@@ -10,8 +10,8 @@ import { useMemo, useState } from "react";
 
 export default function LeadMIS() {
   const [selectedWatiTemplate, setSelectedWatiTemplate] = useState<
-    string | null
-  >(null);
+    string | undefined
+  >(undefined);
 
 
     const [genderFilter, setGenderFilter] = useState<string | null>(null);
