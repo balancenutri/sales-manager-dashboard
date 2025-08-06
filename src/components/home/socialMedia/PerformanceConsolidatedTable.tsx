@@ -13,48 +13,44 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { mockData } from "@/lib/data";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useGetConsolidatedTeamPerformanceQuery } from "@/service/dashboard/api";
+import { selectPeriod } from "@/features/period/periodSlice";
+import { useSelector } from "react-redux";
+import { keyString } from "@/lib/utils";
+
+type PerformanceEntry = {
+  social_leads_assigned: number;
+  social_consultations: number;
+  social_sales: number;
+};
+
+type ConsolidatedTeamPerformanceResponse = {
+  data: Record<string, PerformanceEntry>;
+};
 
 export default function PerformanceConsolidatedTable() {
-  const selectedPeriod = "today";
+  const filter = useSelector(selectPeriod);
 
-  const totalSocialLeads =
-    mockData.socialMediaAnalytics.leadsFromSocial[selectedPeriod]; // Use selectedPeriod
-  const unassignedSocialLeads = mockData.leadsSources.unassigned.socialMedia;
-  const assignedSocialLeads = totalSocialLeads - unassignedSocialLeads;
+  const { data, isLoading } = useGetConsolidatedTeamPerformanceQuery({
+    filter,
+  }) as {
+    data: ConsolidatedTeamPerformanceResponse;
+    isLoading: boolean;
+  };
 
-  const totalAssignedLeadsOverall = mockData.overview.assignedLeads;
-  const socialLeadRatio =
-    totalAssignedLeadsOverall > 0
-      ? assignedSocialLeads / totalAssignedLeadsOverall
-      : 0;
+  const renderSkeletonRows = () => {
+    return Array.from({ length: 5 }).map((_, i) => (
+      <TableRow key={i}>
+        {Array.from({ length: 4 }).map((_, j) => (
+          <TableCell key={j}>
+            <Skeleton className="h-4 w-full" />
+          </TableCell>
+        ))}
+      </TableRow>
+    ));
+  };
 
-  const teamSocialLeadDistribution = mockData.teams.map((team) => {
-    const teamCounsellors = mockData.counsellors.filter((c) =>
-      team.counsellors.includes(c.name)
-    );
-    const estimatedTeamSocialLeads = teamCounsellors.reduce(
-      (sum, c) => sum + Math.round(c.leadsAssigned * socialLeadRatio),
-      0
-    );
-    const estimatedTeamSocialConsultations = teamCounsellors.reduce(
-      (sum, c) => sum + Math.round(c.consultations * socialLeadRatio),
-      0
-    );
-    const estimatedTeamSocialSales = teamCounsellors.reduce(
-      (sum, c) => sum + Math.round(c.salesClosed * socialLeadRatio),
-      0
-    );
-    return {
-      id: team.id,
-      name: team.name,
-      mentor: team.mentor,
-      estimatedSocialLeads: estimatedTeamSocialLeads,
-      estimatedSocialConsultations: estimatedTeamSocialConsultations,
-      estimatedSocialSales: estimatedTeamSocialSales,
-    };
-  });
   return (
     <div>
       <div className="space-y-6 mt-8">
@@ -77,43 +73,30 @@ export default function PerformanceConsolidatedTable() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {teamSocialLeadDistribution.map((team) => (
-                  <TableRow key={team.id}>
-                    <TableCell>
-                      <div className="flex items-center space-x-3">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage
-                            src={
-                              mockData.teams.find((t) => t.id === team.id)
-                                ?.mentorAvatar || "/placeholder.svg"
-                            }
-                          />
-                          <AvatarFallback>
-                            {team.mentor
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <span className="font-medium">{team.name}</span>
-                          <p className="text-xs text-muted-foreground">
-                            {team.mentor}
-                          </p>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-semibold">
-                      {team.estimatedSocialLeads}
-                    </TableCell>
-                    <TableCell className="font-semibold">
-                      {team.estimatedSocialConsultations}
-                    </TableCell>
-                    <TableCell className="font-semibold">
-                      {team.estimatedSocialSales}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {isLoading
+                  ? renderSkeletonRows()
+                  : Object.entries(data?.data || {}).map(
+                      ([name, team], index) => (
+                        <TableRow key={index}>
+                          <TableCell>
+                            <div className="flex items-center space-x-3">
+                              <div>
+                                <span className="font-medium">{keyString(name) as string}</span>
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-semibold">
+                            {team?.social_leads_assigned}
+                          </TableCell>
+                          <TableCell className="font-semibold">
+                            {team?.social_consultations}
+                          </TableCell>
+                          <TableCell className="font-semibold">
+                            {team?.social_sales}
+                          </TableCell>
+                        </TableRow>
+                      )
+                    )}
               </TableBody>
             </Table>
           </CardContent>

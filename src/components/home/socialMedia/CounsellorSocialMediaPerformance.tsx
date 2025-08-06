@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -13,44 +14,42 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { mockData } from "@/lib/data";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { selectPeriod } from "@/features/period/periodSlice";
+import { useGetCounsellorSocialMediaPerformanceQuery } from "@/service/dashboard/api";
+// import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { useSelector } from "react-redux";
+
+type SocialEntry = {
+  social_leads_assigned: number;
+  social_consultations: number;
+  social_sales: number;
+};
+
+type CounsellorSocialMediaPerformanceResponse = {
+  data: Record<string, SocialEntry>;
+};
 
 export default function CounsellorSocialMediaPerformance() {
-  const selectedPeriod = "today";
-  const totalAssignedLeadsOverall = mockData.overview.assignedLeads;
-  const totalSocialLeads =
-    mockData.socialMediaAnalytics.leadsFromSocial[selectedPeriod]; // Use selectedPeriod
-  const unassignedSocialLeads = mockData.leadsSources.unassigned.socialMedia;
-  const assignedSocialLeads = totalSocialLeads - unassignedSocialLeads;
-  const socialLeadRatio =
-    totalAssignedLeadsOverall > 0
-      ? assignedSocialLeads / totalAssignedLeadsOverall
-      : 0;
+  const filter = useSelector(selectPeriod);
 
-  const counsellorSocialLeadDistribution = mockData.counsellors.map(
-    (counsellor) => {
-      const estimatedSocialLeads = Math.round(
-        counsellor.leadsAssigned * socialLeadRatio
-      );
-      const estimatedSocialConsultations = Math.round(
-        counsellor.consultations * socialLeadRatio
-      );
-      const estimatedSocialSales = Math.round(
-        counsellor.salesClosed * socialLeadRatio
-      );
-      return {
-        id: counsellor.id,
-        name: counsellor.name,
-        avatar: counsellor.avatar,
-        estimatedSocialLeads,
-        estimatedSocialConsultations,
-        estimatedSocialSales,
-      };
-    }
-  );
+  const { data, isLoading } = useGetCounsellorSocialMediaPerformanceQuery({
+    filter,
+  }) as {
+    data: CounsellorSocialMediaPerformanceResponse;
+    isLoading: boolean;
+  };
 
-  console.log({ counsellorSocialLeadDistribution });
+  const renderSkeletonRows = () => {
+    return Array.from({ length: 5 }).map((_, i) => (
+      <TableRow key={i}>
+        {Array.from({ length: 4 }).map((_, j) => (
+          <TableCell key={j}>
+            <Skeleton className="h-4 w-full" />
+          </TableCell>
+        ))}
+      </TableRow>
+    ));
+  };
   return (
     <div>
       <div className="space-y-6 mt-8">
@@ -70,18 +69,21 @@ export default function CounsellorSocialMediaPerformance() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Counsellor</TableHead>
-                  <TableHead>Estimated Social Leads Assigned</TableHead>
-                  <TableHead>Estimated Social Consultations</TableHead>
-                  <TableHead>Estimated Social Sales</TableHead>
+                  <TableHead>Social Leads Assigned</TableHead>
+                  <TableHead>Social Consultations</TableHead>
+                  <TableHead>Social Sales</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {counsellorSocialLeadDistribution.map((counsellor) => {
-                  return (
-                    <TableRow key={counsellor.id}>
-                      <TableCell>
-                        <div className="flex items-center space-x-3">
-                          <Avatar className="h-8 w-8">
+                {isLoading
+                  ? renderSkeletonRows()
+                  : Object.entries(data?.data).map(
+                      ([counsellor, sales], index: number) => {
+                        return (
+                          <TableRow key={index}>
+                            <TableCell>
+                              <div className="flex items-center space-x-3">
+                                {/* <Avatar className="h-8 w-8">
                             <AvatarImage
                               src={counsellor.avatar || "/placeholder.svg"}
                             />
@@ -91,22 +93,25 @@ export default function CounsellorSocialMediaPerformance() {
                                 .map((n) => n[0])
                                 .join("")}
                             </AvatarFallback>
-                          </Avatar>
-                          <span className="font-medium">{counsellor.name}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-semibold">
-                        {counsellor.estimatedSocialLeads}
-                      </TableCell>
-                      <TableCell className="font-semibold">
-                        {counsellor.estimatedSocialConsultations}
-                      </TableCell>
-                      <TableCell className="font-semibold">
-                        {counsellor.estimatedSocialSales}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                          </Avatar> */}
+                                <span className="font-medium">
+                                  {counsellor}
+                                </span>
+                              </div>
+                            </TableCell>
+                            <TableCell className="font-semibold">
+                              {sales.social_leads_assigned}
+                            </TableCell>
+                            <TableCell className="font-semibold">
+                              {sales.social_consultations}
+                            </TableCell>
+                            <TableCell className="font-semibold">
+                              {sales.social_sales}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      }
+                    )}
               </TableBody>
             </Table>
           </CardContent>
