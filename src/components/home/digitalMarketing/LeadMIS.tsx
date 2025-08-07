@@ -234,7 +234,7 @@ export default function LeadMIS() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url); // Clean up memory
-    } catch (err) {
+    } catch (err: any) {
       console.error("Export failed:", err);
       alert(
         `Failed to download the file: ${
@@ -571,7 +571,7 @@ export default function LeadMIS() {
                 <SquareChevronLeft size={40} />
               </Button>
               <div className="text-sm font-medium">
-                Page {page} of {Math.ceil(data?.totalCount / limit)}
+                Page {page} of {data && Math.ceil(data?.totalCount / limit)}
               </div>
               <Button
                 variant="outline"
