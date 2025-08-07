@@ -1,5 +1,12 @@
 import type { ClinicalConditionResponse } from "@/components/home/digitalMarketing/ClinicalBifurcation";
 import { commonAPi } from "../common/api";
+import type {
+  AppDownlaodResponse,
+  AppUsageResponse,
+  KeyEngagementResponse,
+  LeadMisBody,
+  LeadMisResponse,
+} from "@/lib/types";
 
 type BodyProps = {
   filter: string;
@@ -40,6 +47,67 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getLeadMisData: builder.query<Blob, LeadMisBody>({
+      query: (body) => ({
+        url: `/sales/digital-marketing/lead-mis-data`,
+        method: "POST",
+        body,
+        responseHandler: async (response) => {
+          const contentType = response.headers.get("Content-Type");
+          console.log("Content-Type:", contentType);
+          if (
+            !contentType?.includes(
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
+          ) {
+            const text = await response.text();
+            throw new Error(
+              `Unexpected Content-Type: ${contentType}. Response: ${text}`
+            );
+          }
+          return response.blob();
+        },
+        headers: {
+          Accept:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "Content-Type": "application/json"
+        },
+      }),
+      providesTags: ["Common"],
+    }),
+    getLeadUserMisData: builder.query<LeadMisResponse, LeadMisBody>({
+      query: (body) => ({
+        url: `/sales/digital-marketing/lead-mis-data`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+
+    getAppDownloadsCount: builder.query<AppDownlaodResponse, void>({
+      query: () => ({
+        url: `/sales/app-activity/app-download-counts`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getAppUsageOverview: builder.query<AppUsageResponse, void>({
+      query: () => ({
+        url: `/sales/app-activity/app-usage-overview`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getKeyEngagementMatrics: builder.query<KeyEngagementResponse, void>({
+      query: () => ({
+        url: `/sales/app-activity/key-engagement-metrics`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+
+
+
 
     getGuideAndBookInteractions: builder.query({
       query: (body: BodyProps) => ({
@@ -63,9 +131,17 @@ export const dashboardApi = commonAPi.injectEndpoints({
 export const {
   useGetGenderWiseLeadQuery,
   useGetClinicalConditionDataQuery,
+  useGetLeadMisDataQuery,
+  useGetLeadUserMisDataQuery,
+  useLazyGetLeadMisDataQuery,
 
   useGetCounsellorSocialMediaPerformanceQuery,
   useGetConsolidatedTeamPerformanceQuery,
+
+  useGetAppDownloadsCountQuery,
+  useGetAppUsageOverviewQuery,
+  useGetKeyEngagementMatricsQuery,
+
   useGetGuideAndBookInteractionsQuery,
   useGetContentVisitsQuery,
 } = dashboardApi;

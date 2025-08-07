@@ -8,6 +8,7 @@ import {
 // import type { LucideIcon } from "lucide-react";
 import React from "react";
 import type { ContentItem } from "./ContentManagement";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface CardSectionProps {
   title: string;
@@ -30,7 +31,6 @@ export const CardSection: React.FC<CardSectionProps> = ({
       </CardHeader>
       <CardContent className="space-y-2">
         {items.map((item) => {
-          const value = data[item.key] || "0 | 0";
           return (
             <div
               key={item.key}
@@ -40,7 +40,7 @@ export const CardSection: React.FC<CardSectionProps> = ({
                 <item.icon className={`h-4 w-4 ${item.color}`} />
                 <span className="font-medium">{item.label}</span>
               </div>
-              <span className="font-semibold text-red-500">{value}</span>
+              {data?.[item.key] ? <span className="font-semibold text-red-500">{data?.[item.key]}</span> : <Skeleton className="h-4 w-24" />}
             </div>
           );
         })}

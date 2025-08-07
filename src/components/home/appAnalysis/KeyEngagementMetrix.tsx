@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { mockData } from "@/lib/data";
+import { useGetKeyEngagementMatricsQuery } from "@/service/dashboard/api";
 import {
   BookText,
   HeartHandshake,
@@ -14,6 +15,8 @@ import {
 } from "lucide-react";
 
 export default function KeyEngagementMetrix() {
+
+    const {} = useGetKeyEngagementMatricsQuery();
   return (
     <Card>
       <CardHeader>

@@ -32,9 +32,10 @@ export default function ContentManagement() {
   const filter = useSelector(selectPeriod);
 
   const {
-    data: contentVisitsData = {} as { data: EngagementData },
-    isLoading: contentVisitingLoading,
-  } = useGetContentVisitsQuery({ filter })
+    data: contentVisitsData = {} as { data: EngagementData }
+  } = useGetContentVisitsQuery({ filter }) as {
+    data: { data: EngagementData };
+  };
 
   const {
     data: guideData = {} as { data: EngagementData },
@@ -105,7 +106,7 @@ export default function ContentManagement() {
     <div>
       <h2 className="text-2xl font-bold my-4">Content Engagement</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {!contentVisitingLoading && (
+        {(
           <CardSection
             title="Content Visits"
             description="User engagement with various content types"

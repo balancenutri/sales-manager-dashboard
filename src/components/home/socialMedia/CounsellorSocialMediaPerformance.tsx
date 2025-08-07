@@ -50,6 +50,7 @@ export default function CounsellorSocialMediaPerformance() {
       </TableRow>
     ));
   };
+
   return (
     <div>
       <div className="space-y-6 mt-8">
@@ -75,7 +76,7 @@ export default function CounsellorSocialMediaPerformance() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {isLoading
+                {isLoading || !data?.data
                   ? renderSkeletonRows()
                   : Object.entries(data?.data).map(
                       ([counsellor, sales], index: number) => {

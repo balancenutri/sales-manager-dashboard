@@ -73,8 +73,8 @@ export default function PerformanceConsolidatedTable() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {isLoading
-                  ? renderSkeletonRows()
+                {isLoading || !data?.data
+                  ? renderSkeletonRows() 
                   : Object.entries(data?.data || {}).map(
                       ([name, team], index) => (
                         <TableRow key={index}>
