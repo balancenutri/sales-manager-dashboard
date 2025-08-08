@@ -3,6 +3,7 @@ import {
   type AllCountriesResponse,
   type AllCountryByRegionResponse,
   type AllStatesResponse,
+  type HealthIssueResponse,
   type RegionApiResponse,
 } from "@/lib/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -49,7 +50,7 @@ export const commonAPi = createApi({
     getCities: builder.query<AllCitiesResponse[], number[]>({
       query: (city) => `/location/all-cities?stateIds=[${city}]`,
     }),
-    getAllHealthIssue: builder.query({
+    getAllHealthIssue: builder.query<HealthIssueResponse, void>({
       query: () => `/common/get-health-issues`,
     }),
   }),

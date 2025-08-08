@@ -90,8 +90,7 @@ export default function LeadMIS() {
     }
   );
 
-  const { data: healthData, isFetching: healthFetching } =
-    useGetAllHealthIssueQuery();
+  const { data: healthData } = useGetAllHealthIssueQuery();
 
   const handleWatiBroadcast = () => {
     if (!selectedWatiTemplate) return;
@@ -271,7 +270,7 @@ export default function LeadMIS() {
             disabled={exportLoading}
           >
             <Download className="mr-2 h-4 w-4 animate-collapsible-down" />
-            Export ({data?.totalCount })
+            Export ({data?.totalCount})
           </Button>
           <Select
             value={selectedWatiTemplate}
@@ -565,7 +564,7 @@ export default function LeadMIS() {
                 disabled={page === 1}
                 onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
               >
-                <SquareChevronLeft size={40}  />
+                <SquareChevronLeft size={40} />
               </Button>
               <div className="text-sm font-medium">
                 Page {page} of {data && Math.ceil(data?.totalCount / limit)}
