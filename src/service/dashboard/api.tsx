@@ -1,7 +1,8 @@
 import type { ClinicalConditionResponse } from "@/components/home/digitalMarketing/ClinicalBifurcation";
 import { commonAPi } from "../common/api";
 import type {
-    ActivatedFeaturesResponse,
+  ActivatedFeaturesResponse,
+  AddCampaignBody,
   AppDownlaodResponse,
   AppUsageResponse,
   KeyEngagementResponse,
@@ -71,10 +72,19 @@ export const dashboardApi = commonAPi.injectEndpoints({
         headers: {
           Accept:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
       }),
       providesTags: ["Common"],
+    }),
+
+    addNewCampaign: builder.mutation<any, AddCampaignBody>({
+      query: (body) => ({
+        url: `/sales/digital-marketing/add-campaign`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Common"],
     }),
     getLeadUserMisData: builder.query<LeadMisResponse, LeadMisBody>({
       query: (body) => ({
@@ -114,9 +124,6 @@ export const dashboardApi = commonAPi.injectEndpoints({
       providesTags: ["Common"],
     }),
 
-
-
-
     getGuideAndBookInteractions: builder.query({
       query: (body: BodyProps) => ({
         url: `/sales/social-media/guide-and-book-interactions`,
@@ -140,6 +147,8 @@ export const {
   useGetGenderWiseLeadQuery,
   useGetClinicalConditionDataQuery,
   useGetLeadMisDataQuery,
+
+  useAddNewCampaignMutation,
   useGetLeadUserMisDataQuery,
   useLazyGetLeadMisDataQuery,
 

@@ -76,6 +76,15 @@ export interface HealthIssueResponse {
     data: HealthIssue[];     // Optional
     hide_columns?: any[];      // Optional
 }
+export interface AllProgramResponse {
+    status: string;
+    message: string;
+    data: {
+        program_id: number;
+        program_name: string;
+    }[];     // Optional
+    hide_columns?: any[];      // Optional
+}
 
 
 
@@ -96,6 +105,21 @@ export interface LeadMisResponse {
     totalCount: number;       // Optional
     hide_columns: any[];      // Optional
 }
+
+
+export type AddCampaignBody = {
+  name: string;
+  type: string;
+  start_date: string;
+  end_date: string;
+  ad_spend: number;
+  target_users: {
+    gender: string[];
+    health_conditions: string[];
+    age_group: string[];
+    program_name: number[];
+  };
+};
 
 export type LeadMisBody = {
     genders?: string[];

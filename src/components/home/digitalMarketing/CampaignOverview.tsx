@@ -25,6 +25,8 @@ import {
 import { mockData } from "@/lib/data";
 import { Download, Filter } from "lucide-react";
 import { useState } from "react";
+import ViewCampaign from "./campaign/ViewCampaign";
+import AddCampaignForm from "./campaign/AddCampaign";
 
 export default function CampaignOverview() {
   const [selectedCampaign, setSelectedCampaign] = useState<
@@ -33,6 +35,8 @@ export default function CampaignOverview() {
 
   const [showCampaignSnapshotModal, setShowCampaignSnapshotModal] =
     useState<boolean>(false);
+
+  const [addCampaignModal, setAddCampaignModal] = useState<boolean>(false);
 
   const handleCampaignClick = (campaign: (typeof mockData.campaigns)[0]) => {
     setSelectedCampaign(campaign);
@@ -56,11 +60,16 @@ export default function CampaignOverview() {
         </div>
 
         <Card>
-          <CardHeader>
-            <CardTitle>Campaign List</CardTitle>
-            <CardDescription>
-              Click on a campaign to view its snapshot
-            </CardDescription>
+          <CardHeader className="flex justify-between">
+            <div>
+              <CardTitle>Campaign List</CardTitle>
+              <CardDescription>
+                Click on a campaign to view its snapshot
+              </CardDescription>
+            </div>
+            <Button variant="outline" onClick={() => setAddCampaignModal(true)}>
+              Add Campaign
+            </Button>
           </CardHeader>
           <CardContent>
             <Table>
@@ -122,110 +131,19 @@ export default function CampaignOverview() {
               Detailed snapshot of the selected campaign's performance
             </DialogDescription>
           </DialogHeader>
-          {selectedCampaign && (
-            <div className="space-y-6">
-              <div className="flex items-center space-x-4">
-                <div>
-                  <p className="text-xl font-semibold">
-                    {selectedCampaign.name}
-                  </p>
-                  <p className="text-muted-foreground">
-                    Campaign ID: {selectedCampaign.id}
-                  </p>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Key Metrics</CardTitle>
-                    <CardDescription>
-                      Overview of campaign performance
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">Type</span>
-                      <span className="font-semibold text-lg">
-                        {selectedCampaign.type}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">Status</span>
-                      <Badge
-                        className={
-                          selectedCampaign.status === "Active"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-gray-100 text-gray-800"
-                        }
-                      >
-                        {selectedCampaign.status}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">Start Date</span>
-                      <span className="font-semibold text-lg">
-                        {selectedCampaign.startDate}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">End Date</span>
-                      <span className="font-semibold text-lg">
-                        {selectedCampaign.endDate}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">Ad Spend</span>
-                      <span className="font-semibold text-lg">
-                        ₹{selectedCampaign.adSpend}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">Leads Generated</span>
-                      <span className="font-semibold text-lg">
-                        {selectedCampaign.leadsGenerated}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">Revenue Generated</span>
-                      <span className="font-semibold text-lg">
-                        ₹{selectedCampaign.revenueGenerated}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">Conversion Rate</span>
-                      <span className="font-semibold text-lg">
-                        {selectedCampaign.conversionRate}%
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">ROI</span>
-                      <span className="font-semibold text-lg">
-                        {selectedCampaign.roi}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Targeted Users</CardTitle>
-                    <CardDescription>
-                      List of targeted user segments
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    {selectedCampaign.usersTargeted.map((user, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between"
-                      >
-                        <span className="font-medium">{user}</span>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          )}
+          <ViewCampaign selectedCampaign={selectedCampaign} />
+        </DialogContent>
+      </Dialog>
+      <Dialog open={addCampaignModal} onOpenChange={setAddCampaignModal}>
+        <DialogContent
+          onInteractOutside={(e: React.MouseEvent | Event) =>
+            e.preventDefault()
+          }
+        >
+          <DialogHeader>
+            <DialogTitle>Add Campaign</DialogTitle>
+          </DialogHeader>
+          <AddCampaignForm />
         </DialogContent>
       </Dialog>
     </div>
