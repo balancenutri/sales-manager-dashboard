@@ -49,6 +49,9 @@ export const commonAPi = createApi({
     getCities: builder.query<AllCitiesResponse[], number[]>({
       query: (city) => `/location/all-cities?stateIds=[${city}]`,
     }),
+    getAllHealthIssue: builder.query({
+      query: () => `/common/get-health-issues`,
+    }),
   }),
 });
 
@@ -60,4 +63,5 @@ export const {
 
   useGetRegionsQuery,
   useGetCountriesByRegionQuery,
+  useGetAllHealthIssueQuery,
 } = commonAPi;

@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { selectPeriod } from "@/features/period/periodSlice";
 import { useGetGenderWiseLeadQuery } from "@/service/dashboard/api";
 import { useSelector } from "react-redux";
@@ -15,17 +16,15 @@ type GenderData = {
 };
 
 type GenderBifurcationResponse = {
-    data : GenderData;
-}
+  data: GenderData;
+};
 
 export default function GenderBifurcation() {
   const filter = useSelector(selectPeriod);
 
-  const { data, isLoading } = useGetGenderWiseLeadQuery({ filter }) as {
+  const { data } = useGetGenderWiseLeadQuery({ filter }) as {
     data: GenderBifurcationResponse;
-    isLoading: boolean;
   };
-  console.log({ data, isLoading });
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
@@ -36,7 +35,13 @@ export default function GenderBifurcation() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
-              <span className="text-4xl font-bold">{data?.data?.overall_male_leads}</span>
+              {data?.data?.overall_male_leads !== undefined ? (
+                <span className="text-4xl font-bold">
+                  {data?.data?.overall_male_leads}
+                </span>
+              ) : (
+                <Skeleton className="h-8 w-20" />
+              )}
               <span className="text-lg text-muted-foreground">Male Leads</span>
             </div>
           </CardContent>
@@ -48,7 +53,13 @@ export default function GenderBifurcation() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
-              <span className="text-4xl font-bold">{data?.data?.overall_female_leads}</span>
+              {!data?.data?.overall_female_leads !== undefined ? (
+                <span className="text-4xl font-bold">
+                  {data?.data?.overall_female_leads}
+                </span>
+              ) : (
+                <Skeleton className="h-8 w-20" />
+              )}
               <span className="text-lg text-muted-foreground">
                 Female Leads
               </span>

@@ -34,6 +34,7 @@ import {
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
+  useGetAllHealthIssueQuery,
   useGetCitiesQuery,
   useGetCountriesByRegionQuery,
   useGetRegionsQuery,
@@ -68,26 +69,29 @@ export default function LeadMIS() {
 
   // API calls with dependencies
 
-  const { data: regionData, isLoading: regionLoading } = useGetRegionsQuery();
-  const { data: countryData, isLoading: countryLoading } =
+  const { data: regionData, isFetching: regionLoading } = useGetRegionsQuery();
+  const { data: countryData, isFetching: countryLoading } =
     useGetCountriesByRegionQuery(
       filters.region.length > 0 ? filters.region : [],
       {
         skip: filters.region.length === 0,
       }
     );
-  const { data: stateData, isLoading: stateLoading } = useGetStatesQuery(
+  const { data: stateData, isFetching: stateLoading } = useGetStatesQuery(
     filters.country.length > 0 ? filters.country : [],
     {
       skip: filters.country.length === 0,
     }
   );
-  const { data: cityData, isLoading: cityLoading } = useGetCitiesQuery(
+  const { data: cityData, isFetching: cityLoading } = useGetCitiesQuery(
     filters.state.length > 0 ? filters.state : [],
     {
       skip: filters.state.length === 0,
     }
   );
+
+  const { data: healthData, isFetching: healthFetching } =
+    useGetAllHealthIssueQuery();
 
   const handleWatiBroadcast = () => {
     if (!selectedWatiTemplate) return;
@@ -267,7 +271,7 @@ export default function LeadMIS() {
             disabled={exportLoading}
           >
             <Download className="mr-2 h-4 w-4 animate-collapsible-down" />
-            Export ({limit})
+            Export ({data?.totalCount })
           </Button>
           <Select
             value={selectedWatiTemplate}
@@ -364,18 +368,9 @@ export default function LeadMIS() {
                 control={control}
                 render={({ field }) => (
                   <MultiSelect
-                    options={[
-                      "Diabetes",
-                      "Hypertension",
-                      "Heart Disease",
-                      "Arthritis",
-                      "Asthma",
-                      "Cholesterol",
-                      "Obesity",
-                      "Depression",
-                      "Anxiety",
-                      "Migraine",
-                    ]}
+                    options={healthData?.data || []}
+                    nameKey="name"
+                    valueKey="name"
                     selected={field.value}
                     onChange={field.onChange}
                     placeholder="Select Clinical Condition"
@@ -421,7 +416,11 @@ export default function LeadMIS() {
                     selected={field.value}
                     onChange={handleCountryChange}
                     placeholder={
-                      countryLoading ? "Loading countries..." : "Select Country"
+                      filters.region.length === 0
+                        ? "Select Region First"
+                        : countryLoading
+                        ? "Loading Country..."
+                        : "Select Country"
                     }
                     nameKey="country_name"
                     valueKey="country_id"
@@ -443,9 +442,9 @@ export default function LeadMIS() {
                     onChange={handleStateChange}
                     placeholder={
                       filters.country.length === 0
-                        ? "Select country first"
+                        ? "Select Country First"
                         : stateLoading
-                        ? "Loading states..."
+                        ? "Loading States..."
                         : "Select State"
                     }
                     nameKey="state_name"
@@ -468,9 +467,9 @@ export default function LeadMIS() {
                     onChange={field.onChange}
                     placeholder={
                       filters.state.length === 0
-                        ? "Select state first"
+                        ? "Select State First"
                         : cityLoading
-                        ? "Loading cities..."
+                        ? "Loading Cities..."
                         : "Select City"
                     }
                     nameKey="city_name"
@@ -524,12 +523,10 @@ export default function LeadMIS() {
 
           <div className="flex justify-between items-center pt-4 border-t">
             <div className="text-sm text-muted-foreground">
-              {/* {getActiveFiltersCount() > 0
-                ? `${getActiveFiltersCount()} filters applied • ${
-                    filteredLeads.length
-                  } leads match`
-                : `Showing all ${mockData.leads.length} leads`} */}
-              ddddd
+              {getActiveFiltersCount() > 0 &&
+                `${getActiveFiltersCount()} filters applied • ${
+                  data?.totalCount || 0
+                } leads match`}
             </div>
             <Button variant="outline" onClick={() => reset()}>
               Clear All Filters
@@ -557,10 +554,10 @@ export default function LeadMIS() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="10">10</SelectItem>
-                  <SelectItem value="20">20</SelectItem>
-                  <SelectItem value="50">50</SelectItem>
-                  <SelectItem value="100">100</SelectItem>
+                  <SelectItem value="10">Show 10</SelectItem>
+                  <SelectItem value="20">Show 20</SelectItem>
+                  <SelectItem value="50">Show 50</SelectItem>
+                  <SelectItem value="100">Show 100</SelectItem>
                 </SelectContent>
               </Select>
               <Button
@@ -568,7 +565,7 @@ export default function LeadMIS() {
                 disabled={page === 1}
                 onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
               >
-                <SquareChevronLeft size={40} />
+                <SquareChevronLeft size={40}  />
               </Button>
               <div className="text-sm font-medium">
                 Page {page} of {data && Math.ceil(data?.totalCount / limit)}
@@ -588,6 +585,7 @@ export default function LeadMIS() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Sr. No.</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Gender</TableHead>
                   <TableHead>Age Group</TableHead>
@@ -602,6 +600,9 @@ export default function LeadMIS() {
                 {Array.isArray(data?.data) && data?.data?.length > 0 ? (
                   data?.data.map((lead, index: number) => (
                     <TableRow key={index}>
+                      <TableCell className="font-normal">
+                        {page * limit - limit + index + 1}
+                      </TableCell>
                       <TableCell className="font-medium">
                         {keyString(lead.Name)}
                       </TableCell>

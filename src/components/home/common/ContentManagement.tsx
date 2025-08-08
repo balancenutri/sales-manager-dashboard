@@ -47,7 +47,7 @@ export default function ContentManagement() {
       label: "Tips Visit",
       icon: ClipboardList,
       color: "text-blue-500",
-      key: "tips_visit",
+      key: "tip_visita",
     },
     {
       label: "Video Visits",

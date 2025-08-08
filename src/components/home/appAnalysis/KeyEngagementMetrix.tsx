@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { mockData } from "@/lib/data";
+import { keyString } from "@/lib/utils";
 import { useGetKeyEngagementMatricsQuery } from "@/service/dashboard/api";
 import {
   BookText,
@@ -13,10 +13,28 @@ import {
   PhoneCall,
   ShoppingCart,
 } from "lucide-react";
+import type { KeyEngagement } from "@/lib/types";
+import type { LucideIcon } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+type EngagementIcon = {
+  [K in keyof KeyEngagement]: LucideIcon;
+};
 
 export default function KeyEngagementMetrix() {
+  const { data, isFetching } = useGetKeyEngagementMatricsQuery();
 
-    const {} = useGetKeyEngagementMatricsQuery();
+  const allIcons: EngagementIcon = {
+    hs_taken: HeartHandshake,
+    consultation_booked: PhoneCall,
+    program_page_visits: BookText,
+    checkout_page_visits: ShoppingCart,
+  };
+
+  console.log({ data, isFetching });
+
+  const skeletonArray = Array(4).fill(null);
+
   return (
     <Card>
       <CardHeader>
@@ -24,46 +42,30 @@ export default function KeyEngagementMetrix() {
         <CardDescription>Important user actions within the app</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
-        <div className="flex items-center justify-between border-b pb-2">
-          <div className="flex items-center space-x-3">
-            <HeartHandshake className="h-4 w-4 text-orange-500" />
-            <span className="font-medium">Health Score Taken</span>
-          </div>
-          <div className="font-semibold text-lg">
-            {mockData.appAnalytics.hsTaken.day} |{" "}
-            {mockData.appAnalytics.hsTaken.mtd.toLocaleString()}
-          </div>
-        </div>
-        <div className="flex items-center justify-between border-b pb-2">
-          <div className="flex items-center space-x-3">
-            <PhoneCall className="h-4 w-4 text-red-500" />
-            <span className="font-medium">Consultations Booked</span>
-          </div>
-          <div className="font-semibold text-lg">
-            {mockData.appAnalytics.consultationBooked.day} |{" "}
-            {mockData.appAnalytics.consultationBooked.mtd.toLocaleString()}
-          </div>
-        </div>
-        <div className="flex items-center justify-between border-b pb-2">
-          <div className="flex items-center space-x-3">
-            <BookText className="h-4 w-4 text-blue-500" />
-            <span className="font-medium">Program Page Visits</span>
-          </div>
-          <div className="font-semibold text-lg">
-            {mockData.appAnalytics.programPageVisits.day} |{" "}
-            {mockData.appAnalytics.programPageVisits.mtd.toLocaleString()}
-          </div>
-        </div>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <ShoppingCart className="h-4 w-4 text-green-500" />
-            <span className="font-medium">Checkout Page Visits</span>
-          </div>
-          <div className="font-semibold text-lg">
-            {mockData.appAnalytics.checkoutPageVisits.day} |{" "}
-            {mockData.appAnalytics.checkoutPageVisits.mtd.toLocaleString()}
-          </div>
-        </div>
+        {isFetching || !data?.data
+          ? skeletonArray.map((_, index: number) => (
+              <div
+                key={index}
+                className="flex items-center justify-between border-b pb-2"
+              >
+                <Skeleton className="h-5 w-20" />
+                <Skeleton className="h-5 w-20" />
+              </div>
+            ))
+          : Object.entries(data.data).map(([key, value]) => {
+              const Icon = allIcons[key] || BookText;
+              return (
+                <div className="flex items-center justify-between border-b pb-2">
+                  <div className="flex items-center space-x-3">
+                    <Icon className="h-4 w-4 text-orange-500" />
+                    <span className="font-medium">{keyString(key)}</span>
+                  </div>
+                  <div className="font-semibold text-lg">
+                    {value.today_count} | {value.monthly_count}
+                  </div>
+                </div>
+              );
+            })}
       </CardContent>
     </Card>
   );

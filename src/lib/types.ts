@@ -66,6 +66,18 @@ export interface AllCitiesResponse {
 }
 
 
+export type HealthIssue = {
+    id: number;
+    name: string;
+}
+export interface HealthIssueResponse {
+    status: string;
+    message: string;
+    data: HealthIssue[];     // Optional
+    hide_columns?: any[];      // Optional
+}
+
+
 
 export type LeadMis = {
     "Name": string,
@@ -130,13 +142,26 @@ export interface AppUsageResponse {
 }
 
 export type KeyEngagement = {
-    count: number,
-    type: string,
+    [key: string]: {
+        today_count: number,
+        monthly_count: number,
+    }
 }
 
 export interface KeyEngagementResponse {
     status: string;
     message: string;
-    data: KeyEngagement[];
+    data: KeyEngagement;
     totalCount: number;
 }
+export interface ActivatedFeaturesResponse {
+    status: string;
+    message: string;
+    data: {
+        [key: string]: number,
+    };
+    totalCount: number;
+}
+
+
+

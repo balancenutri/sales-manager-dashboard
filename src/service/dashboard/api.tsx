@@ -1,6 +1,7 @@
 import type { ClinicalConditionResponse } from "@/components/home/digitalMarketing/ClinicalBifurcation";
 import { commonAPi } from "../common/api";
 import type {
+    ActivatedFeaturesResponse,
   AppDownlaodResponse,
   AppUsageResponse,
   KeyEngagementResponse,
@@ -105,6 +106,13 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getActivatedFeatures: builder.query<ActivatedFeaturesResponse, void>({
+      query: () => ({
+        url: `/sales/app-activity/activated-features`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
 
 
 
@@ -141,6 +149,7 @@ export const {
   useGetAppDownloadsCountQuery,
   useGetAppUsageOverviewQuery,
   useGetKeyEngagementMatricsQuery,
+  useGetActivatedFeaturesQuery,
 
   useGetGuideAndBookInteractionsQuery,
   useGetContentVisitsQuery,

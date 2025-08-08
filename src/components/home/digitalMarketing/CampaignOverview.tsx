@@ -115,7 +115,7 @@ export default function CampaignOverview() {
         open={showCampaignSnapshotModal}
         onOpenChange={setShowCampaignSnapshotModal}
       >
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="min-w-4xl">
           <DialogHeader>
             <DialogTitle>Campaign Snapshot</DialogTitle>
             <DialogDescription>
