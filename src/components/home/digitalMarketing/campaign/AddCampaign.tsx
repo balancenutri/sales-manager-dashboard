@@ -9,22 +9,25 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { DatePicker } from "@/components/ui/date-picker"; // Import the DatePicker
-import dayjs from "dayjs"; // Import dayjs for validation
+import { DatePicker } from "@/components/ui/date-picker";
+import dayjs from "dayjs";
 import { MultiSelect } from "@/components/ui/multi-select";
 import {
   useGetAllHealthIssueQuery,
   useGetAllProgramNameQuery,
+  useGetAllSourceQuery,
 } from "@/service/common/api";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import type { AddCampaignBody } from "@/lib/types";
 import { useAddNewCampaignMutation } from "@/service/dashboard/api";
+import { keyString } from "@/lib/utils";
 
 dayjs.extend(isSameOrAfter);
 
 type FormValues = {
   name: string;
   type: string;
+  status: string;
   start_date: string; // ISO yyyy-MM-dd
   end_date: string; // ISO yyyy-MM-dd
   ad_spend: number; // Use '' for empty number input
@@ -34,7 +37,11 @@ type FormValues = {
   program_name: number[];
 };
 
-export default function AddCampaignForm() {
+export default function AddCampaignForm({
+  modalControl,
+}: {
+  modalControl: () => void;
+}) {
   const {
     register,
     handleSubmit,
@@ -47,6 +54,7 @@ export default function AddCampaignForm() {
     defaultValues: {
       name: "", // No default value
       type: "", // No default value
+      status: "", // No default value
       start_date: "", // No default value
       end_date: "", // No default value
       ad_spend: 0, // No default value
@@ -61,10 +69,13 @@ export default function AddCampaignForm() {
     user_type: "Lead",
   });
 
+  const { data: allSources } = useGetAllSourceQuery({
+    source_id: 6,
+  });
+
   const [addNewCampaign] = useAddNewCampaignMutation();
 
   const onSubmit = async (data: FormValues) => {
-    // extra validation: end_date >= start_date
     const startDay = dayjs(data.start_date);
     const endDay = dayjs(data.end_date);
 
@@ -75,11 +86,11 @@ export default function AddCampaignForm() {
       });
       return;
     }
-    // convert or format if necessary, then send to API
     console.log("Ad campaign payload:", data);
 
     const body: AddCampaignBody = {
       name: data.name,
+      status: data.status,
       type: data.type,
       start_date: data.start_date,
       end_date: data.end_date,
@@ -94,13 +105,12 @@ export default function AddCampaignForm() {
 
     const response = await addNewCampaign(body);
     console.log({ response });
-    // example: show success + reset or keep values
-    // reset(); // Consider if you want to reset after successful submission
+    modalControl();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-4 max-h-[80vh] overflow-y-scroll ">
+      <div className="space-y-4 max-h-[80vh] overflow-y-scroll px-2">
         {/* Type */}
         <div>
           <Label className="mb-2">Name</Label>
@@ -122,6 +132,30 @@ export default function AddCampaignForm() {
         </div>
 
         <div>
+          <Label className="mb-2">Status</Label>
+          <Controller
+            control={control}
+            name="status"
+            rules={{ required: "Campaign status is required" }}
+            render={({ field }) => (
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="inactive">Inactive</SelectItem>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="active">Active</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+          {errors.type && (
+            <p className="mt-1 text-xs text-red-600">{errors.type.message}</p>
+          )}
+        </div>
+        <div>
           <Label className="mb-2">Type</Label>
           <Controller
             control={control}
@@ -133,10 +167,14 @@ export default function AddCampaignForm() {
                   <SelectValue placeholder="Select Type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Google Ads">Google Ads</SelectItem>
-                  <SelectItem value="Facebook Ads">Facebook Ads</SelectItem>
-                  <SelectItem value="LinkedIn">LinkedIn</SelectItem>
-                  <SelectItem value="Organic">Organic</SelectItem>
+                  {allSources?.data?.map((item) => (
+                    <SelectItem
+                      key={item.source_id}
+                      value={String(item.source_id)}
+                    >
+                      {keyString(item.source_name)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             )}
@@ -155,8 +193,7 @@ export default function AddCampaignForm() {
               value={field.value}
               onChange={field.onChange}
               errorMessage={errors.start_date?.message}
-              // Example: Disable dates before 1900-01-01
-              disabled={(date) => dayjs(date).isBefore(dayjs("1900-01-01"))}
+              minDate={dayjs().subtract(1, "day").toDate()}
             />
           )}
         />
@@ -186,7 +223,7 @@ export default function AddCampaignForm() {
               onChange={field.onChange}
               errorMessage={errors.end_date?.message}
               // Example: Disable dates before 1900-01-01
-              disabled={(date) => dayjs(date).isBefore(dayjs("1900-01-01"))}
+              minDate={dayjs().subtract(1, "day").toDate()}
             />
           )}
         />

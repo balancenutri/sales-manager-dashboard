@@ -18,7 +18,8 @@ interface DatePickerProps {
   onChange: (value: string) => void;
   errorMessage?: string;
   placeholder?: string;
-  disabled?: (date: Date) => boolean;
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 export function DatePicker({
@@ -27,11 +28,18 @@ export function DatePicker({
   onChange,
   errorMessage,
   placeholder = "Pick a date",
-  disabled,
+  minDate,
+  maxDate,
 }: DatePickerProps) {
   const [open, setOpen] = useState<boolean>(false);
   // Convert string value to Date object for the Calendar component
   const selectedDate = value ? dayjs(value, "YYYY-MM-DD").toDate() : undefined;
+
+  const restrictDateRange = (date: Date) => {
+    if (minDate && date < minDate) return true;
+    if (maxDate && date > maxDate) return true;
+    return false;
+  };
 
   return (
     <div className="space-y-2">
@@ -64,11 +72,10 @@ export function DatePicker({
                 setOpen(false); // ✅ Close the popover after selecting
               }
             }}
-            
             // onSelect={(date) => {
             //     onChange(date ? dayjs(date).format("YYYY-MM-DD") : "")
             // }}
-            disabled={disabled}
+            disabled={minDate || maxDate ? restrictDateRange : undefined}
             captionLayout="dropdown"
             initialFocus
           />

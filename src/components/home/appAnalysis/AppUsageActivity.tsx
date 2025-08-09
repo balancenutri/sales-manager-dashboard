@@ -55,7 +55,7 @@ export default function AppUsageActivity() {
                     <span className="font-medium">{keyString(item.type)}</span>
                   </div>
                   <div className="font-semibold text-lg">
-                    {item.today_count} | {item.this_month_count}
+                    {item.today_count !== undefined ? `${item.today_count} | ${item.this_month_count}` : item.count}
                   </div>
                 </div>
               );

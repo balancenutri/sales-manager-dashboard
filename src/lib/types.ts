@@ -85,6 +85,16 @@ export interface AllProgramResponse {
     }[];     // Optional
     hide_columns?: any[];      // Optional
 }
+export interface AllSourceResponse {
+    status: string;
+    message: string;
+    data: {
+        "source_id": number;
+        "source_name": string;
+        "source_group": number;
+    }[];     // Optional
+    hide_columns?: any[];      // Optional
+}
 
 
 
@@ -108,17 +118,18 @@ export interface LeadMisResponse {
 
 
 export type AddCampaignBody = {
-  name: string;
-  type: string;
-  start_date: string;
-  end_date: string;
-  ad_spend: number;
-  target_users: {
-    gender: string[];
-    health_conditions: string[];
-    age_group: string[];
-    program_name: number[];
-  };
+    name: string;
+    type: string;
+    status: string;
+    start_date: string;
+    end_date: string;
+    ad_spend: number;
+    target_users: {
+        gender: string[];
+        health_conditions: string[];
+        age_group: string[];
+        program_name: number[];
+    };
 };
 
 export type LeadMisBody = {
@@ -153,8 +164,9 @@ export interface AppDownlaodResponse {
 
 
 export type AppUsage = {
-    today_count: number,
-    this_month_count: number,
+    today_count?: number,
+    this_month_count?: number,
+    count?: number | string,
     type: string,
 }
 

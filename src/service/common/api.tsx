@@ -3,6 +3,7 @@ import {
   type AllCountriesResponse,
   type AllCountryByRegionResponse,
   type AllProgramResponse,
+  type AllSourceResponse,
   type AllStatesResponse,
   type HealthIssueResponse,
   type RegionApiResponse,
@@ -61,6 +62,13 @@ export const commonAPi = createApi({
         params,
       }),
     }),
+    getAllSource: builder.query<AllSourceResponse, { source_id: number | null }>({
+      query: (params) => ({
+        url: `/common/get-all-sources`,
+        method: "GET",
+        params,
+      }),
+    }),
     // getAllPrograms: builder.query({
     //   query: () => `/program-session/all`,
     // }),
@@ -78,4 +86,5 @@ export const {
   useGetAllHealthIssueQuery,
 
   useGetAllProgramNameQuery,
+  useGetAllSourceQuery,
 } = commonAPi;

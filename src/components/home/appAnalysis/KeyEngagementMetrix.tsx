@@ -55,7 +55,7 @@ export default function KeyEngagementMetrix() {
           : Object.entries(data.data).map(([key, value]) => {
               const Icon = allIcons[key] || BookText;
               return (
-                <div className="flex items-center justify-between border-b pb-2">
+                <div className="flex items-center justify-between border-b pb-2" key={key}>
                   <div className="flex items-center space-x-3">
                     <Icon className="h-4 w-4 text-orange-500" />
                     <span className="font-medium">{keyString(key)}</span>

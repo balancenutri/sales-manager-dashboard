@@ -143,7 +143,7 @@ export default function CampaignOverview() {
           <DialogHeader>
             <DialogTitle>Add Campaign</DialogTitle>
           </DialogHeader>
-          <AddCampaignForm />
+          <AddCampaignForm modalControl={() => setAddCampaignModal(false)} />
         </DialogContent>
       </Dialog>
     </div>
