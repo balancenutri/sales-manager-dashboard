@@ -4,7 +4,6 @@ import { mockData } from "@/lib/data";
 import Header from "@/components/common/Header";
 import LeadCard from "@/components/home/overview/LeadCard";
 import RevenueCard from "@/components/home/overview/RevenueCard";
-import SocialMediaCard from "@/components/home/overview/SocialMediaCard";
 import SocialCard from "@/components/home/socialMedia/SocialCard";
 import SocialMediaPerformance from "@/components/home/socialMedia/SocialMediaPerformance";
 import ContentManagement from "@/components/home/common/ContentManagement";
@@ -38,12 +37,18 @@ export default function Home() {
         {/* Main Content Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger className="cursor-pointer" value="overview">Overview</TabsTrigger>
-            <TabsTrigger className="cursor-pointer" value="social-media">Social Media</TabsTrigger>
+            <TabsTrigger className="cursor-pointer" value="overview">
+              Overview
+            </TabsTrigger>
+            <TabsTrigger className="cursor-pointer" value="social-media">
+              Social Media
+            </TabsTrigger>
             <TabsTrigger className="cursor-pointer" value="digital-marketing">
               Digital Marketing
             </TabsTrigger>
-            <TabsTrigger className="cursor-pointer" value="app-analytics">App Analytics</TabsTrigger>
+            <TabsTrigger className="cursor-pointer" value="app-analytics">
+              App Analytics
+            </TabsTrigger>
           </TabsList>
 
           {/* Overview Tab Content */}
@@ -57,7 +62,11 @@ export default function Home() {
               <RevenueCard />
 
               {/* Social Media Performance Card */}
-              <SocialMediaCard />
+              <PerformanceConsolidatedTable
+                title="Team Performance (Social Media)"
+                description="Consolidated social media performance by team/counsellor"
+                header={false}
+              />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Top Performers */}
@@ -83,7 +92,11 @@ export default function Home() {
               <CounsellorSocialMediaPerformance />
 
               {/* New Team Performance Consolidated Table */}
-              <PerformanceConsolidatedTable />
+              <PerformanceConsolidatedTable
+                title="Team & Mentor Performance Summary"
+                description="Leads, Consultations, and Sales by Team and Mentor"
+                header={true}
+              />
             </div>
           </TabsContent>
 
@@ -112,15 +125,14 @@ export default function Home() {
             <h2 className="text-2xl font-bold">App Analytics Overview</h2>
 
             <div className="grid grid-cols-3 gap-6">
+              {/* App Usage Overview */}
+              <AppUsageActivity />
 
-            {/* App Usage Overview */}
-            <AppUsageActivity />
+              {/* Key Engagement Metrics */}
+              <KeyEngagementMetrix />
 
-            {/* Key Engagement Metrics */}
-            <KeyEngagementMetrix />
-
-            {/* Activated Features */}
-            <ActivatedFeatures />
+              {/* Activated Features */}
+              <ActivatedFeatures />
             </div>
           </TabsContent>
         </Tabs>

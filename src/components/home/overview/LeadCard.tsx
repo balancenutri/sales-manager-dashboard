@@ -1,9 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -25,6 +20,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { DialogDescription } from "@radix-ui/react-dialog";
+import { useGetLeadManagementQuery } from "@/service/dashboard/api";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function LeadCard() {
   const [modalType, setModalType] = useState<
@@ -36,6 +33,9 @@ export default function LeadCard() {
     setModalType(type);
     setShowLeadsModal(true);
   };
+
+  const { data: leadManagementData } =
+    useGetLeadManagementQuery();
 
   return (
     <div className="space-y-6">
@@ -51,9 +51,13 @@ export default function LeadCard() {
           >
             <div>
               <p className="text-sm text-muted-foreground">Assigned</p>
-              <p className="text-xl font-bold text-green-700">
-                {mockData.overview.assignedLeads}
-              </p>
+              {leadManagementData?.data ? (
+                <p className="text-xl font-bold text-green-700">
+                  {leadManagementData?.data.assigned_leads}
+                </p>
+              ) : (
+                <Skeleton className="h-5 w-20 mt-2" />
+              )}
             </div>
             <ArrowUp className="h-4 w-4 text-green-500" />
           </div>
@@ -63,16 +67,22 @@ export default function LeadCard() {
           >
             <div>
               <p className="text-sm text-muted-foreground">Unassigned</p>
-              <p className="text-xl font-bold text-orange-700">
-                {mockData.overview.unassignedLeads}
-              </p>
+              {leadManagementData?.data ? (
+                <p className="text-xl font-bold text-orange-700">
+                  {leadManagementData?.data.unassigned_leads}
+                </p>
+              ) : (
+                <Skeleton className="h-5 w-20 mt-2" />
+              )}
             </div>
             <UserCheck className="h-4 w-4 text-orange-500" />
           </div>
         </CardContent>
       </Card>
       <Dialog open={showLeadsModal} onOpenChange={setShowLeadsModal}>
-        <DialogContent className={`${modalType === "assigned" ? "min-w-4xl": ""}`}>
+        <DialogContent
+          className={`${modalType === "assigned" ? "min-w-4xl" : ""}`}
+        >
           <DialogHeader>
             <DialogTitle>
               {modalType === "assigned"

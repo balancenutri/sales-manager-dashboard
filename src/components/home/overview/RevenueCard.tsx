@@ -12,6 +12,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { DialogDescription } from "@radix-ui/react-dialog";
+import { useGetSalesPerformanceQuery } from "@/service/dashboard/api";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function RevenueCard() {
   const [showRevenueModal, setShowRevenueModal] = useState<boolean>(false);
@@ -25,6 +27,9 @@ export default function RevenueCard() {
     // setModalType("sales");
     setShowSalesModal(true);
   };
+
+  const { data: salesPerformanceData } =
+    useGetSalesPerformanceQuery();
 
   return (
     <div className="space-y-6">
@@ -44,9 +49,13 @@ export default function RevenueCard() {
           >
             <div>
               <p className="text-sm text-muted-foreground">Sales Closed</p>
-              <p className="text-2xl font-bold">
-                {mockData.overview.totalSales}
-              </p>
+              {salesPerformanceData?.data ? (
+                <p className="text-2xl font-bold">
+                  {salesPerformanceData?.data.sales_closed}
+                </p>
+              ) : (
+                <Skeleton className="h-5 w-20 mt-2" />
+              )}
             </div>
             <ArrowUp className="h-4 w-4 text-green-500" />
           </div>
@@ -56,51 +65,51 @@ export default function RevenueCard() {
           >
             <div>
               <p className="text-sm text-muted-foreground">Revenue</p>
-              <p className="text-xl font-bold">
-                ₹{(mockData.overview.revenue / 1000).toFixed(0)}K
-              </p>
+              {salesPerformanceData?.data ? (
+                <p className="text-xl font-bold">
+                  ₹ {salesPerformanceData?.data.revenue}
+                </p>
+              ) : (
+                <Skeleton className="h-5 w-20 mt-2" />
+              )}
             </div>
-            <div className="text-right">
-              <p className="text-xs text-muted-foreground">
-                Target: ₹{(mockData.overview.targetRevenue / 1000).toFixed(0)}K
-              </p>
-              <p className="text-xs text-orange-600">
-                Pending: ₹
-                {(
-                  (mockData.overview.targetRevenue -
-                    mockData.overview.revenue) /
-                  1000
-                ).toFixed(0)}
-                K
-              </p>
-            </div>
+            {salesPerformanceData?.data && (
+              <div className="text-right">
+                <p className="text-xs text-muted-foreground">
+                  Target: ₹{salesPerformanceData?.data.target}
+                </p>
+                <p className="text-xs text-orange-600">
+                  Pending: ₹{salesPerformanceData?.data.pending_target}
+                </p>
+              </div>
+            )}
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span>Revenue Target Progress</span>
-              <span>
-                {(
-                  (mockData.overview.revenue /
-                    mockData.overview.targetRevenue) *
-                  100
-                ).toFixed(1)}
-                %
-              </span>
+              {salesPerformanceData?.data ? (
+                <span>
+                  {salesPerformanceData?.data.revenue_target_progress}%
+                </span>
+              ) : (
+                <Skeleton className="h-5 w-20 mt-2" />
+              )}
             </div>
             <Progress
-              value={
-                (mockData.overview.revenue / mockData.overview.targetRevenue) *
-                100
-              }
+              value={Number(salesPerformanceData?.data.revenue_target_progress)}
               className="h-2"
             />
           </div>
           <div className="flex items-center justify-between pt-2 border-t">
             <div>
               <p className="text-sm text-muted-foreground">Conversion Rate</p>
-              <p className="text-lg font-bold text-teal-600">
-                {mockData.overview.conversionRate}%
-              </p>
+              {salesPerformanceData?.data ? (
+                <p className="text-lg font-bold text-teal-600">
+                  {salesPerformanceData?.data.conversion_rate}%
+                </p>
+              ) : (
+                <Skeleton className="h-3 w-16 mt-2" />
+              )}
             </div>
             <TrendingUp className="h-4 w-4 text-teal-500" />
           </div>

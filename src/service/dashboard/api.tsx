@@ -1,13 +1,16 @@
 import type { ClinicalConditionResponse } from "@/components/home/digitalMarketing/ClinicalBifurcation";
 import { commonAPi } from "../common/api";
-import type {
-  ActivatedFeaturesResponse,
-  AddCampaignBody,
-  AppDownlaodResponse,
-  AppUsageResponse,
-  KeyEngagementResponse,
-  LeadMisBody,
-  LeadMisResponse,
+import {
+  type LeadManagementResponse,
+  type ActivatedFeaturesResponse,
+  type AddCampaignBody,
+  type AppDownlaodResponse,
+  type AppUsageResponse,
+  type KeyEngagementResponse,
+  type LeadMisBody,
+  type LeadMisResponse,
+  type SalesPerformanceResponse,
+  type TopPerformerResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -16,6 +19,28 @@ type BodyProps = {
 
 export const dashboardApi = commonAPi.injectEndpoints({
   endpoints: (builder) => ({
+    getLeadManagement: builder.query<LeadManagementResponse, void>({
+      query: () => ({
+        url: `/sales/overview/lead-management`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getSalesPerformance: builder.query<SalesPerformanceResponse, void>({
+      query: () => ({
+        url: `/sales/overview/sales-performance`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getTopPerformers: builder.query<TopPerformerResponse, void>({
+      query: () => ({
+        url: `/sales/overview/top-performers`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+
     // SOCIAL MEDIA
     getCounsellorSocialMediaPerformance: builder.query({
       query: (body: BodyProps) => ({
@@ -144,6 +169,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
 });
 
 export const {
+  useGetLeadManagementQuery,
+  useGetSalesPerformanceQuery,
+  useGetTopPerformersQuery,
+
   useGetGenderWiseLeadQuery,
   useGetClinicalConditionDataQuery,
   useGetLeadMisDataQuery,

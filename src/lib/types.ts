@@ -199,5 +199,46 @@ export interface ActivatedFeaturesResponse {
     totalCount: number;
 }
 
+type LeadManagement = {
+    total_leads: number;
+    assigned_leads: number;
+    unassigned_leads: number;
+}
+export interface LeadManagementResponse {
+    status: string;
+    message: string;
+    data: LeadManagement;
+    totalCount: number;
+}
+
+type SalesPerformance = {
+    sales_closed: string;
+    revenue: string;
+    target: string;
+    conversion_rate: string;
+    revenue_target_progress: string;
+    pending_target: number;
+}
+export interface SalesPerformanceResponse {
+    status: string;
+    message: string;
+    data: SalesPerformance;
+    totalCount: number;
+}
+
+
+type TopPerformer = {
+    [key: string]: {
+        sales: number;
+        conversion_rate: number;
+    }
+}
+export interface TopPerformerResponse {
+    status: string;
+    message: string;
+    data: TopPerformer;
+    totalCount: number;
+}
+
 
 
