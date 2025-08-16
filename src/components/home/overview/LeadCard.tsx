@@ -81,7 +81,7 @@ export default function LeadCard() {
       </Card>
       <Dialog open={showLeadsModal} onOpenChange={setShowLeadsModal}>
         <DialogContent
-          className={`${modalType === "assigned" ? "min-w-4xl" : ""}`}
+          className={`${modalType === "assigned" ? "min-w-6xl" : ""}`}
         >
           <DialogHeader>
             <DialogTitle>

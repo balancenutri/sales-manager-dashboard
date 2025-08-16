@@ -11,6 +11,8 @@ import {
   type LeadMisResponse,
   type SalesPerformanceResponse,
   type TopPerformerResponse,
+  type ClientPerformanceResponse,
+  type ClientPerformanceBody,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -148,6 +150,17 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getClientPerformance: builder.query<
+      ClientPerformanceResponse,
+      ClientPerformanceBody
+    >({
+      query: (body) => ({
+        url: `/post-purchase-mis/count/client-performance`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
 
     getGuideAndBookInteractions: builder.query({
       query: (body: BodyProps) => ({
@@ -188,6 +201,7 @@ export const {
   useGetAppUsageOverviewQuery,
   useGetKeyEngagementMatricsQuery,
   useGetActivatedFeaturesQuery,
+  useGetClientPerformanceQuery,
 
   useGetGuideAndBookInteractionsQuery,
   useGetContentVisitsQuery,

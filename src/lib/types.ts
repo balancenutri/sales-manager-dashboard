@@ -47,22 +47,22 @@ export interface AllStatesResponse {
     status: string;
     message: string;
     data: StateApiResponse[];
-    totalCount?: number;       // Optional: only include if your API returns it
-    hide_columns?: any[];      // Optional: based on your actual API
+    totalCount?: number;
+    hide_columns?: any[];
 }
 export interface RegionApiResponse {
     status: string;
     message: string;
     data: RegionApi[];
-    totalCount?: number;       // Optional: only include if your API returns it
-    hide_columns?: any[];      // Optional: based on your actual API
+    totalCount?: number;
+    hide_columns?: any[];
 }
 export interface AllCitiesResponse {
     status: string;
     message: string;
     data: CityApiResponse[];
-    totalCount?: number;       // Optional
-    hide_columns?: any[];      // Optional
+    totalCount?: number;
+    hide_columns?: any[];
 }
 
 
@@ -73,8 +73,8 @@ export type HealthIssue = {
 export interface HealthIssueResponse {
     status: string;
     message: string;
-    data: HealthIssue[];     // Optional
-    hide_columns?: any[];      // Optional
+    data: HealthIssue[];
+    hide_columns?: any[];
 }
 export interface AllProgramResponse {
     status: string;
@@ -82,8 +82,8 @@ export interface AllProgramResponse {
     data: {
         program_id: number;
         program_name: string;
-    }[];     // Optional
-    hide_columns?: any[];      // Optional
+    }[];
+    hide_columns?: any[];
 }
 export interface AllSourceResponse {
     status: string;
@@ -92,8 +92,8 @@ export interface AllSourceResponse {
         "source_id": number;
         "source_name": string;
         "source_group": number;
-    }[];     // Optional
-    hide_columns?: any[];      // Optional
+    }[];
+    hide_columns?: any[];
 }
 
 
@@ -112,8 +112,8 @@ export interface LeadMisResponse {
     status: string;
     message: string;
     data: LeadMis[];
-    totalCount: number;       // Optional
-    hide_columns: any[];      // Optional
+    totalCount: number;
+    hide_columns: any[];
 }
 
 
@@ -242,3 +242,60 @@ export interface TopPerformerResponse {
 
 
 
+
+
+
+
+
+
+export type NotificationSeenInApp = {
+    seenPercentage: string;
+    totalNotifications: number;
+    seenNotifications: number;
+    trend: string;
+}
+
+export type WeeklyEngagement = {
+    week_number: number;
+    total_notifications: number;
+    seen_notifications: string;
+    engagement_percentage: string;
+}
+
+export type ProgramEngagement = {
+    program_category: string;
+    total_notifications: number;
+    seen_notifications: number;
+    engagement_percentage: string;
+}
+
+export type TopNotification = {
+    title: string;
+    seen_count: number;
+}
+
+export type AppVersionStats = {
+    updated: number;
+    notUpdated: number;
+    updatedPercentage: string;
+    notUpdatedPercentage: string;
+}
+
+export type ClientPerformanceData = {
+    notificationSeenInApp: NotificationSeenInApp;
+    weeklyEngagementTrend: WeeklyEngagement[];
+    engagementByProgramStack: ProgramEngagement[];
+    topNotifications: TopNotification[];
+    appVersionStats: AppVersionStats;
+}
+export interface ClientPerformanceResponse {
+    status: string;
+    message: string;
+    data: ClientPerformanceData;
+    hide_columns: string[];
+}
+
+export type ClientPerformanceBody = {
+    time_range: string;
+    user_status: string[];
+}
