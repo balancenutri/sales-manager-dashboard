@@ -21,7 +21,7 @@ import AppUsageActivity from "@/components/home/appAnalysis/AppUsageActivity";
 import KeyEngagementMetrix from "@/components/home/appAnalysis/KeyEngagementMetrix";
 import ActivatedFeatures from "@/components/home/appAnalysis/ActivatedFeatures";
 import OverviewDetails from "@/components/home/overview/OverViewDetails";
-import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
+// import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
 
 // Calculate total sales opportunity and add to overview
 mockData.overview.totalSalesOpportunity = Object.values(
