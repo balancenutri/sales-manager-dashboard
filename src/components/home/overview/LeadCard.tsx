@@ -1,16 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Users, ArrowUp, UserCheck } from "lucide-react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { mockData } from "@/lib/data";
 import { useState } from "react";
 import {
@@ -22,6 +12,7 @@ import {
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useGetLeadManagementQuery } from "@/service/dashboard/api";
 import { Skeleton } from "@/components/ui/skeleton";
+import AssignedLead from "./leadCard/AssignedLead";
 
 export default function LeadCard() {
   const [modalType, setModalType] = useState<
@@ -34,8 +25,7 @@ export default function LeadCard() {
     setShowLeadsModal(true);
   };
 
-  const { data: leadManagementData } =
-    useGetLeadManagementQuery();
+  const { data: leadManagementData } = useGetLeadManagementQuery();
 
   return (
     <div className="space-y-6">
@@ -97,133 +87,7 @@ export default function LeadCard() {
           </DialogHeader>
 
           {modalType === "assigned" ? (
-            <div className="space-y-4">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Counsellor</TableHead>
-                    <TableHead>Leads Assigned</TableHead>
-                    <TableHead>Consultations</TableHead>
-                    <TableHead>Sales</TableHead>
-                    <TableHead>Lead→Consultation</TableHead>
-                    <TableHead>Consultation→Sales</TableHead>
-                    <TableHead>Lead→Sales</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {mockData.counsellors.map((counsellor) => {
-                    const leadToConsultationRatio =
-                      counsellor.leadsAssigned > 0
-                        ? (
-                            (counsellor.consultations /
-                              counsellor.leadsAssigned) *
-                            100
-                          ).toFixed(1)
-                        : "0.0";
-                    const consultationToSalesRatio =
-                      counsellor.consultations > 0
-                        ? (
-                            (counsellor.salesClosed /
-                              counsellor.consultations) *
-                            100
-                          ).toFixed(1)
-                        : "0.0";
-                    const leadToSalesRatio =
-                      counsellor.leadsAssigned > 0
-                        ? (
-                            (counsellor.salesClosed /
-                              counsellor.leadsAssigned) *
-                            100
-                          ).toFixed(1)
-                        : "0.0";
-
-                    return (
-                      <TableRow key={counsellor.id}>
-                        <TableCell>
-                          <div className="flex items-center space-x-3">
-                            <Avatar className="h-8 w-8">
-                              <AvatarImage
-                                src={counsellor.avatar || "/placeholder.svg"}
-                              />
-                              <AvatarFallback>
-                                {counsellor.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            </Avatar>
-                            <span className="font-medium">
-                              {counsellor.name}
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell className="font-semibold">
-                          {counsellor.leadsAssigned}
-                        </TableCell>
-                        <TableCell className="font-semibold">
-                          {counsellor.consultations}
-                        </TableCell>
-                        <TableCell className="font-semibold">
-                          {counsellor.salesClosed}
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant="outline"
-                            className="bg-blue-50 text-blue-700"
-                          >
-                            {leadToConsultationRatio}%
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant="outline"
-                            className="bg-green-50 text-green-700"
-                          >
-                            {consultationToSalesRatio}%
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant="outline"
-                            className="bg-purple-50 text-purple-700"
-                          >
-                            {leadToSalesRatio}%
-                          </Badge>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-
-              <div className="pt-4 border-t">
-                <div className="grid grid-cols-3 gap-4 text-sm">
-                  <div className="text-center">
-                    <p className="text-muted-foreground">
-                      Total Leads Assigned
-                    </p>
-                    <p className="text-2xl font-bold">
-                      {mockData.overview.assignedLeads}
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-muted-foreground">Total Consultations</p>
-                    <p className="text-2xl font-bold">
-                      {mockData.counsellors.reduce(
-                        (sum, c) => sum + c.consultations,
-                        0
-                      )}
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-muted-foreground">Total Sales</p>
-                    <p className="text-2xl font-bold">
-                      {mockData.overview.totalSales}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <AssignedLead />
           ) : (
             <div className="space-y-4">
               {Object.entries(mockData.leadsSources.unassigned).map(

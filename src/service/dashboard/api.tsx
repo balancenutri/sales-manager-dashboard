@@ -13,6 +13,8 @@ import {
   type TopPerformerResponse,
   type ClientPerformanceResponse,
   type ClientPerformanceBody,
+  type AssignedLeadPerformanceResponse,
+  type SaleByStackResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -28,9 +30,23 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getAssignedLeadPerformance: builder.query<AssignedLeadPerformanceResponse, void>({
+      query: () => ({
+        url: `/sales/overview/assigned-leads-performance`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
     getSalesPerformance: builder.query<SalesPerformanceResponse, void>({
       query: () => ({
         url: `/sales/overview/sales-performance`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getSaleByStack: builder.query<SaleByStackResponse, void>({
+      query: () => ({
+        url: `/sales/overview/sales-breakdown-by-stack`,
         method: "POST",
       }),
       providesTags: ["Common"],
@@ -183,7 +199,11 @@ export const dashboardApi = commonAPi.injectEndpoints({
 
 export const {
   useGetLeadManagementQuery,
+  useGetAssignedLeadPerformanceQuery,
+
   useGetSalesPerformanceQuery,
+  useGetSaleByStackQuery,
+
   useGetTopPerformersQuery,
 
   useGetGenderWiseLeadQuery,

@@ -299,3 +299,33 @@ export type ClientPerformanceBody = {
     time_range: string;
     user_status: string[];
 }
+
+
+export type AssignedLeadPerformance = {
+    [key: string]: {
+        "crm_user": string;
+        "leads_assigned": number;
+        "consultations": number;
+        "sales": number;
+        "l:c": string;
+        "c:s": string;
+        "l:s": string;
+    }
+}
+
+export interface AssignedLeadPerformanceResponse {
+    status: string;
+    message: string;
+    data: AssignedLeadPerformance;
+    totalCount: number;
+}
+export interface SaleByStackResponse {
+    status: string;
+    message: string;
+    data: {
+        "program_category": string;
+        "sales": number;
+        "revenue": number;
+    }[];
+    totalCount: number;
+}

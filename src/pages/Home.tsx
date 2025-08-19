@@ -132,10 +132,11 @@ export default function Home() {
               {/* Key Engagement Metrics */}
               <KeyEngagementMetrix />
 
+
               {/* Activated Features */}
               <ActivatedFeatures />
             </div>
-            <LeadPerformance />
+              {/* <LeadPerformance /> */}
           </TabsContent>
         </Tabs>
 
