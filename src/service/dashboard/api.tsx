@@ -74,7 +74,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    getConsolidatedTeamPerformance: builder.query<SocialMediaResponse, void>({
+    getConsolidatedTeamPerformance: builder.query({
       query: () => ({
         url: `/sales/social-media/consolidated-team-performance`,
         method: "POST",
@@ -178,6 +178,13 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getAllLeadWithAppCount: builder.query<SocialMediaResponse, void>({
+      query: () => ({
+        url: `/sales/app-activity/all-leads-with-app-count`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
     getAppUsageOverview: builder.query<AppUsageResponse, void>({
       query: () => ({
         url: `/sales/app-activity/app-usage-overview`,
@@ -255,6 +262,7 @@ export const {
   useGetSocialMediaPerformanceQuery,
 
   useGetAppDownloadsCountQuery,
+  useGetAllLeadWithAppCountQuery,
   useGetAppUsageOverviewQuery,
   useGetKeyEngagementMatricsQuery,
   useGetActivatedFeaturesQuery,

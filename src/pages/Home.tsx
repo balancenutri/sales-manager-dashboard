@@ -5,14 +5,11 @@ import Header from "@/components/common/Header";
 import LeadCard from "@/components/home/overview/LeadCard";
 import RevenueCard from "@/components/home/overview/RevenueCard";
 import SocialCard from "@/components/home/socialMedia/SocialCard";
-import SocialMediaPerformance from "@/components/home/socialMedia/SocialMediaPerformance";
 import ContentManagement from "@/components/home/common/ContentManagement";
 import TopPerformer from "@/components/home/overview/TopPerformer";
 import RecentActivity from "@/components/home/overview/RecentActivity";
-import DigitalMarketingAnalytics from "@/components/home/digitalMarketing/DigitalMarketingAnalytics";
 import GenderBifurcation from "@/components/home/digitalMarketing/GenderBifurcation";
 import ClinicalBifurcation from "@/components/home/digitalMarketing/ClinicalBifurcation";
-import CampaignOverview from "@/components/home/digitalMarketing/CampaignOverview";
 import LeadMIS from "@/components/home/digitalMarketing/LeadMIS";
 import CounsellorSocialMediaPerformance from "@/components/home/socialMedia/CounsellorSocialMediaPerformance";
 import PerformanceConsolidatedTable from "@/components/home/socialMedia/PerformanceConsolidatedTable";
@@ -22,6 +19,7 @@ import KeyEngagementMetrix from "@/components/home/appAnalysis/KeyEngagementMetr
 import ActivatedFeatures from "@/components/home/appAnalysis/ActivatedFeatures";
 import OverviewDetails from "@/components/home/overview/OverViewDetails";
 import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
+import LeadAppCount from "@/components/home/appAnalysis/LeadAppCount";
 // import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
 
 // Calculate total sales opportunity and add to overview
@@ -124,6 +122,9 @@ export default function Home() {
           <TabsContent value="app-analytics" className="space-y-6">
             {/* App Download Counts */}
             <AppDownloadCount />
+            <div className="max-w-[500px]">
+              <LeadAppCount />
+            </div>
             <h2 className="text-2xl font-bold">App Analytics Overview</h2>
 
             <div className="grid grid-cols-3 gap-6">
