@@ -329,3 +329,39 @@ export interface SaleByStackResponse {
     }[];
     totalCount: number;
 }
+
+
+
+export type ContentVisit = {
+    [key: string]: {
+        countsToday: {
+            lead_count: number;
+            oc_count: number;
+            active_count: number;
+        },
+        countsThisMonth: {
+            lead_count: number;
+            oc_count: number;
+            active_count: number;
+        },
+        data: string;
+    }
+}
+
+export interface ContentVisitResponse {
+    status: string;
+    message: string;
+    data: ContentVisit;
+    totalCount: number;
+}
+
+export type SocailMediaType = {
+    [key: string]: number;
+}
+
+export interface SocialMediaResponse {
+    status: string;
+    message: string;
+    data: SocailMediaType;
+    totalCount: number;
+}

@@ -15,6 +15,7 @@ import {
   type ClientPerformanceBody,
   type AssignedLeadPerformanceResponse,
   type SaleByStackResponse,
+  type SocialMediaResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -30,7 +31,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    getAssignedLeadPerformance: builder.query<AssignedLeadPerformanceResponse, void>({
+    getAssignedLeadPerformance: builder.query<
+      AssignedLeadPerformanceResponse,
+      void
+    >({
       query: () => ({
         url: `/sales/overview/assigned-leads-performance`,
         method: "POST",
@@ -60,19 +64,48 @@ export const dashboardApi = commonAPi.injectEndpoints({
     }),
 
     // SOCIAL MEDIA
-    getCounsellorSocialMediaPerformance: builder.query({
-      query: (body: BodyProps) => ({
+    getCounsellorSocialMediaPerformance: builder.query<
+      SocialMediaResponse,
+      void
+    >({
+      query: () => ({
         url: `/sales/social-media/counsellor-sm-performance`,
         method: "POST",
-        body,
       }),
       providesTags: ["Common"],
     }),
-    getConsolidatedTeamPerformance: builder.query({
-      query: (body: BodyProps) => ({
+    getConsolidatedTeamPerformance: builder.query<SocialMediaResponse, void>({
+      query: () => ({
         url: `/sales/social-media/consolidated-team-performance`,
         method: "POST",
-        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getInstagramPerformance: builder.query<SocialMediaResponse, void>({
+      query: () => ({
+        url: `/sales/social-media/instagram-performance`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getYoutubePerformance: builder.query<SocialMediaResponse, void>({
+      query: () => ({
+        url: `/sales/social-media/youtube-performance`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getFacebookPerformance: builder.query<SocialMediaResponse, void>({
+      query: () => ({
+        url: `/sales/social-media/facebook-performance`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getSocialMediaPerformance: builder.query<SocialMediaResponse, void>({
+      query: () => ({
+        url: `/sales/social-media/social-media-performance`,
+        method: "POST",
       }),
       providesTags: ["Common"],
     }),
@@ -216,6 +249,10 @@ export const {
 
   useGetCounsellorSocialMediaPerformanceQuery,
   useGetConsolidatedTeamPerformanceQuery,
+  useGetInstagramPerformanceQuery,
+  useGetFacebookPerformanceQuery,
+  useGetYoutubePerformanceQuery,
+  useGetSocialMediaPerformanceQuery,
 
   useGetAppDownloadsCountQuery,
   useGetAppUsageOverviewQuery,

@@ -145,8 +145,6 @@ export default function AddCampaignForm({
                 <SelectContent>
                   <SelectItem value="active">Active</SelectItem>
                   <SelectItem value="inactive">Inactive</SelectItem>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="active">Active</SelectItem>
                 </SelectContent>
               </Select>
             )}

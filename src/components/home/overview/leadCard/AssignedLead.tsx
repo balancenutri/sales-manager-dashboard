@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { mockData } from "@/lib/data";
 import type { AssignedLeadPerformance } from "@/lib/types";
 import { useGetAssignedLeadPerformanceQuery } from "@/service/dashboard/api";
 
@@ -135,7 +134,7 @@ export default function AssignedLead() {
           </div>
           <div className="text-center">
             <p className="text-muted-foreground">Total Sales</p>
-            <p className="text-2xl font-bold">{mockData.overview.totalSales}</p>
+            <p className="text-2xl font-bold">{total.totalSales}</p>
           </div>
         </div>
       </div>

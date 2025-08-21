@@ -9,11 +9,13 @@ import {
 import React from "react";
 import type { ContentItem } from "./ContentManagement";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { ContentVisit } from "@/lib/types";
+import { CardTooltip } from "./CardTooltip";
 
 interface CardSectionProps {
   title: string;
   description: string;
-  data: Record<string, string>;
+  data: ContentVisit;
   items: ContentItem[];
 }
 
@@ -40,7 +42,11 @@ export const CardSection: React.FC<CardSectionProps> = ({
                 <item.icon className={`h-4 w-4 ${item.color}`} />
                 <span className="font-medium">{item.label}</span>
               </div>
-              {data?.[item.key] ? <span className="font-semibold text-red-500">{data?.[item.key]}</span> : <Skeleton className="h-4 w-24" />}
+              {data?.[item.key] ? (
+                <CardTooltip itemData={data[item.key]} />
+              ) : (
+                <Skeleton className="h-4 w-24" />
+              )}
             </div>
           );
         })}

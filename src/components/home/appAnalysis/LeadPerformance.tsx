@@ -1,13 +1,365 @@
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card";
+// // import {
+// //   Card,
+// //   CardContent,
+// //   CardDescription,
+// //   CardHeader,
+// //   CardTitle,
+// // } from "@/components/ui/card";
+// // import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
+// // import { useGetClientPerformanceQuery } from "@/service/dashboard/api";
+// // // import { useGetEngagementMetricsQuery } from "@/service/engagement/api"
+// // import { TrendingDown, TrendingUp } from "lucide-react";
+// // import {
+// //   Area,
+// //   AreaChart,
+// //   Cell,
+// //   Pie,
+// //   PieChart,
+// //   ResponsiveContainer,
+// //   XAxis,
+// //   YAxis,
+// //   LabelList,
+// // } from "recharts";
+
+// // export default function EngagementDashboard() {
+// //   const { data: engagementData, isLoading } = useGetClientPerformanceQuery({
+// //     time_range: "2025-08-01,2025-08-31",
+// //     user_status: ["Lead"],
+// //   });
+
+// //   if (isLoading) {
+// //     return (
+// //       <div className="space-y-6">
+// //         <div className="animate-pulse">
+// //           <div className="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
+// //           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+// //             {[1, 2, 3, 4].map((i) => (
+// //               <div key={i} className="h-80 bg-gray-200 rounded"></div>
+// //             ))}
+// //           </div>
+// //         </div>
+// //       </div>
+// //     );
+// //   }
+
+// //   const metrics = engagementData?.data;
+// //   const notificationData = metrics?.notificationSeenInApp;
+
+// //   // Transform weekly engagement data
+// //   const weeklyEngagementData =
+// //     metrics?.weeklyEngagementTrend?.map((item) => ({
+// //       week: `Week ${item.week_number}`,
+// //       engagement: Number.parseFloat(item.engagement_percentage),
+// //       notifications: item.total_notifications,
+// //       seen: Number.parseInt(item.seen_notifications),
+// //     })) || [];
+
+// //   // Transform app version data for pie chart
+// //   const appVersionData = [
+// //     {
+// //       name: "App Updated",
+// //       value: metrics?.appVersionStats?.updated || 0,
+// //       percentage: Number.parseFloat(
+// //         metrics?.appVersionStats?.updatedPercentage || "0"
+// //       ),
+// //       fill: "#06b6d4", // cyan-500
+// //     },
+// //     {
+// //       name: "App Not Updated",
+// //       value: metrics?.appVersionStats?.notUpdated || 0,
+// //       percentage: Number.parseFloat(
+// //         metrics?.appVersionStats?.notUpdatedPercentage || "0"
+// //       ),
+// //       fill: "#fb923c", // orange-400
+// //     },
+// //   ];
+
+// //   // Custom label component for pie chart
+// //   const renderCustomizedLabel = ({
+// //     cx,
+// //     cy,
+// //     midAngle,
+// //     innerRadius,
+// //     outerRadius,
+// //     value,
+// //     percentage,
+// //   }) => {
+// //     const RADIAN = Math.PI / 180;
+// //     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+// //     const x = cx + radius * Math.cos(-midAngle * RADIAN);
+// //     const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+// //     return (
+// //       <text
+// //         x={x}
+// //         y={y}
+// //         fill="white"
+// //         textAnchor={x > cx ? "start" : "end"}
+// //         dominantBaseline="central"
+// //         fontSize="12"
+// //         fontWeight="bold"
+// //       >
+// //         {`${value}`}
+// //       </text>
+// //     );
+// //   };
+
+// //   return (
+// //     <div className="space-y-6">
+// //       <div className="flex justify-between items-center">
+// //         <div>
+// //           <h2 className="text-2xl font-bold">Client Engagement Metrics</h2>
+// //           <p className="text-muted-foreground">
+// //             Monitor user engagement and app performance
+// //           </p>
+// //         </div>
+// //       </div>
+
+// //       <div className="flex flex-wrap gap-6 justify-between">
+// //         {/* Notification Seen in App */}
+// //         <Card className="min-w-96">
+// //           <CardHeader className="pb-3">
+// //             <CardTitle className="text-base font-medium">
+// //               Notification Seen in App
+// //             </CardTitle>
+// //           </CardHeader>
+// //           <CardContent className="pt-0">
+// //             <div className="text-center space-y-4">
+// //               <div className="text-4xl font-bold text-teal-600">
+// //                 {notificationData?.seenPercentage}
+// //               </div>
+// //               <div className="space-y-3 text-sm">
+// //                 <div className="flex justify-between border-b-2 pb-2 px-2">
+// //                   <span className="font-normal text-sm">
+// //                     Total Notifications:
+// //                   </span>
+// //                   <span className="font-medium">
+// //                     {notificationData?.totalNotifications}
+// //                   </span>
+// //                 </div>
+// //                 <div className="flex justify-between border-b-2 pb-2 px-2">
+// //                   <span className="font-normal text-sm">
+// //                     Seen Notifications:
+// //                   </span>
+// //                   <span className="font-medium">
+// //                     {notificationData?.seenNotifications}
+// //                   </span>
+// //                 </div>
+// //                 <div className="flex justify-between items-center px-2">
+// //                   <span className="text-muted-foreground">Trend:</span>
+// //                   <div className="flex items-center">
+// //                     {Number.parseFloat(notificationData?.trend || "0") >= 0 ? (
+// //                       <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+// //                     ) : (
+// //                       <TrendingDown className="h-3 w-3 text-red-500 mr-1" />
+// //                     )}
+// //                     <span
+// //                       className={`text-sm font-medium ${
+// //                         Number.parseFloat(notificationData?.trend || "0") >= 0
+// //                           ? "text-green-500"
+// //                           : "text-red-500"
+// //                       }`}
+// //                     >
+// //                       {notificationData?.trend}
+// //                     </span>
+// //                   </div>
+// //                 </div>
+// //               </div>
+// //             </div>
+// //           </CardContent>
+// //         </Card>
+
+// //         {/* Weekly Engagement Trend */}
+// //         <Card className="lg:col-span-2">
+// //           <CardHeader className="pb-3">
+// //             <CardTitle className="text-base font-medium">
+// //               Weekly Engagement Trend
+// //             </CardTitle>
+// //           </CardHeader>
+// //           <CardContent className="pt-0">
+// //             <ChartContainer
+// //               config={{
+// //                 engagement: {
+// //                   label: "Engagement %",
+// //                   color: "#06b6d4",
+// //                 },
+// //               }}
+// //               className="h-[280px]"
+// //             >
+// //               <ResponsiveContainer width="100%" height="100%">
+// //                 <AreaChart
+// //                   data={weeklyEngagementData}
+// //                   margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+// //                 >
+// //                   <XAxis
+// //                     dataKey="week"
+// //                     axisLine={false}
+// //                     tickLine={false}
+// //                     tick={{ fontSize: 12 }}
+// //                   />
+// //                   <YAxis
+// //                     domain={[0, 100]}
+// //                     axisLine={false}
+// //                     tickLine={false}
+// //                     tick={{ fontSize: 12 }}
+// //                   />
+// //                   <ChartTooltip
+// //                     content={({ active, payload, label }) => {
+// //                       if (active && payload && payload.length) {
+// //                         return (
+// //                           <div className="bg-white p-2 border rounded shadow-lg">
+// //                             <p className="text-sm font-medium">{label}</p>
+// //                             <p className="text-sm text-cyan-600">{`${payload[0].value}%`}</p>
+// //                           </div>
+// //                         );
+// //                       }
+// //                       return null;
+// //                     }}
+// //                   />
+// //                   <Area
+// //                     type="monotone"
+// //                     dataKey="engagement"
+// //                     stroke="#06b6d4"
+// //                     fill="#06b6d4"
+// //                     fillOpacity={0.3}
+// //                     strokeWidth={3}
+// //                   >
+// //                     <LabelList
+// //                       dataKey="engagement"
+// //                       position="top"
+// //                       formatter={(value: any) => `${value}%`}
+// //                       style={{
+// //                         fontSize: "12px",
+// //                         fontWeight: "bold",
+// //                         fill: "#06b6d4",
+// //                       }}
+// //                     />
+// //                   </Area>
+// //                 </AreaChart>
+// //               </ResponsiveContainer>
+// //             </ChartContainer>
+// //           </CardContent>
+// //         </Card>
+
+// //         {/* App Update Status */}
+// //         <Card className="lg:col-span-1">
+// //           <CardHeader className="pb-3">
+// //             <CardTitle className="text-base font-medium">
+// //               App Update Status
+// //             </CardTitle>
+// //           </CardHeader>
+// //           <CardContent className="pt-0">
+// //             <ChartContainer
+// //               config={{
+// //                 updated: {
+// //                   label: "App Updated",
+// //                   color: "#06b6d4",
+// //                 },
+// //                 notUpdated: {
+// //                   label: "App Not Updated",
+// //                   color: "#fb923c",
+// //                 },
+// //               }}
+// //               className="h-[200px]"
+// //             >
+// //               <ResponsiveContainer width="100%" height="100%">
+// //                 <PieChart>
+// //                   <Pie
+// //                     data={appVersionData}
+// //                     cx="50%"
+// //                     cy="50%"
+// //                     outerRadius={80}
+// //                     dataKey="value"
+// //                     labelLine={false}
+// //                     label={renderCustomizedLabel}
+// //                   >
+// //                     {appVersionData.map((entry, index) => (
+// //                       <Cell key={`cell-${index}`} fill={entry.fill} />
+// //                     ))}
+// //                   </Pie>
+// //                   <ChartTooltip
+// //                     content={({ active, payload }) => {
+// //                       if (active && payload && payload.length) {
+// //                         const data = payload[0].payload;
+// //                         return (
+// //                           <div className="bg-white p-2 border rounded shadow-lg">
+// //                             <p className="text-sm font-medium">{data.name}</p>
+// //                             <p className="text-sm">{`${data.value} (${data.percentage}%)`}</p>
+// //                           </div>
+// //                         );
+// //                       }
+// //                       return null;
+// //                     }}
+// //                   />
+// //                 </PieChart>
+// //               </ResponsiveContainer>
+// //             </ChartContainer>
+// //             <div className="mt-4 space-y-2">
+// //               {appVersionData.map((item) => (
+// //                 <div
+// //                   key={item.name}
+// //                   className="flex items-center justify-between text-sm"
+// //                 >
+// //                   <div className="flex items-center">
+// //                     <div
+// //                       className="w-3 h-3 rounded-full mr-2"
+// //                       style={{ backgroundColor: item.fill }}
+// //                     />
+// //                     <span className="text-muted-foreground">{item.name}</span>
+// //                   </div>
+// //                   <span className="font-medium">
+// //                     {item.value} ({item.percentage}%)
+// //                   </span>
+// //                 </div>
+// //               ))}
+// //             </div>
+// //           </CardContent>
+// //         </Card>
+// //       </div>
+// //       <div className="grid lg:grid-cols-4 gap-6">
+// //         {/* Top Notifications */}
+// //         <Card className="lg:col-span-2">
+// //           <CardHeader>
+// //             <CardTitle>Top Performing Notifications</CardTitle>
+// //             <CardDescription>Most viewed notification types</CardDescription>
+// //           </CardHeader>
+// //           <CardContent>
+// //             <div className="space-y-4">
+// //               {metrics?.topNotifications?.length == 0 ? (
+// //                 <p className="text-sm">Notification not found</p>
+// //               ) : (
+// //                 metrics?.topNotifications?.map((notification, index) => (
+// //                   <div
+// //                     key={index}
+// //                     className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
+// //                   >
+// //                     <div className="flex-1">
+// //                       <p className="text-sm font-medium truncate">
+// //                         {notification.title}
+// //                       </p>
+// //                     </div>
+// //                     <div className="flex items-center space-x-2">
+// //                       <span className="text-sm text-muted-foreground">
+// //                         Views:
+// //                       </span>
+// //                       <span className="text-sm font-bold">
+// //                         {notification.seen_count}
+// //                       </span>
+// //                     </div>
+// //                   </div>
+// //                 ))
+// //               )}
+// //             </div>
+// //           </CardContent>
+// //         </Card>
+// //       </div>
+// //     </div>
+// //   );
+// // }
+
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 // import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 // import { useGetClientPerformanceQuery } from "@/service/dashboard/api";
-// // import { useGetEngagementMetricsQuery } from "@/service/engagement/api"
 // import { TrendingDown, TrendingUp } from "lucide-react";
 // import {
 //   Area,
@@ -21,10 +373,10 @@
 //   LabelList,
 // } from "recharts";
 
-// export default function EngagementDashboard() {
+// export default function LeadPerformance() {
 //   const { data: engagementData, isLoading } = useGetClientPerformanceQuery({
 //     time_range: "2025-08-01,2025-08-31",
-//     user_status: ["Lead"],
+//     user_status: ["Active", "Oc", "Lead"],
 //   });
 
 //   if (isLoading) {
@@ -45,16 +397,14 @@
 //   const metrics = engagementData?.data;
 //   const notificationData = metrics?.notificationSeenInApp;
 
-//   // Transform weekly engagement data
 //   const weeklyEngagementData =
 //     metrics?.weeklyEngagementTrend?.map((item) => ({
 //       week: `Week ${item.week_number}`,
 //       engagement: Number.parseFloat(item.engagement_percentage),
 //       notifications: item.total_notifications,
-//       seen: Number.parseInt(item.seen_notifications),
+//       seen: Number.parseInt(item.seen_notifications, 10),
 //     })) || [];
 
-//   // Transform app version data for pie chart
 //   const appVersionData = [
 //     {
 //       name: "App Updated",
@@ -62,7 +412,7 @@
 //       percentage: Number.parseFloat(
 //         metrics?.appVersionStats?.updatedPercentage || "0"
 //       ),
-//       fill: "#06b6d4", // cyan-500
+//       fill: "#06b6d4",
 //     },
 //     {
 //       name: "App Not Updated",
@@ -70,20 +420,13 @@
 //       percentage: Number.parseFloat(
 //         metrics?.appVersionStats?.notUpdatedPercentage || "0"
 //       ),
-//       fill: "#fb923c", // orange-400
+//       fill: "#fb923c",
 //     },
 //   ];
 
-//   // Custom label component for pie chart
-//   const renderCustomizedLabel = ({
-//     cx,
-//     cy,
-//     midAngle,
-//     innerRadius,
-//     outerRadius,
-//     value,
-//     percentage,
-//   }) => {
+//   // Pie chart label with types
+//   const renderCustomizedLabel = (props: any) => {
+//     const { cx, cy, midAngle, innerRadius, outerRadius, value } = props;
 //     const RADIAN = Math.PI / 180;
 //     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
 //     const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -96,10 +439,10 @@
 //         fill="white"
 //         textAnchor={x > cx ? "start" : "end"}
 //         dominantBaseline="central"
-//         fontSize="12"
+//         fontSize={12}
 //         fontWeight="bold"
 //       >
-//         {`${value}`}
+//         {value}
 //       </text>
 //     );
 //   };
@@ -115,9 +458,9 @@
 //         </div>
 //       </div>
 
-//       <div className="flex flex-wrap gap-6 justify-between">
+//       <div className="grid grid-cols-4 gap-6 justify-between">
 //         {/* Notification Seen in App */}
-//         <Card className="min-w-96">
+//         <Card className="">
 //           <CardHeader className="pb-3">
 //             <CardTitle className="text-base font-medium">
 //               Notification Seen in App
@@ -179,10 +522,7 @@
 //           <CardContent className="pt-0">
 //             <ChartContainer
 //               config={{
-//                 engagement: {
-//                   label: "Engagement %",
-//                   color: "#06b6d4",
-//                 },
+//                 engagement: { label: "Engagement %", color: "#06b6d4" },
 //               }}
 //               className="h-[280px]"
 //             >
@@ -209,7 +549,9 @@
 //                         return (
 //                           <div className="bg-white p-2 border rounded shadow-lg">
 //                             <p className="text-sm font-medium">{label}</p>
-//                             <p className="text-sm text-cyan-600">{`${payload[0].value}%`}</p>
+//                             <p className="text-sm text-cyan-600">
+//                               {`${payload[0].value}%`}
+//                             </p>
 //                           </div>
 //                         );
 //                       }
@@ -227,9 +569,9 @@
 //                     <LabelList
 //                       dataKey="engagement"
 //                       position="top"
-//                       formatter={(value: any) => `${value}%`}
+//                       formatter={(value: number) => `${value}%`}
 //                       style={{
-//                         fontSize: "12px",
+//                         fontSize: 12,
 //                         fontWeight: "bold",
 //                         fill: "#06b6d4",
 //                       }}
@@ -249,125 +591,66 @@
 //             </CardTitle>
 //           </CardHeader>
 //           <CardContent className="pt-0">
-//             <ChartContainer
-//               config={{
-//                 updated: {
-//                   label: "App Updated",
-//                   color: "#06b6d4",
-//                 },
-//                 notUpdated: {
-//                   label: "App Not Updated",
-//                   color: "#fb923c",
-//                 },
-//               }}
-//               className="h-[200px]"
-//             >
-//               <ResponsiveContainer width="100%" height="100%">
-//                 <PieChart>
-//                   <Pie
-//                     data={appVersionData}
-//                     cx="50%"
-//                     cy="50%"
-//                     outerRadius={80}
-//                     dataKey="value"
-//                     labelLine={false}
-//                     label={renderCustomizedLabel}
-//                   >
-//                     {appVersionData.map((entry, index) => (
-//                       <Cell key={`cell-${index}`} fill={entry.fill} />
-//                     ))}
-//                   </Pie>
-//                   <ChartTooltip
-//                     content={({ active, payload }) => {
-//                       if (active && payload && payload.length) {
-//                         const data = payload[0].payload;
-//                         return (
-//                           <div className="bg-white p-2 border rounded shadow-lg">
-//                             <p className="text-sm font-medium">{data.name}</p>
-//                             <p className="text-sm">{`${data.value} (${data.percentage}%)`}</p>
-//                           </div>
-//                         );
-//                       }
-//                       return null;
-//                     }}
-//                   />
-//                 </PieChart>
-//               </ResponsiveContainer>
-//             </ChartContainer>
-//             <div className="mt-4 space-y-2">
-//               {appVersionData.map((item) => (
-//                 <div
-//                   key={item.name}
-//                   className="flex items-center justify-between text-sm"
+//             <ResponsiveContainer width="100%" height={200}>
+//               <PieChart>
+//                 <Pie
+//                   data={appVersionData}
+//                   dataKey="value"
+//                   nameKey="name"
+//                   cx="50%"
+//                   cy="50%"
+//                   innerRadius={50}
+//                   outerRadius={80}
+//                   label={renderCustomizedLabel}
+//                   paddingAngle={5}
 //                 >
-//                   <div className="flex items-center">
-//                     <div
-//                       className="w-3 h-3 rounded-full mr-2"
-//                       style={{ backgroundColor: item.fill }}
-//                     />
-//                     <span className="text-muted-foreground">{item.name}</span>
-//                   </div>
-//                   <span className="font-medium">
-//                     {item.value} ({item.percentage}%)
-//                   </span>
-//                 </div>
+//                   {appVersionData.map((entry, index) => (
+//                     <Cell key={`cell-${index}`} fill={entry.fill} />
+//                   ))}
+//                 </Pie>
+//               </PieChart>
+//             </ResponsiveContainer>
+//           </CardContent>
+//         </Card>
+//       </div>
+//       {/* Top Notifications */}
+//       <Card className="">
+//         <CardHeader className="pb-3">
+//           <CardTitle className="text-base font-medium">
+//             Top Notifications
+//           </CardTitle>
+//         </CardHeader>
+//         <CardContent className="pt-0">
+//           {metrics?.topNotifications?.length === 0 ? (
+//             <p className="text-sm text-muted-foreground text-center">
+//               No Top Notifications Found
+//             </p>
+//           ) : (
+//             <ul className="space-y-2">
+//               {metrics?.topNotifications?.map((notification, index) => (
+//                 <li
+//                   key={index}
+//                   className="flex justify-between px-2 border-b pb-1"
+//                 >
+//                   <span className="text-sm">{notification.title}</span>
+//                   <span className="font-medium">{notification.seen_count}</span>
+//                 </li>
 //               ))}
-//             </div>
-//           </CardContent>
-//         </Card>
-//       </div>
-//       <div className="grid lg:grid-cols-4 gap-6">
-//         {/* Top Notifications */}
-//         <Card className="lg:col-span-2">
-//           <CardHeader>
-//             <CardTitle>Top Performing Notifications</CardTitle>
-//             <CardDescription>Most viewed notification types</CardDescription>
-//           </CardHeader>
-//           <CardContent>
-//             <div className="space-y-4">
-//               {metrics?.topNotifications?.length == 0 ? (
-//                 <p className="text-sm">Notification not found</p>
-//               ) : (
-//                 metrics?.topNotifications?.map((notification, index) => (
-//                   <div
-//                     key={index}
-//                     className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
-//                   >
-//                     <div className="flex-1">
-//                       <p className="text-sm font-medium truncate">
-//                         {notification.title}
-//                       </p>
-//                     </div>
-//                     <div className="flex items-center space-x-2">
-//                       <span className="text-sm text-muted-foreground">
-//                         Views:
-//                       </span>
-//                       <span className="text-sm font-bold">
-//                         {notification.seen_count}
-//                       </span>
-//                     </div>
-//                   </div>
-//                 ))
-//               )}
-//             </div>
-//           </CardContent>
-//         </Card>
-//       </div>
+//             </ul>
+//           )}
+//         </CardContent>
+//       </Card>
 //     </div>
 //   );
 // }
 
-
-
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { useGetClientPerformanceQuery } from "@/service/dashboard/api";
-import { TrendingDown, TrendingUp } from "lucide-react";
+import {
+  TrendingDown,
+  TrendingUp,
+} from "lucide-react";
 import {
   Area,
   AreaChart,
@@ -378,22 +661,23 @@ import {
   XAxis,
   YAxis,
   LabelList,
+  Legend,
 } from "recharts";
 
-export default function EngagementDashboard() {
+export default function LeadPerformance() {
   const { data: engagementData, isLoading } = useGetClientPerformanceQuery({
     time_range: "2025-08-01,2025-08-31",
-    user_status: ["Lead"],
+    user_status: ["Active", "Oc", "Lead"],
   });
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 p-6">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="h-8 bg-gray-200 rounded w-1/3 mb-6"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-80 bg-gray-200 rounded"></div>
+              <div key={i} className="h-80 bg-gray-200 rounded-lg"></div>
             ))}
           </div>
         </div>
@@ -414,26 +698,25 @@ export default function EngagementDashboard() {
 
   const appVersionData = [
     {
-      name: "App Updated",
+      name: "Updated",
       value: metrics?.appVersionStats?.updated || 0,
       percentage: Number.parseFloat(
         metrics?.appVersionStats?.updatedPercentage || "0"
       ),
-      fill: "#06b6d4",
+      fill: "#10b981",
     },
     {
-      name: "App Not Updated",
+      name: "Not Updated",
       value: metrics?.appVersionStats?.notUpdated || 0,
       percentage: Number.parseFloat(
         metrics?.appVersionStats?.notUpdatedPercentage || "0"
       ),
-      fill: "#fb923c",
+      fill: "#f59e0b",
     },
   ];
 
-  // Pie chart label with types
   const renderCustomizedLabel = (props: any) => {
-    const { cx, cy, midAngle, innerRadius, outerRadius, value } = props;
+    const { cx, cy, midAngle, innerRadius, outerRadius, percentage } = props;
     const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -446,203 +729,362 @@ export default function EngagementDashboard() {
         fill="white"
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central"
-        fontSize={12}
-        fontWeight="bold"
+        fontSize={14}
+        fontWeight="600"
       >
-        {value}
+        {`${percentage.toFixed(1)}%`}
       </text>
     );
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold">Client Engagement Metrics</h2>
-          <p className="text-muted-foreground">
-            Monitor user engagement and app performance
-          </p>
+    <div className="min-h-screen bg-gray-50">
+      <div className="space-y-8">
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold text-gray-900">
+            Client Engagement Dashboard
+          </h2>
+          {/* <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Monitor user engagement metrics, notification performance, and app
+            adoption rates
+          </p> */}
         </div>
-      </div>
 
-      <div className="flex flex-wrap gap-6 justify-between">
-        {/* Notification Seen in App */}
-        <Card className="min-w-96">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base font-medium">
-              Notification Seen in App
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <div className="text-center space-y-4">
-              <div className="text-4xl font-bold text-teal-600">
-                {notificationData?.seenPercentage}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          {/* Notification Seen in App - Enhanced card */}
+          <Card className="shadow-lg border-0 bg-white">
+            <CardHeader>
+              <div className="flex items-center space-x-3">
+                {/* <Bell className="h-6 w-6" /> */}
+                <CardTitle className="text-md font-semibold">
+                  Notification Engagement
+                </CardTitle>
               </div>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between border-b-2 pb-2 px-2">
-                  <span className="font-normal text-sm">
-                    Total Notifications:
-                  </span>
-                  <span className="font-medium">
-                    {notificationData?.totalNotifications}
-                  </span>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center space-y-6">
+                <div className="space-y-2">
+                  <div className="text-5xl font-bold text-cyan-600">
+                    {notificationData?.seenPercentage}%
+                  </div>
+                  <p className="text-sm text-gray-500">
+                    Overall engagement rate
+                  </p>
                 </div>
-                <div className="flex justify-between border-b-2 pb-2 px-2">
-                  <span className="font-normal text-sm">
-                    Seen Notifications:
-                  </span>
-                  <span className="font-medium">
-                    {notificationData?.seenNotifications}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center px-2">
-                  <span className="text-muted-foreground">Trend:</span>
-                  <div className="flex items-center">
-                    {Number.parseFloat(notificationData?.trend || "0") >= 0 ? (
-                      <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
-                    ) : (
-                      <TrendingDown className="h-3 w-3 text-red-500 mr-1" />
-                    )}
-                    <span
-                      className={`text-sm font-medium ${
-                        Number.parseFloat(notificationData?.trend || "0") >= 0
-                          ? "text-green-500"
-                          : "text-red-500"
-                      }`}
-                    >
-                      {notificationData?.trend}
+
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">
+                      Total Sent
                     </span>
+                    <span className="text-lg font-bold text-gray-900">
+                      {notificationData?.totalNotifications?.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">
+                      Total Seen
+                    </span>
+                    <span className="text-lg font-bold text-cyan-600">
+                      {notificationData?.seenNotifications?.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">
+                      Trend
+                    </span>
+                    <div className="flex items-center space-x-2">
+                      {Number.parseFloat(notificationData?.trend || "0") >=
+                      0 ? (
+                        <TrendingUp className="h-4 w-4 text-green-500" />
+                      ) : (
+                        <TrendingDown className="h-4 w-4 text-red-500" />
+                      )}
+                      <span
+                        className={`text-sm font-bold ${
+                          Number.parseFloat(notificationData?.trend || "0") >= 0
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }`}
+                      >
+                        {notificationData?.trend}%
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* Weekly Engagement Trend */}
-        <Card className="lg:col-span-2">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base font-medium">
-              Weekly Engagement Trend
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <ChartContainer
-              config={{
-                engagement: { label: "Engagement %", color: "#06b6d4" },
-              }}
-              className="h-[280px]"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart
-                  data={weeklyEngagementData}
-                  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                >
-                  <XAxis
-                    dataKey="week"
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fontSize: 12 }}
-                  />
-                  <YAxis
-                    domain={[0, 100]}
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fontSize: 12 }}
-                  />
-                  <ChartTooltip
-                    content={({ active, payload, label }) => {
-                      if (active && payload && payload.length) {
-                        return (
-                          <div className="bg-white p-2 border rounded shadow-lg">
-                            <p className="text-sm font-medium">{label}</p>
-                            <p className="text-sm text-cyan-600">
-                              {`${payload[0].value}%`}
-                            </p>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="engagement"
-                    stroke="#06b6d4"
-                    fill="#06b6d4"
-                    fillOpacity={0.3}
-                    strokeWidth={3}
+          {/* Weekly Engagement Trend - Enhanced chart */}
+          <Card className="lg:col-span-2 shadow-lg border-0 bg-white">
+            <CardHeader>
+              <div className="flex items-center space-x-3">
+                {/* <Users className="h-6 w-6" /> */}
+                <CardTitle className="text-md font-semibold">
+                  Weekly Engagement Trend
+                </CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <ChartContainer
+                config={{
+                  engagement: { label: "Engagement %", color: "#3b82f6" },
+                }}
+                className="h-[320px]"
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart
+                    data={weeklyEngagementData}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                   >
-                    <LabelList
-                      dataKey="engagement"
-                      position="top"
-                      formatter={(value: number) => `${value}%`}
-                      style={{
-                        fontSize: 12,
-                        fontWeight: "bold",
-                        fill: "#06b6d4",
+                    <XAxis
+                      dataKey="week"
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fontSize: 12, fill: "#6b7280" }}
+                    />
+                    <YAxis
+                      domain={[0, 50]}
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fontSize: 12, fill: "#6b7280" }}
+                      label={{
+                        value: "Engagement %",
+                        angle: -90,
+                        position: "insideLeft",
                       }}
                     />
-                  </Area>
-                </AreaChart>
-              </ResponsiveContainer>
-            </ChartContainer>
-          </CardContent>
-        </Card>
+                    <ChartTooltip
+                      content={({ active, payload, label }) => {
+                        if (active && payload && payload.length) {
+                          const data = payload[0].payload;
+                          return (
+                            <div className="bg-white p-4 border rounded-lg shadow-lg">
+                              <p className="font-semibold text-gray-900">
+                                {label}
+                              </p>
+                              <p className="text-blue-600 font-medium">
+                                Engagement: {payload[0].value}%
+                              </p>
+                              <p className="text-gray-600 text-sm">
+                                Total: {data.notifications} notifications
+                              </p>
+                              <p className="text-gray-600 text-sm">
+                                Seen: {data.seen} notifications
+                              </p>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="engagement"
+                      stroke="#3b82f6"
+                      fill="url(#colorGradient)"
+                      fillOpacity={0.6}
+                      strokeWidth={3}
+                    >
+                      <LabelList
+                        dataKey="engagement"
+                        position="top"
+                        formatter={(value: number) => `${value}%`}
+                        style={{
+                          fontSize: 12,
+                          fontWeight: "600",
+                          fill: "#1f2937",
+                        }}
+                      />
+                    </Area>
+                    <defs>
+                      <linearGradient
+                        id="colorGradient"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="5%"
+                          stopColor="#3b82f6"
+                          stopOpacity={0.8}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor="#3b82f6"
+                          stopOpacity={0.1}
+                        />
+                      </linearGradient>
+                    </defs>
+                  </AreaChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+          {/* App Update Status - Enhanced pie chart */}
+          <Card className="shadow-lg border-0 bg-white">
+            <CardHeader className="pb-2 ">
+              <div className="flex items-center space-x-3">
+                {/* <Smartphone className="h-6 w-6" /> */}
+                <CardTitle className="text-md font-semibold">
+                  App Update Status
+                </CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-2">
+              <div className="flex flex-col items-center space-y-6">
+                <ResponsiveContainer width="100%" height={250}>
+                  <PieChart>
+                    <Pie
+                      data={appVersionData}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60}
+                      outerRadius={100}
+                      label={renderCustomizedLabel}
+                      paddingAngle={2}
+                    >
+                      {appVersionData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.fill} />
+                      ))}
+                    </Pie>
+                    <Legend
+                      verticalAlign="bottom"
+                      height={36}
+                      formatter={(value, entry) => (
+                        <span className="text-sm font-medium text-gray-700">
+                          {value}: {entry?.payload?.value} users
+                        </span>
+                      )}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
 
-        {/* App Update Status */}
-        <Card className="lg:col-span-1">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base font-medium">App Update Status</CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart>
-                <Pie
-                  data={appVersionData}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={80}
-                  label={renderCustomizedLabel}
-                  paddingAngle={5}
-                >
-                  {appVersionData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                <div className="grid grid-cols-2 gap-4 w-full">
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <div className="text-2xl font-bold text-green-600">
+                      {metrics?.appVersionStats?.updatedPercentage}%
+                    </div>
+                    <div className="text-sm text-green-700 font-medium">
+                      Updated
+                    </div>
+                  </div>
+                  <div className="text-center p-3 bg-amber-50 rounded-lg">
+                    <div className="text-2xl font-bold text-amber-600">
+                      {metrics?.appVersionStats?.notUpdatedPercentage}%
+                    </div>
+                    <div className="text-sm text-amber-700 font-medium">
+                      Not Updated
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Top Notifications - Enhanced list */}
+          <Card className="shadow-lg border-0 bg-white">
+            <CardHeader>
+              <div className="flex items-center space-x-3">
+                {/* <Bell className="h-6 w-6" /> */}
+                <CardTitle className="text-md font-semibold">
+                  Top Performing Notifications
+                </CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {metrics?.topNotifications?.length === 0 ? (
+                <div className="text-center py-8">
+                  {/* <Bell className="h-12 w-12 text-gray-300 mx-auto mb-4" /> */}
+                  <p className="text-gray-500">
+                    No notifications data available
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {metrics?.topNotifications?.map((notification, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="flex-shrink-0 w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                          <span className="text-sm font-bold text-purple-600">
+                            {index + 1}
+                          </span>
+                        </div>
+                        <span className="text-sm font-medium text-gray-900 line-clamp-2">
+                          {notification.title}
+                        </span>
+                      </div>
+                      <div className="flex-shrink-0 text-right">
+                        <div className="text-lg font-bold text-purple-600">
+                          {notification.seen_count}
+                        </div>
+                        <div className="text-xs text-gray-500">views</div>
+                      </div>
+                    </div>
                   ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Top Notifications */}
-        <Card className="lg:col-span-1">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base font-medium">Top Notifications</CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            {metrics?.topNotifications?.length === 0 ? (
-              <p className="text-sm text-muted-foreground text-center">
-                No Top Notifications Found
-              </p>
-            ) : (
-              <ul className="space-y-2">
-                {metrics?.topNotifications?.map((notification, index) => (
-                  <li
-                    key={index}
-                    className="flex justify-between px-2 border-b pb-1"
-                  >
-                    <span className="text-sm">{notification.title}</span>
-                    <span className="font-medium">{notification.seen_count}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </CardContent>
-        </Card>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+          {metrics?.engagementByProgramStack && (
+            <Card className="shadow-lg border-0 bg-white">
+              <CardHeader>
+                <CardTitle className="text-md font-semibold">
+                  Engagement by Program Stack
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {metrics.engagementByProgramStack.map((stack, index) => (
+                    <div
+                      key={index}
+                      className="p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg"
+                    >
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                        {stack.program_category}
+                      </h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">
+                            Engagement Rate
+                          </span>
+                          <span className="text-xl font-bold text-indigo-600">
+                            {stack.engagement_percentage}%
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">
+                            Total Notifications
+                          </span>
+                          <span className="font-medium">
+                            {stack.total_notifications}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">
+                            Seen Notifications
+                          </span>
+                          <span className="font-medium text-indigo-600">
+                            {stack.seen_notifications}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
       </div>
     </div>
   );

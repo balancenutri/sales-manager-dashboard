@@ -21,6 +21,7 @@ import AppUsageActivity from "@/components/home/appAnalysis/AppUsageActivity";
 import KeyEngagementMetrix from "@/components/home/appAnalysis/KeyEngagementMetrix";
 import ActivatedFeatures from "@/components/home/appAnalysis/ActivatedFeatures";
 import OverviewDetails from "@/components/home/overview/OverViewDetails";
+import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
 // import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
 
 // Calculate total sales opportunity and add to overview
@@ -36,11 +37,11 @@ export default function Home() {
       <Header />
       <div className="p-6">
         {/* Main Content Tabs */}
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger className="cursor-pointer" value="overview">
+        <Tabs defaultValue="social-media" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3">
+            {/* <TabsTrigger className="cursor-pointer" value="overview">
               Overview
-            </TabsTrigger>
+            </TabsTrigger> */}
             <TabsTrigger className="cursor-pointer" value="social-media">
               Social Media
             </TabsTrigger>
@@ -86,7 +87,7 @@ export default function Home() {
 
             {/* Overall Social Media Performance */}
 
-            <SocialMediaPerformance />
+            {/* <SocialMediaPerformance /> */}
 
             <div className="grid grid-cols-2 gap-4">
               {/* Counsellor Social Media Performance */}
@@ -103,7 +104,7 @@ export default function Home() {
 
           {/* Digital Marketing Tab Content */}
           <TabsContent value="digital-marketing" className="space-y-6">
-            <DigitalMarketingAnalytics />
+            {/* <DigitalMarketingAnalytics /> */}
 
             {/* Overall Male/Female Leads */}
             <GenderBifurcation />
@@ -112,7 +113,7 @@ export default function Home() {
             <ClinicalBifurcation />
 
             {/* Campaigns Overview Section */}
-            <CampaignOverview />
+            {/* <CampaignOverview /> */}
 
             {/* Lead MIS Section */}
 
@@ -132,16 +133,16 @@ export default function Home() {
               {/* Key Engagement Metrics */}
               <KeyEngagementMetrix />
 
-
               {/* Activated Features */}
               <ActivatedFeatures />
             </div>
-              {/* <LeadPerformance /> */}
+            <LeadPerformance />
+
+            <ContentManagement />
           </TabsContent>
         </Tabs>
 
         {/* Content Engagement Section */}
-        <ContentManagement />
       </div>
       {/* Campaign Snapshot Modal */}
     </div>
