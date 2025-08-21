@@ -64,10 +64,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
     }),
 
     // SOCIAL MEDIA
-    getCounsellorSocialMediaPerformance: builder.query<
-      SocialMediaResponse,
-      void
-    >({
+    getCounsellorSocialMediaPerformance: builder.query({
       query: () => ({
         url: `/sales/social-media/counsellor-sm-performance`,
         method: "POST",
