@@ -5,18 +5,32 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { SocailMediaType } from "@/lib/types";
 import { keyString } from "@/lib/utils";
 import type { LucideIcon } from "lucide-react";
+import type { JSX } from "react";
 
 type MediaCardTypes = {
   icon: LucideIcon;
   title: string;
   desc: string;
-  data: SocailMediaType;
+  data: SocailMediaType | undefined;
 };
 
 export default function MediaCard({ data }: { data: MediaCardTypes }) {
+  const renderSkeleton = (): JSX.Element[] =>
+    Array(4)
+      .fill(null)
+      .map((_, index: number) => (
+        <div
+          key={index}
+          className="flex items-center justify-between border-b pb-2"
+        >
+          <Skeleton className="h-5 w-40" />
+          <Skeleton className="h-5 w-20" />
+        </div>
+      ));
   const Icon: LucideIcon = data.icon;
   return (
     <Card>
@@ -28,12 +42,17 @@ export default function MediaCard({ data }: { data: MediaCardTypes }) {
         <CardDescription>{data.desc}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
-        {Object.entries(data?.data).map(([key, value]) => (
-          <div className="flex items-center justify-between border-b pb-2">
-            <span className="font-medium">{keyString(key)}</span>
-            <span className="font-semibold text-lg">{value}</span>
-          </div>
-        ))}
+        {data.data
+          ? Object.entries(data.data).map(([key, value]) => (
+              <div
+                className="flex items-center justify-between border-b pb-2"
+                key={key}
+              >
+                <span className="font-medium">{keyString(key)}</span>
+                <span className="font-semibold text-lg">{value}</span>
+              </div>
+            ))
+          : renderSkeleton()}
       </CardContent>
     </Card>
   );
