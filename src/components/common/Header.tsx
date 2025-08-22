@@ -59,9 +59,9 @@ export default function Header() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="today">Today</SelectItem>
-              <SelectItem value="week">This Week</SelectItem>
-              <SelectItem value="month">This Month</SelectItem>
-              <SelectItem value="quarter">This Quarter</SelectItem>
+              <SelectItem value="this_week">This Week</SelectItem>
+              <SelectItem value="mtd">This Month</SelectItem>
+              <SelectItem value="this_quarter">This Quarter</SelectItem>
             </SelectContent>
           </Select>
 
