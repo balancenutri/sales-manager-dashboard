@@ -4,7 +4,7 @@ import {
   useGetSocialMediaPerformanceQuery,
   useGetYoutubePerformanceQuery,
 } from "@/service/dashboard/api";
-import { Facebook, Instagram, Youtube } from "lucide-react";
+import { Clapperboard, Facebook, Instagram, Youtube } from "lucide-react";
 import MediaCard from "./MediaCard";
 import { useSelector } from "react-redux";
 import { selectPeriod } from "@/features/period/periodSlice";
@@ -62,7 +62,7 @@ export default function SocialCard() {
           <MediaCard
             data={{
               data: socialMediaData?.data || {},
-              icon: Facebook,
+              icon: Clapperboard,
               title: "Overall Social Media Performance",
               desc: "Consolidated metrics across all social platforms",
             }}

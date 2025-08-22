@@ -72,7 +72,7 @@ export default function CounsellorSocialMediaPerformance() {
                   <TableHead>Counsellor</TableHead>
                   <TableHead>Social Leads Assigned</TableHead>
                   <TableHead>Social Consultations</TableHead>
-                  <TableHead>Social Sales</TableHead>
+                  <TableHead>Social Sales <br /> (Units)</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -107,7 +107,7 @@ export default function CounsellorSocialMediaPerformance() {
                               {sales.social_consultations}
                             </TableCell>
                             <TableCell className="font-semibold">
-                              {sales.social_sales}
+                              {sales.social_sales} 
                             </TableCell>
                           </TableRow>
                         );

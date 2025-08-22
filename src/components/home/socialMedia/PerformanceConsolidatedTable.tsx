@@ -79,7 +79,7 @@ export default function PerformanceConsolidatedTable({
                 <TableHead>Team / Mentor</TableHead>
                 <TableHead>Leads Assigned</TableHead>
                 <TableHead>Consultations Done</TableHead>
-                <TableHead>Sales Done</TableHead>
+                <TableHead>Sales Done <br /> (Units)</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

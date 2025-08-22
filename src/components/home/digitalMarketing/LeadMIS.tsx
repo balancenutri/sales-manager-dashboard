@@ -536,7 +536,7 @@ export default function LeadMIS() {
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle>Filtered Leads ({limit})</CardTitle>
+              <CardTitle>Filtered Leads ({data?.totalCount})</CardTitle>
               <CardDescription>
                 List of leads matching the applied filters
               </CardDescription>
@@ -584,13 +584,14 @@ export default function LeadMIS() {
                 <TableRow>
                   <TableHead>Sr. No.</TableHead>
                   <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
                   <TableHead>Gender</TableHead>
                   <TableHead>Age Group</TableHead>
                   <TableHead>Clinical Condition</TableHead>
                   <TableHead>Location</TableHead>
                   <TableHead>Sales Status</TableHead>
                   <TableHead>Stage</TableHead>
-                  <TableHead>Previous Campaigns</TableHead>
+                  {/* <TableHead>Previous Campaigns</TableHead> */}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -602,6 +603,9 @@ export default function LeadMIS() {
                       </TableCell>
                       <TableCell className="font-medium">
                         {keyString(lead.Name)}
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {lead.Email}
                       </TableCell>
                       <TableCell>{lead.Gender || "N/A"}</TableCell>
                       <TableCell>{lead["Age Group"] || "N/A"}</TableCell>
@@ -632,8 +636,8 @@ export default function LeadMIS() {
                           {lead.Stage}
                         </Badge>
                       </TableCell>
-                      <TableCell>
-                        {/* {lead.previousCampaigns.length > 0 ? (
+                      {/* <TableCell>
+                        {lead.previousCampaigns.length > 0 ? (
                           <div className="flex flex-wrap gap-1">
                             {lead.previousCampaigns.map((campaign, index) => (
                               <Badge
@@ -646,11 +650,10 @@ export default function LeadMIS() {
                             ))}
                           </div>
                         ) : (
-                        )} */}
-                        <span className="text-muted-foreground text-sm">
+                        )}  <span className="text-muted-foreground text-sm">
                           None
-                        </span>
-                      </TableCell>
+                        </span> 
+                      </TableCell> */}
                     </TableRow>
                   ))
                 ) : (

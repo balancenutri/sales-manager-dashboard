@@ -99,13 +99,14 @@ export interface AllSourceResponse {
 
 
 export type LeadMis = {
-    "Name": string,
-    "Gender": string | null,
-    "Age Group": string | null,
-    "Clinical Conditions": string,
-    "Region": string,
-    "Sales Status": string,
-    "Stage": string
+    "Name": string;
+    "Email": string;
+    "Gender": string | null;
+    "Age Group": string | null;
+    "Clinical Conditions": string;
+    "Region": string;
+    "Sales Status": string;
+    "Stage": string;
 }
 
 export interface LeadMisResponse {
@@ -150,8 +151,8 @@ export type LeadMisBody = {
 
 export type AppDownlaod = {
     [key: string]: {
-        lead: number,
-        oc: number,
+        lead: number;
+        oc: number;
     }
 }
 

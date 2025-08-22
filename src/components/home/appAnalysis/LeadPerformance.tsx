@@ -646,11 +646,10 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
+import { selectPeriod } from "@/features/period/periodSlice";
 import { useGetClientPerformanceQuery } from "@/service/dashboard/api";
-import {
-  TrendingDown,
-  TrendingUp,
-} from "lucide-react";
+import { TrendingDown, TrendingUp } from "lucide-react";
+import { useSelector } from "react-redux";
 import {
   Area,
   AreaChart,
@@ -663,10 +662,48 @@ import {
   LabelList,
   Legend,
 } from "recharts";
+import dayjs from "dayjs";
+import isoWeek from "dayjs/plugin/isoWeek";
+
+dayjs.extend(isoWeek);
 
 export default function LeadPerformance() {
+
+
+const getDateRange = (filter: "today" |"this_week" | "mtd" | "this_quarter") : string => {
+  const today = dayjs();
+
+  if (filter === "today") {
+    const dateStr = today.format("YYYY-MM-DD");
+    return `${dateStr}, ${dateStr}`;
+  }
+
+  if (filter === "this_week") {
+    const startOfWeek = today.startOf("isoWeek").format("YYYY-MM-DD");
+    const endOfWeek = today.endOf("isoWeek").format("YYYY-MM-DD");
+    return `${startOfWeek}, ${endOfWeek}`;
+  }
+
+  if (filter === "mtd") {
+    const startOfMonth = today.startOf("month").format("YYYY-MM-DD");
+    const endOfMonth = today.endOf("month").format("YYYY-MM-DD");
+    return `${startOfMonth}, ${endOfMonth}`;
+  }
+
+  if (filter === "this_quarter") {
+    const threeMonthsAgo = today.subtract(2, "month").startOf("month");
+    const endOfCurrentMonth = today.endOf("month");
+
+    return `${threeMonthsAgo.format("YYYY-MM-DD")}, ${endOfCurrentMonth.format("YYYY-MM-DD")}`;
+  }
+
+  return "";
+}
+
+  const filter = useSelector(selectPeriod);
+  console.log({ filter });
   const { data: engagementData, isLoading } = useGetClientPerformanceQuery({
-    time_range: "2025-08-01,2025-08-31",
+    time_range: getDateRange(filter),
     user_status: ["Active", "Oc", "Lead"],
   });
 
