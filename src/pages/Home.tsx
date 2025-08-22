@@ -20,6 +20,7 @@ import ActivatedFeatures from "@/components/home/appAnalysis/ActivatedFeatures";
 import OverviewDetails from "@/components/home/overview/OverViewDetails";
 import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
 import LeadAppCount from "@/components/home/appAnalysis/LeadAppCount";
+import DigitalMarketingAnalytics from "@/components/home/digitalMarketing/DigitalMarketingAnalytics";
 // import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
 
 // Calculate total sales opportunity and add to overview
@@ -102,7 +103,7 @@ export default function Home() {
 
           {/* Digital Marketing Tab Content */}
           <TabsContent value="digital-marketing" className="space-y-6">
-            {/* <DigitalMarketingAnalytics /> */}
+            <DigitalMarketingAnalytics />
 
             {/* Overall Male/Female Leads */}
             <GenderBifurcation />
@@ -137,9 +138,9 @@ export default function Home() {
               {/* Activated Features */}
               <ActivatedFeatures />
             </div>
+            <ContentManagement />
             <LeadPerformance />
 
-            <ContentManagement />
           </TabsContent>
         </Tabs>
 

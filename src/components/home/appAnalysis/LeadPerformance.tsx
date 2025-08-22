@@ -727,10 +727,12 @@ export default function LeadPerformance() {
         x={x}
         y={y}
         fill="white"
-        textAnchor={x > cx ? "start" : "end"}
+        // textAnchor={x > cx ? "end" : "end"}
+        textAnchor="middle"
         dominantBaseline="central"
         fontSize={14}
         fontWeight="600"
+        className="px-2"
       >
         {`${percentage.toFixed(1)}%`}
       </text>
@@ -831,12 +833,12 @@ export default function LeadPerformance() {
                 config={{
                   engagement: { label: "Engagement %", color: "#3b82f6" },
                 }}
-                className="h-[320px]"
+                className="h-[360px]"
               >
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart
                     data={weeklyEngagementData}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                    margin={{ top: 20, right: 20, left: 20, bottom: 10 }}
                   >
                     <XAxis
                       dataKey="week"
@@ -933,7 +935,7 @@ export default function LeadPerformance() {
                 </CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="pt-2">
+            <CardContent className="">
               <div className="flex flex-col items-center space-y-6">
                 <ResponsiveContainer width="100%" height={250}>
                   <PieChart>
@@ -946,7 +948,7 @@ export default function LeadPerformance() {
                       innerRadius={60}
                       outerRadius={100}
                       label={renderCustomizedLabel}
-                      paddingAngle={2}
+                      paddingAngle={1}
                     >
                       {appVersionData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.fill} />

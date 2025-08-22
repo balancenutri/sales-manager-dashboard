@@ -78,31 +78,35 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    getInstagramPerformance: builder.query<SocialMediaResponse, void>({
-      query: () => ({
+    getInstagramPerformance: builder.query<SocialMediaResponse, BodyProps>({
+      query: (body) => ({
         url: `/sales/social-media/instagram-performance`,
         method: "POST",
+        body,
       }),
       providesTags: ["Common"],
     }),
-    getYoutubePerformance: builder.query<SocialMediaResponse, void>({
-      query: () => ({
+    getYoutubePerformance: builder.query<SocialMediaResponse, BodyProps>({
+      query: (body) => ({
         url: `/sales/social-media/youtube-performance`,
         method: "POST",
+        body,
       }),
       providesTags: ["Common"],
     }),
-    getFacebookPerformance: builder.query<SocialMediaResponse, void>({
-      query: () => ({
+    getFacebookPerformance: builder.query<SocialMediaResponse, BodyProps>({
+      query: (body) => ({
         url: `/sales/social-media/facebook-performance`,
         method: "POST",
+        body,
       }),
       providesTags: ["Common"],
     }),
-    getSocialMediaPerformance: builder.query<SocialMediaResponse, void>({
-      query: () => ({
+    getSocialMediaPerformance: builder.query<SocialMediaResponse, BodyProps>({
+      query: (body) => ({
         url: `/sales/social-media/social-media-performance`,
         method: "POST",
+        body
       }),
       providesTags: ["Common"],
     }),

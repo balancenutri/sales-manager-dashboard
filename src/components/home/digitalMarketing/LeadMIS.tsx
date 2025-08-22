@@ -272,7 +272,7 @@ export default function LeadMIS() {
             <Download className="mr-2 h-4 w-4 animate-collapsible-down" />
             Export ({data?.totalCount})
           </Button>
-          <Select
+          {/* <Select
             value={selectedWatiTemplate}
             onValueChange={setSelectedWatiTemplate}
           >
@@ -293,7 +293,7 @@ export default function LeadMIS() {
           >
             <Send className="mr-2 h-4 w-4" />
             Broadcast ({limit})
-          </Button>
+          </Button> */}
         </div>
       </div>
 

@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectPeriod, setPeriod } from "@/features/period/periodSlice";
 
 type periodState = {
-    period: 'today' | 'week' | 'month' | 'quarter';
+    period: 'today' | 'this_week' | 'mtd' | 'this_quarter';
 }
 
 export default function Header() {

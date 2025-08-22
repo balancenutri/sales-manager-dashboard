@@ -8,12 +8,12 @@ import {
 import { mockData } from "@/lib/data";
 import {
   Activity,
-  Award,
-  DollarSign,
+  // Award,
+  // DollarSign,
+  // LineChart,
+  // Megaphone,
+  // ShoppingCart,
   Eye,
-  LineChart,
-  Megaphone,
-  ShoppingCart,
   TrendingUp,
   UserPlus,
   Users,
@@ -24,8 +24,8 @@ export default function DigitalMarketingAnalytics() {
   return (
     <div>
       <h2 className="text-2xl font-bold">Digital Marketing Analytics</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
+        {/* <Card>
           <CardHeader>
             <CardTitle>Campaign Performance</CardTitle>
             <CardDescription>
@@ -135,7 +135,7 @@ export default function DigitalMarketingAnalytics() {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
         {/* Combined Website Performance Card */}
         <Card>
           <CardHeader>
@@ -145,8 +145,8 @@ export default function DigitalMarketingAnalytics() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <h3 className="text-md font-semibold mb-2">Traffic Overview</h3>
-            <div className="flex items-center justify-between border-b pb-2">
+            {/* <h3 className="text-md font-semibold mb-2">Traffic Overview</h3> */}
+            {/* <div className="flex items-center justify-between border-b pb-2">
               <div className="flex items-center space-x-3">
                 <Users2 className="h-4 w-4 text-blue-500" />
                 <span className="font-medium">Total Visitors</span>
@@ -155,7 +155,7 @@ export default function DigitalMarketingAnalytics() {
                 {mockData.websiteAnalytics.totalVisitors.day} |{" "}
                 {mockData.websiteAnalytics.totalVisitors.mtd.toLocaleString()}
               </div>
-            </div>
+            </div> */}
             <div className="flex items-center justify-between border-b pb-2">
               <div className="flex items-center space-x-3">
                 <Eye className="h-4 w-4 text-purple-500" />
@@ -166,7 +166,17 @@ export default function DigitalMarketingAnalytics() {
                 {mockData.websiteAnalytics.pageViews.mtd.toLocaleString()}
               </div>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between border-b pb-2">
+              <div className="flex items-center space-x-3">
+                <Users className="h-4 w-4 text-purple-500" />
+                <span className="font-medium">Total Engagement</span>
+              </div>
+              <div className="font-semibold text-lg">
+                {mockData.websiteAnalytics.totalUsers.day.toLocaleString()} |{" "}
+                {mockData.websiteAnalytics.totalUsers.mtd.toLocaleString()}
+              </div>
+            </div>
+                        <div className="flex items-center justify-between border-b pb-2">
               <div className="flex items-center space-x-3">
                 <Activity className="h-4 w-4 text-orange-500" />
                 <span className="font-medium">Avg. Session Duration</span>
@@ -176,10 +186,6 @@ export default function DigitalMarketingAnalytics() {
                 {mockData.websiteAnalytics.avgSessionDuration.mtd}
               </div>
             </div>
-
-            <h3 className="text-md font-semibold mt-4 mb-2 pt-3 border-t">
-              Engagement & Leads
-            </h3>
             <div className="flex items-center justify-between border-b pb-2">
               <div className="flex items-center space-x-3">
                 <TrendingUp className="h-4 w-4 text-green-500" />
@@ -188,16 +194,6 @@ export default function DigitalMarketingAnalytics() {
               <div className="font-semibold text-lg">
                 {mockData.websiteAnalytics.bounceRate.day}% |{" "}
                 {mockData.websiteAnalytics.bounceRate.mtd}%
-              </div>
-            </div>
-            <div className="flex items-center justify-between border-b pb-2">
-              <div className="flex items-center space-x-3">
-                <Users className="h-4 w-4 text-purple-500" />
-                <span className="font-medium">Total Users</span>
-              </div>
-              <div className="font-semibold text-lg">
-                {mockData.websiteAnalytics.totalUsers.day.toLocaleString()} |{" "}
-                {mockData.websiteAnalytics.totalUsers.mtd.toLocaleString()}
               </div>
             </div>
             <div className="flex items-center justify-between border-b pb-2">

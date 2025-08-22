@@ -645,13 +645,13 @@ export const mockData = {
   },
   // New data for Website Analytics
   websiteAnalytics: {
-    totalVisitors: { day: 5000, mtd: 150000 },
-    pageViews: { day: 15000, mtd: 450000 },
-    bounceRate: { day: 45, mtd: 40 }, // percentage
-    avgSessionDuration: { day: "00:02:30", mtd: "00:03:15" }, // HH:MM:SS
-    leadsFromWebsite: { day: 142, mtd: 5000 }, // Corresponds to leadsSources.unassigned.website
-    totalUsers: { day: 4500, mtd: 130000 }, // New
-    uniqueEngagement: { day: 1000, mtd: 35000 }, // New
+    // totalVisitors: { day: 5000, mtd: 150000 },
+    pageViews: { day: 73, mtd: 34973 },
+    bounceRate: { day: "79.4", mtd: "57.5" }, // percentage
+    avgSessionDuration: { day: "00:01:58", mtd: "00:01:09" }, // HH:MM:SS
+    leadsFromWebsite: { day: 0, mtd: 0 }, // Corresponds to leadsSources.unassigned.website
+    totalUsers: { day: 17, mtd: 8559 }, // New
+    uniqueEngagement: { day: 7, mtd: 7960 }, // New
   },
   // New data for Campaigns
   campaigns: [

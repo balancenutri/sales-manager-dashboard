@@ -6,16 +6,19 @@ import {
 } from "@/service/dashboard/api";
 import { Facebook, Instagram, Youtube } from "lucide-react";
 import MediaCard from "./MediaCard";
+import { useSelector } from "react-redux";
+import { selectPeriod } from "@/features/period/periodSlice";
 
 export default function SocialCard() {
+  const filter = useSelector(selectPeriod);
   const { data: youtubeData, isFetching: youtubeFetching } =
-    useGetYoutubePerformanceQuery();
+    useGetYoutubePerformanceQuery({ filter });
   const { data: instagramData, isFetching: instagramFetching } =
-    useGetInstagramPerformanceQuery();
+    useGetInstagramPerformanceQuery({ filter });
   const { data: faceBookData, isFetching: faceBookFetching } =
-    useGetFacebookPerformanceQuery();
+    useGetFacebookPerformanceQuery({ filter });
   const { data: socialMediaData, isFetching: socialMediaFetching } =
-    useGetSocialMediaPerformanceQuery();
+    useGetSocialMediaPerformanceQuery({ filter });
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold">

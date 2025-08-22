@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 interface PeriodState {
-    period: 'today' | 'week' | 'month' | 'quarter';
+    period: 'today' | 'this_week' | 'mtd' | 'this_quarter';
 }
 
 const initialState: PeriodState = {
