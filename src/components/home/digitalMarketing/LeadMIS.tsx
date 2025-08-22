@@ -22,11 +22,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { mockData } from "@/lib/data";
 import { MultiSelect } from "@/components/ui/multi-select";
 import {
   Download,
-  Send,
   Filter,
   SquareChevronRight,
   SquareChevronLeft,
@@ -47,7 +45,7 @@ import {
 import { keyString } from "@/lib/utils";
 
 export default function LeadMIS() {
-  const [selectedWatiTemplate, setSelectedWatiTemplate] = useState<string>();
+  // const [selectedWatiTemplate, setSelectedWatiTemplate] = useState<string>();
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
 
@@ -92,10 +90,10 @@ export default function LeadMIS() {
 
   const { data: healthData } = useGetAllHealthIssueQuery();
 
-  const handleWatiBroadcast = () => {
-    if (!selectedWatiTemplate) return;
-    console.log("Filter values:", filters);
-  };
+  // const handleWatiBroadcast = () => {
+  //   if (!selectedWatiTemplate) return;
+  //   console.log("Filter values:", filters);
+  // };
 
   const getStatusColor = (status: string) => {
     switch (status) {
