@@ -16,6 +16,8 @@ import {
   type AssignedLeadPerformanceResponse,
   type SaleByStackResponse,
   type SocialMediaResponse,
+  type UpdateSocialMediaResponse,
+  type UpdateSocialMediaBody,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -84,7 +86,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
         method: "POST",
         body,
       }),
-      providesTags: ["Common"],
+      providesTags: ["SocialMedia"],
     }),
     getYoutubePerformance: builder.query<SocialMediaResponse, BodyProps>({
       query: (body) => ({
@@ -92,7 +94,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
         method: "POST",
         body,
       }),
-      providesTags: ["Common"],
+      providesTags: ["SocialMedia"],
     }),
     getFacebookPerformance: builder.query<SocialMediaResponse, BodyProps>({
       query: (body) => ({
@@ -100,7 +102,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
         method: "POST",
         body,
       }),
-      providesTags: ["Common"],
+      providesTags: ["SocialMedia"],
     }),
     getSocialMediaPerformance: builder.query<SocialMediaResponse, BodyProps>({
       query: (body) => ({
@@ -108,7 +110,15 @@ export const dashboardApi = commonAPi.injectEndpoints({
         method: "POST",
         body
       }),
-      providesTags: ["Common"],
+      providesTags: ["SocialMedia"],
+    }),
+    updateSocialMediaPerformance: builder.mutation<UpdateSocialMediaResponse, UpdateSocialMediaBody>({
+      query: (body) => ({
+        url: `/sales/social-media/update-social-media-analysis`,
+        method: "POST",
+        body
+      }),
+      invalidatesTags: ["SocialMedia"],
     }),
 
     getGenderWiseLead: builder.query({
@@ -179,7 +189,21 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    getAllLeadWithAppCount: builder.query<SocialMediaResponse, void>({
+    getAllActiveAppCount: builder.query<SocialMediaResponse, void>({
+      query: () => ({
+        url: `/sales/app-activity/all-active-app-count`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getAllOcAppCount: builder.query<SocialMediaResponse, void>({
+      query: () => ({
+        url: `/sales/app-activity/all-oc-app-count`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getAllLeadAppCount: builder.query<SocialMediaResponse, void>({
       query: () => ({
         url: `/sales/app-activity/all-leads-with-app-count`,
         method: "POST",
@@ -261,9 +285,12 @@ export const {
   useGetFacebookPerformanceQuery,
   useGetYoutubePerformanceQuery,
   useGetSocialMediaPerformanceQuery,
+  useUpdateSocialMediaPerformanceMutation,
 
   useGetAppDownloadsCountQuery,
-  useGetAllLeadWithAppCountQuery,
+  useGetAllOcAppCountQuery,
+  useGetAllActiveAppCountQuery,
+  useGetAllLeadAppCountQuery,
   useGetAppUsageOverviewQuery,
   useGetKeyEngagementMatricsQuery,
   useGetActivatedFeaturesQuery,

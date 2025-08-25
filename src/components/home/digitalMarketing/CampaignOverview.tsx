@@ -72,7 +72,8 @@ export default function CampaignOverview() {
             </Button>
           </CardHeader>
           <CardContent>
-            <Table>
+            <p className="text-center">No Campaign Available</p>
+            {/* <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Campaign Name</TableHead>
@@ -116,7 +117,7 @@ export default function CampaignOverview() {
                   </TableRow>
                 ))}
               </TableBody>
-            </Table>
+            </Table> */}
           </CardContent>
         </Card>
       </div>

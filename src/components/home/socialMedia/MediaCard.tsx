@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -5,11 +6,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { SocailMediaType } from "@/lib/types";
 import { keyString } from "@/lib/utils";
 import type { LucideIcon } from "lucide-react";
-import type { JSX } from "react";
+import { useState, type JSX } from "react";
+import AddMediaForm from "./AddMediaForm";
 
 type MediaCardTypes = {
   icon: LucideIcon;
@@ -18,7 +26,11 @@ type MediaCardTypes = {
   data: SocailMediaType | undefined;
 };
 
+type DialogType = "Youtube" | "Instagram" | "Facebook" | null;
+
 export default function MediaCard({ data }: { data: MediaCardTypes }) {
+  const [type, setType] = useState<DialogType>(null);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const renderSkeleton = (): JSX.Element[] =>
     Array(4)
       .fill(null)
@@ -32,12 +44,22 @@ export default function MediaCard({ data }: { data: MediaCardTypes }) {
         </div>
       ));
   const Icon: LucideIcon = data.icon;
+
+  const handleDialogOpen = () => {
+    setType(data.title as DialogType);
+    setOpenDialog(true);
+  };
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center space-x-2">
-          <Icon />
-          <CardTitle>{data.title}</CardTitle>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Icon />
+            <CardTitle>{data.title}</CardTitle>
+          </div>
+          <Button variant="outline" onClick={handleDialogOpen}>
+            Update
+          </Button>
         </div>
         <CardDescription>{data.desc}</CardDescription>
       </CardHeader>
@@ -54,6 +76,28 @@ export default function MediaCard({ data }: { data: MediaCardTypes }) {
             ))
           : renderSkeleton()}
       </CardContent>
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogContent
+          onInteractOutside={(e: React.MouseEvent | Event) =>
+            e.preventDefault()
+          }
+        >
+          <DialogHeader>
+            <DialogTitle>{keyString(type || "")}</DialogTitle>
+            <AddMediaForm
+              type={type}
+              mediaData={{
+                impressions: data.data?.impressions || 0,
+                total_followers: data.data?.total_followers || 0,
+                total_reach: data.data?.total_reach || 0,
+                total_visitors: data.data?.total_visitors || 0,
+                unique_engagement: data.data?.unique_engagement || 0,
+              }}
+              closeModal={() => setOpenDialog(false)}
+            />
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

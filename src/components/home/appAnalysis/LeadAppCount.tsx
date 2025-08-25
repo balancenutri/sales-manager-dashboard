@@ -5,11 +5,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { keyString } from "@/lib/utils";
-import { useGetAllLeadWithAppCountQuery } from "@/service/dashboard/api";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGetAllLeadAppCountQuery } from "@/service/dashboard/api";
 
 export default function LeadAppCount() {
-  const { data, isFetching } = useGetAllLeadWithAppCountQuery();
+  const { data, isFetching } = useGetAllLeadAppCountQuery();
 
   console.log({ data, isFetching });
 

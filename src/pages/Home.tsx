@@ -19,8 +19,10 @@ import KeyEngagementMetrix from "@/components/home/appAnalysis/KeyEngagementMetr
 import ActivatedFeatures from "@/components/home/appAnalysis/ActivatedFeatures";
 import OverviewDetails from "@/components/home/overview/OverViewDetails";
 import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
-import LeadAppCount from "@/components/home/appAnalysis/LeadAppCount";
+// import LeadAppCount from "@/components/home/appAnalysis/LeadAppCount";
 import DigitalMarketingAnalytics from "@/components/home/digitalMarketing/DigitalMarketingAnalytics";
+import CampaignOverview from "@/components/home/digitalMarketing/CampaignOverview";
+import AppCount from "@/components/home/appAnalysis/AppCount";
 // import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
 
 // Calculate total sales opportunity and add to overview
@@ -112,7 +114,7 @@ export default function Home() {
             <ClinicalBifurcation />
 
             {/* Campaigns Overview Section */}
-            {/* <CampaignOverview /> */}
+            <CampaignOverview />
 
             {/* Lead MIS Section */}
 
@@ -123,9 +125,10 @@ export default function Home() {
           <TabsContent value="app-analytics" className="space-y-6">
             {/* App Download Counts */}
             <AppDownloadCount />
-            <div className="max-w-[500px]">
+            <AppCount />
+            {/* <div className="max-w-[500px]">
               <LeadAppCount />
-            </div>
+            </div> */}
             <h2 className="text-2xl font-bold">App Analytics Overview</h2>
 
             <div className="grid grid-cols-3 gap-6">

@@ -131,6 +131,13 @@ export type AddCampaignBody = {
         age_group: string[];
         program_name: number[];
     };
+    digital_marketing: {
+        impressions: number;
+        reach: number;
+        clicks: number;
+        ctr: number;
+        conversions: number;
+    },
 };
 
 export type LeadMisBody = {
@@ -365,4 +372,21 @@ export interface SocialMediaResponse {
     message: string;
     data: SocailMediaType;
     totalCount: number;
+}
+
+export interface UpdateSocialMediaBody {
+    data: {
+        total_followers: number;
+        total_visitors: number;
+        unique_engagement: number;
+        total_reach: number;
+        impressions: number;
+        engagement_rate: string;
+    },
+    type?: string;
+}
+
+export interface UpdateSocialMediaResponse {
+    status: string;
+    message: string;
 }
