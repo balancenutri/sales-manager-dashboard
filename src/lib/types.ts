@@ -129,7 +129,29 @@ export type AddCampaignBody = {
         gender: string[];
         health_conditions: string[];
         age_group: string[];
-        program_name: number[];
+        program_name: string[];
+    };
+    digital_marketing: {
+        impressions: number;
+        reach: number;
+        clicks: number;
+        ctr: number;
+        conversions: number;
+    },
+};
+export type UpdateCampaignBody = {
+    id: number;
+    name: string;
+    type: string;
+    status: string;
+    start_date: string;
+    end_date: string;
+    ad_spend: number;
+    target_users: {
+        gender: string[];
+        health_conditions: string[];
+        age_group: string[];
+        program_name: string[];
     };
     digital_marketing: {
         impressions: number;
@@ -389,4 +411,57 @@ export interface UpdateSocialMediaBody {
 export interface UpdateSocialMediaResponse {
     status: string;
     message: string;
+}
+
+
+export type AllCampaignDetails = {
+    "id": number;
+    "name": string;
+    "type": number;
+    "type_name": string;
+    "status": string;
+    "lead_generated": number;
+    "revenue_generated": number;
+}
+export interface GetAllCampaignResponse {
+    status: string;
+    message: string;
+    data: AllCampaignDetails[];
+    hideColumn: [];
+}
+
+
+type CampaignDetails = {
+    "campaignName": string;
+    "campaignType": number;
+    "campaignStatus": string;
+    "campaignTypeName": string;
+    "campaignStartDate": string;
+    "campaignEndDate": string;
+    "campaignAdSpend": number;
+    "targetUsers": {
+        "gender": string[];
+        "health_conditions": string[];
+        "age_group": string[];
+        "program_name": string[];
+    },
+    "digitalMarketing": {
+        "impressions": number;
+        "reach": number;
+        "clicks": number;
+        "ctr": number;
+        "conversions": number;
+    },
+    "leadsGenerated": number;
+    "revenueGenerated": number;
+}
+export interface GetCampaignDetailsResponse {
+    status: string;
+    message: string;
+    data: CampaignDetails;
+    hideColumn: [];
+}
+
+export type CampaignDetailsBody = {
+    campaign_id: number;
 }

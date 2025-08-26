@@ -10,7 +10,7 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+  // DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -22,23 +22,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { mockData } from "@/lib/data";
-import { Download, Filter } from "lucide-react";
 import { useState } from "react";
-import ViewCampaign from "./campaign/ViewCampaign";
 import AddCampaignForm from "./campaign/AddCampaign";
+import { useGetAllCampaignsQuery } from "@/service/dashboard/api";
+import { keyString } from "@/lib/utils";
+import ViewCampaign from "./campaign/ViewCampaign";
 
 export default function CampaignOverview() {
-  const [selectedCampaign, setSelectedCampaign] = useState<
-    (typeof mockData.campaigns)[0] | null
-  >(null);
+  const { data } = useGetAllCampaignsQuery();
+  const [selectedCampaign, setSelectedCampaign] = useState<number | null>(null);
 
   const [showCampaignSnapshotModal, setShowCampaignSnapshotModal] =
     useState<boolean>(false);
 
   const [addCampaignModal, setAddCampaignModal] = useState<boolean>(false);
 
-  const handleCampaignClick = (campaign: (typeof mockData.campaigns)[0]) => {
+  const handleCampaignClick = (campaign: number) => {
     setSelectedCampaign(campaign);
     setShowCampaignSnapshotModal(true);
   };
@@ -47,7 +46,7 @@ export default function CampaignOverview() {
       <div className="space-y-6 mt-8">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold">Campaigns Overview</h2>
-          <div className="flex items-center space-x-2">
+          {/* <div className="flex items-center space-x-2">
             <Button variant="outline">
               <Filter className="mr-2 h-4 w-4" />
               Filter
@@ -56,7 +55,7 @@ export default function CampaignOverview() {
               <Download className="mr-2 h-4 w-4" />
               Export
             </Button>
-          </div>
+          </div> */}
         </div>
 
         <Card>
@@ -72,8 +71,7 @@ export default function CampaignOverview() {
             </Button>
           </CardHeader>
           <CardContent>
-            <p className="text-center">No Campaign Available</p>
-            {/* <Table>
+            <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Campaign Name</TableHead>
@@ -85,39 +83,50 @@ export default function CampaignOverview() {
                   </TableHead>
                 </TableRow>
               </TableHeader>
+
               <TableBody>
-                {mockData.campaigns.map((campaign) => (
-                  <TableRow
-                    key={campaign.id}
-                    className="cursor-pointer hover:bg-gray-50"
-                    onClick={() => handleCampaignClick(campaign)}
-                  >
-                    <TableCell className="font-medium">
-                      {campaign.name}
-                    </TableCell>
-                    <TableCell>{campaign.type}</TableCell>
-                    <TableCell>
-                      <Badge
-                        variant="outline"
-                        className={
-                          campaign.status === "Active"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-gray-100 text-gray-800"
-                        }
-                      >
-                        {campaign.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {campaign.leadsGenerated}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      ₹{(campaign.revenueGenerated / 1000).toFixed(0)}K
+                {!data?.data || data?.data?.length < 1 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={5}
+                      className="text-center py-6 text-muted-foreground"
+                    >
+                      No Campaigns Found
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  data.data.map((campaign) => (
+                    <TableRow
+                      key={campaign.id}
+                      className="cursor-pointer hover:bg-gray-50"
+                      onClick={() => handleCampaignClick(campaign.id)}
+                    >
+                      <TableCell className="font-medium">
+                        {campaign.name}
+                      </TableCell>
+                      <TableCell>{keyString(campaign.type_name)}</TableCell>
+                      <TableCell>
+                        <Badge
+                          className={
+                            campaign.status.toLowerCase() === "active"
+                              ? "bg-green-100 text-green-800"
+                              : "bg-gray-100 text-gray-800"
+                          }
+                        >
+                          {keyString(campaign.status)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {campaign.lead_generated}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        ₹{campaign.revenue_generated}K
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
-            </Table> */}
+            </Table>
           </CardContent>
         </Card>
       </div>
@@ -127,10 +136,7 @@ export default function CampaignOverview() {
       >
         <DialogContent className="min-w-4xl">
           <DialogHeader>
-            <DialogTitle>Campaign Snapshot</DialogTitle>
-            <DialogDescription>
-              Detailed snapshot of the selected campaign's performance
-            </DialogDescription>
+            <DialogTitle className="text-center">Campaign Snapshot</DialogTitle>
           </DialogHeader>
           <ViewCampaign selectedCampaign={selectedCampaign} />
         </DialogContent>
@@ -144,7 +150,10 @@ export default function CampaignOverview() {
           <DialogHeader>
             <DialogTitle>Add Campaign</DialogTitle>
           </DialogHeader>
-          <AddCampaignForm modalControl={() => setAddCampaignModal(false)} />
+          <AddCampaignForm
+            modalControl={() => setAddCampaignModal(false)}
+            data={null}
+          />
         </DialogContent>
       </Dialog>
     </div>

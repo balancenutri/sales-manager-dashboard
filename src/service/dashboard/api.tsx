@@ -18,6 +18,10 @@ import {
   type SocialMediaResponse,
   type UpdateSocialMediaResponse,
   type UpdateSocialMediaBody,
+  type GetAllCampaignResponse,
+  type GetCampaignDetailsResponse,
+  type CampaignDetailsBody,
+  type UpdateCampaignBody,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -171,7 +175,27 @@ export const dashboardApi = commonAPi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Common"],
+      invalidatesTags: ["Campaign"],
+    }),
+    updateCampaign: builder.mutation<any, UpdateCampaignBody>({
+      query: (body) => ({
+        url: `/sales/digital-marketing/update-campaign`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Campaign"],
+    }),
+    getAllCampaigns: builder.query<GetAllCampaignResponse, void>({
+      query: () => `/sales/digital-marketing/get-campaigns-details`,
+      providesTags: ["Campaign"],
+    }),
+    getCampaignDetails: builder.query<GetCampaignDetailsResponse, CampaignDetailsBody>({
+      query: (body) => ({
+        url: `/sales/digital-marketing/campaigns-details-id`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Campaign"],
     }),
     getLeadUserMisData: builder.query<LeadMisResponse, LeadMisBody>({
       query: (body) => ({
@@ -276,6 +300,9 @@ export const {
   useGetLeadMisDataQuery,
 
   useAddNewCampaignMutation,
+  useUpdateCampaignMutation,
+  useGetAllCampaignsQuery,
+  useGetCampaignDetailsQuery,
   useGetLeadUserMisDataQuery,
   useLazyGetLeadMisDataQuery,
 

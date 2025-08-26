@@ -1,335 +1,3 @@
-// import { useForm, Controller } from "react-hook-form";
-// import { Label } from "@/components/ui/label";
-// import { Input } from "@/components/ui/input";
-// import { Button } from "@/components/ui/button";
-// import {
-//   Select,
-//   SelectTrigger,
-//   SelectValue,
-//   SelectContent,
-//   SelectItem,
-// } from "@/components/ui/select";
-// import { DatePicker } from "@/components/ui/date-picker";
-// import dayjs from "dayjs";
-// import { MultiSelect } from "@/components/ui/multi-select";
-// import {
-//   useGetAllHealthIssueQuery,
-//   useGetAllProgramNameQuery,
-//   useGetAllSourceQuery,
-// } from "@/service/common/api";
-// import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-// import type { AddCampaignBody } from "@/lib/types";
-// import { useAddNewCampaignMutation } from "@/service/dashboard/api";
-// import { keyString } from "@/lib/utils";
-
-// dayjs.extend(isSameOrAfter);
-
-// type FormValues = {
-//   name: string;
-//   type: string;
-//   status: string;
-//   start_date: string; // ISO yyyy-MM-dd
-//   end_date: string; // ISO yyyy-MM-dd
-//   ad_spend: number; // Use '' for empty number input
-//   gender: string[];
-//   health_conditions: string[];
-//   age_group: string[];
-//   program_name: number[];
-// };
-
-// export default function AddCampaignForm({
-//   modalControl,
-// }: {
-//   modalControl: () => void;
-// }) {
-//   const {
-//     register,
-//     handleSubmit,
-//     control,
-//     formState: { errors, isSubmitting },
-//     setError,
-//     reset,
-//   } = useForm<FormValues>({
-//     defaultValues: {
-//       name: "",
-//       type: "",
-//       status: "",
-//       start_date: "",
-//       end_date: "",
-//       ad_spend: 0,
-//       gender: [],
-//       health_conditions: [],
-//       age_group: [],
-//       program_name: [],
-//     },
-//   });
-//   const { data: healthData } = useGetAllHealthIssueQuery();
-//   const { data: programData } = useGetAllProgramNameQuery({
-//     user_type: "Lead",
-//   });
-
-//   const { data: allSources } = useGetAllSourceQuery({
-//     source_id: 6,
-//   });
-
-//   const [addNewCampaign] = useAddNewCampaignMutation();
-
-//   const onSubmit = async (data: FormValues) => {
-//     const startDay = dayjs(data.start_date);
-//     const endDay = dayjs(data.end_date);
-
-//     if (endDay.isBefore(startDay)) {
-//       setError("end_date", {
-//         type: "manual",
-//         message: "End date must be on or after start date.",
-//       });
-//       return;
-//     }
-//     console.log("Ad campaign payload:", data);
-
-//     const body: AddCampaignBody = {
-//       name: data.name,
-//       status: data.status,
-//       type: data.type,
-//       start_date: data.start_date,
-//       end_date: data.end_date,
-//       ad_spend: data.ad_spend,
-//       target_users: {
-//         gender: data.gender,
-//         health_conditions: data.health_conditions,
-//         age_group: data.age_group,
-//         program_name: data.program_name,
-//       },
-//     };
-
-//     const response = await addNewCampaign(body);
-//     console.log({ response });
-//     modalControl();
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)}>
-//       <div className="space-y-4 max-h-[80vh] overflow-y-scroll px-2">
-//         {/* Type */}
-//         <div>
-//           <Label className="mb-2">Name</Label>
-//           <Controller
-//             control={control}
-//             name="name"
-//             rules={{
-//               required: "Name is required",
-//               minLength: {
-//                 value: 3,
-//                 message: "Name must be greater than 3 characters",
-//               },
-//             }}
-//             render={({ field }) => (
-//               <Input
-//                 placeholder="Name"
-//                 value={field.value}
-//                 onChange={field.onChange}
-//                 onBlur={field.onBlur}
-//               />
-//             )}
-//           />
-//           {errors.name && (
-//             <p className="mt-1 text-xs text-red-600">{errors.name.message}</p>
-//           )}
-//         </div>
-
-//         <div>
-//           <Label className="mb-2">Status</Label>
-//           <Controller
-//             control={control}
-//             name="status"
-//             rules={{ required: "Campaign status is required" }}
-//             render={({ field }) => (
-//               <Select value={field.value} onValueChange={field.onChange}>
-//                 <SelectTrigger className="w-full">
-//                   <SelectValue placeholder="Select Type" />
-//                 </SelectTrigger>
-//                 <SelectContent>
-//                   <SelectItem value="active">Active</SelectItem>
-//                   <SelectItem value="inactive">Inactive</SelectItem>
-//                 </SelectContent>
-//               </Select>
-//             )}
-//           />
-//           {errors.type && (
-//             <p className="mt-1 text-xs text-red-600">{errors.type.message}</p>
-//           )}
-//         </div>
-//         <div>
-//           <Label className="mb-2">Type</Label>
-//           <Controller
-//             control={control}
-//             name="type"
-//             rules={{ required: "Campaign type is required" }}
-//             render={({ field }) => (
-//               <Select value={field.value} onValueChange={field.onChange}>
-//                 <SelectTrigger className="w-full">
-//                   <SelectValue placeholder="Select Type" />
-//                 </SelectTrigger>
-//                 <SelectContent>
-//                   {allSources?.data?.map((item) => (
-//                     <SelectItem
-//                       key={item.source_id}
-//                       value={String(item.source_id)}
-//                     >
-//                       {keyString(item.source_name)}
-//                     </SelectItem>
-//                   ))}
-//                 </SelectContent>
-//               </Select>
-//             )}
-//           />
-//           {errors.type && (
-//             <p className="mt-1 text-xs text-red-600">{errors.type.message}</p>
-//           )}
-//         </div>
-//         <Controller
-//           control={control}
-//           name="start_date"
-//           rules={{ required: "Start date is required" }}
-//           render={({ field }) => (
-//             <DatePicker
-//               label="Start Date"
-//               value={field.value}
-//               onChange={field.onChange}
-//               errorMessage={errors.start_date?.message}
-//               // minDate={dayjs().subtract(1, "day").toDate()}
-//             />
-//           )}
-//         />
-//         {/* End Date */}
-//         <Controller
-//           control={control}
-//           name="end_date"
-//           render={({ field }) => (
-//             <DatePicker
-//               label="End Date"
-//               value={field.value}
-//               onChange={field.onChange}
-//               errorMessage={errors.end_date?.message}
-//             />
-//           )}
-//         />
-//         {/* Ad Spend */}
-//         <div>
-//           <Label className="mb-2">Ad Spend (₹)</Label>
-//           <Input
-//             inputMode="numeric"
-//             type="number"
-//             placeholder="Ad Spend"
-//             {...register("ad_spend", {
-//               required: "Ad spend is required",
-//               valueAsNumber: true,
-//               min: { value: 0, message: "Ad spend must be >= 0" },
-//             })}
-//           />
-//           {errors.ad_spend && (
-//             <p className="mt-1 text-xs text-red-600">
-//               {errors.ad_spend.message}
-//             </p>
-//           )}
-//         </div>
-//         <div className="space-y-2">
-//           <label className="text-sm font-medium text-gray-700">
-//             Program Name
-//           </label>
-//           <Controller
-//             name="program_name"
-//             control={control}
-//             render={({ field }) => (
-//               <MultiSelect
-//                 options={programData?.[0]?.data || []}
-//                 nameKey="program_name"
-//                 valueKey="program_id"
-//                 selected={field.value}
-//                 onChange={field.onChange}
-//                 placeholder="Select Programs"
-//               />
-//             )}
-//           />
-//         </div>
-//         <div className="space-y-2">
-//           <label className="text-sm font-medium text-gray-700">Gender</label>
-//           <Controller
-//             name="gender"
-//             control={control}
-//             render={({ field }) => (
-//               <MultiSelect
-//                 options={[
-//                   { name: "Male", id: "1" },
-//                   { name: "Female", id: "2" },
-//                 ]}
-//                 selected={field.value}
-//                 onChange={field.onChange}
-//                 placeholder="Select Gender"
-//               />
-//             )}
-//           />
-//         </div>
-//         <div className="space-y-2">
-//           <label className="text-sm font-medium text-gray-700">
-//             Clinical Condition
-//           </label>
-//           <Controller
-//             name="health_conditions"
-//             control={control}
-//             render={({ field }) => (
-//               <MultiSelect
-//                 options={healthData?.data || []}
-//                 nameKey="name"
-//                 valueKey="name"
-//                 selected={field.value}
-//                 onChange={field.onChange}
-//                 placeholder="Select Clinical Condition"
-//               />
-//             )}
-//           />
-//         </div>
-
-//         <div className="space-y-2">
-//           <label className="text-sm font-medium text-gray-700">Age Group</label>
-//           <Controller
-//             name="age_group"
-//             control={control}
-//             render={({ field }) => (
-//               <MultiSelect
-//                 options={["18-25", "25-35", "35-45", "45-55", "55-65", "65+"]}
-//                 selected={field.value}
-//                 onChange={field.onChange}
-//                 placeholder="Select Age Group"
-//               />
-//             )}
-//           />
-//         </div>
-//         {/* Actions */}
-//         <div className="flex gap-2 justify-end pt-2">
-//           <Button
-//             variant="outline"
-//             type="button"
-//             onClick={() =>
-//               reset({
-//                 type: "",
-//                 start_date: "",
-//                 end_date: "",
-//                 ad_spend: 0,
-//               })
-//             }
-//           >
-//             Reset
-//           </Button>
-//           <Button type="submit" disabled={isSubmitting}>
-//             {isSubmitting ? "Saving..." : "Save Campaign"}
-//           </Button>
-//         </div>
-//       </div>
-//     </form>
-//   );
-// }
-
 import { useForm, Controller } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -350,11 +18,17 @@ import {
   useGetAllSourceQuery,
 } from "@/service/common/api";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import type { AddCampaignBody } from "@/lib/types";
-import { useAddNewCampaignMutation } from "@/service/dashboard/api";
+import {
+  useAddNewCampaignMutation,
+  useUpdateCampaignMutation,
+} from "@/service/dashboard/api";
 import { keyString } from "@/lib/utils";
+import { useEffect } from "react";
 
 dayjs.extend(isSameOrAfter);
+dayjs.extend(customParseFormat);
 
 // Custom NumberInput component to handle number inputs with no wheel scrolling
 const NumberInput = ({
@@ -373,9 +47,9 @@ type FormValues = {
   name: string;
   type: string;
   status: string;
-  start_date: string; // ISO yyyy-MM-dd
-  end_date: string; // ISO yyyy-MM-dd
-  ad_spend: number; // Use '' for empty number input
+  start_date: string; 
+  end_date: string; 
+  ad_spend: number; 
   impressions: number;
   reach: number;
   clicks: number;
@@ -384,13 +58,17 @@ type FormValues = {
   gender: string[];
   health_conditions: string[];
   age_group: string[];
-  program_name: number[];
+  program_name: string[];
 };
 
 export default function AddCampaignForm({
   modalControl,
+  data,
+  campaignId,
 }: {
   modalControl: () => void;
+  data: FormValues | null;
+  campaignId?: number | null;
 }) {
   const {
     handleSubmit,
@@ -425,11 +103,25 @@ export default function AddCampaignForm({
     source_id: 6,
   });
 
-  const [addNewCampaign] = useAddNewCampaignMutation();
+  useEffect(() => {
+    if (data) {
+      const normalized = {
+        ...data,
+        type: String(data.type),
+        status: data.status.toLowerCase(),
+        start_date: dayjs(data.start_date, "DD/MM/YYYY").format("YYYY-MM-DD"),
+        end_date: dayjs(data.end_date, "DD/MM/YYYY").format("YYYY-MM-DD"),
+      };
+      reset(normalized);
+    }
+  }, [data, reset, allSources]);
 
-  const onSubmit = async (data: FormValues) => {
-    const startDay = dayjs(data.start_date);
-    const endDay = dayjs(data.end_date);
+  const [addNewCampaign] = useAddNewCampaignMutation();
+  const [updateCampaign] = useUpdateCampaignMutation();
+
+  const onSubmit = async (formData: FormValues) => {
+    const startDay = dayjs(formData.start_date);
+    const endDay = dayjs(formData.end_date);
 
     if (endDay.isBefore(startDay)) {
       setError("end_date", {
@@ -438,32 +130,38 @@ export default function AddCampaignForm({
       });
       return;
     }
-    console.log("Ad campaign payload:", data);
+    console.log("Ad campaign payload:", formData);
 
     const body: AddCampaignBody = {
-      name: data.name,
-      status: data.status,
-      type: data.type,
-      start_date: data.start_date,
-      end_date: data.end_date,
-      ad_spend: data.ad_spend,
+      name: formData.name,
+      status: formData.status,
+      type: formData.type,
+      start_date: formData.start_date,
+      end_date: formData.end_date,
+      ad_spend: formData.ad_spend,
       target_users: {
-        gender: data.gender,
-        health_conditions: data.health_conditions,
-        age_group: data.age_group,
-        program_name: data.program_name,
+        gender: formData.gender,
+        health_conditions: formData.health_conditions,
+        age_group: formData.age_group,
+        program_name: formData.program_name,
       },
       digital_marketing: {
-        impressions: data.impressions,
-        reach: data.reach,
-        clicks: data.clicks,
-        ctr: data.ctr,
-        conversions: data.conversions,
+        impressions: formData.impressions,
+        reach: formData.reach,
+        clicks: formData.clicks,
+        ctr: formData.ctr,
+        conversions: formData.conversions,
       },
     };
 
-    const response = await addNewCampaign(body);
-    console.log({ response });
+    if (data) {
+      const response = await updateCampaign({ ...body, id: campaignId || 0 });
+      console.log({ response });
+    } else {
+      const response = await addNewCampaign(body);
+      console.log({ response });
+    }
+
     modalControl();
   };
 
@@ -510,7 +208,7 @@ export default function AddCampaignForm({
             name="status"
             rules={{ required: "Campaign status is required" }}
             render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
+              <Select value={field.value || ""} onValueChange={field.onChange}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Status" />
                 </SelectTrigger>
@@ -536,7 +234,7 @@ export default function AddCampaignForm({
             name="type"
             rules={{ required: "Campaign type is required" }}
             render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
+              <Select value={field.value || ""} onValueChange={field.onChange}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Type" />
                 </SelectTrigger>
@@ -743,7 +441,7 @@ export default function AddCampaignForm({
               <MultiSelect
                 options={programData?.[0]?.data || []}
                 nameKey="program_name"
-                valueKey="program_id"
+                valueKey="program_name"
                 selected={field.value}
                 onChange={field.onChange}
                 placeholder="Select Programs"
@@ -761,8 +459,8 @@ export default function AddCampaignForm({
             render={({ field }) => (
               <MultiSelect
                 options={[
-                  { name: "Male", id: "1" },
-                  { name: "Female", id: "2" },
+                  { name: "Male", id: "male" },
+                  { name: "Female", id: "female" },
                 ]}
                 selected={field.value}
                 onChange={field.onChange}
