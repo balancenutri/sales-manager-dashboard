@@ -67,6 +67,7 @@ export default function AddMediaForm({
               type="number"
               placeholder="Enter total followers"
               {...field}
+              min={0}
               onChange={(e) => field.onChange(Number(e.target.value))}
             />
           )}
@@ -89,6 +90,7 @@ export default function AddMediaForm({
           render={({ field }) => (
             <Input
               id="total_visitors"
+              min={0}
               type="number"
               placeholder="Enter total visitors"
               {...field}
@@ -115,6 +117,7 @@ export default function AddMediaForm({
             <Input
               id="unique_engagement"
               type="number"
+              min={0}
               placeholder="Enter unique engagement"
               {...field}
               onChange={(e) => field.onChange(Number(e.target.value))}
@@ -141,6 +144,7 @@ export default function AddMediaForm({
               id="total_reach"
               type="number"
               placeholder="Enter total reach"
+              min={0}
               {...field}
               onChange={(e) => field.onChange(Number(e.target.value))}
             />
@@ -166,6 +170,7 @@ export default function AddMediaForm({
               id="impressions"
               type="number"
               placeholder="Enter impressions"
+              min={0}
               {...field}
               onChange={(e) => field.onChange(Number(e.target.value))}
             />
