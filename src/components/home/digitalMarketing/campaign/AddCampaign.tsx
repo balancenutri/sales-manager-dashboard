@@ -48,9 +48,9 @@ type FormValues = {
   name: string;
   type: string;
   status: string;
-  start_date: string; 
-  end_date: string; 
-  ad_spend: number; 
+  start_date: string;
+  end_date: string;
+  ad_spend: number;
   impressions: number;
   reach: number;
   clicks: number;
@@ -303,7 +303,6 @@ export default function AddCampaignForm({
                 id="ad_spend"
                 step="1"
                 placeholder="Enter ad spend"
-
                 {...field}
                 onChange={(e) => field.onChange(Number(e.target.value))}
               />
@@ -512,31 +511,33 @@ export default function AddCampaignForm({
 
         {/* Actions */}
         <div className="flex gap-2 justify-end pt-2">
-          <Button
-            variant="outline"
-            type="button"
-            onClick={() =>
-              reset({
-                name: "",
-                type: "",
-                status: "",
-                start_date: "",
-                end_date: "",
-                ad_spend: undefined,
-                impressions: undefined,
-                reach: undefined,
-                clicks: undefined,
-                ctr: undefined,
-                conversions: undefined,
-                gender: [],
-                health_conditions: [],
-                age_group: [],
-                program_name: [],
-              })
-            }
-          >
-            Reset
-          </Button>
+          {!data && (
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() =>
+                reset({
+                  name: "",
+                  type: "",
+                  status: "",
+                  start_date: "",
+                  end_date: "",
+                  ad_spend: 0,
+                  impressions: 0,
+                  reach: 0,
+                  clicks: 0,
+                  ctr: 0,
+                  conversions: 0,
+                  gender: [],
+                  health_conditions: [],
+                  age_group: [],
+                  program_name: [],
+                })
+              }
+            >
+              Reset
+            </Button>
+          )}
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : "Save Campaign"}
           </Button>

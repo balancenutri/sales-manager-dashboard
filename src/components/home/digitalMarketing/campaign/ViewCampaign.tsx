@@ -207,7 +207,7 @@ export default function ViewCampaign({
               conversions: data?.data?.digitalMarketing?.conversions || 0,
               ctr: data?.data?.digitalMarketing?.ctr || 0,
               end_date: data?.data?.campaignEndDate || "",
-              gender: data?.data?.targetUsers?.age_group || [],
+              gender: data?.data?.targetUsers?.gender || [],
               health_conditions:
                 data?.data?.targetUsers?.health_conditions || [],
               impressions: data?.data?.digitalMarketing?.impressions || 0,
