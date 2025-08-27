@@ -15,7 +15,7 @@ type FormValues = {
 export default function AddMediaForm({
   type,
   mediaData,
-  closeModal
+  closeModal,
 }: {
   type: "Youtube" | "Instagram" | "Facebook" | null;
   mediaData: FormValues;
@@ -56,7 +56,7 @@ export default function AddMediaForm({
       {/* Total Followers */}
       <div>
         <Label htmlFor="total_followers" className="mb-2">
-          Total Followers
+          Total {mediaData?.total_reach ? "Followers" : "Subscriber"}
         </Label>
         <Controller
           control={control}
@@ -132,30 +132,32 @@ export default function AddMediaForm({
       </div>
 
       {/* Total Reach */}
-      {mediaData?.total_reach && <div>
-        <Label htmlFor="total_reach" className="mb-2">
-          Total Reach
-        </Label>
-        <Controller
-          control={control}
-          name="total_reach"
-          render={({ field }) => (
-            <Input
-              id="total_reach"
-              type="number"
-              placeholder="Enter total reach"
-              min={0}
-              {...field}
-              onChange={(e) => field.onChange(Number(e.target.value))}
-            />
+      {mediaData?.total_reach && (
+        <div>
+          <Label htmlFor="total_reach" className="mb-2">
+            Total Reach
+          </Label>
+          <Controller
+            control={control}
+            name="total_reach"
+            render={({ field }) => (
+              <Input
+                id="total_reach"
+                type="number"
+                placeholder="Enter total reach"
+                min={0}
+                {...field}
+                onChange={(e) => field.onChange(Number(e.target.value))}
+              />
+            )}
+          />
+          {errors.total_reach && (
+            <p className="mt-1 text-xs text-red-600">
+              {errors.total_reach.message}
+            </p>
           )}
-        />
-        {errors.total_reach && (
-          <p className="mt-1 text-xs text-red-600">
-            {errors.total_reach.message}
-          </p>
-        )}
-      </div>}
+        </div>
+      )}
 
       {/* Impressions */}
       <div>
