@@ -39,6 +39,7 @@ const NumberInput = ({
     type="number"
     step={step}
     onWheel={(e) => e.currentTarget.blur()}
+    min={0}
     {...props}
   />
 );
@@ -300,8 +301,9 @@ export default function AddCampaignForm({
             render={({ field }) => (
               <NumberInput
                 id="ad_spend"
-                step="0.01"
+                step="1"
                 placeholder="Enter ad spend"
+
                 {...field}
                 onChange={(e) => field.onChange(Number(e.target.value))}
               />
