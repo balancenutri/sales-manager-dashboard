@@ -23,6 +23,7 @@ type MediaCardTypes = {
   icon: LucideIcon;
   title: string;
   desc: string;
+  isUpdate: boolean;
   data: SocailMediaType | undefined;
 };
 
@@ -57,9 +58,9 @@ export default function MediaCard({ data }: { data: MediaCardTypes }) {
             <Icon />
             <CardTitle>{data.title}</CardTitle>
           </div>
-          <Button variant="outline" onClick={handleDialogOpen}>
+          {data.isUpdate && <Button variant="outline" onClick={handleDialogOpen}>
             Update
-          </Button>
+          </Button>}
         </div>
         <CardDescription>{data.desc}</CardDescription>
       </CardHeader>

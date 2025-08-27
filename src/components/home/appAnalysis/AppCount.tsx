@@ -12,8 +12,8 @@ export default function AppCount() {
   return (
     <div className="grid lg:grid-cols-3 gap-4">
       <AppCountCard data={activeData?.data || {}} title="Active App Count" />
-      <AppCountCard data={ocData?.data || {}} title="Lead App Count" />
-      <AppCountCard data={leadData?.data || {}} title="OC App Count" />
+      <AppCountCard data={ocData?.data || {}} title="OC App Count" />
+      <AppCountCard data={leadData?.data || {}} title="Lead App Count" />
     </div>
   );
 }

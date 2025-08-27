@@ -29,6 +29,7 @@ export default function SocialCard() {
             icon: Youtube,
             desc: "Leads and Revenue from Youtube",
             title: "Youtube",
+            isUpdate: true,
           }}
         />
 
@@ -37,7 +38,7 @@ export default function SocialCard() {
             data: instagramData?.data,
             icon: Instagram,
             desc: "Leads and Revenue from Instagram",
-
+            isUpdate: true,
             title: "Instagram",
           }}
         />
@@ -46,6 +47,7 @@ export default function SocialCard() {
           data={{
             data: faceBookData?.data,
             icon: Facebook,
+            isUpdate: true,
             title: "Facebook",
             desc: "Leads and Revenue from Facebook",
           }}
@@ -56,6 +58,7 @@ export default function SocialCard() {
           data={{
             data: socialMediaData?.data,
             icon: Clapperboard,
+            isUpdate: false,
             title: "Overall Social Media Performance",
             desc: "Consolidated metrics across all social platforms",
           }}
