@@ -8,7 +8,7 @@ type FormValues = {
   total_followers: number;
   total_visitors: number;
   unique_engagement: number;
-  total_reach: number;
+  total_reach?: number;
   impressions: number;
 };
 
@@ -132,7 +132,7 @@ export default function AddMediaForm({
       </div>
 
       {/* Total Reach */}
-      <div>
+      {mediaData?.total_reach && <div>
         <Label htmlFor="total_reach" className="mb-2">
           Total Reach
         </Label>
@@ -155,7 +155,7 @@ export default function AddMediaForm({
             {errors.total_reach.message}
           </p>
         )}
-      </div>
+      </div>}
 
       {/* Impressions */}
       <div>

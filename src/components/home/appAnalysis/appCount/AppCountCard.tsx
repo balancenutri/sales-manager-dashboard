@@ -5,6 +5,7 @@ import { keyString } from "@/lib/utils";
 type AppCountType = {
   [key: string]: number;
 };
+
 export default function AppCountCard({
   data,
   title,
@@ -16,11 +17,10 @@ export default function AppCountCard({
     <Card>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        {/* <CardDescription>Important user actions within the app</CardDescription> */}
       </CardHeader>
       <CardContent className="space-y-3">
-        {!data
-          ? Array(4)
+        {Object.entries(data).length < 1
+          ? Array(3)
               .fill(null)
               .map((_, index: number) => (
                 <div

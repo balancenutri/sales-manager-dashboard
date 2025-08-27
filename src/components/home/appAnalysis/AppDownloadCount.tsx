@@ -6,7 +6,7 @@ import { useGetAppDownloadsCountQuery } from "@/service/dashboard/api";
 export default function AppDownloadCount() {
   const { data, isFetching } = useGetAppDownloadsCountQuery();
 
-  const skeletonArray = Array(4).fill(null);
+  const skeletonArray = Array(5).fill(null);
 
   console.log(data?.data);
   return (
@@ -21,6 +21,11 @@ export default function AppDownloadCount() {
                     <Skeleton className="h-4 w-16 rounded-md" />
                     <Skeleton className="h-4 w-10 rounded-md" />
                   </div>
+                  <div className="flex items-center justify-between">
+                    <Skeleton className="h-4 w-16 rounded-md" />
+                    <Skeleton className="h-4 w-10 rounded-md" />
+                  </div>
+                  <hr />
                   <div className="flex items-center justify-between">
                     <Skeleton className="h-4 w-16 rounded-md" />
                     <Skeleton className="h-4 w-10 rounded-md" />

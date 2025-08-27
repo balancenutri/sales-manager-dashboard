@@ -401,7 +401,7 @@ export interface UpdateSocialMediaBody {
         total_followers: number;
         total_visitors: number;
         unique_engagement: number;
-        total_reach: number;
+        total_reach?: number;
         impressions: number;
         engagement_rate: string;
     },
