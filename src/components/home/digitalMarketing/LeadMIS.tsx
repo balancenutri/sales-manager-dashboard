@@ -65,8 +65,6 @@ export default function LeadMIS() {
 
   const filters = watch();
 
-  // API calls with dependencies
-
   const { data: regionData, isFetching: regionLoading } = useGetRegionsQuery();
   const { data: countryData, isFetching: countryLoading } =
     useGetCountriesByRegionQuery(
@@ -89,11 +87,6 @@ export default function LeadMIS() {
   );
 
   const { data: healthData } = useGetAllHealthIssueQuery();
-
-  // const handleWatiBroadcast = () => {
-  //   if (!selectedWatiTemplate) return;
-  //   console.log("Filter values:", filters);
-  // };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -171,31 +164,6 @@ export default function LeadMIS() {
 
   const [triggerExport, { isFetching: exportLoading }] =
     useLazyGetLeadMisDataQuery();
-  // const handleExportLeads = () => {
-  //   getLeadMisData({
-  //   age_groups: filters.ageGroup,
-  //   countries: filters.country,
-  //   states: filters.state,
-  //   cities: filters.city,
-  //   genders: filters.gender,
-  //   health_conditions: filters.clinicalCondition,
-  //   regions: filters.region,
-  //   stages: filters.stage,
-  //   statuses: filters.salesStatus,
-  //   page,
-  //   limit,
-  //   is_export: true
-  // }).then((response: any) => {
-  //   console.log(response, 345678);
-  //   const url = window.URL.createObjectURL(new Blob([response.data]));
-  //   const link = document.createElement('a');
-  //   link.href = url;
-  //   link.setAttribute('download', 'lead_mis.xlsx');
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   link.remove();
-  // })
-  // };
 
   const handleExportLeads = async () => {
     try {
@@ -270,28 +238,6 @@ export default function LeadMIS() {
             <Download className="mr-2 h-4 w-4 animate-collapsible-down" />
             Export ({data?.totalCount})
           </Button>
-          {/* <Select
-            value={selectedWatiTemplate}
-            onValueChange={setSelectedWatiTemplate}
-          >
-            <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Select WATI Template" />
-            </SelectTrigger>
-            <SelectContent>
-              {mockData.watiTemplates.map((template) => (
-                <SelectItem key={template.id} value={template.name}>
-                  {template.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Button
-            onClick={handleWatiBroadcast}
-            disabled={!selectedWatiTemplate}
-          >
-            <Send className="mr-2 h-4 w-4" />
-            Broadcast ({limit})
-          </Button> */}
         </div>
       </div>
 
@@ -525,7 +471,22 @@ export default function LeadMIS() {
                   data?.totalCount || 0
                 } leads match`}
             </div>
-            <Button variant="outline" onClick={() => reset()}>
+            <Button
+              variant="outline"
+              onClick={() =>
+                reset({
+                  gender: [],
+                  ageGroup: [],
+                  clinicalCondition: [],
+                  region: [],
+                  country: [],
+                  state: [],
+                  city: [],
+                  salesStatus: [],
+                  stage: [],
+                })
+              }
+            >
               Clear All Filters
             </Button>
           </div>
@@ -591,7 +552,6 @@ export default function LeadMIS() {
                   <TableHead>Location</TableHead>
                   <TableHead>Sales Status</TableHead>
                   <TableHead>Stage</TableHead>
-                  {/* <TableHead>Previous Campaigns</TableHead> */}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -610,17 +570,6 @@ export default function LeadMIS() {
                       <TableCell>{lead.Gender || "N/A"}</TableCell>
                       <TableCell>{lead["Age Group"] || "N/A"}</TableCell>
                       <TableCell>
-                        {/* <div className="flex flex-wrap gap-1">
-                          {lead.clinicalCondition.map((condition, index) => (
-                            <Badge
-                              key={index}
-                              variant="outline"
-                              className="text-xs"
-                            >
-                              {condition}
-                            </Badge>
-                          ))}
-                        </div> */}
                         {lead["Clinical Conditions"] || "N/A"}
                       </TableCell>
                       <TableCell className="text-sm">
@@ -636,24 +585,6 @@ export default function LeadMIS() {
                           {lead.Stage}
                         </Badge>
                       </TableCell>
-                      {/* <TableCell>
-                        {lead.previousCampaigns.length > 0 ? (
-                          <div className="flex flex-wrap gap-1">
-                            {lead.previousCampaigns.map((campaign, index) => (
-                              <Badge
-                                key={index}
-                                variant="secondary"
-                                className="text-xs"
-                              >
-                                {campaign}
-                              </Badge>
-                            ))}
-                          </div>
-                        ) : (
-                        )}  <span className="text-muted-foreground text-sm">
-                          None
-                        </span> 
-                      </TableCell> */}
                     </TableRow>
                   ))
                 ) : (
