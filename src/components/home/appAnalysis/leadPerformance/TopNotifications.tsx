@@ -2,9 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ClientPerformanceData } from "@/lib/types";
 
 export default function TopNotifications({
-  data,
+  data, title
 }: {
   data: ClientPerformanceData | undefined;
+  title: string;
 }) {
   return (
     <Card className="shadow-lg border-0 bg-white">
@@ -12,7 +13,7 @@ export default function TopNotifications({
         <div className="flex items-center space-x-3">
           {/* <Bell className="h-6 w-6" /> */}
           <CardTitle className="text-md font-semibold">
-            Top Performing Notifications
+            {title}
           </CardTitle>
         </div>
       </CardHeader>
@@ -41,9 +42,9 @@ export default function TopNotifications({
                 </div>
                 <div className="flex-shrink-0 text-right">
                   <div className="text-lg font-bold text-purple-600">
-                    {notification.seen_count}
+                    {title === "Top Performing Notification" ? "34.36%" : "6.75%"}
                   </div>
-                  <div className="text-xs text-gray-500">views</div>
+                  <div className="text-xs text-gray-500">{"open"}</div>
                 </div>
               </div>
             ))}

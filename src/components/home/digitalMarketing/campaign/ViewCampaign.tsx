@@ -92,6 +92,12 @@ export default function ViewCampaign({
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
+                  <span className="font-medium">Conversion</span>
+                  <span className="font-semibold">
+                    {data.data?.digitalMarketing?.conversions}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
                   <span className="font-medium">Leads Generated</span>
                   <span className="font-semibold">
                     {data.data.leadsGenerated}
@@ -101,12 +107,6 @@ export default function ViewCampaign({
                   <span className="font-medium">Revenue Generated</span>
                   <span className="font-semibold">
                     ₹{data.data.revenueGenerated}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-medium">Conversion Rate</span>
-                  <span className="font-semibold">
-                    {data.data?.digitalMarketing?.conversions}%
                   </span>
                 </div>
               </CardContent>
@@ -179,7 +179,7 @@ export default function ViewCampaign({
                     </div>
                     <div>
                       <span className="text-sm font-medium">CTR: </span>
-                      <span className="text-sm font-medium">{data.data.digitalMarketing?.ctr || 0}</span>
+                      <span className="text-sm font-medium">{data.data.digitalMarketing?.ctr || 0}%</span>
                     </div>
                   </div>
                 </CardContent>

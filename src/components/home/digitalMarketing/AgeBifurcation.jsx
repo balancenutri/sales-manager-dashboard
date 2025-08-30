@@ -62,8 +62,6 @@
 //   );
 // }
 
-
-
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -74,35 +72,60 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export default function LeadDistribution() {
+export default function AgeBifurcation() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Gender Bifurcation</CardTitle>
+        <CardTitle>Age Group</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="text-center">Gender</TableHead>
-              <TableHead className="text-center">Lead</TableHead>
-              <TableHead className="text-center">OC</TableHead>
+              <TableHead className="text-center">Age Group</TableHead>
+              <TableHead className="text-center">Below 20</TableHead>
+              <TableHead className="text-center">21 - 30</TableHead>
+              <TableHead className="text-center">31 - 40</TableHead>
+              <TableHead className="text-center">41 - 50</TableHead>
+              <TableHead className="text-center">Above 50</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="font-semibold text-center">Male</TableCell>
+              <TableCell className="font-semibold text-center">
+                Lead
+              </TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
-                6789
+                546
+              </TableCell>
+              <TableCell className="text-center text-blue-600 underline font-bold">
+                576
+              </TableCell>
+              <TableCell className="text-center text-blue-600 underline font-bold">
+                576
+              </TableCell>
+              <TableCell className="text-center text-blue-600 underline font-bold">
+                576
               </TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
                 576
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell className="font-semibold text-center">Female</TableCell>
+              <TableCell className="font-semibold text-center">
+                OC
+              </TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
-                6789
+                546
+              </TableCell>
+              <TableCell className="text-center text-blue-600 underline font-bold">
+                576
+              </TableCell>
+              <TableCell className="text-center text-blue-600 underline font-bold">
+                576
+              </TableCell>
+              <TableCell className="text-center text-blue-600 underline font-bold">
+                576
               </TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
                 576

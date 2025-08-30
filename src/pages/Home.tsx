@@ -23,6 +23,10 @@ import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
 import DigitalMarketingAnalytics from "@/components/home/digitalMarketing/DigitalMarketingAnalytics";
 import CampaignOverview from "@/components/home/digitalMarketing/CampaignOverview";
 import AppCount from "@/components/home/appAnalysis/AppCount";
+import LeadDistribution from "@/components/home/digitalMarketing/LeadDistribution";
+import AgeBifurcation from "@/components/home/digitalMarketing/AgeBifurcation";
+import StageBifurcation from "@/components/home/digitalMarketing/StageBifurcation";
+import UserDistribution from "@/components/home/digitalMarketing/UserDistribution";
 // import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
 
 // Calculate total sales opportunity and add to overview
@@ -33,8 +37,6 @@ mockData.overview.totalSalesOpportunity = Object.values(
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* <Toaster /> Add Toaster component for displaying messages */}
-      {/* Header */}
       <Header />
       <div className="p-6">
         {/* Main Content Tabs */}
@@ -108,7 +110,20 @@ export default function Home() {
             <DigitalMarketingAnalytics />
 
             {/* Overall Male/Female Leads */}
-            <GenderBifurcation />
+            <h2 className="text-2xl font-bold">Lead & OC Bifurcation</h2>
+            <div className="grid grid-cols-4 gap-4">
+              <UserDistribution />
+              <LeadDistribution />
+              <div className="col-span-2">
+                <StageBifurcation />
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-4 mb-20">
+              <GenderBifurcation />
+              <div className="col-span-3">
+                <AgeBifurcation />
+              </div>
+            </div>
 
             {/* Clinical Conditions Section */}
             <ClinicalBifurcation />
@@ -129,27 +144,24 @@ export default function Home() {
             {/* <div className="max-w-[500px]">
               <LeadAppCount />
             </div> */}
-            <h2 className="text-2xl font-bold">App Analytics Overview</h2>
+            <h2 className="text-2xl font-bold">Content Engagement</h2>
 
             <div className="grid grid-cols-3 gap-6">
               {/* App Usage Overview */}
-              <AppUsageActivity />
+              {/* <AppUsageActivity /> */}
 
               {/* Key Engagement Metrics */}
               <KeyEngagementMetrix />
 
               {/* Activated Features */}
               <ActivatedFeatures />
+              <ContentManagement type="content" />
+              <ContentManagement type="guide" />
             </div>
-            <ContentManagement />
             <LeadPerformance />
-
           </TabsContent>
         </Tabs>
-
-        {/* Content Engagement Section */}
       </div>
-      {/* Campaign Snapshot Modal */}
     </div>
   );
 }

@@ -28,7 +28,7 @@ export default function ClinicalBifurcation() {
     <div>
       <div className="space-y-6 mt-8">
         <h2 className="text-2xl font-bold mb-10">Clinical Conditions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-6 gap-y-10">
           {isLoading || isDataEmpty
             ? skeletonArray.map((_, index: number) => (
                 <Card key={index} className="relative">
@@ -65,13 +65,13 @@ export default function ClinicalBifurcation() {
                 </CardHeader> */}
                   <CardContent className="space-y-2 mt-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm ">OLR</span>
+                      <span className="text-sm ">Lead</span>
                       <span className="font-semibold text-base">
                         {data.leads}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm ">OCL</span>
+                      <span className="text-sm ">OC</span>
                       <span className="font-semibold text-base">
                         {data.ocl}
                       </span>

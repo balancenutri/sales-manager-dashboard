@@ -22,9 +22,9 @@ import {
 
 export default function DigitalMarketingAnalytics() {
   return (
-    <div>
+    <div className="space-y-4">
       <h2 className="text-2xl font-bold">Digital Marketing Analytics</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
+      <div className="space-y-4">
         {/* <Card>
           <CardHeader>
             <CardTitle>Campaign Performance</CardTitle>
@@ -156,65 +156,131 @@ export default function DigitalMarketingAnalytics() {
                 {mockData.websiteAnalytics.totalVisitors.mtd.toLocaleString()}
               </div>
             </div> */}
-            <div className="flex items-center justify-between border-b pb-2">
-              <div className="flex items-center space-x-3">
-                <Eye className="h-4 w-4 text-purple-500" />
-                <span className="font-medium">Page Views</span>
+
+            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-5">
+          {Object.entries(accountData).map(([key, value]) => (
+            <div
+              key={key}
+              className="flex justify-between py-3 px-4 bg-muted rounded-lg"
+            >
+              <span className="capitalize">{key.replace(/_/g, " ")}</span>
+              <span className="font-medium">{value}</span>
+            </div>
+          ))}
+        </div> */}
+            <div className="grid grid-cols-3 gap-3">
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <Eye className="h-4 w-4 text-purple-500" />
+                  <span className="font-medium">Page Views</span>
+                </div>
+                <div className="font-semibold text-lg">
+                  {mockData.websiteAnalytics.pageViews.day} |{" "}
+                  {mockData.websiteAnalytics.pageViews.mtd.toLocaleString()}
+                </div>
               </div>
-              <div className="font-semibold text-lg">
-                {mockData.websiteAnalytics.pageViews.day} |{" "}
-                {mockData.websiteAnalytics.pageViews.mtd.toLocaleString()}
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <Users className="h-4 w-4 text-purple-500" />
+                  <span className="font-medium">Total Engagement</span>
+                </div>
+                <div className="font-semibold text-lg">
+                  {mockData.websiteAnalytics.totalUsers.day.toLocaleString()} |{" "}
+                  {mockData.websiteAnalytics.totalUsers.mtd.toLocaleString()}
+                </div>
+              </div>
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <Activity className="h-4 w-4 text-orange-500" />
+                  <span className="font-medium">Avg. Session Duration</span>
+                </div>
+                <div className="font-semibold text-lg">
+                  {mockData.websiteAnalytics.avgSessionDuration.day} |{" "}
+                  {mockData.websiteAnalytics.avgSessionDuration.mtd}
+                </div>
+              </div>
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <TrendingUp className="h-4 w-4 text-green-500" />
+                  <span className="font-medium">Bounce Rate</span>
+                </div>
+                <div className="font-semibold text-lg">
+                  {mockData.websiteAnalytics.bounceRate.day}% |{" "}
+                  {mockData.websiteAnalytics.bounceRate.mtd}%
+                </div>
+              </div>
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <Activity className="h-4 w-4 text-orange-500" />
+                  <span className="font-medium">Unique Engagement</span>
+                </div>
+                <div className="font-semibold text-lg">
+                  {mockData.websiteAnalytics.uniqueEngagement.day.toLocaleString()}{" "}
+                  |{" "}
+                  {mockData.websiteAnalytics.uniqueEngagement.mtd.toLocaleString()}
+                </div>
+              </div>
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <UserPlus className="h-4 w-4 text-teal-500" />
+                  <span className="font-medium">Leads from Website</span>
+                </div>
+                <div className="font-semibold text-lg">
+                  {mockData.websiteAnalytics.leadsFromWebsite.day} |{" "}
+                  {mockData.websiteAnalytics.leadsFromWebsite.mtd}
+                </div>
               </div>
             </div>
-            <div className="flex items-center justify-between border-b pb-2">
-              <div className="flex items-center space-x-3">
-                <Users className="h-4 w-4 text-purple-500" />
-                <span className="font-medium">Total Engagement</span>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Campaign Details</CardTitle>
+            <CardDescription>Campaign Overview</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <Eye className="h-4 w-4 text-purple-500" />
+                  <span className="font-medium">No. of Champaign (Active)</span>
+                </div>
+                <div className="font-semibold text-lg">10</div>
               </div>
-              <div className="font-semibold text-lg">
-                {mockData.websiteAnalytics.totalUsers.day.toLocaleString()} |{" "}
-                {mockData.websiteAnalytics.totalUsers.mtd.toLocaleString()}
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <Users className="h-4 w-4 text-purple-500" />
+                  <span className="font-medium">Ad Spend</span>
+                </div>
+                <div className="font-semibold text-lg">3000</div>
               </div>
-            </div>
-                        <div className="flex items-center justify-between border-b pb-2">
-              <div className="flex items-center space-x-3">
-                <Activity className="h-4 w-4 text-orange-500" />
-                <span className="font-medium">Avg. Session Duration</span>
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <Activity className="h-4 w-4 text-orange-500" />
+                  <span className="font-medium">Total Impressions</span>
+                </div>
+                <div className="font-semibold text-lg">10342</div>
               </div>
-              <div className="font-semibold text-lg">
-                {mockData.websiteAnalytics.avgSessionDuration.day} |{" "}
-                {mockData.websiteAnalytics.avgSessionDuration.mtd}
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <TrendingUp className="h-4 w-4 text-green-500" />
+                  <span className="font-medium">Total Reach</span>
+                </div>
+                <div className="font-semibold text-lg">3453</div>
               </div>
-            </div>
-            <div className="flex items-center justify-between border-b pb-2">
-              <div className="flex items-center space-x-3">
-                <TrendingUp className="h-4 w-4 text-green-500" />
-                <span className="font-medium">Bounce Rate</span>
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <Activity className="h-4 w-4 text-orange-500" />
+                  <span className="font-medium">Lead Generated</span>
+                </div>
+                <div className="font-semibold text-lg">345</div>
               </div>
-              <div className="font-semibold text-lg">
-                {mockData.websiteAnalytics.bounceRate.day}% |{" "}
-                {mockData.websiteAnalytics.bounceRate.mtd}%
-              </div>
-            </div>
-            <div className="flex items-center justify-between border-b pb-2">
-              <div className="flex items-center space-x-3">
-                <Activity className="h-4 w-4 text-orange-500" />
-                <span className="font-medium">Unique Engagement</span>
-              </div>
-              <div className="font-semibold text-lg">
-                {mockData.websiteAnalytics.uniqueEngagement.day.toLocaleString()}{" "}
-                |{" "}
-                {mockData.websiteAnalytics.uniqueEngagement.mtd.toLocaleString()}
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <UserPlus className="h-4 w-4 text-teal-500" />
-                <span className="font-medium">Leads from Website</span>
-              </div>
-              <div className="font-semibold text-lg">
-                {mockData.websiteAnalytics.leadsFromWebsite.day} |{" "}
-                {mockData.websiteAnalytics.leadsFromWebsite.mtd}
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <UserPlus className="h-4 w-4 text-teal-500" />
+                  <span className="font-medium">Revenue Generated</span>
+                </div>
+                <div className="font-semibold text-lg">1000</div>
               </div>
             </div>
           </CardContent>

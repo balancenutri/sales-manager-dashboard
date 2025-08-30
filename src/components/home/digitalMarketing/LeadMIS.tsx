@@ -219,7 +219,7 @@ export default function LeadMIS() {
     <div className="space-y-6 mt-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">Lead MIS for Retargeting</h2>
+          <h2 className="text-2xl font-bold">MIS for Retargeting</h2>
           <p className="text-muted-foreground">
             {getActiveFiltersCount() > 0 && (
               <span className="inline-flex items-center gap-1">
@@ -245,7 +245,7 @@ export default function LeadMIS() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Filter className="h-5 w-5" />
-            Filter Leads
+            Filter Users
           </CardTitle>
           <CardDescription>
             Apply multiple filters to segment leads for retargeting campaigns
@@ -253,6 +253,28 @@ export default function LeadMIS() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {/* Gender Filter */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">
+                Select User Type
+              </label>
+              <Controller
+                name="gender"
+                control={control}
+                render={({ field }) => (
+                  <MultiSelect
+                    options={[
+                      { name: "Male", id: "1" },
+                      { name: "Female", id: "2" },
+                    ]}
+                    selected={field.value}
+                    onChange={field.onChange}
+                    placeholder="Select User Type"
+                  />
+                )}
+              />
+            </div>
+
             {/* Gender Filter */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">

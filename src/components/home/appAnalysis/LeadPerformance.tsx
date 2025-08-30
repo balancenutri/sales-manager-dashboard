@@ -49,7 +49,7 @@ export default function LeadPerformance() {
   const filter = useSelector(selectPeriod);
   console.log({ filter });
   const { data: engagementData, isLoading } = useGetClientPerformanceQuery({
-    time_range: getDateRange(filter),
+    time_range: getDateRange("this_quarter"),
     user_status: ["Active", "Oc", "Lead"],
   });
 
@@ -85,24 +85,28 @@ export default function LeadPerformance() {
       <div className="space-y-8">
         <div className="space-y-2">
           <h2 className="text-2xl font-bold text-gray-900">
-            Client Engagement Dashboard
+            Lead Engagement Dashboard
           </h2>
-          {/* <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Monitor user engagement metrics, notification performance, and app
-            adoption rates
-          </p> */}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
           <NotificationEngagement data={notificationData} />
-          <WeeklyEngagement data={weeklyEngagementData} />
-          <AppUpdateStatus data={metrics} />
+          <div className="col-span-2">
+            <TopNotifications
+              data={metrics}
+              title="Top Performing Notification"
+            />
+          </div>
+          <div className="col-span-2">
+            <TopNotifications data={metrics} title="Low Performing Notification" />
+          </div>
+          {/* <WeeklyEngagement data={weeklyEngagementData} />
+          <AppUpdateStatus data={metrics} /> */}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <TopNotifications data={metrics} />
-          <EngagementByProgramStack data={programStackData} />
-        </div>
+        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* <EngagementByProgramStack data={programStackData} /> */}
+        {/* </div>  */}
       </div>
     </div>
   );

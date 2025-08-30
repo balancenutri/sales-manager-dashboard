@@ -1,18 +1,71 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { keyString } from "@/lib/utils";
 import { useGetAppDownloadsCountQuery } from "@/service/dashboard/api";
+import { useState } from "react";
+
+type DeviceType = "all" | "android" | "ios";
 
 export default function AppDownloadCount() {
-  const { data, isFetching } = useGetAppDownloadsCountQuery();
+  const { data } = useGetAppDownloadsCountQuery();
 
   const skeletonArray = Array(5).fill(null);
+
+  const [selected, setSelected] = useState<DeviceType>("all");
 
   console.log(data?.data);
   return (
     <div>
-      <h2 className="text-2xl font-bold my-4">App Download Counts</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 overflow-x-auto pb-4">
+      <div className="flex justify-between items-center space-y-6">
+        <h2 className="text-2xl font-bold my-4">App Download Counts</h2>
+        <Tabs defaultValue={selected} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger
+              className="cursor-pointer"
+              value="all"
+              onClick={() => setSelected("all")}
+            >
+              All
+            </TabsTrigger>
+            <TabsTrigger
+              className="cursor-pointer"
+              value="android"
+              onClick={() => setSelected("android")}
+            >
+              Android
+            </TabsTrigger>
+            <TabsTrigger
+              className="cursor-pointer"
+              value="ios"
+              onClick={() => setSelected("ios")}
+            >
+              IOS
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </div>
+
+      <Card className="">
+        <div className="flex justify-between items-center px-4 -my-3">
+          {!data?.data
+            ? skeletonArray.map((_, index: number) => (
+                <div className="flex items-center justify-between" key={index}>
+                  <Skeleton className="h-4 w-16 rounded-md" />
+                  <Skeleton className="h-4 w-10 rounded-md" />
+                </div>
+              ))
+            : Object.entries(data?.data).map(([period, data]) => (
+                <div className="text-sm">
+                  <span className="mr-2 font-semibold">
+                    {keyString(period?.replace("_count", " Downloads"))} :
+                  </span>
+                  <span className="font-bold">{data.lead + data.oc}</span>
+                </div>
+              ))}
+        </div>
+      </Card>
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 overflow-x-auto pb-4">
         {isFetching || !data?.data
           ? skeletonArray.map((_, index: number) => (
               <Card key={index} className="relative">
@@ -36,7 +89,6 @@ export default function AppDownloadCount() {
           : Object.entries(data?.data).map(([period, data]) => (
               <Card key={period} className="min-w-[200px]">
                 {" "}
-                {/* Added min-w to ensure cards don't shrink too much */}
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-medium capitalize">
                     {keyString(period?.replace("_count", " Downloads"))}
@@ -49,7 +101,6 @@ export default function AppDownloadCount() {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm">OC</span>{" "}
-                    {/* Changed from Organic Conversions */}
                     <span className="font-semibold text-base">{data.oc}</span>
                   </div>
                   <div className="flex items-center justify-between pt-2 border-t">
@@ -61,7 +112,7 @@ export default function AppDownloadCount() {
                 </CardContent>
               </Card>
             ))}
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -20,7 +20,7 @@ export default function NotificationEngagement({
       <CardContent>
         <div className="text-center space-y-6">
           <div className="space-y-2">
-            <div className="text-5xl font-bold text-cyan-600">
+            <div className="text-3xl font-bold text-cyan-600">
               {data?.seenPercentage}%
             </div>
             <p className="text-sm text-gray-500">Overall engagement rate</p>
@@ -31,7 +31,7 @@ export default function NotificationEngagement({
               <span className="text-sm font-medium text-gray-700">
                 Total Sent
               </span>
-              <span className="text-lg font-bold text-gray-900">
+              <span className="text-base font-bold text-gray-900">
                 {data?.totalNotifications?.toLocaleString()}
               </span>
             </div>
@@ -39,12 +39,12 @@ export default function NotificationEngagement({
               <span className="text-sm font-medium text-gray-700">
                 Total Seen
               </span>
-              <span className="text-lg font-bold text-cyan-600">
+              <span className="text-base font-bold text-cyan-600">
                 {data?.seenNotifications?.toLocaleString()}
               </span>
             </div>
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-              <span className="text-sm font-medium text-gray-700">Trend</span>
+              <span className="text-sm font-medium text-gray-700">Open Trend</span>
               <div className="flex items-center space-x-2">
                 {Number.parseFloat(data?.trend || "0") >= 0 ? (
                   <TrendingUp className="h-4 w-4 text-green-500" />
