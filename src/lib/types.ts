@@ -107,6 +107,7 @@ export type LeadMis = {
     "Region": string;
     "Sales Status": string;
     "Stage": string;
+    "User Type": string;
 }
 
 export interface LeadMisResponse {
@@ -174,6 +175,7 @@ export type LeadMisBody = {
     stages?: number[];
     page?: number;
     limit?: number;
+    user_types?: string[];
     is_export?: boolean;
 };
 

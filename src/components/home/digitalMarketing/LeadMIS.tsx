@@ -43,6 +43,7 @@ import {
   useLazyGetLeadMisDataQuery,
 } from "@/service/dashboard/api";
 import { keyString } from "@/lib/utils";
+import type { LeadMisBody } from "@/lib/types";
 
 export default function LeadMIS() {
   // const [selectedWatiTemplate, setSelectedWatiTemplate] = useState<string>();
@@ -60,6 +61,7 @@ export default function LeadMIS() {
       city: [] as number[],
       salesStatus: [] as number[],
       stage: [] as number[],
+      userTypes: [] as string[],
     },
   });
 
@@ -142,25 +144,42 @@ export default function LeadMIS() {
     { name: "Hot", id: 2 },
     { name: "Warm", id: 3 },
     { name: "Cold", id: 4 },
-    { name: "To Engage", id: 0 },
-    { name: "First Pitched", id: 1 },
-    { name: "Connected", id: 6 },
-    { name: "Consultation Booked", id: 7 },
+    ...(filters.userTypes.includes("lead")
+      ? [
+          { name: "To Engage", id: 0 },
+          { name: "First Pitched", id: 1 },
+          { name: "Connected", id: 6 },
+          { name: "Consultation Booked", id: 7 },
+        ]
+      : []),
   ];
 
-  const { data, isLoading } = useGetLeadUserMisDataQuery({
-    age_groups: filters.ageGroup,
-    countries: filters.country,
-    states: filters.state,
-    cities: filters.city,
-    genders: filters.gender,
-    health_conditions: filters.clinicalCondition,
-    regions: filters.region,
-    stages: filters.stage,
-    statuses: filters.salesStatus,
-    page,
-    limit,
-  });
+  const buildQueryParams = (): LeadMisBody => {
+    const query: LeadMisBody = { page, limit };
+
+    const filterMap: Partial<Record<keyof LeadMisBody, any>> = {
+      age_groups: filters.ageGroup,
+      countries: filters.country,
+      states: filters.state,
+      cities: filters.city,
+      genders: filters.gender,
+      health_conditions: filters.clinicalCondition,
+      regions: filters.region,
+      stages: filters.stage,
+      statuses: filters.salesStatus,
+      user_types: filters.userTypes,
+    };
+
+    for (const [key, value] of Object.entries(filterMap)) {
+      if (Array.isArray(value) && value.length > 0) {
+        (query as any)[key] = value;
+      }
+    }
+
+    return query;
+  };
+
+  const { data, isLoading } = useGetLeadUserMisDataQuery(buildQueryParams());
 
   const [triggerExport, { isFetching: exportLoading }] =
     useLazyGetLeadMisDataQuery();
@@ -259,13 +278,13 @@ export default function LeadMIS() {
                 Select User Type
               </label>
               <Controller
-                name="gender"
+                name="userTypes"
                 control={control}
                 render={({ field }) => (
                   <MultiSelect
                     options={[
-                      { name: "Male", id: "1" },
-                      { name: "Female", id: "2" },
+                      { name: "Lead", id: "lead" },
+                      { name: "OC", id: "oc" },
                     ]}
                     selected={field.value}
                     onChange={field.onChange}
@@ -519,7 +538,7 @@ export default function LeadMIS() {
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle>Filtered Leads ({data?.totalCount})</CardTitle>
+              <CardTitle>Filtered Users ({data?.totalCount})</CardTitle>
               <CardDescription>
                 List of leads matching the applied filters
               </CardDescription>
@@ -570,6 +589,7 @@ export default function LeadMIS() {
                   <TableHead>Email</TableHead>
                   <TableHead>Gender</TableHead>
                   <TableHead>Age Group</TableHead>
+                  <TableHead>User Type</TableHead>
                   <TableHead>Clinical Condition</TableHead>
                   <TableHead>Location</TableHead>
                   <TableHead>Sales Status</TableHead>
@@ -591,6 +611,7 @@ export default function LeadMIS() {
                       </TableCell>
                       <TableCell>{lead.Gender || "N/A"}</TableCell>
                       <TableCell>{lead["Age Group"] || "N/A"}</TableCell>
+                      <TableCell>{lead["User Type"] || "N/A"}</TableCell>
                       <TableCell>
                         {lead["Clinical Conditions"] || "N/A"}
                       </TableCell>

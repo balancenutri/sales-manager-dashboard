@@ -8,10 +8,13 @@ import WeeklyEngagement from "./leadPerformance/WeeklyEngagement";
 import AppUpdateStatus from "./leadPerformance/AppUpdateStatus";
 import TopNotifications from "./leadPerformance/TopNotifications";
 import EngagementByProgramStack from "./leadPerformance/EngagementByProgramStack";
+import { useState } from "react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 dayjs.extend(isoWeek);
 
 export default function LeadPerformance() {
+  const [selected, setSelected] = useState("active");
   const getDateRange = (
     filter: "today" | "this_week" | "mtd" | "this_quarter"
   ): string => {
@@ -80,13 +83,46 @@ export default function LeadPerformance() {
       seen: Number.parseInt(item.seen_notifications, 10),
     })) || [];
 
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="space-y-8">
-        <div className="space-y-2">
+        <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold text-gray-900">
-            Lead Engagement Dashboard
+            Notification Engagement
           </h2>
+          <Tabs defaultValue={selected} className="space-y-6">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger
+                className="cursor-pointer"
+                value="all"
+                onClick={() => setSelected("all")}
+              >
+                All Lead
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="active"
+                onClick={() => setSelected("active")}
+              >
+                Active
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="oc"
+                onClick={() => setSelected("oc")}
+              >
+                OC
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="lead"
+                onClick={() => setSelected("lead")}
+              >
+                Lead
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
@@ -98,15 +134,12 @@ export default function LeadPerformance() {
             />
           </div>
           <div className="col-span-2">
-            <TopNotifications data={metrics} title="Low Performing Notification" />
+            <TopNotifications
+              data={metrics}
+              title="Low Performing Notification"
+            />
           </div>
-          {/* <WeeklyEngagement data={weeklyEngagementData} />
-          <AppUpdateStatus data={metrics} /> */}
         </div>
-
-        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* <EngagementByProgramStack data={programStackData} /> */}
-        {/* </div>  */}
       </div>
     </div>
   );

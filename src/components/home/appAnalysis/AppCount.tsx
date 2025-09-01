@@ -47,7 +47,7 @@ export default function AppCount() {
     },
   };
 
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("mtd");
   return (
     <div className="mt-12">
       <div className="flex justify-between items-center mb-4">
@@ -56,28 +56,28 @@ export default function AppCount() {
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger
               className="cursor-pointer"
-              value="all"
+              value="mtd"
               onClick={() => setSelected("mtd")}
             >
               This Month
             </TabsTrigger>
             <TabsTrigger
               className="cursor-pointer"
-              value="android"
+              value="last_24_hours"
               onClick={() => setSelected("last_24_hours")}
             >
               Last 24 Hours
             </TabsTrigger>
             <TabsTrigger
               className="cursor-pointer"
-              value="ios"
+              value="last_48_hours"
               onClick={() => setSelected("last_48_hours")}
             >
               Last 48 Hours
             </TabsTrigger>
             <TabsTrigger
               className="cursor-pointer"
-              value="ios"
+              value="all"
               onClick={() => setSelected("all")}
             >
               Over All

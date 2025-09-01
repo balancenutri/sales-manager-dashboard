@@ -626,19 +626,6 @@ export default function SocialMediaDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {platforms.map((platform) => {
           const Icon = platform.icon;
-          const khyatiData =
-            accountsData.khyati[
-              platform.key as keyof typeof accountsData.khyati
-            ];
-          const bnData =
-            accountsData.bn[platform.key as keyof typeof accountsData.bn];
-          const totalFollowers =
-            khyatiData?.followers ||
-            khyatiData?.subscribers + bnData?.followers ||
-            khyatiData?.subscribers;
-          const totalRevenue =
-            khyatiData.revenue_generated + bnData.revenue_generated;
-
           return (
             <Card
               key={platform.key}

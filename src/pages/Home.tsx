@@ -14,7 +14,6 @@ import LeadMIS from "@/components/home/digitalMarketing/LeadMIS";
 import CounsellorSocialMediaPerformance from "@/components/home/socialMedia/CounsellorSocialMediaPerformance";
 import PerformanceConsolidatedTable from "@/components/home/socialMedia/PerformanceConsolidatedTable";
 import AppDownloadCount from "@/components/home/appAnalysis/AppDownloadCount";
-import AppUsageActivity from "@/components/home/appAnalysis/AppUsageActivity";
 import KeyEngagementMetrix from "@/components/home/appAnalysis/KeyEngagementMetrix";
 import ActivatedFeatures from "@/components/home/appAnalysis/ActivatedFeatures";
 import OverviewDetails from "@/components/home/overview/OverViewDetails";

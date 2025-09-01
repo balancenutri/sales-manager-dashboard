@@ -270,6 +270,20 @@ export default function DigitalMarketingAnalytics() {
               </div>
               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
                 <div className="flex items-center space-x-3">
+                  <TrendingUp className="h-4 w-4 text-green-500" />
+                  <span className="font-medium">Total CTR</span>
+                </div>
+                <div className="font-semibold text-lg">56%</div>
+              </div>
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <TrendingUp className="h-4 w-4 text-green-500" />
+                  <span className="font-medium">Total CAC</span>
+                </div>
+                <div className="font-semibold text-lg">3453</div>
+              </div>
+              <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3">
                   <Activity className="h-4 w-4 text-orange-500" />
                   <span className="font-medium">Lead Generated</span>
                 </div>
