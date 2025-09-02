@@ -467,3 +467,57 @@ export interface GetCampaignDetailsResponse {
 export type CampaignDetailsBody = {
     campaign_id: number;
 }
+
+
+
+// Generic type for bifurcation with lead & oc
+export type Bifurcation<T> = {
+  lead: T;
+  oc: T;
+};
+
+// Location distribution
+export type LocationDistribution = {
+  indian: number;
+  abroad: number;
+};
+
+// Stage distribution
+export type StageDistribution = {
+  stage_1: number;
+  stage_2: number;
+  stage_3: number;
+  stage_4: number;
+};
+
+// Gender distribution
+export type GenderDistribution = {
+  gender_male: number;
+  gender_female: number;
+};
+
+// Age group distribution
+export type AgeGroupDistribution = {
+  age_group_below_20: number;
+  age_group_21_to_30: number;
+  age_group_31_to_40: number;
+  age_group_41_to_50: number;
+  age_group_above_50: number;
+};
+
+// Final response type
+export interface UserBifurcationResponse {
+  status: "success" | "error";
+  message: string;
+  data: {
+    overall_distribution: {
+      lead: number;
+      oc: number;
+    };
+    location_distribution: Bifurcation<LocationDistribution>;
+    stage_distribution: Bifurcation<StageDistribution>;
+    gender_distribution: Bifurcation<GenderDistribution>;
+    age_group_distribution: Bifurcation<AgeGroupDistribution>;
+  };
+  hide_columns: string[];
+}

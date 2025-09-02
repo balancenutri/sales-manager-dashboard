@@ -22,6 +22,7 @@ import {
   type GetCampaignDetailsResponse,
   type CampaignDetailsBody,
   type UpdateCampaignBody,
+  type UserBifurcationResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -197,6 +198,13 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Campaign"],
     }),
+    getUserBifurcationCount: builder.query<UserBifurcationResponse, void>({
+      query: () => ({
+        url: `/sales/digital-marketing/user-bifurcation-count`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
     getLeadUserMisData: builder.query<LeadMisResponse, LeadMisBody>({
       query: (body) => ({
         url: `/sales/digital-marketing/lead-mis-data`,
@@ -303,6 +311,7 @@ export const {
   useUpdateCampaignMutation,
   useGetAllCampaignsQuery,
   useGetCampaignDetailsQuery,
+  useGetUserBifurcationCountQuery,
   useGetLeadUserMisDataQuery,
   useLazyGetLeadMisDataQuery,
 

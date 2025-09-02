@@ -7,8 +7,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { Bifurcation, StageDistribution } from "@/lib/types";
 
-export default function StageBifurcation() {
+export default function StageBifurcation({
+  data,
+}: {
+  data?: Bifurcation<StageDistribution>;
+}) {
   return (
     <Card>
       <CardHeader>
@@ -29,31 +34,31 @@ export default function StageBifurcation() {
             <TableRow>
               <TableCell className="font-semibold text-center">Lead</TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
-                546
+                {data?.lead.stage_1}
               </TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
-                576
+                {data?.lead.stage_2}
               </TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
-                576
+                {data?.lead.stage_3}
               </TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
-                576
+                {data?.lead.stage_4}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-semibold text-center">OC</TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
-                546
+                {data?.oc.stage_1}
               </TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
-                576
+                {data?.oc.stage_2}
               </TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
-                576
+                {data?.oc.stage_3}
               </TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
-                576
+                {data?.oc.stage_4}
               </TableCell>
             </TableRow>
           </TableBody>

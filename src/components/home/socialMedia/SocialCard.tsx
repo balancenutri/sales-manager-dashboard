@@ -41,7 +41,7 @@ export default function SocialCard() {
       </h2>
       <Card>
         <CardHeader>
-          <CardTitle>OverAll Socail Media Leads</CardTitle>
+          <CardTitle>OverAll Social Media Leads</CardTitle>
         </CardHeader>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-5">
           {Object.entries(accountData).map(([key, value]) => (

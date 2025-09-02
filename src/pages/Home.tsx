@@ -8,7 +8,6 @@ import SocialCard from "@/components/home/socialMedia/SocialCard";
 import ContentManagement from "@/components/home/common/ContentManagement";
 import TopPerformer from "@/components/home/overview/TopPerformer";
 import RecentActivity from "@/components/home/overview/RecentActivity";
-import GenderBifurcation from "@/components/home/digitalMarketing/GenderBifurcation";
 import ClinicalBifurcation from "@/components/home/digitalMarketing/ClinicalBifurcation";
 import LeadMIS from "@/components/home/digitalMarketing/LeadMIS";
 import CounsellorSocialMediaPerformance from "@/components/home/socialMedia/CounsellorSocialMediaPerformance";
@@ -18,17 +17,11 @@ import KeyEngagementMetrix from "@/components/home/appAnalysis/KeyEngagementMetr
 import ActivatedFeatures from "@/components/home/appAnalysis/ActivatedFeatures";
 import OverviewDetails from "@/components/home/overview/OverViewDetails";
 import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
-// import LeadAppCount from "@/components/home/appAnalysis/LeadAppCount";
 import DigitalMarketingAnalytics from "@/components/home/digitalMarketing/DigitalMarketingAnalytics";
 import CampaignOverview from "@/components/home/digitalMarketing/CampaignOverview";
 import AppCount from "@/components/home/appAnalysis/AppCount";
-import LeadDistribution from "@/components/home/digitalMarketing/LeadDistribution";
-import AgeBifurcation from "@/components/home/digitalMarketing/AgeBifurcation";
-import StageBifurcation from "@/components/home/digitalMarketing/StageBifurcation";
-import UserDistribution from "@/components/home/digitalMarketing/UserDistribution";
-// import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
+import LeadOcBifurcation from "@/components/home/digitalMarketing/LeadOcBifurcation";
 
-// Calculate total sales opportunity and add to overview
 mockData.overview.totalSalesOpportunity = Object.values(
   mockData.solidSalesOpportunity
 ).reduce((sum, item) => sum + item.mtd, 0);
@@ -109,20 +102,7 @@ export default function Home() {
             <DigitalMarketingAnalytics />
 
             {/* Overall Male/Female Leads */}
-            <h2 className="text-2xl font-bold">Lead & OC Bifurcation</h2>
-            <div className="grid grid-cols-4 gap-4">
-              <UserDistribution />
-              <LeadDistribution />
-              <div className="col-span-2">
-                <StageBifurcation />
-              </div>
-            </div>
-            <div className="grid grid-cols-4 gap-4 mb-20">
-              <GenderBifurcation />
-              <div className="col-span-3">
-                <AgeBifurcation />
-              </div>
-            </div>
+            <LeadOcBifurcation />
 
             {/* Clinical Conditions Section */}
             <ClinicalBifurcation />
