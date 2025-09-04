@@ -472,52 +472,100 @@ export type CampaignDetailsBody = {
 
 // Generic type for bifurcation with lead & oc
 export type Bifurcation<T> = {
-  lead: T;
-  oc: T;
+    lead: T;
+    oc: T;
 };
 
 // Location distribution
 export type LocationDistribution = {
-  indian: number;
-  abroad: number;
+    indian: number;
+    abroad: number;
 };
 
 // Stage distribution
 export type StageDistribution = {
-  stage_1: number;
-  stage_2: number;
-  stage_3: number;
-  stage_4: number;
+    stage_1: number;
+    stage_2: number;
+    stage_3: number;
+    stage_4: number;
 };
 
 // Gender distribution
 export type GenderDistribution = {
-  gender_male: number;
-  gender_female: number;
+    gender_male: number;
+    gender_female: number;
 };
 
 // Age group distribution
 export type AgeGroupDistribution = {
-  age_group_below_20: number;
-  age_group_21_to_30: number;
-  age_group_31_to_40: number;
-  age_group_41_to_50: number;
-  age_group_above_50: number;
+    age_group_below_20: number;
+    age_group_21_to_30: number;
+    age_group_31_to_40: number;
+    age_group_41_to_50: number;
+    age_group_above_50: number;
 };
 
 // Final response type
 export interface UserBifurcationResponse {
-  status: "success" | "error";
-  message: string;
-  data: {
-    overall_distribution: {
-      lead: number;
-      oc: number;
+    status: string;
+    message: string;
+    data: {
+        overall_distribution: {
+            lead: number;
+            oc: number;
+        };
+        location_distribution: Bifurcation<LocationDistribution>;
+        stage_distribution: Bifurcation<StageDistribution>;
+        gender_distribution: Bifurcation<GenderDistribution>;
+        age_group_distribution: Bifurcation<AgeGroupDistribution>;
     };
-    location_distribution: Bifurcation<LocationDistribution>;
-    stage_distribution: Bifurcation<StageDistribution>;
-    gender_distribution: Bifurcation<GenderDistribution>;
-    age_group_distribution: Bifurcation<AgeGroupDistribution>;
-  };
-  hide_columns: string[];
+    hide_columns: string[];
+}
+
+type CampaignOverviewData = {
+    active_count: number;
+    total_ad_spend: number;
+    total_impressions: number;
+    total_reach: number;
+    total_ctr: number;
+    total_cac: number;
+    leads_generated: number;
+    revenue_generated: number;
+}
+export interface CampaignOverviewResponse {
+    status: string;
+    message: string;
+    data: CampaignOverviewData[];
+    hide_columns: string[];
+}
+
+
+export type AppVersionCount = {
+    version: string;
+    count: number;
+};
+
+export type NotUpdatedVersions = {
+    android: AppVersionCount[];
+    ios: AppVersionCount[];
+};
+
+export type ActiveAppCount = {
+    with_app: number;
+    without_app: number;
+    not_updated: number;
+    with_activity: number;
+    with_inactivity: number;
+    not_updated_versions: NotUpdatedVersions;
+    current_versions: {
+        android: string;
+        ios: string;
+    }
+};
+
+export interface AppCountResponse {
+    status: string;
+    message: string;
+    data: ActiveAppCount;
+    hide_columns: string[];
 }

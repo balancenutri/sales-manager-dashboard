@@ -1,20 +1,20 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { keyString } from "@/lib/utils";
 import { useGetAppDownloadsCountQuery } from "@/service/dashboard/api";
 import { useState } from "react";
 
-type DeviceType = "all" | "android" | "ios";
+type DeviceType = "" | "android" | "ios";
 
 export default function AppDownloadCount() {
-  const { data } = useGetAppDownloadsCountQuery();
+  const [selected, setSelected] = useState<DeviceType>("");
+  const { data } = useGetAppDownloadsCountQuery({
+    filter: selected == "" ? undefined : selected
+  });
 
   const skeletonArray = Array(5).fill(null);
 
-  const [selected, setSelected] = useState<DeviceType>("all");
-
-  console.log(data?.data);
   return (
     <div>
       <div className="flex justify-between items-center space-y-6">
@@ -23,14 +23,14 @@ export default function AppDownloadCount() {
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger
               className="cursor-pointer"
-              value="all"
-              onClick={() => setSelected("all")}
+              value=""
+              onClick={() => setSelected("")}
             >
               All
             </TabsTrigger>
             <TabsTrigger
               className="cursor-pointer"
-              value="android"
+              value={"android"}
               onClick={() => setSelected("android")}
             >
               Android
@@ -50,8 +50,8 @@ export default function AppDownloadCount() {
         <div className="flex justify-between items-center px-4 -my-3">
           {!data?.data
             ? skeletonArray.map((_, index: number) => (
-                <div className="flex items-center justify-between" key={index}>
-                  <Skeleton className="h-4 w-16 rounded-md" />
+                <div className="flex items-center justify-between mt-1 gap-2" key={index}>
+                  <Skeleton className="h-4 w-26 rounded-md" />
                   <Skeleton className="h-4 w-10 rounded-md" />
                 </div>
               ))

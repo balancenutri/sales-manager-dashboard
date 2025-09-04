@@ -1,4 +1,6 @@
+import SkeletonTable from "@/components/common/SkeletonTable";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+
 import {
   Table,
   TableBody,
@@ -28,28 +30,34 @@ export default function RegionDistribution({
               <TableHead className="text-center">OC</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="font-semibold text-center">India</TableCell>
-              <TableCell className="text-center font-bold">
-                {data?.lead.indian}
-              </TableCell>
-              <TableCell className="text-center font-bold">
-                {data?.oc.indian}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="font-semibold text-center">
-                Abroad
-              </TableCell>
-              <TableCell className="text-center font-bold">
-                {data?.lead.abroad}
-              </TableCell>
-              <TableCell className="text-center font-bold">
-                {data?.oc.abroad}
-              </TableCell>
-            </TableRow>
-          </TableBody>
+          {data?.lead && data?.oc ? (
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-semibold text-center">
+                  India
+                </TableCell>
+                <TableCell className="text-center font-bold">
+                  {data.lead.indian}
+                </TableCell>
+                <TableCell className="text-center font-bold">
+                  {data.oc.indian}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold text-center">
+                  Abroad
+                </TableCell>
+                <TableCell className="text-center font-bold">
+                  {data.lead.abroad}
+                </TableCell>
+                <TableCell className="text-center font-bold">
+                  {data.oc.abroad}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          ) : (
+            <SkeletonTable row={2} col={3} />
+          )}
         </Table>
       </CardContent>
     </Card>

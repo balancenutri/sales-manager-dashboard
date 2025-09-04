@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import NotificationEngagement from "./leadPerformance/NotificationEngagement";
-import WeeklyEngagement from "./leadPerformance/WeeklyEngagement";
-import AppUpdateStatus from "./leadPerformance/AppUpdateStatus";
+// import WeeklyEngagement from "./leadPerformance/WeeklyEngagement";
+// import AppUpdateStatus from "./leadPerformance/AppUpdateStatus";
 import TopNotifications from "./leadPerformance/TopNotifications";
-import EngagementByProgramStack from "./leadPerformance/EngagementByProgramStack";
+// import EngagementByProgramStack from "./leadPerformance/EngagementByProgramStack";
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -73,15 +73,15 @@ export default function LeadPerformance() {
 
   const metrics = engagementData?.data;
   const notificationData = metrics?.notificationSeenInApp;
-  const programStackData = metrics?.engagementByProgramStack;
+  // const programStackData = metrics?.engagementByProgramStack;
 
-  const weeklyEngagementData =
-    metrics?.weeklyEngagementTrend?.map((item) => ({
-      week: `Week ${item.week_number}`,
-      engagement: Number.parseFloat(item.engagement_percentage),
-      notifications: item.total_notifications,
-      seen: Number.parseInt(item.seen_notifications, 10),
-    })) || [];
+  // const weeklyEngagementData =
+  //   metrics?.weeklyEngagementTrend?.map((item) => ({
+  //     week: `Week ${item.week_number}`,
+  //     engagement: Number.parseFloat(item.engagement_percentage),
+  //     notifications: item.total_notifications,
+  //     seen: Number.parseInt(item.seen_notifications, 10),
+  //   })) || [];
 
 
   return (

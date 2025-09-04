@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 
 export const keyString = (str: string): string => {
-  if (!str) return "";
+  if (!str || typeof str !== "string") return "";
   let result = str.replace(/_/g, " ");
   // result = result.replace(/([A-Z])/g, " $1").trim();
   result = result.replace(/\b\w/g, (char) => char.toUpperCase());

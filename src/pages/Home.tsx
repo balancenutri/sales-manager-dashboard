@@ -101,14 +101,15 @@ export default function Home() {
           <TabsContent value="digital-marketing" className="space-y-6">
             <DigitalMarketingAnalytics />
 
+            {/* Campaigns Overview Section */}
+            <CampaignOverview />
+            
             {/* Overall Male/Female Leads */}
             <LeadOcBifurcation />
 
             {/* Clinical Conditions Section */}
             <ClinicalBifurcation />
 
-            {/* Campaigns Overview Section */}
-            <CampaignOverview />
 
             {/* Lead MIS Section */}
 

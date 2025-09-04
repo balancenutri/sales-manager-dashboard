@@ -1,3 +1,4 @@
+import SkeletonTable from "@/components/common/SkeletonTable";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -28,7 +29,7 @@ export default function GenderBifurcation({
               <TableHead className="text-center">OC</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          {data?.lead && data?.oc ? <TableBody>
             <TableRow>
               <TableCell className="font-semibold text-center">Male</TableCell>
               <TableCell className="text-center font-bold">
@@ -49,7 +50,7 @@ export default function GenderBifurcation({
                 {data?.oc.gender_female}
               </TableCell>
             </TableRow>
-          </TableBody>
+          </TableBody> : <SkeletonTable row={2} col={3} />}
         </Table>
       </CardContent>
     </Card>

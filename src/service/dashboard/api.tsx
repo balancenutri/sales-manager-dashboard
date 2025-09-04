@@ -23,6 +23,8 @@ import {
   type CampaignDetailsBody,
   type UpdateCampaignBody,
   type UserBifurcationResponse,
+  type CampaignOverviewResponse,
+  type AppCountResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -113,15 +115,18 @@ export const dashboardApi = commonAPi.injectEndpoints({
       query: (body) => ({
         url: `/sales/social-media/social-media-performance`,
         method: "POST",
-        body
+        body,
       }),
       providesTags: ["SocialMedia"],
     }),
-    updateSocialMediaPerformance: builder.mutation<UpdateSocialMediaResponse, UpdateSocialMediaBody>({
+    updateSocialMediaPerformance: builder.mutation<
+      UpdateSocialMediaResponse,
+      UpdateSocialMediaBody
+    >({
       query: (body) => ({
         url: `/sales/social-media/update-social-media-analysis`,
         method: "POST",
-        body
+        body,
       }),
       invalidatesTags: ["SocialMedia"],
     }),
@@ -190,11 +195,21 @@ export const dashboardApi = commonAPi.injectEndpoints({
       query: () => `/sales/digital-marketing/get-campaigns-details`,
       providesTags: ["Campaign"],
     }),
-    getCampaignDetails: builder.query<GetCampaignDetailsResponse, CampaignDetailsBody>({
+    getCampaignDetails: builder.query<
+      GetCampaignDetailsResponse,
+      CampaignDetailsBody
+    >({
       query: (body) => ({
         url: `/sales/digital-marketing/campaigns-details-id`,
         method: "POST",
         body,
+      }),
+      providesTags: ["Campaign"],
+    }),
+    getCampaignOverview: builder.query<CampaignOverviewResponse, void>({
+      query: () => ({
+        url: `/sales/digital-marketing/campaign-overview`,
+        method: "POST",
       }),
       providesTags: ["Campaign"],
     }),
@@ -214,10 +229,14 @@ export const dashboardApi = commonAPi.injectEndpoints({
       providesTags: ["Common"],
     }),
 
-    getAppDownloadsCount: builder.query<AppDownlaodResponse, void>({
-      query: () => ({
+    getAppDownloadsCount: builder.query<
+      AppDownlaodResponse,
+      { filter?: string }
+    >({
+      query: (body) => ({
         url: `/sales/app-activity/app-download-counts`,
         method: "POST",
+        body,
       }),
       providesTags: ["Common"],
     }),
@@ -263,6 +282,32 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getActiveAppCount: builder.query<AppCountResponse, BodyProps>({
+      query: (body) => ({
+        url: `/sales/app-activity/app-analytics-overview-active-count`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getOcAppCount: builder.query<AppCountResponse, BodyProps>({
+      query: (body) => ({
+        url: `/sales/app-activity/app-analytics-overview-oc-count`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getLeadAppCount: builder.query<AppCountResponse, BodyProps>({
+      query: (body) => ({
+        url: `/sales/app-activity/app-analytics-overview-lead-count`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+
+
     getClientPerformance: builder.query<
       ClientPerformanceResponse,
       ClientPerformanceBody
@@ -311,6 +356,7 @@ export const {
   useUpdateCampaignMutation,
   useGetAllCampaignsQuery,
   useGetCampaignDetailsQuery,
+  useGetCampaignOverviewQuery,
   useGetUserBifurcationCountQuery,
   useGetLeadUserMisDataQuery,
   useLazyGetLeadMisDataQuery,
@@ -330,6 +376,11 @@ export const {
   useGetAppUsageOverviewQuery,
   useGetKeyEngagementMatricsQuery,
   useGetActivatedFeaturesQuery,
+  useGetActiveAppCountQuery,
+  useGetOcAppCountQuery,
+  useGetLeadAppCountQuery,
+
+
   useGetClientPerformanceQuery,
 
   useGetGuideAndBookInteractionsQuery,

@@ -1,3 +1,4 @@
+import SkeletonTable from "@/components/common/SkeletonTable";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -31,7 +32,7 @@ export default function AgeBifurcation({
               <TableHead className="text-center">Above 50</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          {data?.lead && data?.oc ? <TableBody>
             <TableRow>
               <TableCell className="font-semibold text-center">Lead</TableCell>
               <TableCell className="text-center font-bold">
@@ -68,7 +69,7 @@ export default function AgeBifurcation({
                 {data?.oc.age_group_above_50}
               </TableCell>
             </TableRow>
-          </TableBody>
+          </TableBody> : <SkeletonTable row={2} col={6} />}
         </Table>
       </CardContent>
     </Card>

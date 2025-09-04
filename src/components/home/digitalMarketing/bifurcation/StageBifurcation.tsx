@@ -1,3 +1,4 @@
+import SkeletonTable from "@/components/common/SkeletonTable";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -30,7 +31,7 @@ export default function StageBifurcation({
               <TableHead className="text-center">Stage 4</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          {data?.lead && data?.oc ? <TableBody>
             <TableRow>
               <TableCell className="font-semibold text-center">Lead</TableCell>
               <TableCell className="text-center text-blue-600 underline font-bold">
@@ -61,7 +62,7 @@ export default function StageBifurcation({
                 {data?.oc.stage_4}
               </TableCell>
             </TableRow>
-          </TableBody>
+          </TableBody> : <SkeletonTable row={2} col={5} />}
         </Table>
       </CardContent>
     </Card>

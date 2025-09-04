@@ -21,7 +21,7 @@ export default function ClinicalBifurcation() {
     isLoading: boolean;
   };
 
-  const skeletonArray = Array(4).fill(null);
+  const skeletonArray = Array(5).fill(null);
 
   const isDataEmpty = !data?.data || Object.keys(data.data).length === 0;
   return (

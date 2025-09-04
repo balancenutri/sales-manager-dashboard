@@ -19,6 +19,7 @@ import {
   Users,
   // Users2,
 } from "lucide-react";
+import CampaignDetails from "./campaign/CampaignDetails";
 
 export default function DigitalMarketingAnalytics() {
   return (
@@ -233,7 +234,8 @@ export default function DigitalMarketingAnalytics() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <CampaignDetails  />
+        {/* <Card>
           <CardHeader>
             <CardTitle>Campaign Details</CardTitle>
             <CardDescription>Campaign Overview</CardDescription>
@@ -298,7 +300,7 @@ export default function DigitalMarketingAnalytics() {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
     </div>
   );
