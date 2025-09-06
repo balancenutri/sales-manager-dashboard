@@ -1,4 +1,3 @@
-import { CardSection } from "./contentCard";
 import { selectPeriod } from "@/features/period/periodSlice";
 import {
   useGetContentVisitsQuery,
@@ -17,6 +16,7 @@ import {
 import { useSelector } from "react-redux";
 import type { LucideIcon } from "lucide-react";
 import type { ContentVisit } from "@/lib/types";
+import { CardSection } from "./ContentCard";
 
 export type ContentItem = {
   label: string;

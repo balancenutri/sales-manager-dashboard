@@ -46,6 +46,7 @@ const NumberInput = ({
 
 type FormValues = {
   name: string;
+  added_by: string;
   type: string;
   status: string;
   start_date: string;
@@ -80,6 +81,7 @@ export default function AddCampaignForm({
   } = useForm<FormValues>({
     defaultValues: {
       name: "",
+      added_by: "",
       type: "",
       status: "",
       start_date: "",
@@ -153,6 +155,7 @@ export default function AddCampaignForm({
         ctr: formData.ctr,
         conversions: formData.conversions,
       },
+      added_by: formData.added_by,
     };
 
     if (data) {
@@ -507,6 +510,35 @@ export default function AddCampaignForm({
               />
             )}
           />
+        </div>
+
+        <div>
+          <Label htmlFor="added_by" className="mb-2">
+            Added By
+          </Label>
+          <Controller
+            control={control}
+            name="added_by"
+            rules={{
+              required: "Name is required",
+              minLength: {
+                value: 3,
+                message: "Name must be greater than 3 characters",
+              },
+            }}
+            render={({ field }) => (
+              <Input
+                id="added_by"
+                placeholder="Added By"
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+              />
+            )}
+          />
+          {errors.added_by && (
+            <p className="mt-1 text-xs text-red-600">{errors.added_by.message}</p>
+          )}
         </div>
 
         {/* Actions */}

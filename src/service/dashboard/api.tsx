@@ -25,6 +25,9 @@ import {
   type UserBifurcationResponse,
   type CampaignOverviewResponse,
   type AppCountResponse,
+  type AllSocialMediaPerformanceResponse,
+  type NotificationStatsResponse,
+  type WebsitePerformanceResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -87,7 +90,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    getInstagramPerformance: builder.query<SocialMediaResponse, BodyProps>({
+    getInstagramPerformance: builder.query<
+      SocialMediaResponse,
+      { account: string | null; filter?: string }
+    >({
       query: (body) => ({
         url: `/sales/social-media/instagram-performance`,
         method: "POST",
@@ -95,7 +101,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["SocialMedia"],
     }),
-    getYoutubePerformance: builder.query<SocialMediaResponse, BodyProps>({
+    getYoutubePerformance: builder.query<
+      SocialMediaResponse,
+      { account: string | null; filter?: string }
+    >({
       query: (body) => ({
         url: `/sales/social-media/youtube-performance`,
         method: "POST",
@@ -103,7 +112,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["SocialMedia"],
     }),
-    getFacebookPerformance: builder.query<SocialMediaResponse, BodyProps>({
+    getFacebookPerformance: builder.query<
+      SocialMediaResponse,
+      { account: string | null; filter?: string }
+    >({
       query: (body) => ({
         url: `/sales/social-media/facebook-performance`,
         method: "POST",
@@ -111,9 +123,42 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["SocialMedia"],
     }),
-    getSocialMediaPerformance: builder.query<SocialMediaResponse, BodyProps>({
+    getTwitterPerformance: builder.query<
+      SocialMediaResponse,
+      { account: string | null; filter?: string }
+    >({
+      query: (body) => ({
+        url: `/sales/social-media/twitter-performance`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["SocialMedia"],
+    }),
+    getLinkedinPerformance: builder.query<
+      SocialMediaResponse,
+      { account: string | null; filter?: string }
+    >({
+      query: (body) => ({
+        url: `/sales/social-media/linkedin-performance`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["SocialMedia"],
+    }),
+    getSocialMediaPerformance: builder.query<SocialMediaResponse, void>({
       query: (body) => ({
         url: `/sales/social-media/social-media-performance`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["SocialMedia"],
+    }),
+    getAllSocialMediaPerformance: builder.query<
+      AllSocialMediaPerformanceResponse,
+      void
+    >({
+      query: (body) => ({
+        url: `/sales/social-media/all-social-media-performance`,
         method: "POST",
         body,
       }),
@@ -136,6 +181,13 @@ export const dashboardApi = commonAPi.injectEndpoints({
         url: `/sales/digital-marketing/overall-gender-wise-leads`,
         method: "POST",
         body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getWebsitePerformance: builder.query<WebsitePerformanceResponse, void>({
+      query: () => ({
+        url: `/sales/digital-marketing/website-performance`,
+        method: "POST",
       }),
       providesTags: ["Common"],
     }),
@@ -306,7 +358,17 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-
+    getNotificationEngagement: builder.query<
+      NotificationStatsResponse,
+      BodyProps
+    >({
+      query: (body) => ({
+        url: `/sales/app-activity/notification-engagement`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
 
     getClientPerformance: builder.query<
       ClientPerformanceResponse,
@@ -349,6 +411,7 @@ export const {
   useGetTopPerformersQuery,
 
   useGetGenderWiseLeadQuery,
+  useGetWebsitePerformanceQuery,
   useGetClinicalConditionDataQuery,
   useGetLeadMisDataQuery,
 
@@ -365,8 +428,11 @@ export const {
   useGetConsolidatedTeamPerformanceQuery,
   useGetInstagramPerformanceQuery,
   useGetFacebookPerformanceQuery,
+  useGetLinkedinPerformanceQuery,
+  useGetTwitterPerformanceQuery,
   useGetYoutubePerformanceQuery,
   useGetSocialMediaPerformanceQuery,
+  useGetAllSocialMediaPerformanceQuery,
   useUpdateSocialMediaPerformanceMutation,
 
   useGetAppDownloadsCountQuery,
@@ -379,7 +445,7 @@ export const {
   useGetActiveAppCountQuery,
   useGetOcAppCountQuery,
   useGetLeadAppCountQuery,
-
+  useGetNotificationEngagementQuery,
 
   useGetClientPerformanceQuery,
 

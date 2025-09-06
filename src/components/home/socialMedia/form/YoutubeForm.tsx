@@ -3,29 +3,27 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUpdateSocialMediaPerformanceMutation } from "@/service/dashboard/api";
-import type { SocialMediaType, UpdateSocialMediaBody } from "@/lib/types";
 
 type FormValues = {
-  total_followers: number;
-  total_visitors: number;
+  total_subscriber: number;
+  subscriber_gain: number;
+  subscriber_loss: number;
+  total_views: number;
   unique_engagement: number;
-  total_reach: number;
   like: number;
   comment: number;
   share: number;
 };
 
-export default function AddMediaForm({
+export default function YoutubeForm({
   type,
   accounts,
   mediaData,
   closeModal,
 }: {
-  type: SocialMediaType;
-  accounts: string;
   mediaData: FormValues;
-
   closeModal: () => void;
+  accounts: string;
 }) {
   const {
     handleSubmit,
@@ -38,22 +36,22 @@ export default function AddMediaForm({
   const [updateSocialMedia] = useUpdateSocialMediaPerformanceMutation();
 
   const onSubmit = async (data: FormValues) => {
-    const body: UpdateSocialMediaBody = {
+    const body = {
       data: {
-        total_followers: data.total_followers,
-        total_visitors: data.total_visitors,
+        total_subscriber: data.total_subscriber,
+        subscriber_gain: data.subscriber_gain,
+        subscriber_loss: data.subscriber_loss,
         unique_engagement: data.unique_engagement,
-        total_reach: data.total_reach,
         impressions: data.like + data.comment + data.share,
         engagement_rate: `${(
           (data.unique_engagement * 100) /
-          (data.total_visitors || 1)
+          (data.total_views || 1)
         ).toFixed(2)}%`,
         like: data.like,
         comment: data.comment,
         share: data.share,
       },
-      type: type ?? undefined,
+      type: "youtube",
       account: accounts ?? undefined,
     };
 
@@ -69,15 +67,15 @@ export default function AddMediaForm({
     >
       {/* Total Followers */}
       <div>
-        <Label htmlFor="total_followers" className="mb-2">
-          Total {mediaData?.total_reach ? "Followers" : "Subscriber"}
+        <Label htmlFor="total_subscriber" className="mb-2">
+          Total Subscriber
         </Label>
         <Controller
           control={control}
-          name="total_followers"
+          name="total_subscriber"
           render={({ field }) => (
             <Input
-              id="total_followers"
+              id="total_subscriber"
               type="number"
               placeholder="Enter total followers"
               {...field}
@@ -86,24 +84,24 @@ export default function AddMediaForm({
             />
           )}
         />
-        {errors.total_followers && (
+        {errors.total_subscriber && (
           <p className="mt-1 text-xs text-red-600">
-            {errors.total_followers.message}
+            {errors.total_subscriber.message}
           </p>
         )}
       </div>
 
       {/* Total Visitors */}
       <div>
-        <Label htmlFor="total_visitors" className="mb-2">
+        <Label htmlFor="subscriber_gain" className="mb-2">
           Total Visitors
         </Label>
         <Controller
           control={control}
-          name="total_visitors"
+          name="subscriber_gain"
           render={({ field }) => (
             <Input
-              id="total_visitors"
+              id="subscriber_gain"
               min={0}
               type="number"
               placeholder="Enter total visitors"
@@ -112,9 +110,58 @@ export default function AddMediaForm({
             />
           )}
         />
-        {errors.total_visitors && (
+        {errors.subscriber_gain && (
           <p className="mt-1 text-xs text-red-600">
-            {errors.total_visitors.message}
+            {errors.subscriber_gain.message}
+          </p>
+        )}
+      </div>
+      {/* Total Visitors */}
+      <div>
+        <Label htmlFor="subscriber_loss" className="mb-2">
+          Total Visitors
+        </Label>
+        <Controller
+          control={control}
+          name="subscriber_loss"
+          render={({ field }) => (
+            <Input
+              id="subscriber_loss"
+              min={0}
+              type="number"
+              placeholder="Enter total visitors"
+              {...field}
+              onChange={(e) => field.onChange(Number(e.target.value))}
+            />
+          )}
+        />
+        {errors.subscriber_loss && (
+          <p className="mt-1 text-xs text-red-600">
+            {errors.subscriber_loss.message}
+          </p>
+        )}
+      </div>
+      <div>
+        <Label htmlFor="total_views" className="mb-2">
+          Total Views
+        </Label>
+        <Controller
+          control={control}
+          name="total_views"
+          render={({ field }) => (
+            <Input
+              id="total_views"
+              min={0}
+              type="number"
+              placeholder="Enter total visitors"
+              {...field}
+              onChange={(e) => field.onChange(Number(e.target.value))}
+            />
+          )}
+        />
+        {errors.total_views && (
+          <p className="mt-1 text-xs text-red-600">
+            {errors.total_views.message}
           </p>
         )}
       </div>
@@ -145,32 +192,6 @@ export default function AddMediaForm({
         )}
       </div>
 
-      <div>
-        <Label htmlFor="total_reach" className="mb-2">
-          Total Reach
-        </Label>
-        <Controller
-          control={control}
-          name="total_reach"
-          render={({ field }) => (
-            <Input
-              id="total_reach"
-              type="number"
-              placeholder="Enter total reach"
-              min={0}
-              {...field}
-              onChange={(e) => field.onChange(Number(e.target.value))}
-            />
-          )}
-        />
-        {errors.total_reach && (
-          <p className="mt-1 text-xs text-red-600">
-            {errors.total_reach.message}
-          </p>
-        )}
-      </div>
-
-      {/* Impressions */}
       <div>
         <Label htmlFor="like" className="mb-2">
           Like
@@ -237,7 +258,6 @@ export default function AddMediaForm({
           <p className="mt-1 text-xs text-red-600">{errors.share.message}</p>
         )}
       </div>
-
       <Button type="submit" className="w-full" disabled={isSubmitting}>
         {isSubmitting ? "Submitting..." : "Submit"}
       </Button>

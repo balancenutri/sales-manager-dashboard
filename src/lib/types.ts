@@ -139,6 +139,7 @@ export type AddCampaignBody = {
         ctr: number;
         conversions: number;
     },
+    added_by: string;
 };
 export type UpdateCampaignBody = {
     id: number;
@@ -388,7 +389,22 @@ export interface ContentVisitResponse {
 }
 
 export type SocailMediaType = {
-    [key: string]: number;
+    impressions: number;
+    total_reach: number;
+    total_visitors: number;
+    engagement_rate: string;
+    total_followers: number;
+    unique_engagement: number;
+    lead_generated: number;
+    lead_converted: number;
+    revenue_generated: number;
+    total_subscriber?: number;
+    subscriber_gain?: number;
+    subscriber_loss?: number;
+    total_views?: number;
+    like: number;
+    comment: number;
+    share: number;
 }
 
 export interface SocialMediaResponse {
@@ -400,14 +416,21 @@ export interface SocialMediaResponse {
 
 export interface UpdateSocialMediaBody {
     data: {
-        total_followers: number;
-        total_visitors: number;
+        total_followers?: number;
+        total_visitors?: number;
+        total_subscriber?: number;
+        subscriber_gain?: number;
+        subscriber_loss?: number;
         unique_engagement: number;
         total_reach?: number;
         impressions: number;
         engagement_rate: string;
+        like: number;
+        comment: number;
+        share: number;
     },
     type?: string;
+    account?: string;
 }
 
 export interface UpdateSocialMediaResponse {
@@ -456,6 +479,7 @@ type CampaignDetails = {
     },
     "leadsGenerated": number;
     "revenueGenerated": number;
+    addedBy: string | null;
 }
 export interface GetCampaignDetailsResponse {
     status: string;
@@ -569,3 +593,73 @@ export interface AppCountResponse {
     data: ActiveAppCount;
     hide_columns: string[];
 }
+
+export type SocialMediaType =
+    | "youtube"
+    | "instagram"
+    | "facebook"
+    | "twitter"
+    | "linkedin"
+    | null;
+
+// Define valid keys as DialogType excluding null
+export type ValidSocialMediaKey = Exclude<SocialMediaType, null>;
+
+type AllSocialMedia = {
+    [key in ValidSocialMediaKey]: {
+        lead_generated: number;
+        revenue_generated: number;
+    }
+}
+
+export interface AllSocialMediaPerformanceResponse {
+    status: string;
+    message: string;
+    data: AllSocialMedia;
+    hide_columns: string[];
+}
+
+
+
+export type NotificationEntry = {
+    title: string;
+    seen_count: number;
+    total_count: number;
+    open_trend: string;
+};
+
+export type NotificationEngagementData = {
+    total_notifications: {
+        total_sent: number;
+        total_seen: number;
+        open_trend: string;
+    };
+    top_notifications: NotificationEntry[];
+    less_performing_notifications: NotificationEntry[];
+};
+
+
+export interface NotificationStatsResponse {
+    status: string;
+    message: string;
+    data: NotificationEngagementData;
+    hide_columns: string[];
+};
+
+export type WebsitePerformanceKey = "page_view" |
+    "total_engagement" |
+    "avg_session_duration" |
+    "bounce_rate" |
+    "unique_engagement" |
+    "leads_from_website"
+
+export type WebsitePerformanceType = {
+    [key in WebsitePerformanceKey]: string;
+}
+
+export interface WebsitePerformanceResponse {
+    status: string;
+    message: string;
+    data: WebsitePerformanceType;
+    hide_columns: string[];
+};

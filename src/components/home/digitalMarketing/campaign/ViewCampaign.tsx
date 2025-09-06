@@ -109,6 +109,12 @@ export default function ViewCampaign({
                     ₹{data.data.revenueGenerated}
                   </span>
                 </div>
+                {data.data.addedBy && (
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">Added By</span>
+                    <span className="font-semibold">{data.data.addedBy}</span>
+                  </div>
+                )}
               </CardContent>
             </Card>
             <div>
@@ -167,19 +173,27 @@ export default function ViewCampaign({
                   <div className="grid grid-cols-2">
                     <div>
                       <span className="text-sm font-medium">Impression: </span>
-                      <span className="text-sm font-medium">{data.data.digitalMarketing?.impressions || 0}</span>
+                      <span className="text-sm font-medium">
+                        {data.data.digitalMarketing?.impressions || 0}
+                      </span>
                     </div>
                     <div>
                       <span className="text-sm font-medium">Reach: </span>
-                      <span className="text-sm font-medium">{data.data.digitalMarketing?.reach || 0}</span>
+                      <span className="text-sm font-medium">
+                        {data.data.digitalMarketing?.reach || 0}
+                      </span>
                     </div>
                     <div>
                       <span className="text-sm font-medium">Clicks: </span>
-                      <span className="text-sm font-medium">{data.data.digitalMarketing?.clicks || 0}</span>
+                      <span className="text-sm font-medium">
+                        {data.data.digitalMarketing?.clicks || 0}
+                      </span>
                     </div>
                     <div>
                       <span className="text-sm font-medium">CTR: </span>
-                      <span className="text-sm font-medium">{data.data.digitalMarketing?.ctr || 0}%</span>
+                      <span className="text-sm font-medium">
+                        {data.data.digitalMarketing?.ctr || 0}%
+                      </span>
                     </div>
                   </div>
                 </CardContent>
@@ -217,6 +231,7 @@ export default function ViewCampaign({
               start_date: data?.data?.campaignStartDate || "",
               status: data?.data?.campaignStatus || "",
               type: String(data?.data?.campaignType) || "",
+              added_by: data?.data.addedBy || "",
             }}
             campaignId={selectedCampaign}
           />

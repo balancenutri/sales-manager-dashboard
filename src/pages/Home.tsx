@@ -16,11 +16,11 @@ import AppDownloadCount from "@/components/home/appAnalysis/AppDownloadCount";
 import KeyEngagementMetrix from "@/components/home/appAnalysis/KeyEngagementMetrix";
 import ActivatedFeatures from "@/components/home/appAnalysis/ActivatedFeatures";
 import OverviewDetails from "@/components/home/overview/OverViewDetails";
-import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
 import DigitalMarketingAnalytics from "@/components/home/digitalMarketing/DigitalMarketingAnalytics";
 import CampaignOverview from "@/components/home/digitalMarketing/CampaignOverview";
 import AppCount from "@/components/home/appAnalysis/AppCount";
 import LeadOcBifurcation from "@/components/home/digitalMarketing/LeadOcBifurcation";
+import NotificationEngagments from "@/components/home/appAnalysis/NotificationEngagements";
 
 mockData.overview.totalSalesOpportunity = Object.values(
   mockData.solidSalesOpportunity
@@ -80,12 +80,7 @@ export default function Home() {
           <TabsContent value="social-media" className="space-y-6">
             <SocialCard />
 
-            {/* Overall Social Media Performance */}
-
-            {/* <SocialMediaPerformance /> */}
-
             <div className="grid grid-cols-2 gap-4">
-              {/* Counsellor Social Media Performance */}
               <CounsellorSocialMediaPerformance />
 
               {/* New Team Performance Consolidated Table */}
@@ -100,45 +95,27 @@ export default function Home() {
           {/* Digital Marketing Tab Content */}
           <TabsContent value="digital-marketing" className="space-y-6">
             <DigitalMarketingAnalytics />
-
-            {/* Campaigns Overview Section */}
             <CampaignOverview />
-            
-            {/* Overall Male/Female Leads */}
             <LeadOcBifurcation />
-
-            {/* Clinical Conditions Section */}
             <ClinicalBifurcation />
 
-
-            {/* Lead MIS Section */}
 
             <LeadMIS />
           </TabsContent>
 
-          {/* App Analytics Tab Content (Moved from previous location) */}
           <TabsContent value="app-analytics" className="space-y-6">
-            {/* App Download Counts */}
             <AppDownloadCount />
             <AppCount />
-            {/* <div className="max-w-[500px]">
-              <LeadAppCount />
-            </div> */}
             <h2 className="text-2xl font-bold">Content Engagement</h2>
 
             <div className="grid grid-cols-3 gap-6">
-              {/* App Usage Overview */}
-              {/* <AppUsageActivity /> */}
-
-              {/* Key Engagement Metrics */}
               <KeyEngagementMetrix />
 
-              {/* Activated Features */}
               <ActivatedFeatures />
               <ContentManagement type="content" />
               <ContentManagement type="guide" />
             </div>
-            <LeadPerformance />
+            <NotificationEngagments />
           </TabsContent>
         </Tabs>
       </div>
