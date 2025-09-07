@@ -16,7 +16,6 @@ type FormValues = {
 };
 
 export default function YoutubeForm({
-  type,
   accounts,
   mediaData,
   closeModal,

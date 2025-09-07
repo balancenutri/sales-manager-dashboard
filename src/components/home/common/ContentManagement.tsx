@@ -16,7 +16,7 @@ import {
 import { useSelector } from "react-redux";
 import type { LucideIcon } from "lucide-react";
 import type { ContentVisit } from "@/lib/types";
-import { CardSection } from "./ContentCard";
+import { CardSection } from "./ContentCards";
 
 export type ContentItem = {
   label: string;
