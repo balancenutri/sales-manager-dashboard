@@ -94,7 +94,7 @@ export default function ContentManagement({
       color: "text-indigo-500",
       key: "peer_group_visit",
     },
-  ];
+  ]; 
 
   return (
     <div>
