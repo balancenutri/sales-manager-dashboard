@@ -1,11 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { NotificationEngagementData } from "@/lib/types";
 import { TrendingDown, TrendingUp } from "lucide-react";
 
 export default function NotificationEngagement({
   data,
+  fetching,
 }: {
   data: NotificationEngagementData["total_notifications"] | undefined;
+  fetching: boolean;
 }) {
   return (
     <Card className="shadow-lg border-0 bg-white">
@@ -21,10 +24,14 @@ export default function NotificationEngagement({
         <div className="text-center space-y-6">
           <div className="space-y-2">
             <div className="text-3xl font-bold text-cyan-600">
-              {data?.total_seen &&
+              {fetching ? (
+                <Skeleton className="h-5 w-16" />
+              ) : (
+                data?.total_seen &&
                 data.total_sent &&
-                Number((data?.total_seen * 100) / data?.total_sent).toFixed(2)}
-              %
+                Number((data?.total_seen * 100) / data?.total_sent).toFixed(2) || 0 + "%"
+              )}
+              
             </div>
             <p className="text-sm text-gray-500">Overall engagement rate</p>
           </div>

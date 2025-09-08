@@ -525,6 +525,7 @@ export default function LeadMIS() {
                   city: [],
                   salesStatus: [],
                   stage: [],
+                  userTypes: [],
                 })
               }
             >

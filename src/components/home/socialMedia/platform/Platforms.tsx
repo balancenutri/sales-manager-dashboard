@@ -215,7 +215,7 @@ export default function Platforms({
             </DialogHeader>
 
             <Select
-              value={"mtd"}
+              value={selectedPeriod}
               onValueChange={(val: PeriodType) => setSelectedPeriod(val)}
             >
               <SelectTrigger className="w-32">

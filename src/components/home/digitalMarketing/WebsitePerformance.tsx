@@ -55,8 +55,8 @@ export default function WebsitePerformance() {
           Traffic, engagement, and leads from the website
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-3">
-        {data?.data ? (
+      {data?.data ? (
+        <CardContent className="space-y-3">
           <div className="grid grid-cols-3 gap-3">
             {Object.entries(data.data).map(([key, value], idx) => {
               const Icon = allIcons[key as WebsitePerformanceKey];
@@ -74,10 +74,10 @@ export default function WebsitePerformance() {
               );
             })}
           </div>
-        ) : (
-          <div className="grid grid-cols-3 gap-3 mx-6">{SkeletonArray}</div>
-        )}
-      </CardContent>
+        </CardContent>
+      ) : (
+        <div className="grid grid-cols-3 gap-3 mx-6">{SkeletonArray}</div>
+      )}
     </Card>
   );
 }

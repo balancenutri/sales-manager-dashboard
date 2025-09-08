@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { Dispatch, SetStateAction } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type PeriodType = "overall" | "last_24_hours" | "last_48_hours" | "mtd";
 
@@ -24,13 +25,27 @@ export default function AppCountCard({
   period?: string;
   setPeriod?: Dispatch<SetStateAction<PeriodType>>;
 }) {
+  const SkeletonArray = Array(5)
+    .fill(null)
+    .map((_, index: number) => (
+      <div
+        key={index}
+        className="flex items-center justify-between border-b pb-2"
+      >
+        <Skeleton className="h-5 w-20" />
+        <Skeleton className="h-5 w-20" />
+      </div>
+    ));
   return (
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>{title}</CardTitle>
           {period && setPeriod && (
-            <Select value={period} onValueChange={(val: PeriodType) => setPeriod(val)}>
+            <Select
+              value={period}
+              onValueChange={(val: PeriodType) => setPeriod(val)}
+            >
               <SelectTrigger className="w-32">
                 <SelectValue />
               </SelectTrigger>
@@ -45,31 +60,32 @@ export default function AppCountCard({
         </div>
       </CardHeader>
       <CardContent className="space-y-3">
-        {data &&
-          Object.entries(data).map(([key, value]) => {
-            console.log({ data });
-            return (
-              key !== "current_versions" && (
-                <div
-                  className="flex items-center justify-between border-b pb-2"
-                  key={key}
-                >
-                  <div className="flex items-center space-x-3">
-                    <span className="font-medium">{keyString(key)}</span>
+        {data
+          ? Object.entries(data).map(([key, value]) => {
+              console.log({ data });
+              return (
+                key !== "current_versions" && (
+                  <div
+                    className="flex items-center justify-between border-b pb-2"
+                    key={key}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <span className="font-medium">{keyString(key)}</span>
+                    </div>
+                    <div className="font-semibold text-lg">
+                      {key === "not_updated_versions" ? (
+                        <PreviousVersionTooltip
+                          versions={value as NotUpdatedVersions}
+                        />
+                      ) : (
+                        (value as number)
+                      )}
+                    </div>
                   </div>
-                  <div className="font-semibold text-lg">
-                    {key === "not_updated_versions" ? (
-                      <PreviousVersionTooltip
-                        versions={value as NotUpdatedVersions}
-                      />
-                    ) : (
-                      (value as number)
-                    )}
-                  </div>
-                </div>
-              )
-            );
-          })}
+                )
+              );
+            })
+          : SkeletonArray}
       </CardContent>
     </Card>
   );

@@ -1,14 +1,27 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { NotificationEntry } from "@/lib/types";
 
 export default function TopNotifications({
   data,
   title,
+  fetching,
 }: {
   data: NotificationEntry[] | undefined;
   title: string;
+  fetching: boolean;
 }) {
-  console.log({ data });
+  const SkeletonArray = Array(5)
+    .fill(null)
+    .map((_, index: number) => (
+      <div
+        key={index}
+        className="flex items-center justify-between my-3 border-b pb-2"
+      >
+        <Skeleton className="h-7 w-20" />
+        <Skeleton className="h-7 w-20" />
+      </div>
+    ));
   return (
     <Card className="shadow-lg border-0 bg-white">
       <CardHeader>
@@ -18,7 +31,9 @@ export default function TopNotifications({
         </div>
       </CardHeader>
       <CardContent>
-        {data?.length === 0 ? (
+        {fetching ? (
+          SkeletonArray
+        ) : data?.length === 0 ? (
           <div className="text-center py-8">
             {/* <Bell className="h-12 w-12 text-gray-300 mx-auto mb-4" /> */}
             <p className="text-gray-500">No notifications data available</p>

@@ -6,7 +6,7 @@ import TopNotifications from "./leadPerformance/TopNotifications";
 
 export default function NotificationEngagments() {
   const [selected, setSelected] = useState("active");
-  const { data: notificationData } = useGetNotificationEngagementQuery({
+  const { data: notificationData, isFetching } = useGetNotificationEngagementQuery({
     filter: selected,
   });
   return (
@@ -49,21 +49,23 @@ export default function NotificationEngagments() {
         </Tabs>
       </div>
 
-      {notificationData?.data && (
+      {(
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
           <NotificationEngagement
-            data={notificationData?.data?.total_notifications}
+            data={notificationData?.data?.total_notifications} fetching={isFetching}
           />
           <div className="col-span-2">
             <TopNotifications
               data={notificationData?.data.top_notifications}
               title="Top Performing Notification"
+              fetching={isFetching}
             />
           </div>
           <div className="col-span-2">
             <TopNotifications
               data={notificationData?.data?.less_performing_notifications}
               title="Low Performing Notification"
+              fetching={isFetching}
             />
           </div>
         </div>
