@@ -41,23 +41,23 @@ export default function NotificationEngagement({
               <span className="text-sm font-medium text-gray-700">
                 Total Sent
               </span>
-              <span className="text-base font-bold text-gray-900">
+              {fetching ? <Skeleton className="h-5 w-10" /> :<span className="text-base font-bold text-gray-900">
                 {data?.total_sent}
-              </span>
+              </span>}
             </div>
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
               <span className="text-sm font-medium text-gray-700">
                 Total Seen
               </span>
-              <span className="text-base font-bold text-cyan-600">
+              {fetching ? <Skeleton className="h-5 w-10" /> :<span className="text-base font-bold text-cyan-600">
                 {data?.total_seen}
-              </span>
+              </span>}
             </div>
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
               <span className="text-sm font-medium text-gray-700">
                 Open Trend
               </span>
-              <div className="flex items-center space-x-2">
+              {fetching ? <Skeleton className="h-5 w-10" /> :<div className="flex items-center space-x-2">
                 {Number.parseFloat(data?.open_trend || "0") >= 0 ? (
                   <TrendingUp className="h-4 w-4 text-green-500" />
                 ) : (
@@ -72,7 +72,7 @@ export default function NotificationEngagement({
                 >
                   {data?.open_trend}%
                 </span>
-              </div>
+              </div>}
             </div>
           </div>
         </div>

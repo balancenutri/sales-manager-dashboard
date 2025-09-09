@@ -19,11 +19,13 @@ export default function AppCountCard({
   title,
   period,
   setPeriod,
+  fetching,
 }: {
   data?: ActiveAppCount;
   title: string;
   period?: string;
   setPeriod?: Dispatch<SetStateAction<PeriodType>>;
+  fetching: boolean;
 }) {
   const SkeletonArray = Array(5)
     .fill(null)
@@ -60,7 +62,7 @@ export default function AppCountCard({
         </div>
       </CardHeader>
       <CardContent className="space-y-3">
-        {data
+        {data && !fetching
           ? Object.entries(data).map(([key, value]) => {
               console.log({ data });
               return (

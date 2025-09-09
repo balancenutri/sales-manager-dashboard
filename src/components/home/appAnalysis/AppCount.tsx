@@ -17,9 +17,9 @@ export default function AppCount() {
     const [leadPeriod, setLeadPeriod] = useState<PeriodType>("mtd");
     const [activePeriod, setActivePeriod] = useState<PeriodType>("mtd");
 
-  const { data: leadData } = useGetLeadAppCountQuery({ filter: leadPeriod });
-  const { data: activeData } = useGetActiveAppCountQuery({ filter: activePeriod });
-  const { data: ocData } = useGetOcAppCountQuery({ filter: "" });
+  const { data: leadData, isFetching: leadLoading } = useGetLeadAppCountQuery({ filter: leadPeriod });
+  const { data: activeData, isFetching: activeLoading } = useGetActiveAppCountQuery({ filter: activePeriod });
+  const { data: ocData , isFetching: ocLoading} = useGetOcAppCountQuery({ filter: "" });
 
 
   return (
@@ -33,14 +33,16 @@ export default function AppCount() {
           title="Lead App Count"
           period={leadPeriod}
           setPeriod={setLeadPeriod}
+          fetching={leadLoading}
         />
         <AppCountCard
           data={activeData?.data}
           title="Active App Count"
           period={activePeriod}
           setPeriod={setActivePeriod}
+          fetching={activeLoading}
         />
-        <AppCountCard data={ocData?.data} title="OC App Count" />
+        <AppCountCard data={ocData?.data} title="OC App Count" fetching={ocLoading} />
       </div>
     </div>
   );

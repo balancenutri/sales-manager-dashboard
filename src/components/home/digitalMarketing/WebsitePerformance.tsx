@@ -69,7 +69,7 @@ export default function WebsitePerformance() {
                     <Icon className="h-4 w-4 text-purple-500" />
                     <span className="font-medium">{keyString(key)}</span>
                   </div>
-                  <div className="font-semibold text-lg">{value}</div>
+                  <div className="font-semibold text-lg">{value?.replaceAll(".00", "")}</div>
                 </div>
               );
             })}
