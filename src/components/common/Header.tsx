@@ -1,12 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bell, ChevronDown, Settings } from "lucide-react";
 import {
@@ -17,16 +17,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useDispatch, useSelector } from "react-redux";
-import { selectPeriod, setPeriod } from "@/features/period/periodSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import { selectPeriod } from "@/features/period/periodSlice";
 
-type periodState = {
-    period: 'today' | 'this_week' | 'mtd' | 'this_quarter';
-}
+// type periodState = {
+//     period: 'today' | 'this_week' | 'mtd' | 'this_quarter';
+// }
 
 export default function Header() {
-  const dispatch = useDispatch();
-  const period = useSelector(selectPeriod);
+  // const dispatch = useDispatch();
+  // const period = useSelector(selectPeriod);
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
@@ -48,7 +48,7 @@ export default function Header() {
         </div>
 
         <div className="flex items-center space-x-4">
-          <Select
+          {/* <Select
             value={period}
             onValueChange={(val: periodState['period']) =>
               dispatch(setPeriod(val))
@@ -63,7 +63,7 @@ export default function Header() {
               <SelectItem value="mtd">This Month</SelectItem>
               <SelectItem value="this_quarter">This Quarter</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
 
           <Button variant="outline" size="icon">
             <Bell className="h-4 w-4" />

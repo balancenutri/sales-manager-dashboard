@@ -34,31 +34,31 @@ export default function StageBifurcation({
           {data?.lead && data?.oc ? <TableBody>
             <TableRow>
               <TableCell className="font-semibold text-center">Lead</TableCell>
-              <TableCell className="text-center text-blue-600 underline font-bold">
+              <TableCell className="text-center font-bold">
                 {data?.lead.stage_1}
               </TableCell>
-              <TableCell className="text-center text-blue-600 underline font-bold">
+              <TableCell className="text-center font-bold">
                 {data?.lead.stage_2}
               </TableCell>
-              <TableCell className="text-center text-blue-600 underline font-bold">
+              <TableCell className="text-center font-bold">
                 {data?.lead.stage_3}
               </TableCell>
-              <TableCell className="text-center text-blue-600 underline font-bold">
+              <TableCell className="text-center font-bold">
                 {data?.lead.stage_4}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-semibold text-center">OC</TableCell>
-              <TableCell className="text-center text-blue-600 underline font-bold">
+              <TableCell className="text-center font-bold">
                 {data?.oc.stage_1}
               </TableCell>
-              <TableCell className="text-center text-blue-600 underline font-bold">
+              <TableCell className="text-center font-bold">
                 {data?.oc.stage_2}
               </TableCell>
-              <TableCell className="text-center text-blue-600 underline font-bold">
+              <TableCell className="text-center font-bold">
                 {data?.oc.stage_3}
               </TableCell>
-              <TableCell className="text-center text-blue-600 underline font-bold">
+              <TableCell className="text-center font-bold">
                 {data?.oc.stage_4}
               </TableCell>
             </TableRow>

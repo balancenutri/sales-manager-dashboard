@@ -23,7 +23,7 @@ export default function PreviousVersionTooltip({
             {totalCount}
           </span>
         </TooltipTrigger>
-        <TooltipContent className="p-0 bg-white border border-gray-200 shadow-lg rounded-lg max-w-xs z-50">
+        {totalCount !== 0 && <TooltipContent className="p-0 bg-white border border-gray-200 shadow-lg rounded-lg max-w-xs z-50">
           <div className="p-4 space-y-4">
             {/* Android Section */}
             {versions.android.length > 0 && (
@@ -77,7 +77,7 @@ export default function PreviousVersionTooltip({
               </div>
             )}
           </div>
-        </TooltipContent>
+        </TooltipContent>}
       </Tooltip>
     </TooltipProvider>
   );

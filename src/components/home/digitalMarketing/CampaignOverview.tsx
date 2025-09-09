@@ -120,7 +120,7 @@ export default function CampaignOverview() {
                         {campaign.lead_generated}
                       </TableCell>
                       <TableCell className="text-right">
-                        ₹{campaign.revenue_generated}K
+                        ₹ {campaign.revenue_generated}
                       </TableCell>
                     </TableRow>
                   ))
