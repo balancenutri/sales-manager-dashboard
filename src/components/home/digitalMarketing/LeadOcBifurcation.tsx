@@ -18,8 +18,10 @@ export default function LeadOcBifurcation() {
           <StageBifurcation data={data?.data.stage_distribution} />
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-4 mb-20">
-        <GenderBifurcation data={data?.data.gender_distribution} />
+      <div className="grid grid-cols-5 gap-4 mb-20">
+        <div className="col-span-2">
+          <GenderBifurcation data={data?.data.gender_distribution} />
+        </div>
         <div className="col-span-3">
           <AgeBifurcation data={data?.data.age_group_distribution} />
         </div>

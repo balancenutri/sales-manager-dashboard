@@ -24,11 +24,12 @@ export default function StageBifurcation({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="text-center">User</TableHead>
+              <TableHead className="text-center">Stage</TableHead>
               <TableHead className="text-center">Stage 1</TableHead>
               <TableHead className="text-center">Stage 2</TableHead>
               <TableHead className="text-center">Stage 3</TableHead>
               <TableHead className="text-center">Stage 4</TableHead>
+              <TableHead className="text-center">No Stage</TableHead>
             </TableRow>
           </TableHeader>
           {data?.lead && data?.oc ? <TableBody>
@@ -46,6 +47,9 @@ export default function StageBifurcation({
               <TableCell className="text-center font-bold">
                 {data?.lead.stage_4}
               </TableCell>
+              <TableCell className="text-center font-bold">
+                {data?.lead.stage_0}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-semibold text-center">OC</TableCell>
@@ -61,8 +65,11 @@ export default function StageBifurcation({
               <TableCell className="text-center font-bold">
                 {data?.oc.stage_4}
               </TableCell>
+              <TableCell className="text-center font-bold">
+                {data?.oc.stage_0}
+              </TableCell>
             </TableRow>
-          </TableBody> : <SkeletonTable row={2} col={5} />}
+          </TableBody> : <SkeletonTable row={2} col={6} />}
         </Table>
       </CardContent>
     </Card>

@@ -520,12 +520,14 @@ export type StageDistribution = {
     stage_2: number;
     stage_3: number;
     stage_4: number;
+    stage_0: number;
 };
 
 // Gender distribution
 export type GenderDistribution = {
     gender_male: number;
     gender_female: number;
+    gender_no_gender: number;
 };
 
 // Age group distribution
@@ -535,6 +537,7 @@ export type AgeGroupDistribution = {
     age_group_31_to_40: number;
     age_group_41_to_50: number;
     age_group_above_50: number;
+    age_group_no_age_group: number;
 };
 
 // Final response type

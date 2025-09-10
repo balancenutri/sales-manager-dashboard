@@ -25,23 +25,27 @@ export default function GenderBifurcation({
           <TableHeader>
             <TableRow>
               <TableHead className="text-center">Gender</TableHead>
-              <TableHead className="text-center">Lead</TableHead>
-              <TableHead className="text-center">OC</TableHead>
+              <TableHead className="text-center">Male</TableHead>
+              <TableHead className="text-center">Female</TableHead>
+              <TableHead className="text-center">No Gender</TableHead>
             </TableRow>
           </TableHeader>
           {data?.lead && data?.oc ? <TableBody>
             <TableRow>
-              <TableCell className="font-semibold text-center">Male</TableCell>
+              <TableCell className="font-semibold text-center">Lead</TableCell>
               <TableCell className="text-center font-bold">
                 {data?.lead.gender_male}
               </TableCell>
               <TableCell className="text-center font-bold">
                 {data?.lead.gender_female}
               </TableCell>
+              <TableCell className="text-center font-bold">
+                {data?.lead.gender_no_gender}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-semibold text-center">
-                Female
+                OC
               </TableCell>
               <TableCell className="text-center font-bold">
                 {data?.oc.gender_male}
@@ -49,8 +53,11 @@ export default function GenderBifurcation({
               <TableCell className="text-center font-bold">
                 {data?.oc.gender_female}
               </TableCell>
+              <TableCell className="text-center font-bold">
+                {data?.oc.gender_no_gender}
+              </TableCell>
             </TableRow>
-          </TableBody> : <SkeletonTable row={2} col={3} />}
+          </TableBody> : <SkeletonTable row={2} col={4} />}
         </Table>
       </CardContent>
     </Card>

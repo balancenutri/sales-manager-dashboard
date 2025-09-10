@@ -30,6 +30,7 @@ export default function AgeBifurcation({
               <TableHead className="text-center">31 - 40</TableHead>
               <TableHead className="text-center">41 - 50</TableHead>
               <TableHead className="text-center">Above 50</TableHead>
+              <TableHead className="text-center">No Age</TableHead>
             </TableRow>
           </TableHeader>
           {data?.lead && data?.oc ? <TableBody>
@@ -50,6 +51,9 @@ export default function AgeBifurcation({
               <TableCell className="text-center font-bold">
                 {data?.lead.age_group_above_50}
               </TableCell>
+              <TableCell className="text-center font-bold">
+                {data?.lead.age_group_no_age_group}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-semibold text-center">OC</TableCell>
@@ -68,8 +72,11 @@ export default function AgeBifurcation({
               <TableCell className="text-center font-bold">
                 {data?.oc.age_group_above_50}
               </TableCell>
+              <TableCell className="text-center font-bold">
+                {data?.oc.age_group_no_age_group}
+              </TableCell>
             </TableRow>
-          </TableBody> : <SkeletonTable row={2} col={6} />}
+          </TableBody> : <SkeletonTable row={2} col={7} />}
         </Table>
       </CardContent>
     </Card>
