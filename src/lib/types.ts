@@ -212,8 +212,18 @@ export interface AppUsageResponse {
 
 export type KeyEngagement = {
     [key: string]: {
-        today_count: number,
-        monthly_count: number,
+        today_count: {
+            active: number;
+            oc: number;
+            lead: number;
+            total: number;
+        };
+        monthly_count: {
+            active: number;
+            oc: number;
+            lead: number;
+            total: number;
+        }
     }
 }
 
@@ -226,9 +236,7 @@ export interface KeyEngagementResponse {
 export interface ActivatedFeaturesResponse {
     status: string;
     message: string;
-    data: {
-        [key: string]: number,
-    };
+    data: KeyEngagement;
     totalCount: number;
 }
 

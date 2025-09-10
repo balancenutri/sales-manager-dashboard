@@ -171,7 +171,7 @@ export default function Platforms({
                 like: data?.like || 0,
                 comment: data?.comment || 0,
                 share: data?.share || 0,
-                total_views: data?.total_followers || 0,
+                total_views: data?.total_views || 0,
                 total_subscriber: data?.total_subscriber || 0,
                 subscriber_gain: data?.subscriber_gain || 0,
                 subscriber_loss: data?.subscriber_loss || 0,

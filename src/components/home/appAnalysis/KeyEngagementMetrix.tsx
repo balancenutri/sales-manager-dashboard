@@ -16,6 +16,7 @@ import {
 import type { KeyEngagement } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { KeyEngagementCardTooltip } from "../common/KeyEngagmentCardTooltip";
 
 type EngagementIcon = {
   [K in keyof KeyEngagement]: LucideIcon;
@@ -61,7 +62,7 @@ export default function KeyEngagementMetrix() {
                     <span className="font-medium">{keyString(key)}</span>
                   </div>
                   <div className="font-semibold text-lg">
-                    {value.today_count} | {value.monthly_count}
+                    {value ? <KeyEngagementCardTooltip itemData={value} /> : <Skeleton className="h-6" />}
                   </div>
                 </div>
               );
