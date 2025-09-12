@@ -21,6 +21,7 @@ import CampaignOverview from "@/components/home/digitalMarketing/CampaignOvervie
 import AppCount from "@/components/home/appAnalysis/AppCount";
 import LeadOcBifurcation from "@/components/home/digitalMarketing/LeadOcBifurcation";
 import NotificationEngagments from "@/components/home/appAnalysis/NotificationEngagements";
+import OcCard from "@/components/home/overview/OcCard";
 
 mockData.overview.totalSalesOpportunity = Object.values(
   mockData.solidSalesOpportunity
@@ -33,10 +34,10 @@ export default function Home() {
       <div className="p-6">
         {/* Main Content Tabs */}
         <Tabs defaultValue="social-media" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            {/* <TabsTrigger className="cursor-pointer" value="overview">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger className="cursor-pointer" value="overview">
               Overview
-            </TabsTrigger> */}
+            </TabsTrigger>
             <TabsTrigger className="cursor-pointer" value="social-media">
               Social Media
             </TabsTrigger>
@@ -54,16 +55,17 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {/* Combined Leads Card */}
               <LeadCard />
+              <OcCard />
 
               {/* Combined Sales & Revenue Card */}
               <RevenueCard />
 
               {/* Social Media Performance Card */}
-              <PerformanceConsolidatedTable
+              {/* <PerformanceConsolidatedTable
                 title="Team Performance (Social Media)"
                 description="Consolidated social media performance by team/counsellor"
                 header={false}
-              />
+              /> */}
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Top Performers */}
