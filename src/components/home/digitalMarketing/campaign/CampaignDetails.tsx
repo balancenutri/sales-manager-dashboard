@@ -6,12 +6,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGetCampaignOverviewQuery } from "@/service/dashboard/api";
 import { Activity, Eye, TrendingUp, UserPlus, Users } from "lucide-react";
+import { useState } from "react";
 
 export default function CampaignDetails() {
   const { data, isFetching } = useGetCampaignOverviewQuery();
 
+  const [selected, setSelected] = useState<"" | "bn" | "cleanse">("");
   console.log({ data });
 
   const SkeletonArray = Array(9)
@@ -25,12 +28,44 @@ export default function CampaignDetails() {
         <Skeleton className="h-5 w-20" />
       </div>
     ));
+
   return (
     <div>
       <Card>
         <CardHeader>
-          <CardTitle>Campaign Details</CardTitle>
-          <CardDescription>Campaign Overview</CardDescription>
+          <div className="flex justify-between">
+            <div>
+              <CardTitle>Campaign Details</CardTitle>
+              <CardDescription className="mt-1">
+                Campaign Overview
+              </CardDescription>
+            </div>
+            <Tabs defaultValue={selected} className="space-y-6">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger
+                  className="cursor-pointer"
+                  value=""
+                  onClick={() => setSelected("")}
+                >
+                  All
+                </TabsTrigger>
+                <TabsTrigger
+                  className="cursor-pointer"
+                  value={"bn"}
+                  onClick={() => setSelected("bn")}
+                >
+                  BN
+                </TabsTrigger>
+                <TabsTrigger
+                  className="cursor-pointer"
+                  value="cleanse"
+                  onClick={() => setSelected("cleanse")}
+                >
+                  Cleanse
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
         </CardHeader>
         {data?.data && !isFetching ? (
           <CardContent>
@@ -41,7 +76,7 @@ export default function CampaignDetails() {
                   <span className="font-medium">No. of Champaign (Active)</span>
                 </div>
                 <div className="font-semibold text-lg">
-                  {data.data[0].active_count}
+                  {selected === "cleanse" ? 0 : data.data[0].active_count}
                 </div>
               </div>
               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
@@ -50,7 +85,7 @@ export default function CampaignDetails() {
                   <span className="font-medium">Ad Spend</span>
                 </div>
                 <div className="font-semibold text-lg">
-                  {data.data[0].total_ad_spend}
+                  {selected === "cleanse" ? 0 : data.data[0].total_ad_spend}
                 </div>
               </div>
               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
@@ -59,7 +94,7 @@ export default function CampaignDetails() {
                   <span className="font-medium">Total Impressions</span>
                 </div>
                 <div className="font-semibold text-lg">
-                  {data.data[0].total_impressions}
+                  {selected === "cleanse" ? 0 : data.data[0].total_impressions}
                 </div>
               </div>
               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
@@ -68,7 +103,7 @@ export default function CampaignDetails() {
                   <span className="font-medium">Total Reach</span>
                 </div>
                 <div className="font-semibold text-lg">
-                  {data.data[0].total_reach}
+                  {selected === "cleanse" ? 0 : data.data[0].total_reach}
                 </div>
               </div>
               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
@@ -77,7 +112,7 @@ export default function CampaignDetails() {
                   <span className="font-medium">Total CTR</span>
                 </div>
                 <div className="font-semibold text-lg">
-                  {data.data[0].total_ctr}%
+                  {selected === "cleanse" ? 0 : data.data[0].total_ctr}%
                 </div>
               </div>
               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
@@ -86,7 +121,7 @@ export default function CampaignDetails() {
                   <span className="font-medium">Total CAC</span>
                 </div>
                 <div className="font-semibold text-lg">
-                  {data.data[0].total_cac}
+                  {selected === "cleanse" ? 0 : data.data[0].total_cac}
                 </div>
               </div>
               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
@@ -95,7 +130,7 @@ export default function CampaignDetails() {
                   <span className="font-medium">Lead Generated</span>
                 </div>
                 <div className="font-semibold text-lg">
-                  {data.data[0].leads_generated}
+                  {selected === "cleanse" ? 0 : data.data[0].leads_generated}
                 </div>
               </div>
               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
@@ -104,7 +139,7 @@ export default function CampaignDetails() {
                   <span className="font-medium">Revenue Generated</span>
                 </div>
                 <div className="font-semibold text-lg">
-                  {data.data[0].revenue_generated}
+                  {selected === "cleanse" ? 0 : data.data[0].revenue_generated}
                 </div>
               </div>
             </div>
