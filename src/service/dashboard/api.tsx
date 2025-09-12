@@ -22,6 +22,12 @@ import {
   type GetCampaignDetailsResponse,
   type CampaignDetailsBody,
   type UpdateCampaignBody,
+  type UserBifurcationResponse,
+  type CampaignOverviewResponse,
+  type AppCountResponse,
+  type AllSocialMediaPerformanceResponse,
+  type NotificationStatsResponse,
+  type WebsitePerformanceResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -84,7 +90,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    getInstagramPerformance: builder.query<SocialMediaResponse, BodyProps>({
+    getInstagramPerformance: builder.query<
+      SocialMediaResponse,
+      { account: string | null; filter?: string }
+    >({
       query: (body) => ({
         url: `/sales/social-media/instagram-performance`,
         method: "POST",
@@ -92,7 +101,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["SocialMedia"],
     }),
-    getYoutubePerformance: builder.query<SocialMediaResponse, BodyProps>({
+    getYoutubePerformance: builder.query<
+      SocialMediaResponse,
+      { account: string | null; filter?: string }
+    >({
       query: (body) => ({
         url: `/sales/social-media/youtube-performance`,
         method: "POST",
@@ -100,7 +112,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["SocialMedia"],
     }),
-    getFacebookPerformance: builder.query<SocialMediaResponse, BodyProps>({
+    getFacebookPerformance: builder.query<
+      SocialMediaResponse,
+      { account: string | null; filter?: string }
+    >({
       query: (body) => ({
         url: `/sales/social-media/facebook-performance`,
         method: "POST",
@@ -108,19 +123,55 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["SocialMedia"],
     }),
-    getSocialMediaPerformance: builder.query<SocialMediaResponse, BodyProps>({
+    getTwitterPerformance: builder.query<
+      SocialMediaResponse,
+      { account: string | null; filter?: string }
+    >({
       query: (body) => ({
-        url: `/sales/social-media/social-media-performance`,
+        url: `/sales/social-media/twitter-performance`,
         method: "POST",
-        body
+        body,
       }),
       providesTags: ["SocialMedia"],
     }),
-    updateSocialMediaPerformance: builder.mutation<UpdateSocialMediaResponse, UpdateSocialMediaBody>({
+    getLinkedinPerformance: builder.query<
+      SocialMediaResponse,
+      { account: string | null; filter?: string }
+    >({
+      query: (body) => ({
+        url: `/sales/social-media/linkedin-performance`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["SocialMedia"],
+    }),
+    getSocialMediaPerformance: builder.query<SocialMediaResponse, void>({
+      query: (body) => ({
+        url: `/sales/social-media/social-media-performance`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["SocialMedia"],
+    }),
+    getAllSocialMediaPerformance: builder.query<
+      AllSocialMediaPerformanceResponse,
+      void
+    >({
+      query: (body) => ({
+        url: `/sales/social-media/all-social-media-performance`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["SocialMedia"],
+    }),
+    updateSocialMediaPerformance: builder.mutation<
+      UpdateSocialMediaResponse,
+      UpdateSocialMediaBody
+    >({
       query: (body) => ({
         url: `/sales/social-media/update-social-media-analysis`,
         method: "POST",
-        body
+        body,
       }),
       invalidatesTags: ["SocialMedia"],
     }),
@@ -130,6 +181,13 @@ export const dashboardApi = commonAPi.injectEndpoints({
         url: `/sales/digital-marketing/overall-gender-wise-leads`,
         method: "POST",
         body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getWebsitePerformance: builder.query<WebsitePerformanceResponse, void>({
+      query: () => ({
+        url: `/sales/digital-marketing/website-performance`,
+        method: "POST",
       }),
       providesTags: ["Common"],
     }),
@@ -189,13 +247,30 @@ export const dashboardApi = commonAPi.injectEndpoints({
       query: () => `/sales/digital-marketing/get-campaigns-details`,
       providesTags: ["Campaign"],
     }),
-    getCampaignDetails: builder.query<GetCampaignDetailsResponse, CampaignDetailsBody>({
+    getCampaignDetails: builder.query<
+      GetCampaignDetailsResponse,
+      CampaignDetailsBody
+    >({
       query: (body) => ({
         url: `/sales/digital-marketing/campaigns-details-id`,
         method: "POST",
         body,
       }),
       providesTags: ["Campaign"],
+    }),
+    getCampaignOverview: builder.query<CampaignOverviewResponse, void>({
+      query: () => ({
+        url: `/sales/digital-marketing/campaign-overview`,
+        method: "POST",
+      }),
+      providesTags: ["Campaign"],
+    }),
+    getUserBifurcationCount: builder.query<UserBifurcationResponse, void>({
+      query: () => ({
+        url: `/sales/digital-marketing/user-bifurcation-count`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
     }),
     getLeadUserMisData: builder.query<LeadMisResponse, LeadMisBody>({
       query: (body) => ({
@@ -206,10 +281,14 @@ export const dashboardApi = commonAPi.injectEndpoints({
       providesTags: ["Common"],
     }),
 
-    getAppDownloadsCount: builder.query<AppDownlaodResponse, void>({
-      query: () => ({
+    getAppDownloadsCount: builder.query<
+      AppDownlaodResponse,
+      { filter?: string }
+    >({
+      query: (body) => ({
         url: `/sales/app-activity/app-download-counts`,
         method: "POST",
+        body,
       }),
       providesTags: ["Common"],
     }),
@@ -255,6 +334,42 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getActiveAppCount: builder.query<AppCountResponse, BodyProps>({
+      query: (body) => ({
+        url: `/sales/app-activity/app-analytics-overview-active-count`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getOcAppCount: builder.query<AppCountResponse, BodyProps>({
+      query: (body) => ({
+        url: `/sales/app-activity/app-analytics-overview-oc-count`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getLeadAppCount: builder.query<AppCountResponse, BodyProps>({
+      query: (body) => ({
+        url: `/sales/app-activity/app-analytics-overview-lead-count`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getNotificationEngagement: builder.query<
+      NotificationStatsResponse,
+      BodyProps
+    >({
+      query: (body) => ({
+        url: `/sales/app-activity/notification-engagement`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+
     getClientPerformance: builder.query<
       ClientPerformanceResponse,
       ClientPerformanceBody
@@ -296,6 +411,7 @@ export const {
   useGetTopPerformersQuery,
 
   useGetGenderWiseLeadQuery,
+  useGetWebsitePerformanceQuery,
   useGetClinicalConditionDataQuery,
   useGetLeadMisDataQuery,
 
@@ -303,6 +419,8 @@ export const {
   useUpdateCampaignMutation,
   useGetAllCampaignsQuery,
   useGetCampaignDetailsQuery,
+  useGetCampaignOverviewQuery,
+  useGetUserBifurcationCountQuery,
   useGetLeadUserMisDataQuery,
   useLazyGetLeadMisDataQuery,
 
@@ -310,8 +428,11 @@ export const {
   useGetConsolidatedTeamPerformanceQuery,
   useGetInstagramPerformanceQuery,
   useGetFacebookPerformanceQuery,
+  useGetLinkedinPerformanceQuery,
+  useGetTwitterPerformanceQuery,
   useGetYoutubePerformanceQuery,
   useGetSocialMediaPerformanceQuery,
+  useGetAllSocialMediaPerformanceQuery,
   useUpdateSocialMediaPerformanceMutation,
 
   useGetAppDownloadsCountQuery,
@@ -321,6 +442,11 @@ export const {
   useGetAppUsageOverviewQuery,
   useGetKeyEngagementMatricsQuery,
   useGetActivatedFeaturesQuery,
+  useGetActiveAppCountQuery,
+  useGetOcAppCountQuery,
+  useGetLeadAppCountQuery,
+  useGetNotificationEngagementQuery,
+
   useGetClientPerformanceQuery,
 
   useGetGuideAndBookInteractionsQuery,

@@ -33,7 +33,7 @@ export default function TopPerformer() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
+        <div className="space-y-4 max-h-[60vh] overflow-scroll">
           {!data?.data || isFetching
             ? renderSkeletonRows()
             : Object.entries(data?.data || {}).map(

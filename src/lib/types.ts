@@ -107,6 +107,7 @@ export type LeadMis = {
     "Region": string;
     "Sales Status": string;
     "Stage": string;
+    "User Type": string;
 }
 
 export interface LeadMisResponse {
@@ -138,6 +139,7 @@ export type AddCampaignBody = {
         ctr: number;
         conversions: number;
     },
+    added_by: string;
 };
 export type UpdateCampaignBody = {
     id: number;
@@ -174,6 +176,7 @@ export type LeadMisBody = {
     stages?: number[];
     page?: number;
     limit?: number;
+    user_types?: string[];
     is_export?: boolean;
 };
 
@@ -209,8 +212,18 @@ export interface AppUsageResponse {
 
 export type KeyEngagement = {
     [key: string]: {
-        today_count: number,
-        monthly_count: number,
+        today_count: {
+            active: number;
+            oc: number;
+            lead: number;
+            total: number;
+        };
+        monthly_count: {
+            active: number;
+            oc: number;
+            lead: number;
+            total: number;
+        }
     }
 }
 
@@ -223,9 +236,7 @@ export interface KeyEngagementResponse {
 export interface ActivatedFeaturesResponse {
     status: string;
     message: string;
-    data: {
-        [key: string]: number,
-    };
+    data: KeyEngagement;
     totalCount: number;
 }
 
@@ -386,7 +397,22 @@ export interface ContentVisitResponse {
 }
 
 export type SocailMediaType = {
-    [key: string]: number;
+    impressions: number;
+    total_reach: number;
+    total_visitors: number;
+    engagement_rate: string;
+    total_followers: number;
+    unique_engagement: number;
+    lead_generated: number;
+    lead_converted: number;
+    revenue_generated: number;
+    total_subscriber?: number;
+    subscriber_gain?: number;
+    subscriber_loss?: number;
+    total_views?: number;
+    like: number;
+    comment: number;
+    share: number;
 }
 
 export interface SocialMediaResponse {
@@ -398,14 +424,21 @@ export interface SocialMediaResponse {
 
 export interface UpdateSocialMediaBody {
     data: {
-        total_followers: number;
-        total_visitors: number;
+        total_followers?: number;
+        total_visitors?: number;
+        total_subscriber?: number;
+        subscriber_gain?: number;
+        subscriber_loss?: number;
         unique_engagement: number;
         total_reach?: number;
         impressions: number;
         engagement_rate: string;
+        like: number;
+        comment: number;
+        share: number;
     },
     type?: string;
+    account?: string;
 }
 
 export interface UpdateSocialMediaResponse {
@@ -454,6 +487,7 @@ type CampaignDetails = {
     },
     "leadsGenerated": number;
     "revenueGenerated": number;
+    addedBy: string | null;
 }
 export interface GetCampaignDetailsResponse {
     status: string;
@@ -465,3 +499,178 @@ export interface GetCampaignDetailsResponse {
 export type CampaignDetailsBody = {
     campaign_id: number;
 }
+
+
+
+// Generic type for bifurcation with lead & oc
+export type Bifurcation<T> = {
+    lead: T;
+    oc: T;
+};
+
+// Location distribution
+export type LocationDistribution = {
+    indian: number;
+    abroad: number;
+};
+
+// Stage distribution
+export type StageDistribution = {
+    stage_1: number;
+    stage_2: number;
+    stage_3: number;
+    stage_4: number;
+    stage_0: number;
+};
+
+// Gender distribution
+export type GenderDistribution = {
+    gender_male: number;
+    gender_female: number;
+    gender_no_gender: number;
+};
+
+// Age group distribution
+export type AgeGroupDistribution = {
+    age_group_below_20: number;
+    age_group_21_to_30: number;
+    age_group_31_to_40: number;
+    age_group_41_to_50: number;
+    age_group_above_50: number;
+    age_group_no_age_group: number;
+};
+
+// Final response type
+export interface UserBifurcationResponse {
+    status: string;
+    message: string;
+    data: {
+        overall_distribution: {
+            lead: number;
+            oc: number;
+        };
+        location_distribution: Bifurcation<LocationDistribution>;
+        stage_distribution: Bifurcation<StageDistribution>;
+        gender_distribution: Bifurcation<GenderDistribution>;
+        age_group_distribution: Bifurcation<AgeGroupDistribution>;
+    };
+    hide_columns: string[];
+}
+
+type CampaignOverviewData = {
+    active_count: number;
+    total_ad_spend: number;
+    total_impressions: number;
+    total_reach: number;
+    total_ctr: number;
+    total_cac: number;
+    leads_generated: number;
+    revenue_generated: number;
+}
+export interface CampaignOverviewResponse {
+    status: string;
+    message: string;
+    data: CampaignOverviewData[];
+    hide_columns: string[];
+}
+
+
+export type AppVersionCount = {
+    version: string;
+    count: number;
+};
+
+export type NotUpdatedVersions = {
+    android: AppVersionCount[];
+    ios: AppVersionCount[];
+};
+
+export type ActiveAppCount = {
+    with_app: number;
+    without_app: number;
+    not_updated: number;
+    with_activity: number;
+    with_inactivity: number;
+    not_updated_versions: NotUpdatedVersions;
+    current_versions: {
+        android: string;
+        ios: string;
+    }
+};
+
+export interface AppCountResponse {
+    status: string;
+    message: string;
+    data: ActiveAppCount;
+    hide_columns: string[];
+}
+
+export type SocialMediaType =
+    | "youtube"
+    | "instagram"
+    | "facebook"
+    | "twitter"
+    | "linkedin"
+    | null;
+
+// Define valid keys as DialogType excluding null
+export type ValidSocialMediaKey = Exclude<SocialMediaType, null>;
+
+type AllSocialMedia = {
+    [key in ValidSocialMediaKey]: {
+        lead_generated: number;
+        revenue_generated: number;
+    }
+}
+
+export interface AllSocialMediaPerformanceResponse {
+    status: string;
+    message: string;
+    data: AllSocialMedia;
+    hide_columns: string[];
+}
+
+
+
+export type NotificationEntry = {
+    title: string;
+    seen_count: number;
+    total_count: number;
+    open_trend: string;
+};
+
+export type NotificationEngagementData = {
+    total_notifications: {
+        total_sent: number;
+        total_seen: number;
+        open_trend: string;
+    };
+    top_notifications: NotificationEntry[];
+    less_performing_notifications: NotificationEntry[];
+};
+
+
+export interface NotificationStatsResponse {
+    status: string;
+    message: string;
+    data: NotificationEngagementData;
+    hide_columns: string[];
+};
+
+export type WebsitePerformanceKey = "page_view" |
+    "total_engagement" |
+    "avg_session_duration" |
+    "bounce_rate" |
+    "unique_engagement" |
+    "leads_from_website"
+
+export type WebsitePerformanceType = {
+    [key in WebsitePerformanceKey]: string;
+}
+
+export interface WebsitePerformanceResponse {
+    status: string;
+    message: string;
+    data: WebsitePerformanceType;
+    hide_columns: string[];
+};

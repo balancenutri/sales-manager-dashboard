@@ -13,14 +13,8 @@ import { DialogDescription } from "@radix-ui/react-dialog";
 import { useGetLeadManagementQuery } from "@/service/dashboard/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import AssignedLead from "./leadCard/AssignedLead";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
-export default function LeadCard() {
+export default function OcCard() {
   const [modalType, setModalType] = useState<
     "assigned" | "unassigned" | "sales" | "revenue" | "team" | null
   >(null);
@@ -37,86 +31,26 @@ export default function LeadCard() {
     <div className="space-y-6">
       <Card className="cursor-pointer hover:shadow-md transition-shadow h-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Lead Management</CardTitle>
+          <CardTitle className="text-sm font-medium">OC Management</CardTitle>
           <Users className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent className="space-y-3">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div
-                  className="flex items-center justify-between p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
-                  onClick={() => handleLeadsClick("assigned")}
-                >
-                  <div>
-                    <p className="text-sm text-muted-foreground">Total Lead Generated</p>
-                    {leadManagementData?.data ? (
-                      <p className="text-xl font-bold text-green-700">
-                        {leadManagementData?.data.assigned_leads}
-                      </p>
-                    ) : (
-                      <Skeleton className="h-5 w-20 mt-2" />
-                    )}
-                  </div>
-                  <ArrowUp className="h-4 w-4 text-green-500" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent className="p-0 bg-white border border-gray-200 shadow-lg rounded-lg max-w-xs">
-                <div className="grid grid-cols-2 gap-3 m-3">
-                  <div className="text-center p-2 bg-green-50 rounded-md">
-                    <p className="text-xs text-gray-600 font-medium">
-                      Target Market
-                    </p>
-                    <p className="text-sm font-bold text-green-700">10</p>
-                  </div>
-                  <div className="text-center p-2 bg-blue-50 rounded-md">
-                    <p className="text-xs text-gray-600 font-medium">
-                      Non Target Market
-                    </p>
-                    <p className="text-sm font-bold text-blue-700">40</p>
-                  </div>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div
-                  className="flex items-center justify-between p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
-                  onClick={() => handleLeadsClick("assigned")}
-                >
-                  <div>
-                    <p className="text-sm text-muted-foreground">Assigned</p>
-                    {leadManagementData?.data ? (
-                      <p className="text-xl font-bold text-green-700">
-                        {leadManagementData?.data.assigned_leads}
-                      </p>
-                    ) : (
-                      <Skeleton className="h-5 w-20 mt-2" />
-                    )}
-                  </div>
-                  <ArrowUp className="h-4 w-4 text-green-500" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent className="p-0 bg-white border border-gray-200 shadow-lg rounded-lg max-w-xs">
-                <div className="grid grid-cols-2 gap-3 m-3">
-                  <div className="text-center p-2 bg-green-50 rounded-md">
-                    <p className="text-xs text-gray-600 font-medium">
-                      Mentor
-                    </p>
-                    <p className="text-sm font-bold text-green-700">10</p>
-                  </div>
-                  <div className="text-center p-2 bg-blue-50 rounded-md">
-                    <p className="text-xs text-gray-600 font-medium">
-                      Counsellor
-                    </p>
-                    <p className="text-sm font-bold text-blue-700">40</p>
-                  </div>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <div
+            className="flex items-center justify-between p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
+            onClick={() => handleLeadsClick("assigned")}
+          >
+            <div>
+              <p className="text-sm text-muted-foreground">Assigned</p>
+              {leadManagementData?.data ? (
+                <p className="text-xl font-bold text-green-700">
+                  {leadManagementData?.data.assigned_leads}
+                </p>
+              ) : (
+                <Skeleton className="h-5 w-20 mt-2" />
+              )}
+            </div>
+            <ArrowUp className="h-4 w-4 text-green-500" />
+          </div>
           <div
             className="flex items-center justify-between p-2 rounded-lg bg-orange-50 hover:bg-orange-100 transition-colors cursor-pointer"
             onClick={() => handleLeadsClick("unassigned")}

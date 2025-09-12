@@ -1,19 +1,49 @@
-import {
-  useGetAllActiveAppCountQuery,
-  useGetAllLeadAppCountQuery,
-  useGetAllOcAppCountQuery,
-} from "@/service/dashboard/api";
+// import {
+//   useGetAllActiveAppCountQuery,
+//   useGetAllLeadAppCountQuery,
+//   useGetAllOcAppCountQuery,
+// } from "@/service/dashboard/api";
 import AppCountCard from "./appCount/AppCountCard";
+import { useState } from "react";
+import {
+  useGetActiveAppCountQuery,
+  useGetLeadAppCountQuery,
+  useGetOcAppCountQuery,
+} from "@/service/dashboard/api";
+
+type PeriodType = "overall" | "last_24_hours" | "last_48_hours" | "mtd";
 
 export default function AppCount() {
-  const { data: leadData } = useGetAllLeadAppCountQuery();
-  const { data: activeData } = useGetAllActiveAppCountQuery();
-  const { data: ocData } = useGetAllOcAppCountQuery();
+    const [leadPeriod, setLeadPeriod] = useState<PeriodType>("mtd");
+    const [activePeriod, setActivePeriod] = useState<PeriodType>("mtd");
+
+  const { data: leadData, isFetching: leadLoading } = useGetLeadAppCountQuery({ filter: leadPeriod });
+  const { data: activeData, isFetching: activeLoading } = useGetActiveAppCountQuery({ filter: activePeriod });
+  const { data: ocData , isFetching: ocLoading} = useGetOcAppCountQuery({ filter: "" });
+
+
   return (
-    <div className="grid lg:grid-cols-3 gap-4">
-      <AppCountCard data={activeData?.data || {}} title="Active App Count" />
-      <AppCountCard data={ocData?.data || {}} title="OC App Count" />
-      <AppCountCard data={leadData?.data || {}} title="Lead App Count" />
+    <div className="mt-12">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold">App Analytics Overview</h2>
+      </div>
+      <div className="grid lg:grid-cols-3 gap-4">
+        <AppCountCard
+          data={leadData?.data}
+          title="Lead App Count"
+          period={leadPeriod}
+          setPeriod={setLeadPeriod}
+          fetching={leadLoading}
+        />
+        <AppCountCard
+          data={activeData?.data}
+          title="Active App Count"
+          period={activePeriod}
+          setPeriod={setActivePeriod}
+          fetching={activeLoading}
+        />
+        <AppCountCard data={ocData?.data} title="OC App Count" fetching={ocLoading} />
+      </div>
     </div>
   );
 }

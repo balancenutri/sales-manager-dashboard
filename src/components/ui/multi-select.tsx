@@ -332,7 +332,7 @@
 //                 const displayValue = getDisplayValue(option)
 //                 const storedValue = getStoredValue(option)
 //                 const uniqueKey = isObjectOption(option) ? storedValue : index
-                
+
 //                 return (
 //                   <CommandItem
 //                     key={uniqueKey}
@@ -356,12 +356,11 @@
 //   )
 // }
 
-
-import * as React from "react"
-import { Check, ChevronsUpDown, X } from 'lucide-react'
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import * as React from "react";
+import { Check, ChevronsUpDown, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -369,26 +368,26 @@ import {
   CommandInput,
   CommandItem,
   CommandList, // Ensure CommandList is imported
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 // Types for the unified component
-type StringOption = string
-type ObjectOption = Record<string, any>
-type Option = StringOption | ObjectOption
+type StringOption = string;
+type ObjectOption = Record<string, any>;
+type Option = StringOption | ObjectOption;
 
 interface MultiSelectProps {
-  options: Option[]
-  selected: (string | number)[]
-  onChange: (selected: (string | number)[]) => void
-  placeholder?: string
-  className?: string
-  nameKey?: string // Key to use for display name in objects
-  valueKey?: string // Key to use for stored value in objects
+  options: Option[];
+  selected: (string | number)[];
+  onChange: (selected: (string | number)[]) => void;
+  placeholder?: string;
+  className?: string;
+  nameKey?: string; // Key to use for display name in objects
+  valueKey?: string; // Key to use for stored value in objects
 }
 
 export function MultiSelect({
@@ -400,53 +399,55 @@ export function MultiSelect({
   nameKey = "name",
   valueKey = "id",
 }: MultiSelectProps) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   // Helper function to check if option is an object
   const isObjectOption = (option: Option): option is ObjectOption => {
-    return typeof option === 'object' && option !== null
-  }
+    return typeof option === "object" && option !== null;
+  };
 
   // Helper function to get display value
   const getDisplayValue = (option: Option): string => {
     if (isObjectOption(option)) {
-      return option[nameKey] || String(option[valueKey]) || 'Unknown'
+      return option[nameKey] || String(option[valueKey]) || "Unknown";
     }
-    return String(option)
-  }
+    return String(option);
+  };
 
   // Helper function to get stored value
   const getStoredValue = (option: Option): string | number => {
     if (isObjectOption(option)) {
-      return option[valueKey]
+      return option[valueKey];
     }
-    return option
-  }
+    return option;
+  };
 
   // Helper function to get display name from selected value
   const getSelectedDisplayName = (value: string | number): string => {
-    const option = options.find(opt => getStoredValue(opt) === value)
-    return option ? getDisplayValue(option) : String(value)
-  }
+    const option = options.find((opt) => getStoredValue(opt) === value);
+    return option ? getDisplayValue(option) : String(value);
+  };
 
   const handleUnselect = (value: string | number) => {
-    onChange(selected.filter((selectedValue) => selectedValue !== value))
-  }
+    onChange(selected.filter((selectedValue) => selectedValue !== value));
+  };
 
   const handleSelect = (option: Option) => {
-    const value = getStoredValue(option)
+    const value = getStoredValue(option);
     if (selected.includes(value)) {
-      handleUnselect(value)
+      handleUnselect(value);
     } else {
-      onChange([...selected, value])
+      onChange([...selected, value]);
     }
-  }
+  };
 
   const handleClearAll = () => {
-    onChange([])
-  }
+    onChange([]);
+  };
 
-  const selectedDisplayNames = selected.map(value => getSelectedDisplayName(value))
+  const selectedDisplayNames = selected.map((value) =>
+    getSelectedDisplayName(value)
+  );
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -472,8 +473,8 @@ export function MultiSelect({
                     key={selected[index]}
                     className="mr-1 mb-1"
                     onClick={(e) => {
-                      e.stopPropagation()
-                      handleUnselect(selected[index])
+                      e.stopPropagation();
+                      handleUnselect(selected[index]);
                     }}
                   >
                     {name}
@@ -490,13 +491,16 @@ export function MultiSelect({
           </div>
           <div className="flex items-center gap-2">
             {selected.length > 0 && (
-              <X
-                className="h-4 w-4 cursor-pointer text-muted-foreground hover:text-foreground"
+              <button
+                type="button"
                 onClick={(e) => {
-                  e.stopPropagation()
-                  handleClearAll()
+                  e.stopPropagation();
+                  handleClearAll();
                 }}
-              />
+                className="ml-2 text-muted-foreground hover:text-foreground cursor-pointer"
+              >
+                <X className="h-4 w-4" />
+              </button>
             )}
             <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
           </div>
@@ -511,14 +515,16 @@ export function MultiSelect({
       >
         <Command>
           <CommandInput placeholder="Search..." />
-          <CommandList className="max-h-[200px] overflow-y-auto"> {/* Added max-height and overflow-y-auto here */}
+          <CommandList className="max-h-[200px] overflow-y-auto">
+            {" "}
+            {/* Added max-height and overflow-y-auto here */}
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
               {options.map((option, index) => {
-                const displayValue = getDisplayValue(option)
-                const storedValue = getStoredValue(option)
-                const uniqueKey = isObjectOption(option) ? storedValue : index
-                
+                const displayValue = getDisplayValue(option);
+                const storedValue = getStoredValue(option);
+                const uniqueKey = isObjectOption(option) ? storedValue : index;
+
                 return (
                   <CommandItem
                     key={uniqueKey}
@@ -527,12 +533,14 @@ export function MultiSelect({
                     <Check
                       className={cn(
                         "mr-2 h-4 w-4",
-                        selected.includes(storedValue) ? "opacity-100" : "opacity-0"
+                        selected.includes(storedValue)
+                          ? "opacity-100"
+                          : "opacity-0"
                       )}
                     />
                     {displayValue}
                   </CommandItem>
-                )
+                );
               })}
             </CommandGroup>
           </CommandList>
@@ -551,5 +559,5 @@ export function MultiSelect({
         )}
       </PopoverContent>
     </Popover>
-  )
+  );
 }

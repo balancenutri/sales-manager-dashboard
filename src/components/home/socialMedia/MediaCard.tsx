@@ -1,237 +1,121 @@
-// import { Button } from "@/components/ui/button";
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card";
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogHeader,
-//   DialogTitle,
-// } from "@/components/ui/dialog";
-// import { Skeleton } from "@/components/ui/skeleton";
-// import type { SocailMediaType } from "@/lib/types";
-// import { keyString } from "@/lib/utils";
-// import type { LucideIcon } from "lucide-react";
-// import { useState, type JSX } from "react";
-// import AddMediaForm from "./AddMediaForm";
-
-// type MediaCardTypes = {
-//   icon: LucideIcon;
-//   title: string;
-//   desc: string;
-//   isUpdate: boolean;
-//   data: SocailMediaType | undefined;
-// };
-
-// type DialogType = "Youtube" | "Instagram" | "Facebook" | null;
-
-// export default function MediaCard({ data }: { data: MediaCardTypes }) {
-//   const [type, setType] = useState<DialogType>(null);
-//   const [openDialog, setOpenDialog] = useState<boolean>(false);
-//   const renderSkeleton = (): JSX.Element[] =>
-//     Array(4)
-//       .fill(null)
-//       .map((_, index: number) => (
-//         <div
-//           key={index}
-//           className="flex items-center justify-between border-b pb-2"
-//         >
-//           <Skeleton className="h-5 w-40" />
-//           <Skeleton className="h-5 w-20" />
-//         </div>
-//       ));
-//   const Icon: LucideIcon = data.icon;
-
-//   const handleDialogOpen = () => {
-//     setType(data.title as DialogType);
-//     setOpenDialog(true);
-//   };
-//   return (
-//     <Card>
-//       <CardHeader>
-//         <div className="flex items-center justify-between">
-//           <div className="flex items-center gap-2">
-//             <Icon />
-//             <CardTitle>{data.title}</CardTitle>
-//           </div>
-//           {data.isUpdate && (
-//             <Button variant="outline" onClick={handleDialogOpen}>
-//               Update
-//             </Button>
-//           )}
-//         </div>
-//         <CardDescription>{data.desc}</CardDescription>
-//       </CardHeader>
-//       <CardContent className="space-y-3">
-//         {data.data
-//           ? Object.entries(data.data).map(([key, value]) => (
-//               <div
-//                 className="flex items-center justify-between border-b pb-2"
-//                 key={key}
-//               >
-//                 <span className="font-medium">
-//                   {data.title === "youtube"
-//                     ? key === "total_reach"
-//                       ? ""
-//                       : key === "total_followers"
-//                       ? "Total Subscriber"
-//                       : keyString(key)
-//                     : keyString(key)}
-//                 </span>
-//                 <span className="font-semibold text-lg">{value}</span>
-//               </div>
-//             ))
-//           : renderSkeleton()}
-//       </CardContent>
-//       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-//         <DialogContent
-//           onInteractOutside={(e: React.MouseEvent | Event) =>
-//             e.preventDefault()
-//           }
-//         >
-//           <DialogHeader>
-//             <DialogTitle>{keyString(type || "")}</DialogTitle>
-//             <AddMediaForm
-//               type={type}
-//               mediaData={{
-//                 impressions: data.data?.impressions || 0,
-//                 total_followers: data.data?.total_followers || 0,
-//                 total_reach: data.data?.total_reach || 0,
-//                 total_visitors: data.data?.total_visitors || 0,
-//                 unique_engagement: data.data?.unique_engagement || 0,
-//               }}
-//               closeModal={() => setOpenDialog(false)}
-//             />
-//           </DialogHeader>
-//         </DialogContent>
-//       </Dialog>
-//     </Card>
-//   );
-// }
-
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  Youtube,
+  Twitter,
+  Instagram,
+  Facebook,
+  Linkedin,
+  type LucideIcon,
+} from "lucide-react";
+import Platforms from "./platform/Platforms";
+import type { SocialMediaType, ValidSocialMediaKey } from "@/lib/types";
+import { useGetAllSocialMediaPerformanceQuery } from "@/service/dashboard/api";
+import { Dialog } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { SocailMediaType } from "@/lib/types";
-import { keyString } from "@/lib/utils";
-import type { LucideIcon } from "lucide-react";
-import { useState, type JSX } from "react";
-import AddMediaForm from "./AddMediaForm";
 
-type MediaCardTypes = {
+type PlatformsType = {
+  key: ValidSocialMediaKey;
+  name: string;
   icon: LucideIcon;
-  title: string;
-  desc: string;
-  isUpdate: boolean;
-  data: SocailMediaType | undefined;
+  color: string;
 };
+export default function MediaCard() {
+  const [selectedPlatform, setSelectedPlatform] =
+    useState<SocialMediaType>(null);
+  // const [modalAccountTab, setModalAccountTab] = useState("all");
 
-type DialogType = "Youtube" | "Instagram" | "Facebook" | null;
+  const { data } = useGetAllSocialMediaPerformanceQuery();
 
-export default function MediaCard({ data }: { data: MediaCardTypes }) {
-  const [type, setType] = useState<DialogType>(null);
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
-
-  const renderSkeleton = (): JSX.Element[] =>
-    Array(4)
-      .fill(null)
-      .map((_, index: number) => (
-        <div
-          key={index}
-          className="flex items-center justify-between border-b pb-2"
-        >
-          <Skeleton className="h-5 w-40" />
-          <Skeleton className="h-5 w-20" />
-        </div>
-      ));
-
-  const Icon: LucideIcon = data.icon;
-
-  const handleDialogOpen = () => {
-    setType(data.title as DialogType);
-    setOpenDialog(true);
+  const handlePlatformClick = (platform: SocialMediaType) => {
+    setSelectedPlatform(platform);
+    // setModalAccountTab("all");
   };
 
-  return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Icon />
-            <CardTitle>{data.title}</CardTitle>
-          </div>
-          {data.isUpdate && (
-            <Button variant="outline" onClick={handleDialogOpen}>
-              Update
-            </Button>
-          )}
-        </div>
-        <CardDescription>{data.desc}</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-3">
-        {data.data
-          ? Object.entries(data.data).map(([key, value]) => {
-              // Skip rendering total_reach for YouTube
-              if (data.title === "Youtube" && key === "total_reach") {
-                return null;
-              }
-              // Determine display value for the key
-              const displayValue =
-                data.title === "Youtube" && key === "total_followers"
-                  ? "Total Subscriber"
-                  : keyString(key);
-              return (
-                <div
-                  className="flex items-center justify-between border-b pb-2"
-                  key={key}
-                >
-                  <span className="font-medium">{displayValue}</span>
-                  <span className="font-semibold text-lg">{value}</span>
+  const closeModal = () => {
+    setSelectedPlatform(null);
+  };
+
+  const renderPlatformCards = () => {
+    const platforms: PlatformsType[] = [
+      { key: "youtube", name: "YouTube", icon: Youtube, color: "text-red-600" },
+      {
+        key: "instagram",
+        name: "Instagram",
+        icon: Instagram,
+        color: "text-pink-600",
+      },
+      {
+        key: "facebook",
+        name: "Facebook",
+        icon: Facebook,
+        color: "text-blue-600",
+      },
+      { key: "twitter", name: "Twitter", icon: Twitter, color: "text-sky-600" },
+      {
+        key: "linkedin",
+        name: "Linkedin",
+        icon: Linkedin,
+        color: "text-sky-600",
+      },
+    ];
+
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        {platforms.map((platform) => {
+          const Icon = platform.icon;
+          return (
+            <Card
+              key={platform.key}
+              className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105"
+              onClick={() => handlePlatformClick(platform.key)}
+            >
+              <CardHeader className="flex items-center space-y-0 pb-2">
+                <Icon className={`h-6 w-6 ${platform.color}`} />
+                <CardTitle className="text-sm font-medium">
+                  {platform.name}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div>
+                    {data?.data ? (
+                      <div className="text-2xl font-bold">
+                        {data.data[platform.key].lead_generated}
+                      </div>
+                    ) : (
+                      <Skeleton className="h-6 w-16" />
+                    )}
+                    <p className="text-xs">Total Leads</p>
+                  </div>
+                  <div>
+                    {data?.data ? (
+                      <div className="text-lg font-semibold text-green-600">
+                        Rs. {data.data[platform.key].revenue_generated}
+                      </div>
+                    ) : (
+                      <Skeleton className="h-6 w-16" />
+                    )}
+                    <p className="text-xs">Revenue Generated</p>
+                  </div>
                 </div>
-              );
-            })
-          : renderSkeleton()}
-      </CardContent>
-      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent
-          onInteractOutside={(e: React.MouseEvent | Event) =>
-            e.preventDefault()
-          }
-        >
-          <DialogHeader>
-            <DialogTitle>{keyString(type || "")}</DialogTitle>
-            <AddMediaForm
-              type={type}
-              mediaData={{
-                impressions: data.data?.impressions || 0,
-                total_followers: data.data?.total_followers || 0,
-                ...(data?.title !== "Youtube" && {
-                  total_reach: data.data?.total_reach || 0,
-                }),
-                total_visitors: data.data?.total_visitors || 0,
-                unique_engagement: data.data?.unique_engagement || 0,
-              }}
-              closeModal={() => setOpenDialog(false)}
-            />
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-    </Card>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+    );
+  };
+  return (
+    <div className="">
+      <div className="container mx-auto">
+        {renderPlatformCards()}
+        {/* {renderModalContent()} */}
+
+        <Dialog open={!!selectedPlatform} onOpenChange={closeModal}>
+          <Platforms selectedPlatform={selectedPlatform} />
+        </Dialog>
+      </div>
+    </div>
   );
 }

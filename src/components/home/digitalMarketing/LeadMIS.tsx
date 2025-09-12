@@ -43,6 +43,7 @@ import {
   useLazyGetLeadMisDataQuery,
 } from "@/service/dashboard/api";
 import { keyString } from "@/lib/utils";
+import type { LeadMisBody } from "@/lib/types";
 
 export default function LeadMIS() {
   // const [selectedWatiTemplate, setSelectedWatiTemplate] = useState<string>();
@@ -60,6 +61,7 @@ export default function LeadMIS() {
       city: [] as number[],
       salesStatus: [] as number[],
       stage: [] as number[],
+      userTypes: [] as string[],
     },
   });
 
@@ -142,25 +144,42 @@ export default function LeadMIS() {
     { name: "Hot", id: 2 },
     { name: "Warm", id: 3 },
     { name: "Cold", id: 4 },
-    { name: "To Engage", id: 0 },
-    { name: "First Pitched", id: 1 },
-    { name: "Connected", id: 6 },
-    { name: "Consultation Booked", id: 7 },
+    ...(filters.userTypes.includes("lead")
+      ? [
+          { name: "To Engage", id: 0 },
+          { name: "First Pitched", id: 1 },
+          { name: "Connected", id: 6 },
+          { name: "Consultation Booked", id: 7 },
+        ]
+      : []),
   ];
 
-  const { data, isLoading } = useGetLeadUserMisDataQuery({
-    age_groups: filters.ageGroup,
-    countries: filters.country,
-    states: filters.state,
-    cities: filters.city,
-    genders: filters.gender,
-    health_conditions: filters.clinicalCondition,
-    regions: filters.region,
-    stages: filters.stage,
-    statuses: filters.salesStatus,
-    page,
-    limit,
-  });
+  const buildQueryParams = (): LeadMisBody => {
+    const query: LeadMisBody = { page, limit };
+
+    const filterMap: Partial<Record<keyof LeadMisBody, any>> = {
+      age_groups: filters.ageGroup,
+      countries: filters.country,
+      states: filters.state,
+      cities: filters.city,
+      genders: filters.gender,
+      health_conditions: filters.clinicalCondition,
+      regions: filters.region,
+      stages: filters.stage,
+      statuses: filters.salesStatus,
+      user_types: filters.userTypes,
+    };
+
+    for (const [key, value] of Object.entries(filterMap)) {
+      if (Array.isArray(value) && value.length > 0) {
+        (query as any)[key] = value;
+      }
+    }
+
+    return query;
+  };
+
+  const { data, isLoading } = useGetLeadUserMisDataQuery(buildQueryParams());
 
   const [triggerExport, { isFetching: exportLoading }] =
     useLazyGetLeadMisDataQuery();
@@ -219,7 +238,7 @@ export default function LeadMIS() {
     <div className="space-y-6 mt-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">Lead MIS for Retargeting</h2>
+          <h2 className="text-2xl font-bold">MIS for Retargeting</h2>
           <p className="text-muted-foreground">
             {getActiveFiltersCount() > 0 && (
               <span className="inline-flex items-center gap-1">
@@ -245,7 +264,7 @@ export default function LeadMIS() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Filter className="h-5 w-5" />
-            Filter Leads
+            Filter Users
           </CardTitle>
           <CardDescription>
             Apply multiple filters to segment leads for retargeting campaigns
@@ -253,6 +272,28 @@ export default function LeadMIS() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {/* Gender Filter */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">
+                Select User Type
+              </label>
+              <Controller
+                name="userTypes"
+                control={control}
+                render={({ field }) => (
+                  <MultiSelect
+                    options={[
+                      { name: "Lead", id: "lead" },
+                      { name: "OC", id: "oc" },
+                    ]}
+                    selected={field.value}
+                    onChange={field.onChange}
+                    placeholder="Select User Type"
+                  />
+                )}
+              />
+            </div>
+
             {/* Gender Filter */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
@@ -484,6 +525,7 @@ export default function LeadMIS() {
                   city: [],
                   salesStatus: [],
                   stage: [],
+                  userTypes: [],
                 })
               }
             >
@@ -497,7 +539,7 @@ export default function LeadMIS() {
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle>Filtered Leads ({data?.totalCount})</CardTitle>
+              <CardTitle>Filtered Users ({data?.totalCount})</CardTitle>
               <CardDescription>
                 List of leads matching the applied filters
               </CardDescription>
@@ -548,6 +590,7 @@ export default function LeadMIS() {
                   <TableHead>Email</TableHead>
                   <TableHead>Gender</TableHead>
                   <TableHead>Age Group</TableHead>
+                  <TableHead>User Type</TableHead>
                   <TableHead>Clinical Condition</TableHead>
                   <TableHead>Location</TableHead>
                   <TableHead>Sales Status</TableHead>
@@ -569,6 +612,7 @@ export default function LeadMIS() {
                       </TableCell>
                       <TableCell>{lead.Gender || "N/A"}</TableCell>
                       <TableCell>{lead["Age Group"] || "N/A"}</TableCell>
+                      <TableCell>{lead["User Type"] || "N/A"}</TableCell>
                       <TableCell>
                         {lead["Clinical Conditions"] || "N/A"}
                       </TableCell>

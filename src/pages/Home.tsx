@@ -8,24 +8,21 @@ import SocialCard from "@/components/home/socialMedia/SocialCard";
 import ContentManagement from "@/components/home/common/ContentManagement";
 import TopPerformer from "@/components/home/overview/TopPerformer";
 import RecentActivity from "@/components/home/overview/RecentActivity";
-import GenderBifurcation from "@/components/home/digitalMarketing/GenderBifurcation";
 import ClinicalBifurcation from "@/components/home/digitalMarketing/ClinicalBifurcation";
 import LeadMIS from "@/components/home/digitalMarketing/LeadMIS";
 import CounsellorSocialMediaPerformance from "@/components/home/socialMedia/CounsellorSocialMediaPerformance";
 import PerformanceConsolidatedTable from "@/components/home/socialMedia/PerformanceConsolidatedTable";
 import AppDownloadCount from "@/components/home/appAnalysis/AppDownloadCount";
-import AppUsageActivity from "@/components/home/appAnalysis/AppUsageActivity";
 import KeyEngagementMetrix from "@/components/home/appAnalysis/KeyEngagementMetrix";
 import ActivatedFeatures from "@/components/home/appAnalysis/ActivatedFeatures";
 import OverviewDetails from "@/components/home/overview/OverViewDetails";
-import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
-// import LeadAppCount from "@/components/home/appAnalysis/LeadAppCount";
 import DigitalMarketingAnalytics from "@/components/home/digitalMarketing/DigitalMarketingAnalytics";
 import CampaignOverview from "@/components/home/digitalMarketing/CampaignOverview";
 import AppCount from "@/components/home/appAnalysis/AppCount";
-// import LeadPerformance from "@/components/home/appAnalysis/LeadPerformance";
+import LeadOcBifurcation from "@/components/home/digitalMarketing/LeadOcBifurcation";
+import NotificationEngagments from "@/components/home/appAnalysis/NotificationEngagements";
+import OcCard from "@/components/home/overview/OcCard";
 
-// Calculate total sales opportunity and add to overview
 mockData.overview.totalSalesOpportunity = Object.values(
   mockData.solidSalesOpportunity
 ).reduce((sum, item) => sum + item.mtd, 0);
@@ -33,8 +30,6 @@ mockData.overview.totalSalesOpportunity = Object.values(
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* <Toaster /> Add Toaster component for displaying messages */}
-      {/* Header */}
       <Header />
       <div className="p-6">
         {/* Main Content Tabs */}
@@ -60,16 +55,17 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {/* Combined Leads Card */}
               <LeadCard />
+              <OcCard />
 
               {/* Combined Sales & Revenue Card */}
               <RevenueCard />
 
               {/* Social Media Performance Card */}
-              <PerformanceConsolidatedTable
+              {/* <PerformanceConsolidatedTable
                 title="Team Performance (Social Media)"
                 description="Consolidated social media performance by team/counsellor"
                 header={false}
-              />
+              /> */}
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Top Performers */}
@@ -86,12 +82,7 @@ export default function Home() {
           <TabsContent value="social-media" className="space-y-6">
             <SocialCard />
 
-            {/* Overall Social Media Performance */}
-
-            {/* <SocialMediaPerformance /> */}
-
             <div className="grid grid-cols-2 gap-4">
-              {/* Counsellor Social Media Performance */}
               <CounsellorSocialMediaPerformance />
 
               {/* New Team Performance Consolidated Table */}
@@ -106,50 +97,30 @@ export default function Home() {
           {/* Digital Marketing Tab Content */}
           <TabsContent value="digital-marketing" className="space-y-6">
             <DigitalMarketingAnalytics />
-
-            {/* Overall Male/Female Leads */}
-            <GenderBifurcation />
-
-            {/* Clinical Conditions Section */}
+            <CampaignOverview />
+            <LeadOcBifurcation />
             <ClinicalBifurcation />
 
-            {/* Campaigns Overview Section */}
-            <CampaignOverview />
-
-            {/* Lead MIS Section */}
 
             <LeadMIS />
           </TabsContent>
 
-          {/* App Analytics Tab Content (Moved from previous location) */}
           <TabsContent value="app-analytics" className="space-y-6">
-            {/* App Download Counts */}
             <AppDownloadCount />
             <AppCount />
-            {/* <div className="max-w-[500px]">
-              <LeadAppCount />
-            </div> */}
-            <h2 className="text-2xl font-bold">App Analytics Overview</h2>
+            <h2 className="text-2xl font-bold">Content Engagement</h2>
 
             <div className="grid grid-cols-3 gap-6">
-              {/* App Usage Overview */}
-              <AppUsageActivity />
-
-              {/* Key Engagement Metrics */}
               <KeyEngagementMetrix />
 
-              {/* Activated Features */}
               <ActivatedFeatures />
+              <ContentManagement type="content" />
+              <ContentManagement type="guide" />
             </div>
-            <ContentManagement />
-            <LeadPerformance />
-
+            <NotificationEngagments />
           </TabsContent>
         </Tabs>
-
-        {/* Content Engagement Section */}
       </div>
-      {/* Campaign Snapshot Modal */}
     </div>
   );
 }
