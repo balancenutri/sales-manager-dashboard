@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { mockData } from "@/lib/data";
+import { keyMetricsData, mockData } from "@/lib/data";
 import Header from "@/components/common/Header";
 import LeadCard from "@/components/home/overview/LeadCard";
 import RevenueCard from "@/components/home/overview/RevenueCard";
@@ -22,6 +22,7 @@ import AppCount from "@/components/home/appAnalysis/AppCount";
 import LeadOcBifurcation from "@/components/home/digitalMarketing/LeadOcBifurcation";
 import NotificationEngagments from "@/components/home/appAnalysis/NotificationEngagements";
 import OcCard from "@/components/home/overview/OcCard";
+import KeyMetricsBar from "@/components/home/overview/KeyMetrics";
 
 mockData.overview.totalSalesOpportunity = Object.values(
   mockData.solidSalesOpportunity
@@ -33,7 +34,7 @@ export default function Home() {
       <Header />
       <div className="p-6">
         {/* Main Content Tabs */}
-        <Tabs defaultValue="social-media" className="space-y-6">
+        <Tabs defaultValue="overview" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger className="cursor-pointer" value="overview">
               Overview
@@ -67,6 +68,7 @@ export default function Home() {
                 header={false}
               /> */}
             </div>
+            <KeyMetricsBar data={keyMetricsData} />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Top Performers */}
               <TopPerformer />
@@ -100,7 +102,6 @@ export default function Home() {
             <CampaignOverview />
             <LeadOcBifurcation />
             <ClinicalBifurcation />
-
 
             <LeadMIS />
           </TabsContent>

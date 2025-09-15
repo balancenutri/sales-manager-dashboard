@@ -871,3 +871,46 @@ export const mockData = {
     Cholesterol: { olr: { count: 89, value: 5121 }, ocl: { count: 85, value: 3528 } },
   },
 }
+
+export const keyMetricsData = {
+  hot: {
+    count: 88,
+    dayWiseData: {
+      day3: {
+        engagement: 180,
+        conversions: 35,
+        clicks: 210,
+      },
+      day5: {
+        engagement: 220,
+        conversions: 42,
+        clicks: 250,
+      },
+      day7: {
+        engagement: 260,
+        conversions: 50,
+        clicks: 290,
+      },
+    },
+  },
+  warm: {
+    count: 77,
+    dayWiseData: {
+      day3: {
+        engagement: 100,
+        conversions: 18,
+        clicks: 130,
+      },
+      day5: {
+        engagement: 120,
+        conversions: 22,
+        clicks: 160,
+      },
+      day7: {
+        engagement: 140,
+        conversions: 28,
+        clicks: 180,
+      },
+    },
+  },
+}

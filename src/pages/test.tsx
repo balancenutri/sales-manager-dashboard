@@ -3604,6 +3604,106 @@
 //   )
 // }
 
+
+
+
+          // <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          //   {mockData.counsellors.map((counsellor) => {
+          //     const performanceTag = getPerformanceTag(counsellor.conversionRate)
+          //     const leadToConsultationRatio =
+          //       counsellor.leadsAssigned > 0
+          //         ? ((counsellor.consultations / counsellor.leadsAssigned) * 100).toFixed(1)
+          //         : "0.0"
+          //     const consultationToSalesRatio =
+          //       counsellor.consultations > 0
+          //         ? ((counsellor.salesClosed / counsellor.consultations) * 100).toFixed(1)
+          //         : "0.0"
+          //     const leadToSalesRatio =
+          //       counsellor.leadsAssigned > 0
+          //         ? ((counsellor.salesClosed / counsellor.leadsAssigned) * 100).toFixed(1)
+          //         : "0.0"
+
+          //     return (
+          //       <Card
+          //         key={counsellor.id}
+          //         className="cursor-pointer hover:shadow-md transition-shadow"
+          //         onClick={() => handleCounsellorCardClick(counsellor)}
+          //       >
+          //         <CardHeader className="pb-3">
+          //           <div className="flex items-center space-x-3">
+          //             <Avatar className="h-12 w-12">
+          //               <AvatarImage src={counsellor.avatar || "/placeholder.svg"} />
+          //               <AvatarFallback>
+          //                 {counsellor.name
+          //                   .split(" ")
+          //                   .map((n) => n[0])
+          //                   .join("")}
+          //               </AvatarFallback>
+          //             </Avatar>
+          //             <div className="flex-1">
+          //               <CardTitle className="text-lg">{counsellor.name}</CardTitle>
+          //               <div className="flex items-center space-x-2">
+          //                 <Badge className={getStatusColor(counsellor.status)}>{counsellor.status}</Badge>
+          //                 <span className="text-xs text-muted-foreground">{counsellor.lastActive}</span>
+          //               </div>
+          //             </div>
+          //             <Badge className={performanceTag.color}>{performanceTag.tag}</Badge>
+          //           </div>
+          //         </CardHeader>
+          //         <CardContent className="space-y-4">
+          //           <div className="flex items-center justify-between p-2 rounded-md bg-blue-50 text-blue-800 text-sm font-medium">
+          //             <span>Best Source:</span>
+          //             <span>{counsellor.bestConversionSource}</span>
+          //           </div>
+          //           <div className="grid grid-cols-2 gap-4 text-sm">
+          //             <div>
+          //               <p className="text-muted-foreground">Leads Assigned</p>
+          //               <p className="font-semibold">{counsellor.leadsAssigned}</p>
+          //             </div>
+          //             <div>
+          //               <p className="text-muted-foreground">Consultations</p>
+          //               <p className="font-semibold">{counsellor.consultations}</p>
+          //             </div>
+          //             <div>
+          //               <p className="text-muted-foreground">Sales Closed</p>
+          //               <p className="font-semibold">₹{(counsellor.revenue / 1000).toFixed(0)}K</p>
+          //             </div>
+          //             <div>
+          //               <p className="text-muted-foreground">Revenue</p>
+          //               <p className="font-semibold">₹{(counsellor.revenue / 1000).toFixed(0)}K</p>
+          //             </div>
+          //             <div>
+          //               <p className="text-muted-foreground">Total Sales Opportunity</p>
+          //               <p className="font-semibold">{mockData.overview.totalSalesOpportunity}</p>
+          //             </div>
+          //             <div>
+          //               <p className="text-muted-foreground">Payment Details Shared</p>
+          //               <p className="font-semibold">
+          //                 ₹{(counsellor.paymentDetailsShared.amount / 1000).toFixed(1)} Lac (
+          //                 {counsellor.paymentDetailsShared.count})
+          //               </p>
+          //             </div>
+          //           </div>
+          //           <div className="grid grid-cols-3 gap-2 text-center text-sm pt-2 border-t">
+          //             <div>
+          //               <p className="text-muted-foreground">L:C</p>
+          //               <p className="font-semibold">{leadToConsultationRatio}%</p>
+          //             </div>
+          //             <div>
+          //               <p className="text-muted-foreground">C:S</p>
+          //               <p className="font-semibold">{consultationToSalesRatio}%</p>
+          //             </div>
+          //             <div>
+          //               <p className="text-muted-foreground">L:S</p>
+          //               <p className="font-semibold">{leadToSalesRatio}%</p>
+          //             </div>
+          //           </div>
+          //         </CardContent>
+          //       </Card>
+          //     )
+          //   })}
+          // </div>
+
 export default function test() {
   return (
     <div>
