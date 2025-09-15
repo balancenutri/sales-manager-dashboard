@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { PieChart, CheckCircle, Clock, } from "lucide-react";
+import { PieChart } from "lucide-react";
 import { useState } from "react";
 
 interface SimpleRowMetricsData {
@@ -133,9 +133,9 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-md transition-all cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-blue-500 rounded-full">
+                  {/* <div className="p-2 bg-blue-500 rounded-full">
                     <PieChart className="h-5 w-5  text-white" />
-                  </div>
+                  </div> */}
                   <div>
                     <h4 className="font-semibold text-gray-800">
                       Total Pitched
@@ -169,9 +169,9 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
             <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 border border-green-200 hover:shadow-md transition-all cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-green-500 rounded-full">
+                  {/* <div className="p-2 bg-green-500 rounded-full">
                     <CheckCircle className="h-5 w-5 text-white" />
-                  </div>
+                  </div> */}
                   <div>
                     <h4 className="font-semibold text-gray-800">To Pay</h4>
                   </div>
@@ -203,9 +203,9 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
             <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-lg p-4 border border-orange-200 hover:shadow-md transition-all cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-orange-500 rounded-full">
+                  {/* <div className="p-2 bg-orange-500 rounded-full">
                     <Clock className="h-5 w-5 text-white" />
-                  </div>
+                  </div> */}
                   <div>
                     <h4 className="font-semibold text-gray-800">Pay Later</h4>
                   </div>

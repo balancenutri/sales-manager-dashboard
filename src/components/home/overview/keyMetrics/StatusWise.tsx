@@ -110,9 +110,9 @@ export default function StatusWiseMetrics({ data }: SimpleLeadMetricsProps) {
             <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-lg p-4 border border-red-200 dark:border-red-800 hover:shadow-lg transition-all duration-300 cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-full">
+                  {/* <div className="p-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-full">
                     <Flame className="h-5 w-5 text-white" />
-                  </div>
+                  </div> */}
                   <div>
                     <h4 className="font-semibold text-gray-800 dark:text-gray-200">
                       Hot Leads
@@ -144,9 +144,9 @@ export default function StatusWiseMetrics({ data }: SimpleLeadMetricsProps) {
             <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg p-4 border border-yellow-200 dark:border-yellow-800 hover:shadow-lg transition-all duration-300 cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-gradient-to-r from-yellow-500 to-orange-400 rounded-full">
+                  {/* <div className="p-2 bg-gradient-to-r from-yellow-500 to-orange-400 rounded-full">
                     <Thermometer className="h-5 w-5 text-white" />
-                  </div>
+                  </div> */}
                   <div>
                     <h4 className="font-semibold text-gray-800 dark:text-gray-200">
                       Warm Leads
