@@ -651,6 +651,7 @@ type FormValues = {
   reach?: number;
   clicks?: number;
   ctr?: number;
+  frequency?: number;
   conversions?: number;
   gender: string[];
   health_conditions: string[];
@@ -687,6 +688,7 @@ export default function AddCampaignForm({
       clicks: undefined,
       ctr: undefined,
       conversions: undefined,
+      frequency: undefined,
       gender: [],
       health_conditions: [],
       age_group: [],
@@ -887,8 +889,9 @@ export default function AddCampaignForm({
 
         {/* Number fields */}
         {[
-          { name: "ad_spend", label: "Ad Spend (₹)", step: "1" },
+          { name: "ad_spend", label: "Ad Spend (₹)", step: "0.01" },
           { name: "impressions", label: "Impressions" },
+          { name: "frequency", label: "Frequency" },
           { name: "reach", label: "Reach" },
           { name: "clicks", label: "Clicks" },
           { name: "ctr", label: "CTR (%)", step: "0.01" },

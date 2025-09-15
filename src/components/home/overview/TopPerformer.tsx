@@ -10,7 +10,13 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { useGetTopPerformersQuery } from "@/service/dashboard/api";
-export default function TopPerformer() {
+export default function TopPerformer({
+  title,
+  subTitle,
+}: {
+  title: string;
+  subTitle: string;
+}) {
   const { data, isFetching } = useGetTopPerformersQuery();
 
   const renderSkeletonRows = () => {
@@ -27,39 +33,38 @@ export default function TopPerformer() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Top Performers</CardTitle>
-        <CardDescription>
-          Best performing counsellors this month
-        </CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{subTitle}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4 max-h-[60vh] overflow-scroll">
+        <div className="space-y-4 max-h-[60vh]">
           {!data?.data || isFetching
             ? renderSkeletonRows()
             : Object.entries(data?.data || {}).map(
-                ([counsellor, sales], index) => (
-                  <div key={index} className="flex items-center space-x-4">
-                    {/* <div className="flex items-center justify-center w-8 h-8 rounded-full bg-teal-100 text-teal-800 font-bold text-sm">
+                ([counsellor, sales], index) =>
+                  index < 5 && (
+                    <div key={index} className="flex items-center space-x-4">
+                      {/* <div className="flex items-center justify-center w-8 h-8 rounded-full bg-teal-100 text-teal-800 font-bold text-sm">
                   {index + 1}
                 </div> */}
-                    <Avatar className="h-10 w-10">
-                      {/* <AvatarImage src={counsellor.avatar || "/placeholder.svg"} /> */}
-                      <AvatarFallback>
-                        {counsellor
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">{counsellor}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {sales.conversion_rate}% conversion rate
-                      </p>
+                      <Avatar className="h-10 w-10">
+                        {/* <AvatarImage src={counsellor.avatar || "/placeholder.svg"} /> */}
+                        <AvatarFallback>
+                          {counsellor
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">{counsellor}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {sales.conversion_rate}% conversion rate
+                        </p>
+                      </div>
+                      <Badge variant="secondary">₹{sales.sales}</Badge>
                     </div>
-                    <Badge variant="secondary">₹{sales.sales}</Badge>
-                  </div>
-                )
+                  )
               )}
         </div>
       </CardContent>

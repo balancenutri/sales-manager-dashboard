@@ -914,3 +914,85 @@ export const keyMetricsData = {
     },
   },
 }
+
+
+export const simpleRowMetricsData = {
+  hot: {
+    count: 124,
+    dayWiseData: {
+      day3: {
+        engagement: 320,
+        conversions: 48,
+        clicks: 210,
+      },
+      day5: {
+        engagement: 410,
+        conversions: 52,
+        clicks: 265,
+      },
+      day7: {
+        engagement: 500,
+        conversions: 65,
+        clicks: 310,
+      },
+    },
+  },
+  warm: {
+    count: 87,
+    dayWiseData: {
+      day3: {
+        engagement: 210,
+        conversions: 22,
+        clicks: 130,
+      },
+      day5: {
+        engagement: 270,
+        conversions: 30,
+        clicks: 175,
+      },
+      day7: {
+        engagement: 300,
+        conversions: 38,
+        clicks: 190,
+      },
+    },
+  },
+  salesProjection: {
+    totalPitched: {
+      count: 340,
+      amount: 156000,
+      rateShared: {
+        units: 120,
+        amount: 60000,
+      },
+      linkShared: {
+        units: 90,
+        amount: 45000,
+      },
+    },
+    toPay: {
+      count: 180,
+      amount: 78000,
+      rateShared: {
+        units: 70,
+        amount: 30000,
+      },
+      linkShared: {
+        units: 50,
+        amount: 20000,
+      },
+    },
+    payLater: {
+      count: 95,
+      amount: 42000,
+      rateShared: {
+        units: 40,
+        amount: 16000,
+      },
+      linkShared: {
+        units: 30,
+        amount: 12000,
+      },
+    },
+  },
+};

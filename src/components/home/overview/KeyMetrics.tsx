@@ -1,13 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-//   TrendingUp,
-  Users,
-//   MousePointer,
-//   Target,
-  Flame,
-  Thermometer,
-} from "lucide-react";
+import { Flame, Thermometer } from "lucide-react";
 import { useState } from "react";
 
 interface LeadMetricsData {
@@ -70,12 +63,12 @@ export default function SimpleLeadMetrics({ data }: SimpleLeadMetricsProps) {
               </Badge>
             </div>
             <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center">
-                  {/* <TrendingUp className="h-3 w-3 text-blue-500 mr-1" /> */}
+              <div className="flex items-center justify-center text-xs">
+                {/* <div className="flex items-center">
+                  <TrendingUp className="h-3 w-3 text-blue-500 mr-1" />
                   <span>Engagement</span>
-                </div>
-                <span className="font-bold text-blue-600">
+                </div> */}
+                <span className="font-bold text-center text-blue-600">
                   1000
                 </span>
               </div>
@@ -98,7 +91,7 @@ export default function SimpleLeadMetrics({ data }: SimpleLeadMetricsProps) {
   return (
     <Card className="w-full">
       <CardContent className="px-6 p">
-        <div className="flex items-center justify-between mb-4">
+        {/* <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
             <Users className="h-5 w-5 text-blue-600" />
             <h3 className="text-lg font-semibold">Lead Key Metrix</h3>
@@ -106,75 +99,168 @@ export default function SimpleLeadMetrics({ data }: SimpleLeadMetricsProps) {
           <Badge variant="outline" className="text-sm">
             Total: {data.hot.count + data.warm.count} leads
           </Badge>
-        </div>
-
-        <div className="grid grid-cols-2 gap-6">
-          {/* Hot Leads */}
-          <div
-            className="relative"
-            onMouseEnter={() => setHoveredLead("hot")}
-            onMouseLeave={() => setHoveredLead(null)}
-          >
-            <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-lg p-4 border border-red-200 dark:border-red-800 hover:shadow-lg transition-all duration-300 cursor-pointer">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-full">
-                    <Flame className="h-5 w-5 text-white" />
+        </div> */}
+        <div className="grid grid-cols-2">
+          <div className="grid grid-cols-2 gap-6">
+            {/* Hot Leads */}
+            <div
+              className="relative"
+              onMouseEnter={() => setHoveredLead("hot")}
+              onMouseLeave={() => setHoveredLead(null)}
+            >
+              <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-lg p-4 border border-red-200 dark:border-red-800 hover:shadow-lg transition-all duration-300 cursor-pointer">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-full">
+                      <Flame className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800 dark:text-gray-200">
+                        Hot Leads
+                      </h4>
+                      <p className="text-xs text-muted-foreground">
+                        High engagement
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200">
-                      Hot Leads
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      High engagement
-                    </p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-3xl font-bold text-red-600">
-                    {data.hot.count}
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-red-600">
+                      {data.hot.count}
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {hoveredLead === "hot" && (
+                <DetailedInfo type="hot" leadData={data.hot} />
+              )}
             </div>
 
-            {hoveredLead === "hot" && (
-              <DetailedInfo type="hot" leadData={data.hot} />
-            )}
+            {/* Warm Leads */}
+            <div
+              className="relative"
+              onMouseEnter={() => setHoveredLead("warm")}
+              onMouseLeave={() => setHoveredLead(null)}
+            >
+              <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg p-4 border border-yellow-200 dark:border-yellow-800 hover:shadow-lg transition-all duration-300 cursor-pointer">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-gradient-to-r from-yellow-500 to-orange-400 rounded-full">
+                      <Thermometer className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800 dark:text-gray-200">
+                        Warm Leads
+                      </h4>
+                      <p className="text-xs text-muted-foreground">
+                        Moderate engagement
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-yellow-600">
+                      {data.warm.count}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {hoveredLead === "warm" && (
+                <DetailedInfo type="warm" leadData={data.warm} />
+              )}
+            </div>
           </div>
-
-          {/* Warm Leads */}
-          <div
-            className="relative"
-            onMouseEnter={() => setHoveredLead("warm")}
-            onMouseLeave={() => setHoveredLead(null)}
-          >
-            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg p-4 border border-yellow-200 dark:border-yellow-800 hover:shadow-lg transition-all duration-300 cursor-pointer">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-gradient-to-r from-yellow-500 to-orange-400 rounded-full">
-                    <Thermometer className="h-5 w-5 text-white" />
+          <div className="grid grid-cols-3 gap-6">
+            {/* Hot Leads */}
+            <div
+              className="relative"
+              onMouseEnter={() => setHoveredLead("hot")}
+              onMouseLeave={() => setHoveredLead(null)}
+            >
+              <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-lg p-4 border border-red-200 dark:border-red-800 hover:shadow-lg transition-all duration-300 cursor-pointer">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-full">
+                      <Flame className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800 dark:text-gray-200">
+                        Total Pitched
+                      </h4>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200">
-                      Warm Leads
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      Moderate engagement
-                    </p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-3xl font-bold text-yellow-600">
-                    {data.warm.count}
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-red-600">
+                      {data.hot.count}
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {hoveredLead === "hot" && (
+                <DetailedInfo type="hot" leadData={data.hot} />
+              )}
             </div>
 
-            {hoveredLead === "warm" && (
-              <DetailedInfo type="warm" leadData={data.warm} />
-            )}
+            {/* Warm Leads */}
+            <div
+              className="relative"
+              onMouseEnter={() => setHoveredLead("warm")}
+              onMouseLeave={() => setHoveredLead(null)}
+            >
+              <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg p-4 border border-yellow-200 dark:border-yellow-800 hover:shadow-lg transition-all duration-300 cursor-pointer">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-gradient-to-r from-yellow-500 to-orange-400 rounded-full">
+                      <Thermometer className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800 dark:text-gray-200">
+                        To Pay
+                      </h4>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-yellow-600">
+                      {data.warm.count}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {hoveredLead === "warm" && (
+                <DetailedInfo type="warm" leadData={data.warm} />
+              )}
+            </div>
+            <div
+              className="relative"
+              onMouseEnter={() => setHoveredLead("warm")}
+              onMouseLeave={() => setHoveredLead(null)}
+            >
+              <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg p-4 border border-yellow-200 dark:border-yellow-800 hover:shadow-lg transition-all duration-300 cursor-pointer">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-gradient-to-r from-yellow-500 to-orange-400 rounded-full">
+                      <Thermometer className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800 dark:text-gray-200">
+                        Pay Later
+                      </h4>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-yellow-600">
+                      {data.warm.count}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {hoveredLead === "warm" && (
+                <DetailedInfo type="warm" leadData={data.warm} />
+              )}
+            </div>
           </div>
         </div>
 
@@ -191,7 +277,7 @@ export default function SimpleLeadMetrics({ data }: SimpleLeadMetricsProps) {
                 %
               </span>
               <span className="text-green-600 font-medium">↗ Trending up</span>
-            </div>
+            </div> bn
           </div>
         </div> */}
       </CardContent>

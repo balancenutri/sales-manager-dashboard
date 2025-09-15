@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { keyMetricsData, mockData } from "@/lib/data";
+import { keyMetricsData, mockData, simpleRowMetricsData } from "@/lib/data";
 import Header from "@/components/common/Header";
 import LeadCard from "@/components/home/overview/LeadCard";
 import RevenueCard from "@/components/home/overview/RevenueCard";
@@ -22,7 +22,9 @@ import AppCount from "@/components/home/appAnalysis/AppCount";
 import LeadOcBifurcation from "@/components/home/digitalMarketing/LeadOcBifurcation";
 import NotificationEngagments from "@/components/home/appAnalysis/NotificationEngagements";
 import OcCard from "@/components/home/overview/OcCard";
-import KeyMetricsBar from "@/components/home/overview/KeyMetrics";
+// import KeyMetricsBar from "@/components/home/overview/KeyMetrics";
+import StatusWiseMetrics from "@/components/home/overview/keyMetrics/StatusWise";
+import SalesProjection from "@/components/home/overview/keyMetrics/SalesProjection";
 
 mockData.overview.totalSalesOpportunity = Object.values(
   mockData.solidSalesOpportunity
@@ -68,10 +70,21 @@ export default function Home() {
                 header={false}
               /> */}
             </div>
-            <KeyMetricsBar data={keyMetricsData} />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <h2 className="text-2xl font-bold">Key Metrics</h2>
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-6">
+              <StatusWiseMetrics data={keyMetricsData} />
+              <SalesProjection data={simpleRowMetricsData} />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Top Performers */}
-              <TopPerformer />
+              <TopPerformer
+                title="Top Performers"
+                subTitle="Best performing counsellors this month"
+              />
+              <TopPerformer
+                title="Low Performers"
+                subTitle="Low performing counsellors this month"
+              />
 
               {/* Recent Activity */}
               <RecentActivity />
