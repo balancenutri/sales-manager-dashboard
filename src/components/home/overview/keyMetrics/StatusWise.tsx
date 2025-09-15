@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Flame, Thermometer } from "lucide-react";
+import { Users } from "lucide-react";
 import { useState } from "react";
 
 interface LeadMetricsData {
@@ -39,12 +39,7 @@ export default function StatusWiseMetrics({ data }: SimpleLeadMetricsProps) {
     <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 p-4 z-10 animate-in slide-in-from-top-2 duration-200">
       <div className="flex items-center justify-between mb-3">
         <h4 className="font-semibold text-base capitalize flex items-center">
-          {type === "hot" ? (
-            <Flame className="h-4 w-4 text-red-500 mr-2" />
-          ) : (
-            <Thermometer className="h-4 w-4 text-yellow-500 mr-2" />
-          )}
-          {type} Leads Performance
+          {type} Trigger
         </h4>
         <Badge
           variant={type === "hot" ? "destructive" : "secondary"}
@@ -55,26 +50,28 @@ export default function StatusWiseMetrics({ data }: SimpleLeadMetricsProps) {
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        {["3rd", "5th", "7th"].map((item) => (
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-3">
-            <div className="text-center mb-2">
-              <Badge variant="outline" className="text-xs mb-2">
-                {item} Day
-              </Badge>
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-center text-xs">
-                {/* <div className="flex items-center">
+        {(type == "hot" ? ["3rd", "5th", "7th"] : ["10th", "12th", "15th"]).map(
+          (item) => (
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-3">
+              <div className="text-center mb-2">
+                <Badge variant="outline" className="text-xs mb-2">
+                  {item} Day
+                </Badge>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center justify-center text-xs">
+                  {/* <div className="flex items-center">
                   <TrendingUp className="h-3 w-3 text-blue-500 mr-1" />
                   <span>Engagement</span>
                 </div> */}
-                <span className="font-bold text-center text-blue-600">
-                  1000
-                </span>
+                  <span className="font-bold text-center text-blue-600">
+                    1000
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
 
       {/* <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
@@ -94,7 +91,7 @@ export default function StatusWiseMetrics({ data }: SimpleLeadMetricsProps) {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
             <Users className="h-5 w-5 text-blue-600" />
-            <h3 className="text-lg font-semibold">Leads Metrics</h3>
+            <h3 className="text-lg font-semibold">Sales Trigger</h3>
           </div>
           <Badge variant="outline" className="text-sm">
             Total: {data.hot.count + data.warm.count} leads
@@ -115,7 +112,7 @@ export default function StatusWiseMetrics({ data }: SimpleLeadMetricsProps) {
                   </div> */}
                   <div>
                     <h4 className="font-semibold text-gray-800 dark:text-gray-200">
-                      Hot Leads
+                      Hot Trigger
                     </h4>
                     <p className="text-xs text-muted-foreground">
                       High engagement
@@ -149,7 +146,7 @@ export default function StatusWiseMetrics({ data }: SimpleLeadMetricsProps) {
                   </div> */}
                   <div>
                     <h4 className="font-semibold text-gray-800 dark:text-gray-200">
-                      Warm Leads
+                      Warm Trigger
                     </h4>
                     <p className="text-xs text-muted-foreground">
                       Moderate engagement

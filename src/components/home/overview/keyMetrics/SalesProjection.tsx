@@ -2,6 +2,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PieChart } from "lucide-react";
 import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import PitchedHistory from "./PitchedDetails";
 
 interface SimpleRowMetricsData {
   hot: {
@@ -50,6 +57,10 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
   const [hoveredCard, setHoveredCard] = useState<
     "total" | "to_pay" | "pay_later" | null
   >(null);
+
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  console.log({ openDialog });
 
   const SalesHoverDetails = ({
     type,
@@ -128,6 +139,7 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
           <div
             className="relative"
             onMouseEnter={() => setHoveredCard("total")}
+            onClick={() => setOpenDialog(true)}
             onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-md transition-all cursor-pointer">
@@ -229,6 +241,20 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
           </div>
         </div>
       </CardContent>
+
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogContent
+          onInteractOutside={(e: React.MouseEvent | Event) =>
+            e.preventDefault()
+          }
+          className="min-w-[80vw]"
+        >
+          <DialogHeader>
+            <DialogTitle>Pitched History</DialogTitle>
+          </DialogHeader>
+          <PitchedHistory />
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

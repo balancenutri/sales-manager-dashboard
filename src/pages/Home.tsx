@@ -70,7 +70,7 @@ export default function Home() {
                 header={false}
               /> */}
             </div>
-            <h2 className="text-2xl font-bold">Key Metrics</h2>
+            <h2 className="text-2xl font-bold">Lead Key Metrics</h2>
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-6">
               <StatusWiseMetrics data={keyMetricsData} />
               <SalesProjection data={simpleRowMetricsData} />

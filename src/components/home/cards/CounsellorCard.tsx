@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LayoutDashboard, MessageSquareMore } from "lucide-react";
 
 export default function CounsellorCard() {
   //   const getPerformanceTag = (conversionRate: number) => {
@@ -21,14 +22,14 @@ export default function CounsellorCard() {
         <div className="flex items-center space-x-3">
           <div className="flex-1">
             <CardTitle className="text-lg">{"Kundan Chaudhary"}</CardTitle>
-            {/* <div className="flex items-center space-x-2">
-              <Badge>{counsellor.status}</Badge>
-              <span className="text-xs text-muted-foreground">
-                {counsellor.lastActive}
-              </span>
-            </div> */}
+            <Badge className={"bg-green-500 text-white"}>{"Good"}</Badge>
           </div>
-          <Badge className={"bg-green-500 text-white"}>{"Good"}</Badge>
+          <div className="p-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-full">
+            <MessageSquareMore className="h-5 w-5 text-white" />
+          </div>
+          <div className="p-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-full">
+            <LayoutDashboard className="h-5 w-5 text-white" />
+          </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -47,35 +48,33 @@ export default function CounsellorCard() {
           </div>
           <div>
             <p className="text-muted-foreground">Sales Closed</p>
-            <p className="font-semibold">
-              ₹{123333}
-            </p>
+            <p className="font-semibold">₹{123333}</p>
           </div>
           <div>
             <p className="text-muted-foreground">Revenue</p>
-            <p className="font-semibold">₹57667</p>
+            <p className="font-semibold">₹576</p>
           </div>
           <div>
             <p className="text-muted-foreground">Total Sales Opportunity</p>
-            <p className="font-semibold">₹7867897</p>
+            <p className="font-semibold">₹7867</p>
           </div>
           <div>
             <p className="text-muted-foreground">Payment Details Shared</p>
-            <p className="font-semibold">₹5454545 (34)</p>
+            <p className="font-semibold">₹5445 (34)</p>
           </div>
         </div>
         <div className="grid grid-cols-3 gap-2 text-center text-sm pt-2 border-t">
           <div>
-            <p className="text-muted-foreground">L:C</p>
-            <p className="font-semibold">{10}%</p>
+            <p className="">L:C</p>
+            <p className="font-semibold text-red-500">{10}%</p>
           </div>
           <div>
-            <p className="text-muted-foreground">C:S</p>
-            <p className="font-semibold">{20}%</p>
+            <p className="">C:S</p>
+            <p className="font-semibold text-red-500">{20}%</p>
           </div>
           <div>
-            <p className="text-muted-foreground">L:S</p>
-            <p className="font-semibold">{30}%</p>
+            <p className="">L:S</p>
+            <p className="font-semibold text-red-500">{30}%</p>
           </div>
         </div>
       </CardContent>

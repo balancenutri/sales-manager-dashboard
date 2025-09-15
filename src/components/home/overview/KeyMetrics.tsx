@@ -116,7 +116,7 @@ export default function SimpleLeadMetrics({ data }: SimpleLeadMetricsProps) {
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-800 dark:text-gray-200">
-                        Hot Leads
+                        Hot Trigger
                       </h4>
                       <p className="text-xs text-muted-foreground">
                         High engagement
@@ -150,7 +150,7 @@ export default function SimpleLeadMetrics({ data }: SimpleLeadMetricsProps) {
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-800 dark:text-gray-200">
-                        Warm Leads
+                        Warm Trigger
                       </h4>
                       <p className="text-xs text-muted-foreground">
                         Moderate engagement
