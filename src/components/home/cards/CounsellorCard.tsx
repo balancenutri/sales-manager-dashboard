@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function CounsellorCard({ counsellor }: { counsellor: any }) {
+export default function CounsellorCard() {
   //   const getPerformanceTag = (conversionRate: number) => {
   //     if (conversionRate >= benchmark) {
   //       return { tag: "Excellent", color: "bg-green-500 text-white" };

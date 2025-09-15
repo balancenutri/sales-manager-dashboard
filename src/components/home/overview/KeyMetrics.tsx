@@ -1,10 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  TrendingUp,
+//   TrendingUp,
   Users,
-  MousePointer,
-  Target,
+//   MousePointer,
+//   Target,
   Flame,
   Thermometer,
 } from "lucide-react";
