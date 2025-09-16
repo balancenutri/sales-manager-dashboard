@@ -23,7 +23,6 @@ import {
   User,
   Package,
 } from "lucide-react";
-import { useState } from "react";
 
 interface PitchedRecord {
   id: string;
@@ -43,9 +42,9 @@ interface PitchedRecord {
 }
 
 export default function PitchedHistory() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [dateFilter, setDateFilter] = useState("all");
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [statusFilter, setStatusFilter] = useState("all");
+//   const [dateFilter, setDateFilter] = useState("all");
 
   // Mock data - replace with actual API data
   const summaryData = {
@@ -186,19 +185,21 @@ export default function PitchedHistory() {
     });
   };
 
-  const filteredRecords = pitchedRecords.filter((record) => {
-    const matchesSearch =
-      record.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      record.programDetails.name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      record.pitchedBy.name.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredRecords = pitchedRecords
 
-    const matchesStatus =
-      statusFilter === "all" || record.status === statusFilter;
+//   const filteredRecords = pitchedRecords.filter((record) => {
+//     const matchesSearch =
+//       record.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//       record.programDetails.name
+//         .toLowerCase()
+//         .includes(searchTerm.toLowerCase()) ||
+//       record.pitchedBy.name.toLowerCase().includes(searchTerm.toLowerCase());
 
-    return matchesSearch && matchesStatus;
-  });
+//     const matchesStatus =
+//       statusFilter === "all" || record.status === statusFilter;
+
+//     return matchesSearch && matchesStatus;
+//   });
 
   return (
     <div className="space-y-6 p-6 bg-gray-50 h-[80vh] overflow-scroll">
