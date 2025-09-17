@@ -54,6 +54,14 @@ export const mockData = {
       googleAds: 57,
     },
   },
+  ocSources: {
+    unassigned: {
+      checkoutVisit: 142,
+      pageVisit: 89,
+      appDownload: 67,
+      appChat: 57,
+    },
+  },
   salesTypes: {
     basicStack: 34,
     specialStack: 28,

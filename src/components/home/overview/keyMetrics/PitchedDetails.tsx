@@ -23,6 +23,10 @@ import {
   User,
   Package,
 } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import CustomDatePicker from "@/components/ui/custom-date-picker";
+import dayjs from "dayjs";
+import { useState } from "react";
 
 interface PitchedRecord {
   id: string;
@@ -42,9 +46,9 @@ interface PitchedRecord {
 }
 
 export default function PitchedHistory() {
-//   const [searchTerm, setSearchTerm] = useState("");
-//   const [statusFilter, setStatusFilter] = useState("all");
-//   const [dateFilter, setDateFilter] = useState("all");
+  //   const [searchTerm, setSearchTerm] = useState("");
+  //   const [statusFilter, setStatusFilter] = useState("all");
+  //   const [dateFilter, setDateFilter] = useState("all");
 
   // Mock data - replace with actual API data
   const summaryData = {
@@ -185,25 +189,41 @@ export default function PitchedHistory() {
     });
   };
 
-  const filteredRecords = pitchedRecords
+  const filteredRecords = pitchedRecords;
 
-//   const filteredRecords = pitchedRecords.filter((record) => {
-//     const matchesSearch =
-//       record.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//       record.programDetails.name
-//         .toLowerCase()
-//         .includes(searchTerm.toLowerCase()) ||
-//       record.pitchedBy.name.toLowerCase().includes(searchTerm.toLowerCase());
+  //   const filteredRecords = pitchedRecords.filter((record) => {
+  //     const matchesSearch =
+  //       record.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //       record.programDetails.name
+  //         .toLowerCase()
+  //         .includes(searchTerm.toLowerCase()) ||
+  //       record.pitchedBy.name.toLowerCase().includes(searchTerm.toLowerCase());
 
-//     const matchesStatus =
-//       statusFilter === "all" || record.status === statusFilter;
+  //     const matchesStatus =
+  //       statusFilter === "all" || record.status === statusFilter;
 
-//     return matchesSearch && matchesStatus;
-//   });
+  //     return matchesSearch && matchesStatus;
+  //   });
+
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   return (
     <div className="space-y-6 p-6 bg-gray-50 h-[80vh] overflow-scroll">
       {/* Header */}
+
+      <Tabs defaultValue="overview" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger className="cursor-pointer" value="overview">
+            All
+          </TabsTrigger>
+          <TabsTrigger className="cursor-pointer" value="social-media">
+            Lead
+          </TabsTrigger>
+          <TabsTrigger className="cursor-pointer" value="digital-marketing">
+            OC
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Pitched History</h1>
@@ -227,8 +247,16 @@ export default function PitchedHistory() {
               </SelectContent>
             </Select>
 
+            <CustomDatePicker
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              showMonthYearPicker={true}
+              dateFormat="MM/yyyy"
+              maxDate={dayjs()}
+            />
+
             {/* Month Filter */}
-            <Select>
+            {/* <Select>
               <SelectTrigger className="w-32">
                 <SelectValue placeholder="Month" />
               </SelectTrigger>
@@ -246,10 +274,10 @@ export default function PitchedHistory() {
                 <SelectItem value="november">November</SelectItem>
                 <SelectItem value="december">December</SelectItem>
               </SelectContent>
-            </Select>
+            </Select> */}
 
             {/* Year Filter */}
-            <Select>
+            {/* <Select>
               <SelectTrigger className="w-28">
                 <SelectValue placeholder="Year" />
               </SelectTrigger>
@@ -258,7 +286,7 @@ export default function PitchedHistory() {
                 <SelectItem value="2024">2024</SelectItem>
                 <SelectItem value="2025">2025</SelectItem>
               </SelectContent>
-            </Select>
+            </Select> */}
           </div>
         </div>
       </div>

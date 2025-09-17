@@ -85,7 +85,7 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
               <Share className="h-3 w-3 text-white" />
             </div> */}
             <span className="font-medium text-gray-700 dark:text-gray-300">
-              Rate Shared
+              {type == "total" ? "Rate Shared" : "Today"}
             </span>
           </div>
           <div className="text-right">
@@ -105,7 +105,7 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
               <Link className="h-3 w-3 text-white" />
             </div> */}
             <span className="font-medium text-gray-700 dark:text-gray-300">
-              Link Shared
+              {type == "total" ? "Link Shared" : "Tomorrow"}
             </span>
           </div>
           <div className="text-right">
@@ -209,8 +209,8 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
           {/* Pay Later */}
           <div
             className="relative"
-            onMouseEnter={() => setHoveredCard("pay_later")}
-            onMouseLeave={() => setHoveredCard(null)}
+            // onMouseEnter={() => setHoveredCard("pay_later")}
+            // onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-lg p-4 border border-orange-200 hover:shadow-md transition-all cursor-pointer">
               <div className="flex items-center justify-between">

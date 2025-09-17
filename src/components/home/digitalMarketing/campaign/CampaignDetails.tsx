@@ -23,6 +23,12 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { type LucideIcon } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type IconTypes = {
   [key: string]: LucideIcon;
@@ -47,8 +53,12 @@ export default function CampaignDetails() {
     ));
 
   const cleanseData = {
-    total_campaigns_active: 12,
-    total_campaigns_inactive: 4,
+    total_campaigns: {
+      active: 4,
+      inactive: 2,
+      total: 6,
+    },
+    // total_campaigns_inactive: 4,
     total_ad_spent: 45230,
     impressions: 128000,
     reach: 98000,
@@ -56,13 +66,14 @@ export default function CampaignDetails() {
     CPL: 35,
     CAC: 133,
     CTR: 3.2,
-    total_leads_generated: 1300,
     total_conversions: 340,
+    total_leads_generated: 1300,
+    total_revenue_generated: 17000,
   };
 
   const allIcons: IconTypes = {
-    total_campaigns_active: Rocket,
-    total_campaigns_inactive: Rocket,
+    total_campaigns: Rocket,
+    // total_campaigns_inactive: Rocket,
     total_ad_spent: IndianRupee,
     impressions: BarChart2,
     reach: Users,
@@ -72,7 +83,54 @@ export default function CampaignDetails() {
     CTR: LineChart,
     total_leads_generated: UserPlus,
     total_conversions: CheckCircle,
+    total_revenue_generated: IndianRupee,
   };
+
+  const CustomTooltip = (value: {
+    active: number;
+    inactive: number;
+    total: number;
+  }) => (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span className="font-semibold text-red-500 cursor-pointer hover:text-red-700 transition-colors duration-200 px-2 py-1 rounded-md hover:bg-red-50">
+            {value?.total}
+          </span>
+        </TooltipTrigger>
+        <TooltipContent className="p-0 bg-white border border-gray-200 shadow-lg rounded-lg max-w-xs z-50">
+          <div className="p-4 space-y-4">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <h4 className="font-semibold text-gray-900 text-sm">
+                  Total Campaigns
+                </h4>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="text-center p-2 bg-green-50 rounded-md">
+                  <p className="text-xs text-gray-600 font-medium">
+                    Active Campaign
+                  </p>
+                  <p className="text-sm font-bold text-green-700">
+                    {value.active}
+                  </p>
+                </div>
+                <div className="text-center p-2 bg-green-50 rounded-md">
+                  <p className="text-xs text-gray-600 font-medium">
+                    Inactive Campaign
+                  </p>
+                  <p className="text-sm font-bold text-green-700">
+                    {value.inactive}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
 
   return (
     <div>
@@ -120,11 +178,15 @@ export default function CampaignDetails() {
                 return (
                   <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
                     <div className="flex items-center space-x-3">
-                      <Icon className="h-4 w-4 text-purple-500" />
+                      {Icon && <Icon className="h-4 w-4 text-purple-500" />}
                       <span className="font-medium">{keyString(key)}</span>
                     </div>
                     <div className="font-semibold text-lg">
-                      {selected === "cleanse" ? 0 : value}
+                      {selected === "cleanse"
+                        ? 0
+                        : typeof value === "object" && "total" in value
+                        ? CustomTooltip(value)
+                        : value}
                     </div>
                   </div>
                 );

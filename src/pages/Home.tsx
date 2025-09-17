@@ -25,6 +25,7 @@ import OcCard from "@/components/home/overview/OcCard";
 // import KeyMetricsBar from "@/components/home/overview/KeyMetrics";
 import StatusWiseMetrics from "@/components/home/overview/keyMetrics/StatusWise";
 import SalesProjection from "@/components/home/overview/keyMetrics/SalesProjection";
+import KeySourceConversion from "@/components/home/overview/KeySourceConversion";
 
 mockData.overview.totalSalesOpportunity = Object.values(
   mockData.solidSalesOpportunity
@@ -75,6 +76,7 @@ export default function Home() {
               <StatusWiseMetrics data={keyMetricsData} />
               <SalesProjection data={simpleRowMetricsData} />
             </div>
+            <KeySourceConversion />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Top Performers */}
               <TopPerformer
@@ -113,6 +115,7 @@ export default function Home() {
           <TabsContent value="digital-marketing" className="space-y-6">
             <DigitalMarketingAnalytics />
             <CampaignOverview />
+            <CounsellorSocialMediaPerformance />
             <LeadOcBifurcation />
             <ClinicalBifurcation />
 
