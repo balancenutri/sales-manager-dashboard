@@ -63,12 +63,12 @@ export default function CampaignDetails() {
     impressions: 52780,
     reach: 40583,
     clicks: 4200,
-    CPL: 209.07,
+    CPL: "₹ 209.07",
     CAC: "₹ 9647",
     CTR: "7.34%",
     total_conversions: 1,
     total_leads_generated: 46,
-    total_revenue_generated: "₹ 1499",
+    total_revenue_generated: "₹ 9498",
   };
 
   const allIcons: IconTypes = {
