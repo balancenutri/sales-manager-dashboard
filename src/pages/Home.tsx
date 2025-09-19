@@ -26,6 +26,7 @@ import OcCard from "@/components/home/overview/OcCard";
 import StatusWiseMetrics from "@/components/home/overview/keyMetrics/StatusWise";
 import SalesProjection from "@/components/home/overview/keyMetrics/SalesProjection";
 import KeySourceConversion from "@/components/home/overview/KeySourceConversion";
+import CounsellorDigitalMarketingPerfotmance from "@/components/home/digitalMarketing/CounsellorDigitalMarketingPerfotmance";
 
 mockData.overview.totalSalesOpportunity = Object.values(
   mockData.solidSalesOpportunity
@@ -115,7 +116,7 @@ export default function Home() {
           <TabsContent value="digital-marketing" className="space-y-6">
             <DigitalMarketingAnalytics />
             <CampaignOverview />
-            <CounsellorSocialMediaPerformance />
+            <CounsellorDigitalMarketingPerfotmance />
             <LeadOcBifurcation />
             <ClinicalBifurcation />
 

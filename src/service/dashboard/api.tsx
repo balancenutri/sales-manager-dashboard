@@ -28,6 +28,7 @@ import {
   type AllSocialMediaPerformanceResponse,
   type NotificationStatsResponse,
   type WebsitePerformanceResponse,
+  type CounsellorCampaignPerformanceResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -265,6 +266,13 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Campaign"],
     }),
+    getCounsellorCampaignPerformance: builder.query<CounsellorCampaignPerformanceResponse, void>({
+      query: () => ({
+        url: `/sales/digital-marketing/counsellor-campaign-performance`,
+        method: "POST",
+      }),
+      providesTags: ["Campaign"],
+    }),
     getUserBifurcationCount: builder.query<UserBifurcationResponse, void>({
       query: () => ({
         url: `/sales/digital-marketing/user-bifurcation-count`,
@@ -420,6 +428,7 @@ export const {
   useGetAllCampaignsQuery,
   useGetCampaignDetailsQuery,
   useGetCampaignOverviewQuery,
+  useGetCounsellorCampaignPerformanceQuery,
   useGetUserBifurcationCountQuery,
   useGetLeadUserMisDataQuery,
   useLazyGetLeadMisDataQuery,

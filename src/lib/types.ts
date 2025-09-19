@@ -629,6 +629,19 @@ export interface AllSocialMediaPerformanceResponse {
     data: AllSocialMedia;
     hide_columns: string[];
 }
+type CounsellorKey = {
+    [key: string]: {
+        social_leads_assigned: number;
+        social_consultations: number;
+        social_sales: number;
+    }
+}
+export interface CounsellorCampaignPerformanceResponse {
+    status: string;
+    message: string;
+    data: CounsellorKey;
+    hide_columns: string[];
+}
 
 
 
