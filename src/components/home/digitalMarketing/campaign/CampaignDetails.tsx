@@ -54,8 +54,8 @@ export default function CampaignDetails() {
 
   const cleanseData = {
     total_campaigns: {
-      active: 2,
-      inactive: 3,
+      active: 0,
+      inactive: 5,
       total: 5,
     },
     // total_campaigns_inactive: 4,
