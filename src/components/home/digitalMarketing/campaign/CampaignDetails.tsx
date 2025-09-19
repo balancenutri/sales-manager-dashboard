@@ -37,7 +37,7 @@ type IconTypes = {
 export default function CampaignDetails() {
   const { data, isFetching } = useGetCampaignOverviewQuery();
 
-  const [selected, setSelected] = useState<"" | "bn" | "cleanse">("");
+  const [selected, setSelected] = useState<"" | "meta" | "google">("");
   console.log({ data });
 
   const SkeletonArray = Array(9)
@@ -69,6 +69,42 @@ export default function CampaignDetails() {
     total_conversions: 1,
     total_leads_generated: 46,
     total_revenue_generated: "₹ 9498",
+  };
+  const metaData = {
+    total_campaigns: {
+      active: 0,
+      inactive: 4,
+      total: 4,
+    },
+    // total_campaigns_inactive: 4,
+    total_ad_spent: "₹ 7493",
+    impressions: 44883,
+    reach: 40583,
+    clicks: 4076,
+    CPL: "₹ 209.07",
+    CAC: "₹ 9647",
+    CTR: "7.34%",
+    total_conversions: 1,
+    total_leads_generated: 46,
+    total_revenue_generated: "₹ 9498",
+  };
+  const googleData = {
+    total_campaigns: {
+      active: 0,
+      inactive: 1,
+      total: 1,
+    },
+    // total_campaigns_inactive: 4,
+    total_ad_spent: "₹ 2154",
+    impressions: 12097,
+    reach: 0,
+    clicks: 124,
+    CPL: "₹ 209.07",
+    CAC: "₹ 9647",
+    CTR: "7.34%",
+    total_conversions: 0,
+    total_leads_generated: 0,
+    total_revenue_generated: "₹ 0",
   };
 
   const allIcons: IconTypes = {
@@ -154,15 +190,15 @@ export default function CampaignDetails() {
                 </TabsTrigger>
                 <TabsTrigger
                   className="cursor-pointer"
-                  value={"bn"}
-                  onClick={() => setSelected("bn")}
+                  value={"meta"}
+                  onClick={() => setSelected("meta")}
                 >
                   Meta
                 </TabsTrigger>
                 <TabsTrigger
                   className="cursor-pointer"
-                  value="cleanse"
-                  onClick={() => setSelected("cleanse")}
+                  value="google"
+                  onClick={() => setSelected("google")}
                 >
                   Google
                 </TabsTrigger>
@@ -173,7 +209,13 @@ export default function CampaignDetails() {
         {data?.data && !isFetching ? (
           <CardContent>
             <div className="grid grid-cols-3 gap-3">
-              {Object.entries(cleanseData).map(([key, value]) => {
+              {Object.entries(
+                selected == "meta"
+                  ? metaData
+                  : selected == "google"
+                  ? googleData
+                  : cleanseData
+              ).map(([key, value]) => {
                 const Icon = allIcons[key];
                 return (
                   <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
@@ -182,9 +224,7 @@ export default function CampaignDetails() {
                       <span className="font-medium">{keyString(key)}</span>
                     </div>
                     <div className="font-semibold text-lg">
-                      {selected === "cleanse"
-                        ? 0
-                        : typeof value === "object" && "total" in value
+                      {typeof value === "object" && "total" in value
                         ? CustomTooltip(value)
                         : value}
                     </div>
