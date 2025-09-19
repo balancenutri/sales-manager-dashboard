@@ -38,11 +38,11 @@ export default function Home() {
       <Header />
       <div className="p-6">
         {/* Main Content Tabs */}
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger className="cursor-pointer" value="overview">
+        <Tabs defaultValue="social-media" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3">
+            {/* <TabsTrigger className="cursor-pointer" value="overview">
               Overview
-            </TabsTrigger>
+            </TabsTrigger> */}
             <TabsTrigger className="cursor-pointer" value="social-media">
               Social Media
             </TabsTrigger>
