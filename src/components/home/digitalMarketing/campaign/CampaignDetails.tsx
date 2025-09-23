@@ -40,9 +40,6 @@ export default function CampaignDetails() {
     filter: selected,
   });
 
-  const [selected, setSelected] = useState<"" | "meta" | "google">("");
-  console.log({ data });
-
   const SkeletonArray = Array(9)
     .fill(null)
     .map((_, index: number) => (
