@@ -54,24 +54,24 @@ export default function CampaignDetails() {
       </div>
     ));
 
-  const cleanseData = {
-    total_campaigns: {
-      active: 2,
-      inactive: 3,
-      total: 5,
-    },
-    // total_campaigns_inactive: 4,
-    total_ad_spent: 9647,
-    impressions: 52780,
-    reach: 40583,
-    clicks: 4200,
-    CPL: 209.07,
-    CAC: "₹ 9647",
-    CTR: "7.34%",
-    total_conversions: 1,
-    total_leads_generated: 46,
-    total_revenue_generated: "₹ 1499",
-  };
+  // const cleanseData = {
+  //   total_campaigns: {
+  //     active: 2,
+  //     inactive: 3,
+  //     total: 5,
+  //   },
+  //   // total_campaigns_inactive: 4,
+  //   total_ad_spent: 9647,
+  //   impressions: 52780,
+  //   reach: 40583,
+  //   clicks: 4200,
+  //   CPL: 209.07,
+  //   CAC: "₹ 9647",
+  //   CTR: "7.34%",
+  //   total_conversions: 1,
+  //   total_leads_generated: 46,
+  //   total_revenue_generated: "₹ 1499",
+  // };
 
   const allIcons: IconTypes = {
     total_campaigns: Rocket,
@@ -156,15 +156,15 @@ export default function CampaignDetails() {
                 </TabsTrigger>
                 <TabsTrigger
                   className="cursor-pointer"
-                  value={"bn"}
-                  onClick={() => setSelected("bn")}
+                  value={"meta"}
+                  onClick={() => setSelected("meta")}
                 >
                   Meta
                 </TabsTrigger>
                 <TabsTrigger
                   className="cursor-pointer"
-                  value="cleanse"
-                  onClick={() => setSelected("cleanse")}
+                  value="google"
+                  onClick={() => setSelected("google")}
                 >
                   Google
                 </TabsTrigger>
