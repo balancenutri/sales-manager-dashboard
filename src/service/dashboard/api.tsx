@@ -37,20 +37,31 @@ type BodyProps = {
 
 export const dashboardApi = commonAPi.injectEndpoints({
   endpoints: (builder) => ({
-    getLeadManagement: builder.query<LeadManagementResponse, void>({
-      query: () => ({
+    getLeadManagement: builder.query<
+      LeadManagementResponse,
+      {
+        start_date?: string;
+        end_date?: string;
+      }
+    >({
+      query: (body) => ({
         url: `/sales/overview/lead-management`,
         method: "POST",
+        body,
       }),
       providesTags: ["Common"],
     }),
     getAssignedLeadPerformance: builder.query<
       AssignedLeadPerformanceResponse,
-      void
+      {
+        start_date?: string;
+        end_date?: string;
+      }
     >({
-      query: () => ({
+      query: (body) => ({
         url: `/sales/overview/assigned-leads-performance`,
         method: "POST",
+        body,
       }),
       providesTags: ["Common"],
     }),

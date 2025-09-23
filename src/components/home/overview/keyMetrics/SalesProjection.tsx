@@ -85,7 +85,7 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
               <Share className="h-3 w-3 text-white" />
             </div> */}
             <span className="font-medium text-gray-700 dark:text-gray-300">
-              {type == "total" ? "Rate Shared" : "Today"}
+              {type == "Total Pitched" ? "Rate Shared" : "Today"}
             </span>
           </div>
           <div className="text-right">
@@ -105,7 +105,7 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
               <Link className="h-3 w-3 text-white" />
             </div> */}
             <span className="font-medium text-gray-700 dark:text-gray-300">
-              {type == "total" ? "Link Shared" : "Tomorrow"}
+              {type == "Total Pitched" ? "Link Shared" : "Tomorrow"}
             </span>
           </div>
           <div className="text-right">

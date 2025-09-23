@@ -241,9 +241,19 @@ export interface ActivatedFeaturesResponse {
 }
 
 type LeadManagement = {
-    total_leads: number;
-    assigned_leads: number;
-    unassigned_leads: number;
+    "total_leads": string,
+    "unassigned": {
+        "total_unassigned_leads": string,
+        "total_target_market_unassigned_leads": string,
+        "total_non_target_market_unassigned_leads": string;
+    },
+    "assigned": {
+        "total_assigned_leads": string,
+        "total_assigned_to_mentors": string,
+        "total_assigned_to_counsellors": string;
+    },
+    "consultation_done": string,
+    "sales": string,
 }
 export interface LeadManagementResponse {
     status: string;
@@ -357,7 +367,10 @@ export type AssignedLeadPerformance = {
 export interface AssignedLeadPerformanceResponse {
     status: string;
     message: string;
-    data: AssignedLeadPerformance;
+    data: {
+        counsellor_data: AssignedLeadPerformance,
+        mentor_data: AssignedLeadPerformance,
+    };
     totalCount: number;
 }
 export interface SaleByStackResponse {
