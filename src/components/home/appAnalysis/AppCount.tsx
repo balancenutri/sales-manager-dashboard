@@ -14,13 +14,17 @@ import {
 type PeriodType = "overall" | "last_24_hours" | "last_48_hours" | "mtd";
 
 export default function AppCount() {
-    const [leadPeriod, setLeadPeriod] = useState<PeriodType>("mtd");
-    const [activePeriod, setActivePeriod] = useState<PeriodType>("mtd");
+  const [leadPeriod, setLeadPeriod] = useState<PeriodType>("overall");
+  const [activePeriod, setActivePeriod] = useState<PeriodType>("overall");
 
-  const { data: leadData, isFetching: leadLoading } = useGetLeadAppCountQuery({ filter: leadPeriod });
-  const { data: activeData, isFetching: activeLoading } = useGetActiveAppCountQuery({ filter: activePeriod });
-  const { data: ocData , isFetching: ocLoading} = useGetOcAppCountQuery({ filter: "" });
-
+  const { data: leadData, isFetching: leadLoading } = useGetLeadAppCountQuery({
+    filter: leadPeriod,
+  });
+  const { data: activeData, isFetching: activeLoading } =
+    useGetActiveAppCountQuery({ filter: activePeriod });
+  const { data: ocData, isFetching: ocLoading } = useGetOcAppCountQuery({
+    filter: "",
+  });
 
   return (
     <div className="mt-12">
@@ -36,13 +40,17 @@ export default function AppCount() {
           fetching={leadLoading}
         />
         <AppCountCard
+          data={ocData?.data}
+          title="OC App Count"
+          fetching={ocLoading}
+        />
+        <AppCountCard
           data={activeData?.data}
           title="Active App Count"
           period={activePeriod}
           setPeriod={setActivePeriod}
           fetching={activeLoading}
         />
-        <AppCountCard data={ocData?.data} title="OC App Count" fetching={ocLoading} />
       </div>
     </div>
   );
