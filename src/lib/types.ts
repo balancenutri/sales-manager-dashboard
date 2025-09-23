@@ -559,6 +559,9 @@ export interface UserBifurcationResponse {
 
 type CampaignOverviewData = {
     active_count: number;
+    inactive_count: number;
+    total_count: number;
+    total_conversion: number;
     total_ad_spend: number;
     total_impressions: number;
     total_reach: number;
@@ -670,11 +673,12 @@ export interface NotificationStatsResponse {
     hide_columns: string[];
 };
 
-export type WebsitePerformanceKey = "page_view" |
-    "total_engagement" |
+export type WebsitePerformanceKey = "active_users" |
+    "new_users" |
     "avg_session_duration" |
     "bounce_rate" |
-    "unique_engagement" |
+    "impressions" |
+    "lead_conversion" |
     "leads_from_website"
 
 export type WebsitePerformanceType = {

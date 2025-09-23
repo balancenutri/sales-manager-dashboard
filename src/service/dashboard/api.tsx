@@ -259,14 +259,21 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Campaign"],
     }),
-    getCampaignOverview: builder.query<CampaignOverviewResponse, void>({
-      query: () => ({
+    getCampaignOverview: builder.query<
+      CampaignOverviewResponse,
+      { filter?: string }
+    >({
+      query: (body) => ({
         url: `/sales/digital-marketing/campaign-overview`,
         method: "POST",
+        body,
       }),
       providesTags: ["Campaign"],
     }),
-    getCounsellorCampaignPerformance: builder.query<CounsellorCampaignPerformanceResponse, void>({
+    getCounsellorCampaignPerformance: builder.query<
+      CounsellorCampaignPerformanceResponse,
+      void
+    >({
       query: () => ({
         url: `/sales/digital-marketing/counsellor-campaign-performance`,
         method: "POST",

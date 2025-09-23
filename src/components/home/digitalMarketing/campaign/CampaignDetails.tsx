@@ -35,9 +35,11 @@ type IconTypes = {
 };
 
 export default function CampaignDetails() {
-  const { data, isFetching } = useGetCampaignOverviewQuery();
+  const [selected, setSelected] = useState<"" | "meta" | "google">("");
+  const { data, isFetching } = useGetCampaignOverviewQuery({
+    filter: selected,
+  });
 
-  const [selected, setSelected] = useState<"" | "bn" | "cleanse">("");
   console.log({ data });
 
   const SkeletonArray = Array(9)
@@ -173,22 +175,26 @@ export default function CampaignDetails() {
         {data?.data && !isFetching ? (
           <CardContent>
             <div className="grid grid-cols-3 gap-3">
-              {Object.entries(cleanseData).map(([key, value]) => {
+              {Object.entries(data?.data[0]).map(([key, value]) => {
                 const Icon = allIcons[key];
                 return (
-                  <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      {Icon && <Icon className="h-4 w-4 text-purple-500" />}
-                      <span className="font-medium">{keyString(key)}</span>
+                  !["active_count", "inactive_count"].includes(key) && (
+                    <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        {Icon && <Icon className="h-4 w-4 text-purple-500" />}
+                        <span className="font-medium">{keyString(key)}</span>
+                      </div>
+                      <div className="font-semibold text-lg">
+                        {key == "total_count"
+                          ? CustomTooltip({
+                              active: data?.data[0]?.active_count,
+                              inactive: data?.data[0]?.inactive_count,
+                              total: data?.data[0]?.total_count,
+                            })
+                          : value}
+                      </div>
                     </div>
-                    <div className="font-semibold text-lg">
-                      {selected === "cleanse"
-                        ? 0
-                        : typeof value === "object" && "total" in value
-                        ? CustomTooltip(value)
-                        : value}
-                    </div>
-                  </div>
+                  )
                 );
               })}
             </div>
