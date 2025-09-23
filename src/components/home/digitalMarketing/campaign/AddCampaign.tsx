@@ -891,7 +891,7 @@ export default function AddCampaignForm({
         {[
           { name: "ad_spend", label: "Ad Spend (₹)", step: "0.01" },
           { name: "impressions", label: "Impressions" },
-          { name: "frequency", label: "Frequency" },
+          { name: "frequency", label: "Frequency", step: "0.01" },
           { name: "reach", label: "Reach" },
           { name: "clicks", label: "Clicks" },
           { name: "ctr", label: "CTR (%)", step: "0.01" },

@@ -241,9 +241,19 @@ export interface ActivatedFeaturesResponse {
 }
 
 type LeadManagement = {
-    total_leads: number;
-    assigned_leads: number;
-    unassigned_leads: number;
+    "total_leads": string,
+    "unassigned": {
+        "total_unassigned_leads": string,
+        "total_target_market_unassigned_leads": string,
+        "total_non_target_market_unassigned_leads": string;
+    },
+    "assigned": {
+        "total_assigned_leads": string,
+        "total_assigned_to_mentors": string,
+        "total_assigned_to_counsellors": string;
+    },
+    "consultation_done": string,
+    "sales": string,
 }
 export interface LeadManagementResponse {
     status: string;
@@ -357,7 +367,10 @@ export type AssignedLeadPerformance = {
 export interface AssignedLeadPerformanceResponse {
     status: string;
     message: string;
-    data: AssignedLeadPerformance;
+    data: {
+        counsellor_data: AssignedLeadPerformance,
+        mentor_data: AssignedLeadPerformance,
+    };
     totalCount: number;
 }
 export interface SaleByStackResponse {
@@ -559,6 +572,9 @@ export interface UserBifurcationResponse {
 
 type CampaignOverviewData = {
     active_count: number;
+    inactive_count: number;
+    total_count: number;
+    total_conversion: number;
     total_ad_spend: number;
     total_impressions: number;
     total_reach: number;
@@ -670,11 +686,12 @@ export interface NotificationStatsResponse {
     hide_columns: string[];
 };
 
-export type WebsitePerformanceKey = "page_view" |
-    "total_engagement" |
+export type WebsitePerformanceKey = "active_users" |
+    "new_users" |
     "avg_session_duration" |
     "bounce_rate" |
-    "unique_engagement" |
+    "impressions" |
+    "lead_conversion" |
     "leads_from_website"
 
 export type WebsitePerformanceType = {

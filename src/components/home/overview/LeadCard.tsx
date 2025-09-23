@@ -25,21 +25,33 @@ import {
 // import "react-datepicker/dist/react-datepicker.css";
 import CustomDatePicker from "@/components/ui/custom-date-picker";
 import dayjs from "dayjs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function LeadCard() {
   const [modalType, setModalType] = useState<
     "assigned" | "unassigned" | "sales" | "revenue" | "team" | null
   >(null);
   const [showLeadsModal, setShowLeadsModal] = useState<boolean>(false);
+  const [selected, setSelected] = useState<"counsellor_data" | "mentor_data">(
+    "counsellor_data"
+  );
 
   const handleLeadsClick = (type: "assigned" | "unassigned") => {
     setModalType(type);
     setShowLeadsModal(true);
   };
-
-  const { data: leadManagementData } = useGetLeadManagementQuery();
-
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const { data: leadManagementData } = useGetLeadManagementQuery(
+    selectedDate
+      ? {
+          start_date: dayjs(selectedDate).startOf("month").format("YYYY-MM-DD"),
+          end_date: dayjs(selectedDate).endOf("month").format("YYYY-MM-DD"),
+        }
+      : {}
+  );
+
+  const leadData = leadManagementData?.data;
 
   return (
     <div className="space-y-6">
@@ -68,8 +80,10 @@ export default function LeadCard() {
               <UserCheck className="h-4 w-4 text-orange-500" />
               <p className="text-sm">Total Leads</p>
             </div>
-            {leadManagementData?.data ? (
-              <p className="text-xl font-bold text-orange-700">16 | 567</p>
+            {leadData ? (
+              <p className="text-xl font-bold text-orange-700">
+                {leadData.total_leads}
+              </p>
             ) : (
               <Skeleton className="h-5 w-20 mt-2" />
             )}
@@ -86,7 +100,9 @@ export default function LeadCard() {
                     <p className="text-sm">Unassigned</p>
                   </div>
                   {leadManagementData?.data ? (
-                    <p className="text-xl font-bold text-green-700">5 | 112</p>
+                    <p className="text-xl font-bold text-green-700">
+                      {leadData?.unassigned.total_unassigned_leads}
+                    </p>
                   ) : (
                     <Skeleton className="h-5 w-20 mt-2" />
                   )}
@@ -105,13 +121,23 @@ export default function LeadCard() {
                       <p className="text-xs text-gray-600 font-medium">
                         Target Market
                       </p>
-                      <p className="text-sm font-bold text-green-700">10</p>
+                      <p className="text-sm font-bold text-green-700">
+                        {
+                          leadData?.unassigned
+                            .total_target_market_unassigned_leads
+                        }
+                      </p>
                     </div>
                     <div className="text-center p-2 bg-blue-50 rounded-md">
                       <p className="text-xs text-gray-600 font-medium">
                         Non Target Market
                       </p>
-                      <p className="text-sm font-bold text-blue-700">40</p>
+                      <p className="text-sm font-bold text-blue-700">
+                        {
+                          leadData?.unassigned
+                            .total_non_target_market_unassigned_leads
+                        }
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -130,7 +156,9 @@ export default function LeadCard() {
                     <p className="text-sm">Assigned</p>
                   </div>
                   {leadManagementData?.data ? (
-                    <p className="text-xl font-bold text-green-700">5 | 112</p>
+                    <p className="text-xl font-bold text-green-700">
+                      {leadData?.assigned.total_assigned_leads}
+                    </p>
                   ) : (
                     <Skeleton className="h-5 w-20 mt-2" />
                   )}
@@ -149,13 +177,17 @@ export default function LeadCard() {
                       <p className="text-xs text-gray-600 font-medium">
                         Mentor
                       </p>
-                      <p className="text-sm font-bold text-green-700">10</p>
+                      <p className="text-sm font-bold text-green-700">
+                        {leadData?.assigned.total_assigned_to_mentors}
+                      </p>
                     </div>
                     <div className="text-center p-2 bg-blue-50 rounded-md">
                       <p className="text-xs text-gray-600 font-medium">
                         Counsellor
                       </p>
-                      <p className="text-sm font-bold text-blue-700">40</p>
+                      <p className="text-sm font-bold text-blue-700">
+                        {leadData?.assigned.total_assigned_to_counsellors}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -164,28 +196,32 @@ export default function LeadCard() {
           </TooltipProvider>
           <div
             className="flex items-center justify-between p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
-            onClick={() => handleLeadsClick("assigned")}
+            // onClick={() => handleLeadsClick("assigned")}
           >
             <div className="flex items-center gap-2">
               <ArrowUp className="h-4 w-4 text-green-500" />
               <p className="text-sm">Consultation Done</p>
             </div>
             {leadManagementData?.data ? (
-              <p className="text-xl font-bold text-green-700">5 | 112</p>
+              <p className="text-xl font-bold text-green-700">
+                {leadData?.consultation_done}
+              </p>
             ) : (
               <Skeleton className="h-5 w-20 mt-2" />
             )}
           </div>
           <div
             className="flex items-center justify-between p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
-            onClick={() => handleLeadsClick("assigned")}
+            // onClick={() => handleLeadsClick("assigned")}
           >
             <div className="flex items-center gap-2">
               <IndianRupee className="h-4 w-4 text-green-500" />
               <p className="text-sm">Sales</p>
             </div>
             {leadManagementData?.data ? (
-              <p className="text-xl font-bold text-green-700">₹5535 | ₹11233</p>
+              <p className="text-xl font-bold text-green-700">
+                {leadData?.sales}
+              </p>
             ) : (
               <Skeleton className="h-5 w-20 mt-2" />
             )}
@@ -197,20 +233,43 @@ export default function LeadCard() {
           className={`${modalType === "assigned" ? "min-w-6xl" : ""}`}
         >
           <DialogHeader>
-            <DialogTitle>
-              {modalType === "assigned"
-                ? "Assigned Leads - Counsellor Performance"
-                : "Unassigned Leads - Source Breakdown"}
-            </DialogTitle>
-            <DialogDescription>
-              {modalType === "assigned"
-                ? "Detailed performance metrics for each counsellor including consultation and sales ratios"
-                : "Source-wise distribution of unassigned leads"}
-            </DialogDescription>
+            <div className="flex justify-between items-end">
+              <div className="">
+                <DialogTitle>
+                  {modalType === "assigned"
+                    ? "Assigned Leads - Counsellor Performance"
+                    : "Unassigned Leads - Source Breakdown"}
+                </DialogTitle>
+                <DialogDescription>
+                  {modalType === "assigned"
+                    ? "Detailed performance metrics for each counsellor including consultation and sales ratios"
+                    : "Source-wise distribution of unassigned leads"}
+                </DialogDescription>
+              </div>
+
+              {modalType === "assigned" && <Tabs defaultValue={selected} className="space-y-6">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger
+                    className="cursor-pointer"
+                    value={"android"}
+                    onClick={() => setSelected("counsellor_data")}
+                  >
+                    Counsellor
+                  </TabsTrigger>
+                  <TabsTrigger
+                    className="cursor-pointer"
+                    value="ios"
+                    onClick={() => setSelected("mentor_data")}
+                  >
+                    Mentor
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>}
+            </div>
           </DialogHeader>
 
           {modalType === "assigned" ? (
-            <AssignedLead />
+            <AssignedLead selected={selected} selectedDate={selectedDate} />
           ) : (
             <div className="space-y-4">
               {Object.entries(mockData.leadsSources.unassigned).map(

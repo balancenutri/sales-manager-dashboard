@@ -10,9 +10,23 @@ import {
 } from "@/components/ui/table";
 import type { AssignedLeadPerformance } from "@/lib/types";
 import { useGetAssignedLeadPerformanceQuery } from "@/service/dashboard/api";
+import dayjs from "dayjs";
 
-export default function AssignedLead() {
-  const { data, isFetching } = useGetAssignedLeadPerformanceQuery();
+export default function AssignedLead({
+  selected,
+  selectedDate,
+}: {
+  selected: "counsellor_data" | "mentor_data";
+  selectedDate: Date | null;
+}) {
+  const { data, isFetching } = useGetAssignedLeadPerformanceQuery(
+    selectedDate
+      ? {
+          start_date: dayjs(selectedDate).startOf("month").format("YYYY-MM-DD"),
+          end_date: dayjs(selectedDate).endOf("month").format("YYYY-MM-DD"),
+        }
+      : {}
+  );
 
   console.log({ data, isFetching });
 
@@ -40,7 +54,7 @@ export default function AssignedLead() {
     totalSales: number;
     totalLeadsAssigned: number;
   } = data?.data
-    ? getTotalPerformance(data?.data)
+    ? getTotalPerformance(data?.data?.[selected])
     : {
         totalConsultations: 0,
         totalSales: 0,
@@ -48,7 +62,7 @@ export default function AssignedLead() {
       };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-h-[80vh] overflow-scroll">
       <Table>
         <TableHeader>
           <TableRow>
@@ -63,7 +77,7 @@ export default function AssignedLead() {
         </TableHeader>
         <TableBody>
           {data?.data &&
-            Object.entries(data?.data).map(([key, counsellor]) => {
+            Object.entries(data?.data?.[selected]).map(([key, counsellor]) => {
               return (
                 <TableRow key={key}>
                   <TableCell>
@@ -122,15 +136,11 @@ export default function AssignedLead() {
         <div className="grid grid-cols-3 gap-4 text-sm">
           <div className="text-center">
             <p className="text-muted-foreground">Total Leads Assigned</p>
-            <p className="text-2xl font-bold">
-              {total.totalLeadsAssigned}
-            </p>
+            <p className="text-2xl font-bold">{total.totalLeadsAssigned}</p>
           </div>
           <div className="text-center">
             <p className="text-muted-foreground">Total Consultations</p>
-            <p className="text-2xl font-bold">
-              {total.totalConsultations}
-            </p>
+            <p className="text-2xl font-bold">{total.totalConsultations}</p>
           </div>
           <div className="text-center">
             <p className="text-muted-foreground">Total Sales</p>

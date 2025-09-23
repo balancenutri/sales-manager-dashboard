@@ -63,41 +63,41 @@ export default function WebsitePerformance() {
 const allIcons: IconTypes = {
   active_users: Users,
   new_users: UserPlus,
-  avg_engagement_time: Clock,
+  avg_session_duration: Clock,
   impressions: BarChart2,
   clicks: MousePointerClick,
   ctr: LineChart,
   position: Target,
   bounce_rate: TrendingDown,
   leads_from_website: Globe,
-  leads_converted: CheckCircle2,
+  lead_conversion: CheckCircle2,
 };
 
 
   const cleanseData = {
     active_users: "0 | 0",
     new_users: "0 | 0",
-    avg_engagement_time: "0 | 0",
+    avg_session_duration: "0 | 0",
     impressions: "0 | 0",
     // clicks: "0 | 0",
-    ctr : "0 | 0",
+    // ctr : "0 | 0",
     // position: "0 | 0",
     bounce_rate: "0 | 0",
     leads_from_website: "0 | 0",
-    leads_converted: "0 | 0",
+    lead_conversion: "0 | 0",
   };
-  const allData = {
-    active_users: "18 | 6437",
-    new_users: "14 | 5489",
-    avg_engagement_time: "02:20:04 | 02:30:82",
-    impressions: "79 | 27437",
-    // clicks: "342 | 387",
-    ctr: "2.3% | 2.6%",
-    // position: "4.1 | 3.9",
-    bounce_rate: "0.83% | 0.58%",
-    leads_from_website: "0 | 1",
-    leads_converted: "0 | 0",
-  };
+  // const allData = {
+  //   active_users: "18 | 6437",
+  //   new_users: "14 | 5489",
+  //   avg_engagement_time: "02:20:04 | 02:30:82",
+  //   impressions: "79 | 27437",
+  //   // clicks: "342 | 387",
+  //   ctr: "2.3% | 2.6%",
+  //   // position: "4.1 | 3.9",
+  //   bounce_rate: "0.83% | 0.58%",
+  //   leads_from_website: "0 | 1",
+  //   leads_converted: "0 | 0",
+  // };
 
   return (
     <Card>
@@ -139,7 +139,7 @@ const allIcons: IconTypes = {
       {data?.data ? (
         <CardContent className="space-y-3">
           <div className="grid grid-cols-3 gap-3">
-            {Object.entries(selected == "cleanse" ? cleanseData : allData).map(
+            {Object.entries(selected == "cleanse" ? cleanseData : data?.data).map(
               ([key, value], idx) => {
                 const Icon = allIcons[key];
                 return (

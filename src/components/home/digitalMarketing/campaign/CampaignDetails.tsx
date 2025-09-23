@@ -35,7 +35,10 @@ type IconTypes = {
 };
 
 export default function CampaignDetails() {
-  const { data, isFetching } = useGetCampaignOverviewQuery();
+  const [selected, setSelected] = useState<"" | "meta" | "google">("");
+  const { data, isFetching } = useGetCampaignOverviewQuery({
+    filter: selected,
+  });
 
   const [selected, setSelected] = useState<"" | "meta" | "google">("");
   console.log({ data });
@@ -52,60 +55,24 @@ export default function CampaignDetails() {
       </div>
     ));
 
-  const cleanseData = {
-    total_campaigns: {
-      active: 0,
-      inactive: 5,
-      total: 5,
-    },
-    // total_campaigns_inactive: 4,
-    total_ad_spent: 9647,
-    impressions: 52780,
-    reach: 40583,
-    clicks: 4200,
-    CPL: "₹ 209.07",
-    CAC: "₹ 9647",
-    CTR: "7.34%",
-    total_conversions: 1,
-    total_leads_generated: 46,
-    total_revenue_generated: "₹ 9498",
-  };
-  const metaData = {
-    total_campaigns: {
-      active: 0,
-      inactive: 4,
-      total: 4,
-    },
-    // total_campaigns_inactive: 4,
-    total_ad_spent: "₹ 7493",
-    impressions: 44883,
-    reach: 40583,
-    clicks: 4076,
-    CPL: "₹ 209.07",
-    CAC: "₹ 9647",
-    CTR: "7.34%",
-    total_conversions: 1,
-    total_leads_generated: 46,
-    total_revenue_generated: "₹ 9498",
-  };
-  const googleData = {
-    total_campaigns: {
-      active: 0,
-      inactive: 1,
-      total: 1,
-    },
-    // total_campaigns_inactive: 4,
-    total_ad_spent: "₹ 2154",
-    impressions: 12097,
-    reach: 0,
-    clicks: 124,
-    CPL: "₹ 209.07",
-    CAC: "₹ 9647",
-    CTR: "7.34%",
-    total_conversions: 0,
-    total_leads_generated: 0,
-    total_revenue_generated: "₹ 0",
-  };
+  // const cleanseData = {
+  //   total_campaigns: {
+  //     active: 2,
+  //     inactive: 3,
+  //     total: 5,
+  //   },
+  //   // total_campaigns_inactive: 4,
+  //   total_ad_spent: 9647,
+  //   impressions: 52780,
+  //   reach: 40583,
+  //   clicks: 4200,
+  //   CPL: 209.07,
+  //   CAC: "₹ 9647",
+  //   CTR: "7.34%",
+  //   total_conversions: 1,
+  //   total_leads_generated: 46,
+  //   total_revenue_generated: "₹ 1499",
+  // };
 
   const allIcons: IconTypes = {
     total_campaigns: Rocket,
@@ -209,26 +176,26 @@ export default function CampaignDetails() {
         {data?.data && !isFetching ? (
           <CardContent>
             <div className="grid grid-cols-3 gap-3">
-              {Object.entries(
-                selected == "meta"
-                  ? metaData
-                  : selected == "google"
-                  ? googleData
-                  : cleanseData
-              ).map(([key, value]) => {
+              {Object.entries(data?.data[0]).map(([key, value]) => {
                 const Icon = allIcons[key];
                 return (
-                  <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      {Icon && <Icon className="h-4 w-4 text-purple-500" />}
-                      <span className="font-medium">{keyString(key)}</span>
+                  !["active_count", "inactive_count"].includes(key) && (
+                    <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        {Icon && <Icon className="h-4 w-4 text-purple-500" />}
+                        <span className="font-medium">{keyString(key)}</span>
+                      </div>
+                      <div className="font-semibold text-lg">
+                        {key == "total_count"
+                          ? CustomTooltip({
+                              active: data?.data[0]?.active_count,
+                              inactive: data?.data[0]?.inactive_count,
+                              total: data?.data[0]?.total_count,
+                            })
+                          : value}
+                      </div>
                     </div>
-                    <div className="font-semibold text-lg">
-                      {typeof value === "object" && "total" in value
-                        ? CustomTooltip(value)
-                        : value}
-                    </div>
-                  </div>
+                  )
                 );
               })}
             </div>
