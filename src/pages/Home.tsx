@@ -27,6 +27,7 @@ import StatusWiseMetrics from "@/components/home/overview/keyMetrics/StatusWise"
 import SalesProjection from "@/components/home/overview/keyMetrics/SalesProjection";
 import KeySourceConversion from "@/components/home/overview/KeySourceConversion";
 import CounsellorDigitalMarketingPerfotmance from "@/components/home/digitalMarketing/CounsellorDigitalMarketingPerfotmance";
+// import BenchmarkAndAvg from "@/components/home/overview/BenchmarkAndAvg";
 
 mockData.overview.totalSalesOpportunity = Object.values(
   mockData.solidSalesOpportunity
@@ -39,10 +40,10 @@ export default function Home() {
       <div className="p-6">
         {/* Main Content Tabs */}
         <Tabs defaultValue="social-media" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            {/* <TabsTrigger className="cursor-pointer" value="overview">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger className="cursor-pointer" value="overview">
               Overview
-            </TabsTrigger> */}
+            </TabsTrigger>
             <TabsTrigger className="cursor-pointer" value="social-media">
               Social Media
             </TabsTrigger>
@@ -57,6 +58,7 @@ export default function Home() {
           {/* Overview Tab Content */}
           <TabsContent value="overview" className="space-y-6">
             {/* Key Metrics */}
+            {/* <BenchmarkAndAvg /> */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {/* Combined Leads Card */}
               <LeadCard />
@@ -100,7 +102,7 @@ export default function Home() {
           <TabsContent value="social-media" className="space-y-6">
             <SocialCard />
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <CounsellorSocialMediaPerformance />
 
               {/* New Team Performance Consolidated Table */}

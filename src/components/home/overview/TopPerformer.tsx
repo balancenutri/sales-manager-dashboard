@@ -18,6 +18,13 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { useGetTopPerformersQuery } from "@/service/dashboard/api";
 import { useState } from "react";
 import CounsellorCard from "../cards/CounsellorCard";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 export default function TopPerformer({
   title,
   subTitle,
@@ -28,6 +35,11 @@ export default function TopPerformer({
   const { data, isFetching } = useGetTopPerformersQuery();
 
   const [openModal, setOpenModal] = useState(false);
+  const [selected, setSelected] = useState<
+    "average" | "revenue" | "conversion" | null
+  >(null);
+
+  console.log({ selected, setSelected });
 
   const renderSkeletonRows = () => {
     return Array.from({ length: 3 }).map((_, i) => (
@@ -43,8 +55,26 @@ export default function TopPerformer({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{subTitle}</CardDescription>
+        <div className="flex justify-between items-center">
+          <div className="">
+            <CardTitle>{title}</CardTitle>
+            <CardDescription>{subTitle}</CardDescription>
+          </div>
+          <Select
+            onValueChange={(val: string) =>
+              setSelected(val as "average" | "revenue" | "conversion")
+            }
+          >
+            <SelectTrigger className="w-32">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="conversion">Conversion</SelectItem>
+              <SelectItem value="revenue">Revenue</SelectItem>
+              <SelectItem value="average">Avg. Per Unit Sale</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-4 max-h-[60vh]">
@@ -58,11 +88,7 @@ export default function TopPerformer({
                       className="flex items-center space-x-4"
                       onClick={() => setOpenModal(true)}
                     >
-                      {/* <div className="flex items-center justify-center w-8 h-8 rounded-full bg-teal-100 text-teal-800 font-bold text-sm">
-                  {index + 1}
-                </div> */}
                       <Avatar className="h-10 w-10">
-                        {/* <AvatarImage src={counsellor.avatar || "/placeholder.svg"} /> */}
                         <AvatarFallback>
                           {counsellor
                             .split(" ")

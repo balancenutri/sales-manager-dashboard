@@ -49,7 +49,7 @@ export default function KeySourceConversion() {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
         {Object.entries(data).map(([key, value], idx) => (
           <Card key={idx}>
             <CardHeader>

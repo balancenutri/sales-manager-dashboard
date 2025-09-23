@@ -263,8 +263,16 @@ export interface LeadManagementResponse {
 }
 
 type SalesPerformance = {
-    sales_closed: string;
-    revenue: string;
+    sales_closed: {
+        total: string;
+        by_counsellor: string;
+        by_mentor: string;
+    };
+    revenue: {
+        total: string;
+        by_counsellor: string;
+        by_mentor: string;
+    };
     target: string;
     conversion_rate: string;
     revenue_target_progress: string;
@@ -704,3 +712,9 @@ export interface WebsitePerformanceResponse {
     data: WebsitePerformanceType;
     hide_columns: string[];
 };
+export interface SolidSalesResponse {
+    status: string;
+    message: string;
+    data: { [key: string]: number; };
+    hideColumn: [];
+}

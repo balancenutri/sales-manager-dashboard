@@ -29,6 +29,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import CustomDatePicker from "@/components/ui/custom-date-picker";
+import dayjs from "dayjs";
 
 type IconTypes = {
   [key: string]: LucideIcon;
@@ -36,6 +38,7 @@ type IconTypes = {
 
 export default function CampaignDetails() {
   const [selected, setSelected] = useState<"" | "meta" | "google">("");
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const { data, isFetching } = useGetCampaignOverviewQuery({
     filter: selected,
   });
@@ -143,31 +146,40 @@ export default function CampaignDetails() {
                 Campaign Overview
               </CardDescription>
             </div>
-            <Tabs defaultValue={selected} className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger
-                  className="cursor-pointer"
-                  value=""
-                  onClick={() => setSelected("")}
-                >
-                  All
-                </TabsTrigger>
-                <TabsTrigger
-                  className="cursor-pointer"
-                  value={"meta"}
-                  onClick={() => setSelected("meta")}
-                >
-                  Meta
-                </TabsTrigger>
-                <TabsTrigger
-                  className="cursor-pointer"
-                  value="google"
-                  onClick={() => setSelected("google")}
-                >
-                  Google
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
+            <div className="flex gap-3">
+              <CustomDatePicker
+                selected={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                showMonthYearPicker={true}
+                dateFormat="MM/yyyy"
+                maxDate={dayjs()}
+              />
+              <Tabs defaultValue={selected} className="space-y-6">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger
+                    className="cursor-pointer"
+                    value=""
+                    onClick={() => setSelected("")}
+                  >
+                    All
+                  </TabsTrigger>
+                  <TabsTrigger
+                    className="cursor-pointer"
+                    value={"meta"}
+                    onClick={() => setSelected("meta")}
+                  >
+                    Meta
+                  </TabsTrigger>
+                  <TabsTrigger
+                    className="cursor-pointer"
+                    value="google"
+                    onClick={() => setSelected("google")}
+                  >
+                    Google
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
           </div>
         </CardHeader>
         {data?.data && !isFetching ? (

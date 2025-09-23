@@ -118,6 +118,7 @@ export default function CustomDatePicker({
             }}
             showMonthYearPicker={showMonthYearPicker}
             maxDate={maxDate}
+            isClearable={true}
           />
         </div>
       </PopoverContent>

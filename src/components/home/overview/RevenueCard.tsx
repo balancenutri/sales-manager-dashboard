@@ -61,7 +61,7 @@ export default function RevenueCard() {
                     </p>
                     {salesPerformanceData?.data ? (
                       <p className="text-2xl font-bold">
-                        {salesPerformanceData?.data.sales_closed}
+                        {salesPerformanceData?.data.sales_closed?.total}
                       </p>
                     ) : (
                       <Skeleton className="h-5 w-20 mt-2" />
@@ -83,13 +83,17 @@ export default function RevenueCard() {
                       <p className="text-xs text-gray-600 font-medium">
                         Mentor
                       </p>
-                      <p className="text-sm font-bold text-green-700">10</p>
+                      <p className="text-sm font-bold text-green-700">
+                        {salesPerformanceData?.data.sales_closed?.by_mentor}
+                      </p>
                     </div>
                     <div className="text-center p-2 bg-blue-50 rounded-md">
                       <p className="text-xs text-gray-600 font-medium">
                         Counsellor
                       </p>
-                      <p className="text-sm font-bold text-blue-700">40</p>
+                      <p className="text-sm font-bold text-blue-700">
+                        {salesPerformanceData?.data.sales_closed?.by_counsellor}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -107,7 +111,7 @@ export default function RevenueCard() {
                     <p className="text-sm text-muted-foreground">Revenue</p>
                     {salesPerformanceData?.data ? (
                       <p className="text-xl font-bold">
-                        ₹ {salesPerformanceData?.data.revenue}
+                        ₹ {salesPerformanceData?.data.revenue?.total}
                       </p>
                     ) : (
                       <Skeleton className="h-5 w-20 mt-2" />
@@ -138,13 +142,17 @@ export default function RevenueCard() {
                       <p className="text-xs text-gray-600 font-medium">
                         Mentor
                       </p>
-                      <p className="text-sm font-bold text-green-700">₹10000</p>
+                      <p className="text-sm font-bold text-green-700">
+                        ₹{salesPerformanceData?.data.revenue?.by_mentor}
+                      </p>
                     </div>
                     <div className="text-center p-2 bg-blue-50 rounded-md">
                       <p className="text-xs text-gray-600 font-medium">
                         Counsellor
                       </p>
-                      <p className="text-sm font-bold text-blue-700">₹4000</p>
+                      <p className="text-sm font-bold text-blue-700">
+                        ₹{salesPerformanceData?.data.revenue?.by_counsellor}
+                      </p>
                     </div>
                   </div>
                 </div>

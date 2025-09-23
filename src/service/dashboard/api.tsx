@@ -29,6 +29,7 @@ import {
   type NotificationStatsResponse,
   type WebsitePerformanceResponse,
   type CounsellorCampaignPerformanceResponse,
+  type SolidSalesResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -65,6 +66,15 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+
+
+    getSalesBreakDownByStack: builder.query<SalesPerformanceResponse, void>({
+      query: () => ({
+        url: `/sales/overview/sales-breakdown-by-stack`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
     getSalesPerformance: builder.query<SalesPerformanceResponse, void>({
       query: () => ({
         url: `/sales/overview/sales-performance`,
@@ -85,6 +95,25 @@ export const dashboardApi = commonAPi.injectEndpoints({
         method: "POST",
       }),
       providesTags: ["Common"],
+    }),
+    getLeadRiskAndMisses: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/lead-dashboard/risk-and-misses`,
+    }),
+    getLeadSolidSalesOpportunity: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/lead-dashboard/solid-sales-opportunity`,
+    }),
+    getLeadMtdSalesRisks: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/lead-dashboard/mtd-sales-risk`,
+    }),
+
+    getOcRiskAndMisses: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/oc-dashboard/risk-and-misses`,
+    }),
+    getOcSolidSalesOpportunity: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/oc-dashboard/solid-sales-opportunity`,
+    }),
+    getOcMtdSalesRisks: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/oc-dashboard/mtd-sales-risk`,
     }),
 
     // SOCIAL MEDIA
@@ -430,11 +459,19 @@ export const dashboardApi = commonAPi.injectEndpoints({
 export const {
   useGetLeadManagementQuery,
   useGetAssignedLeadPerformanceQuery,
+  useGetSalesBreakDownByStackQuery,
 
   useGetSalesPerformanceQuery,
   useGetSaleByStackQuery,
 
   useGetTopPerformersQuery,
+  useGetLeadRiskAndMissesQuery,
+  useGetLeadSolidSalesOpportunityQuery,
+  useGetLeadMtdSalesRisksQuery,
+
+  useGetOcMtdSalesRisksQuery,
+  useGetOcRiskAndMissesQuery,
+  useGetOcSolidSalesOpportunityQuery,
 
   useGetGenderWiseLeadQuery,
   useGetWebsitePerformanceQuery,
