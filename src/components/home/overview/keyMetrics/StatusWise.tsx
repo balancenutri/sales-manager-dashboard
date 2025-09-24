@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users } from "lucide-react";
 import { useState } from "react";
+import { useGetSalesTriggerQuery } from "@/service/dashboard/api";
 
 interface LeadMetricsData {
   hot: {
@@ -29,6 +30,9 @@ interface SimpleLeadMetricsProps {
 export default function StatusWiseMetrics({ data }: SimpleLeadMetricsProps) {
   const [hoveredLead, setHoveredLead] = useState<"hot" | "warm" | null>(null);
 
+  const { data: salesData } = useGetSalesTriggerQuery();
+  console.log({ salesData });
+
   const DetailedInfo = ({
     type,
     leadData,
@@ -45,7 +49,7 @@ export default function StatusWiseMetrics({ data }: SimpleLeadMetricsProps) {
           variant={type === "hot" ? "destructive" : "secondary"}
           className="text-xs"
         >
-          {leadData.count} leads
+          {leadData.count} leadsssss
         </Badge>
       </div>
 

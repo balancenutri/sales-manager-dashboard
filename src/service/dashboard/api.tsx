@@ -30,6 +30,7 @@ import {
   type WebsitePerformanceResponse,
   type CounsellorCampaignPerformanceResponse,
   type SolidSalesResponse,
+  type SalesTriggerResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -85,6 +86,13 @@ export const dashboardApi = commonAPi.injectEndpoints({
     getSaleByStack: builder.query<SaleByStackResponse, void>({
       query: () => ({
         url: `/sales/overview/sales-breakdown-by-stack`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getSalesTrigger: builder.query<SalesTriggerResponse, void>({
+      query: () => ({
+        url: `/sales/overview/sales-trigger`,
         method: "POST",
       }),
       providesTags: ["Common"],
@@ -463,6 +471,7 @@ export const {
 
   useGetSalesPerformanceQuery,
   useGetSaleByStackQuery,
+  useGetSalesTriggerQuery,
 
   useGetTopPerformersQuery,
   useGetLeadRiskAndMissesQuery,

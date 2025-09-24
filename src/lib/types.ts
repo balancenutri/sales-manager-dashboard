@@ -718,3 +718,30 @@ export interface SolidSalesResponse {
     data: { [key: string]: number; };
     hideColumn: [];
 }
+export type TriggerType = {
+    "hot_triggers": {
+        "total": number;
+        "3_days": number;
+        "5_days": number;
+        "7_days": number;
+    },
+    "warm_triggers": {
+        "total": number;
+        "10_days": number;
+        "12_days": number;
+        "15_days": number;
+    },
+    "to_engage": number;
+    "downgrade_counts": {
+        "hot_to_warm": number;
+        "hot_to_cold": number;
+        "warm_to_cold": number;
+    }
+}
+
+export interface SalesTriggerResponse {
+    status: string;
+    message: string;
+    data: TriggerType;
+    hide_columns: string[];
+};
