@@ -619,7 +619,7 @@ import {
   useUpdateCampaignMutation,
 } from "@/service/dashboard/api";
 import { keyString } from "@/lib/utils";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(customParseFormat);
@@ -675,23 +675,17 @@ export default function AddCampaignForm({
     reset,
   } = useForm<FormValues>({
     defaultValues: {
-      name: "",
-      added_by: "",
-      type: "",
-      status: "",
-      start_date: "",
-      end_date: "",
-      ad_spend: undefined,
-      impressions: undefined,
-      reach: undefined,
-      clicks: undefined,
-      ctr: undefined,
-      conversions: undefined,
-      frequency: undefined,
-      gender: [],
-      health_conditions: [],
-      age_group: [],
-      program_name: [],
+      ...(data
+        ? {
+            ...data,
+            type: data.type ? String(data.type) : "",
+            status: data.status ? data.status.toLowerCase() : "",
+            start_date: dayjs(data.start_date, "DD/MM/YYYY").format(
+              "YYYY-MM-DD"
+            ),
+            end_date: dayjs(data.end_date, "DD/MM/YYYY").format("YYYY-MM-DD"),
+          }
+        : {}),
     },
   });
 
@@ -704,43 +698,6 @@ export default function AddCampaignForm({
   });
 
   const stableAllSources = useMemo(() => allSources?.data, [allSources?.data]);
-
-  useEffect(() => {
-    console.log("useEffect triggered", { data, stableAllSources });
-    if (data && stableAllSources) {
-      const normalized = {
-        ...data,
-        type: data.type ? String(data.type) : "",
-        status: data.status ? data.status.toLowerCase() : "",
-        start_date: dayjs(data.start_date, "DD/MM/YYYY").format("YYYY-MM-DD"),
-        end_date: dayjs(data.end_date, "DD/MM/YYYY").format("YYYY-MM-DD"),
-      };
-      console.log("Resetting form with normalized data", normalized);
-      reset(normalized);
-    } else if (!data) {
-      console.log("Resetting form to default values");
-      reset({
-        name: "",
-        added_by: "",
-        type: "",
-        status: "",
-        start_date: "",
-        end_date: "",
-        ad_spend: undefined,
-        impressions: undefined,
-        reach: undefined,
-        clicks: undefined,
-        ctr: undefined,
-        conversions: undefined,
-        frequency: undefined,
-        gender: [],
-        health_conditions: [],
-        age_group: [],
-        program_name: [],
-      });
-    }
-  }, [data, stableAllSources, reset]);
-
   const [addNewCampaign] = useAddNewCampaignMutation();
   const [updateCampaign] = useUpdateCampaignMutation();
 
@@ -995,7 +952,7 @@ export default function AddCampaignForm({
                   { name: "Male", id: "male" },
                   { name: "Female", id: "female" },
                 ]}
-                selected={field.value}
+                selected={field.value || []}
                 onChange={field.onChange}
                 placeholder="Select Gender"
               />
@@ -1016,7 +973,7 @@ export default function AddCampaignForm({
                 options={healthData?.data || []}
                 nameKey="name"
                 valueKey="name"
-                selected={field.value}
+                selected={field.value || []}
                 onChange={field.onChange}
                 placeholder="Select Clinical Condition"
               />
@@ -1033,7 +990,7 @@ export default function AddCampaignForm({
             render={({ field }) => (
               <MultiSelect
                 options={["18-25", "25-35", "35-45", "45-55", "55-65", "65+"]}
-                selected={field.value}
+                selected={field.value || []}
                 onChange={field.onChange}
                 placeholder="Select Age Group"
               />
