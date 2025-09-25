@@ -35,6 +35,7 @@ import {
   type KeySourceResponse,
   type CounsellorDataResponse,
   type PitchedHistoryResponse,
+  type OcManagementResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -52,6 +53,20 @@ export const dashboardApi = commonAPi.injectEndpoints({
     >({
       query: (body) => ({
         url: `/sales/overview/lead-management`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getOcManagement: builder.query<
+      OcManagementResponse,
+      {
+        start_date?: string;
+        end_date?: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/sales/overview/oc-management`,
         method: "POST",
         body,
       }),
@@ -517,6 +532,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
 
 export const {
   useGetLeadManagementQuery,
+  useGetOcManagementQuery,
   useGetAssignedLeadPerformanceQuery,
   useGetSalesBreakDownByStackQuery,
 

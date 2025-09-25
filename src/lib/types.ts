@@ -262,6 +262,17 @@ export interface LeadManagementResponse {
     data: LeadManagement;
     totalCount: number;
 }
+export interface OcManagementResponse {
+    status: string;
+    message: string;
+    data: {
+        oc: string;
+        suggested_programs: string;
+        calls: string;
+        orders: string;
+    };
+    totalCount: number;
+}
 
 type SalesPerformance = {
     sales_closed: {
