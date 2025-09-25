@@ -14,7 +14,8 @@ export default function RecentActivity() {
         <CardDescription>Latest updates from your team</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
+        <p className="text-sm font-medium text-center">No Activity Found</p>
+        {/* <div className="space-y-4">
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
             <div className="flex-1">
@@ -42,7 +43,7 @@ export default function RecentActivity() {
               <p className="text-xs text-muted-foreground">6 hours ago</p>
             </div>
           </div>
-        </div>
+        </div> */}
       </CardContent>
     </Card>
   );
