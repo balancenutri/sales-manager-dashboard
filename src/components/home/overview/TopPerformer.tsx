@@ -114,7 +114,7 @@ export default function TopPerformer({
         </div>
       </CardContent>
 
-      <Dialog open={openModal} onOpenChange={setOpenModal}>
+      <Dialog open={!!openModal} onOpenChange={() => setOpenModal(null)}>
         <DialogContent
           onInteractOutside={(e: React.MouseEvent | Event) =>
             e.preventDefault()
