@@ -7,33 +7,9 @@ import dayjs from "dayjs";
 import { useState } from "react";
 
 export default function KeySourceConversion() {
-  // const data = {
-  //   social_media: {
-  //     leads: 45,
-  //     converted: 55,
-  //     revenue: "₹ 53563",
-  //     conversion: "45%",
-  //   },
-  //   direct: {
-  //     leads: 45,
-  //     converted: 55,
-  //     revenue: "₹ 53563",
-  //     conversion: "45%",
-  //   },
-  //   IWD: {
-  //     leads: 45,
-  //     converted: 55,
-  //     revenue: "₹ 53563",
-  //     conversion: "45%",
-  //   },
-  //   referral: {
-  //     leads: 45,
-  //     converted: 55,
-  //     revenue: "₹ 53563",
-  //     conversion: "45%",
-  //   },
-  // };
-  const [selectedDate, setSelectedDate] = useState<Date | null>(dayjs().toDate());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    dayjs().toDate()
+  );
 
   const { data, isFetching } = useGetKeySourceConversionQuery({
     start_date: dayjs(selectedDate).startOf("month").format("YYYY-MM-DD"),
@@ -56,27 +32,25 @@ export default function KeySourceConversion() {
         </div>
       </div>
 
-      <div className="grid xl:grid-cols-5 md:grid-cols-2 grid-cols-1 gap-4">
-        {!isFetching && data?.data
+      <div className="flex gap-4 overflow-x-auto pb-2">
+        {isFetching && data?.data
           ? Object.entries(data?.data).map(([key, value], idx) => (
-              <Card key={idx}>
+              <Card key={idx} className="min-w-[320px] flex-shrink-0">
                 <CardHeader>
                   <CardTitle>{keyString(key)}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  {Object.entries(value).map(([key, item], index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between border-b last:border-none pb-2 last:pb-0"
-                      >
-                        <div className="flex items-center space-x-2">
-                          <span className="font-medium">{keyString(key)}</span>
-                        </div>
-                        <span className="font-medium">{item}</span>
+                  {Object.entries(value).map(([key, item], index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between border-b last:border-none pb-2 last:pb-0"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <span className="font-medium">{keyString(key)}</span>
                       </div>
-                    );
-                  })}
+                      <span className="font-medium">{item}</span>
+                    </div>
+                  ))}
                 </CardContent>
               </Card>
             ))
