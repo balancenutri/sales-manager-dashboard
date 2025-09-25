@@ -1,11 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { keyString } from "@/lib/utils";
-
-// type DataItem = {
-//   day: number;
-//   mtd: number;
-// };
 
 type OverviewCardProps = {
   title: string;
@@ -50,19 +46,29 @@ export default function OverviewCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
-        {data &&
-          !fetching &&
-          Object.entries(data).map(([key, value]) => (
-            <div
-              key={key}
-              className="flex items-center justify-between border-b pb-2 last:border-b-0 last:pb-0"
-            >
-              <span className="text-sm text-medium capitalize">
-                {keyString(key)}
-              </span>
-              <span className="font-semibold text-base">{value}</span>
-            </div>
-          ))}
+        {data && !fetching
+          ? Object.entries(data).map(([key, value]) => (
+              <div
+                key={key}
+                className="flex items-center justify-between border-b pb-2 last:border-b-0 last:pb-0"
+              >
+                <span className="text-sm text-medium capitalize">
+                  {keyString(key)}
+                </span>
+                <span className="font-semibold text-base">{value}</span>
+              </div>
+            ))
+          : Array(8)
+              .fill(null)
+              .map((_, index: number) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between border-b pb-2"
+                >
+                  <Skeleton className="h-5 w-20" />
+                  <Skeleton className="h-5 w-20" />
+                </div>
+              ))}
       </CardContent>
     </Card>
   );

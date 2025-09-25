@@ -1,4 +1,5 @@
 
+import SkeletonCard from "@/components/common/SkeletonCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CustomDatePicker from "@/components/ui/custom-date-picker";
 import { keyString } from "@/lib/utils";
@@ -39,7 +40,7 @@ export default function KeySourceConversion() {
     start_date: dayjs(selectedDate).startOf("month").format("YYYY-MM-DD"),
     end_date: dayjs(selectedDate).endOf("month").format("YYYY-MM-DD"),
   });
-  console.log(data);
+
   return (
     <>
       <div className="flex justify-between">
@@ -58,7 +59,7 @@ export default function KeySourceConversion() {
 
       <div className="grid xl:grid-cols-5 md:grid-cols-2 grid-cols-1 gap-4">
         {!isFetching &&
-          data?.data &&
+          data?.data ?
           Object.entries(data?.data).map(([key, value], idx) => (
             <Card key={idx}>
               <CardHeader>
@@ -80,7 +81,7 @@ export default function KeySourceConversion() {
                 })}
               </CardContent>
             </Card>
-          ))}
+          )) : Array(5).fill(null).map((_, idx: number) => <SkeletonCard row={4} key={idx} />)}
       </div>
     </>
   );

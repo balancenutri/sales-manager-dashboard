@@ -303,6 +303,8 @@ type TopPerformer = {
         sales: number;
         conversion_rate: number;
         avg_per_unit: number;
+        id: number;
+        crm_user: string;
     }
 }
 export interface TopPerformerResponse {

@@ -31,7 +31,7 @@ export default function TopPerformer({
   title: string;
   subTitle: string;
 }) {
-  const [openModal, setOpenModal] = useState(null);
+  const [openModal, setOpenModal] = useState<null | number>(null);
   const [selected, setSelected] = useState<
     "sales" | "conversion_rate" | "avg_per_unit"
   >("conversion_rate");
@@ -88,7 +88,7 @@ export default function TopPerformer({
                     <div
                       key={index}
                       className="flex items-center space-x-4 cursor-pointer"
-                      // onClick={() => setOpenModal(sales.)}
+                      onClick={() => setOpenModal(sales.id)}
                     >
                       <Avatar className="h-10 w-10">
                         <AvatarFallback>
@@ -123,7 +123,7 @@ export default function TopPerformer({
           <DialogHeader>
             <DialogTitle>Counsellor Details</DialogTitle>
           </DialogHeader>
-          <CounsellorCard />
+          {openModal && <CounsellorCard counsellorId={openModal}/>}
         </DialogContent>
       </Dialog>
     </Card>

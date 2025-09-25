@@ -10,9 +10,7 @@ import { useState } from "react";
 //   DialogTitle,
 // } from "@/components/ui/dialog";
 // import { DialogDescription } from "@radix-ui/react-dialog";
-import {
-  useGetOcManagementQuery,
-} from "@/service/dashboard/api";
+import { useGetOcManagementQuery } from "@/service/dashboard/api";
 import { Skeleton } from "@/components/ui/skeleton";
 // import AssignedLead from "./leadCard/AssignedLead";
 
@@ -31,7 +29,7 @@ export default function LeadCard() {
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-  const { data: leadManagementData } = useGetOcManagementQuery(
+  const { data: ocManagementData } = useGetOcManagementQuery(
     selectedDate
       ? {
           start_date: dayjs(selectedDate).startOf("month").format("YYYY-MM-DD"),
@@ -40,7 +38,7 @@ export default function LeadCard() {
       : {}
   );
 
-  const ocData = leadManagementData?.data;
+  const ocData = ocManagementData?.data;
 
   return (
     <div className="space-y-6">
@@ -82,7 +80,7 @@ export default function LeadCard() {
               <ArrowUp className="h-4 w-4 text-green-500" />
               <p className="text-sm">Call Done</p>
             </div>
-            {leadManagementData?.data ? (
+            {ocManagementData?.data ? (
               <p className="text-xl font-bold text-green-700">
                 {ocData?.calls}
               </p>
@@ -98,7 +96,7 @@ export default function LeadCard() {
               <ArrowUp className="h-4 w-4 text-green-500" />
               <p className="text-sm">Suggested Program</p>
             </div>
-            {leadManagementData?.data ? (
+            {ocManagementData?.data ? (
               <p className="text-xl font-bold text-green-700">
                 {ocData?.suggested_programs}
               </p>
@@ -114,9 +112,12 @@ export default function LeadCard() {
               <IndianRupee className="h-4 w-4 text-green-500" />
               <p className="text-sm">Sales</p>
             </div>
-            {leadManagementData?.data ? (
+            {ocManagementData?.data ? (
               <p className="text-xl font-bold text-green-700">
-                {ocData?.orders && `₹${ocData.orders.split("| ")[0]} | ₹${ocData.orders.split("| ")[1]}`}
+                {ocData?.orders &&
+                  `₹${ocData.orders.split("| ")[0]} | ₹${
+                    ocData.orders.split("| ")[1]
+                  }`}
               </p>
             ) : (
               <Skeleton className="h-5 w-20 mt-2" />

@@ -1,3 +1,4 @@
+import SkeletonTable from "@/components/common/SkeletonTable";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -27,8 +28,6 @@ export default function AssignedLead({
         }
       : {}
   );
-
-  console.log({ data, isFetching });
 
   function getTotalPerformance(data: AssignedLeadPerformance) {
     let totalConsultations = 0;
@@ -76,7 +75,7 @@ export default function AssignedLead({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.data &&
+          {data?.data && !isFetching ? (
             Object.entries(data?.data?.[selected]).map(([key, counsellor]) => {
               return (
                 <TableRow key={key}>
@@ -85,9 +84,9 @@ export default function AssignedLead({
                       <Avatar className="h-8 w-8">
                         <AvatarFallback>
                           {counsellor.crm_user
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
+                            ?.split(" ")
+                            ?.map((n) => n[0])
+                            ?.join("")}
                         </AvatarFallback>
                       </Avatar>
                       <span className="font-medium">{counsellor.crm_user}</span>
@@ -128,7 +127,10 @@ export default function AssignedLead({
                   </TableCell>
                 </TableRow>
               );
-            })}
+            })
+          ) : (
+            <SkeletonTable row={7} col={7} />
+          )}
         </TableBody>
       </Table>
 

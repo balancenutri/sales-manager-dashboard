@@ -40,7 +40,7 @@ export default function RevenueCard() {
     <div className="space-y-6">
       {/* Key Metrics */}
       {/* Combined Sales & Revenue Card */}
-      <Card className="hover:shadow-md transition-shadow">
+      <Card className="hover:shadow-md transition-shadow h-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
             Overall Sales Performance (Lead & OC)

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGetCounsellorDataByIdQuery } from "@/service/dashboard/api";
 import { LayoutDashboard, MessageSquareMore } from "lucide-react";
 
-export default function CounsellorCard() {
+export default function CounsellorCard({ counsellorId }: { counsellorId: number; }) {
   //   const getPerformanceTag = (conversionRate: number) => {
   //     if (conversionRate >= benchmark) {
   //       return { tag: "Excellent", color: "bg-green-500 text-white" };
@@ -18,7 +18,7 @@ export default function CounsellorCard() {
   //     }
   //   };
 
-  const { data, isFetching } = useGetCounsellorDataByIdQuery(277);
+  const { data, isFetching } = useGetCounsellorDataByIdQuery(counsellorId);
 
   console.log({ data, isFetching });
   return (
