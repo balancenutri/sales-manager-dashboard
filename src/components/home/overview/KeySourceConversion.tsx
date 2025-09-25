@@ -1,4 +1,3 @@
-
 import SkeletonCard from "@/components/common/SkeletonCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CustomDatePicker from "@/components/ui/custom-date-picker";
@@ -34,7 +33,7 @@ export default function KeySourceConversion() {
   //     conversion: "45%",
   //   },
   // };
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(dayjs().toDate());
 
   const { data, isFetching } = useGetKeySourceConversionQuery({
     start_date: dayjs(selectedDate).startOf("month").format("YYYY-MM-DD"),
@@ -58,30 +57,32 @@ export default function KeySourceConversion() {
       </div>
 
       <div className="grid xl:grid-cols-5 md:grid-cols-2 grid-cols-1 gap-4">
-        {!isFetching &&
-          data?.data ?
-          Object.entries(data?.data).map(([key, value], idx) => (
-            <Card key={idx}>
-              <CardHeader>
-                <CardTitle>{keyString(key)}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {Object.entries(value).map(([key, item], index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between border-b last:border-none pb-2 last:pb-0"
-                    >
-                      <div className="flex items-center space-x-2">
-                        <span className="font-medium">{keyString(key)}</span>
+        {!isFetching && data?.data
+          ? Object.entries(data?.data).map(([key, value], idx) => (
+              <Card key={idx}>
+                <CardHeader>
+                  <CardTitle>{keyString(key)}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  {Object.entries(value).map(([key, item], index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between border-b last:border-none pb-2 last:pb-0"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <span className="font-medium">{keyString(key)}</span>
+                        </div>
+                        <span className="font-medium">{item}</span>
                       </div>
-                      <span className="font-medium">{item}</span>
-                    </div>
-                  );
-                })}
-              </CardContent>
-            </Card>
-          )) : Array(5).fill(null).map((_, idx: number) => <SkeletonCard row={4} key={idx} />)}
+                    );
+                  })}
+                </CardContent>
+              </Card>
+            ))
+          : Array(5)
+              .fill(null)
+              .map((_, idx: number) => <SkeletonCard row={4} key={idx} />)}
       </div>
     </>
   );
