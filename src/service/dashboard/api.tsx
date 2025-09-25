@@ -31,6 +31,10 @@ import {
   type CounsellorCampaignPerformanceResponse,
   type SolidSalesResponse,
   type SalesTriggerResponse,
+  type SalesProjectionResponse,
+  type KeySourceResponse,
+  type CounsellorDataResponse,
+  type PitchedHistoryResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -68,7 +72,6 @@ export const dashboardApi = commonAPi.injectEndpoints({
       providesTags: ["Common"],
     }),
 
-
     getSalesBreakDownByStack: builder.query<SalesPerformanceResponse, void>({
       query: () => ({
         url: `/sales/overview/sales-breakdown-by-stack`,
@@ -90,6 +93,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+
     getSalesTrigger: builder.query<SalesTriggerResponse, void>({
       query: () => ({
         url: `/sales/overview/sales-trigger`,
@@ -97,9 +101,56 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    getTopPerformers: builder.query<TopPerformerResponse, void>({
+    getSalesProjection: builder.query<SalesProjectionResponse, void>({
       query: () => ({
-        url: `/sales/overview/top-performers`,
+        url: `/sales/overview/sales-projection`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getPitchedHistory: builder.query<
+      PitchedHistoryResponse,
+      {
+        user_type?: string;
+        start_date?: string;
+        end_date?: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/sales/overview/pitched-history`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getKeySourceConversion: builder.query<
+      KeySourceResponse,
+      {
+        start_date?: string;
+        end_date?: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/sales/overview/key-source-conversion`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getCounsellorPerformance: builder.query<
+      TopPerformerResponse,
+      { sort_by?: string; order?: string }
+    >({
+      query: (body) => ({
+        url: `/sales/overview/counsellor-performance`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getCounsellorDataById: builder.query<CounsellorDataResponse, number>({
+      query: (id) => ({
+        url: `/sales/overview/assigned-leads-performance-by-id/${id}`,
         method: "POST",
       }),
       providesTags: ["Common"],
@@ -472,8 +523,12 @@ export const {
   useGetSalesPerformanceQuery,
   useGetSaleByStackQuery,
   useGetSalesTriggerQuery,
+  useGetSalesProjectionQuery,
+  useGetPitchedHistoryQuery,
+  useGetKeySourceConversionQuery,
 
-  useGetTopPerformersQuery,
+  useGetCounsellorPerformanceQuery,
+  useGetCounsellorDataByIdQuery,
   useGetLeadRiskAndMissesQuery,
   useGetLeadSolidSalesOpportunityQuery,
   useGetLeadMtdSalesRisksQuery,

@@ -138,6 +138,7 @@ export type AddCampaignBody = {
         clicks: number;
         ctr: number;
         conversions: number;
+        frequency: number;
     },
     added_by: string;
 };
@@ -290,6 +291,7 @@ type TopPerformer = {
     [key: string]: {
         sales: number;
         conversion_rate: number;
+        avg_per_unit: number;
     }
 }
 export interface TopPerformerResponse {
@@ -745,3 +747,100 @@ export interface SalesTriggerResponse {
     data: TriggerType;
     hide_columns: string[];
 };
+
+export type ProjectionKey =
+    | "total_pitched"
+    | "rate_shared"
+    | "link_shared"
+    | "total_to_pay"
+    | "pay_later"
+    | "today_to_pay"
+    | "tomorrow_to_pay";
+
+export type ProjectionType = {
+    [key in ProjectionKey]: {
+        units: number;
+        amount: number;
+    };
+};
+
+export interface SalesProjectionResponse {
+    status: string;
+    message: string;
+    data: ProjectionType;
+    hide_columns: string[];
+};
+export type KeySourceKey =
+    | "social_media"
+    | "direct"
+    | "iwd"
+    | "campaigns"
+    | "referrals";
+
+export type KeySourceType = {
+    [key in KeySourceKey]: {
+        leads: number;
+        converted: number;
+        revenue: number;
+        conversion: string;
+    };
+};
+
+export interface KeySourceResponse {
+    status: string;
+    message: string;
+    data: KeySourceType;
+    hide_columns: string[];
+};
+
+export type CounsellorType = {
+    "crm_user": string;
+    "role_id": number;
+    "leads_assigned": number;
+    "consultations": number;
+    "sales": number;
+    "l:c": string;
+    "c:s": string;
+    "l:s": string;
+    "sales_amount": string;
+    "revenue": string;
+    "suggested_programs": number;
+    "suggested_amount": number;
+    "best_source_performance": string;
+};
+
+export interface CounsellorDataResponse {
+    status: string;
+    message: string;
+    data: CounsellorType;
+    hide_columns: string[];
+};
+
+
+export type PitchedType = {
+    "total_amount": number;
+    "basic_stack": number;
+    "special_stack": number;
+    "users": {
+        "name": string;
+        "user_id": 28,
+        "program_name": string;
+        "program_category": string;
+        "suggested_amount": string;
+        "mrp": number;
+        "suggested_by": string;
+        "designation": string;
+        "added_date": string;
+        "payment_status": number;
+        program_duration: string;
+        email_id: string;
+    }[],
+}
+export interface PitchedHistoryResponse {
+    status: string;
+    message: string;
+    data: PitchedType;
+    hide_columns: string[];
+};
+
+

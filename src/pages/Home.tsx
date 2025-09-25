@@ -1,6 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { keyMetricsData, mockData, simpleRowMetricsData } from "@/lib/data";
 import Header from "@/components/common/Header";
 import LeadCard from "@/components/home/overview/LeadCard";
 import RevenueCard from "@/components/home/overview/RevenueCard";
@@ -28,10 +27,6 @@ import SalesProjection from "@/components/home/overview/keyMetrics/SalesProjecti
 import KeySourceConversion from "@/components/home/overview/KeySourceConversion";
 import CounsellorDigitalMarketingPerfotmance from "@/components/home/digitalMarketing/CounsellorDigitalMarketingPerfotmance";
 // import BenchmarkAndAvg from "@/components/home/overview/BenchmarkAndAvg";
-
-mockData.overview.totalSalesOpportunity = Object.values(
-  mockData.solidSalesOpportunity
-).reduce((sum, item) => sum + item.mtd, 0);
 
 export default function Home() {
   return (
@@ -76,8 +71,8 @@ export default function Home() {
             </div>
             <h2 className="text-2xl font-bold">Lead Key Metrics</h2>
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-6">
-              <StatusWiseMetrics data={keyMetricsData} />
-              <SalesProjection data={simpleRowMetricsData} />
+              <StatusWiseMetrics />
+              <SalesProjection />
             </div>
             <KeySourceConversion />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

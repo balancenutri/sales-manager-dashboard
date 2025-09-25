@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { PieChart } from "lucide-react";
 import { useState } from "react";
 import {
@@ -9,56 +8,17 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import PitchedHistory from "./PitchedDetails";
+import { useGetSalesProjectionQuery } from "@/service/dashboard/api";
 
-interface SimpleRowMetricsData {
-  hot: {
-    count: number;
-    dayWiseData: {
-      day3: { engagement: number; conversions: number; clicks: number };
-      day5: { engagement: number; conversions: number; clicks: number };
-      day7: { engagement: number; conversions: number; clicks: number };
-    };
-  };
-  warm: {
-    count: number;
-    dayWiseData: {
-      day3: { engagement: number; conversions: number; clicks: number };
-      day5: { engagement: number; conversions: number; clicks: number };
-      day7: { engagement: number; conversions: number; clicks: number };
-    };
-  };
-  salesProjection: {
-    totalPitched: {
-      count: number;
-      amount: number;
-      rateShared: { units: number; amount: number };
-      linkShared: { units: number; amount: number };
-    };
-    toPay: {
-      count: number;
-      amount: number;
-      rateShared: { units: number; amount: number };
-      linkShared: { units: number; amount: number };
-    };
-    payLater: {
-      count: number;
-      amount: number;
-      rateShared: { units: number; amount: number };
-      linkShared: { units: number; amount: number };
-    };
-  };
-}
-
-interface SimpleLeadMetricsProps {
-  data: SimpleRowMetricsData;
-}
-
-export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
+export default function SalesProjection() {
   const [hoveredCard, setHoveredCard] = useState<
     "total" | "to_pay" | "pay_later" | null
   >(null);
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const { data } = useGetSalesProjectionQuery();
+
+  console.log(data);
 
   console.log({ openDialog });
 
@@ -72,52 +32,56 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
     <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl border p-4 z-20 animate-in slide-in-from-top-2 duration-200 min-w-[250px]">
       <div className="flex items-center justify-between mb-4">
         <h4 className="font-semibold text-lg capitalize">{type}</h4>
-        <Badge variant="outline" className="text-xs">
+        {/* <Badge variant="outline" className="text-xs">
           {salesData.count} leads
-        </Badge>
+        </Badge> */}
       </div>
 
-      <div className="space-y-4">
-        {/* Rate Shared */}
-        <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-          <div className="flex items-center space-x-2">
-            {/* <div className="p-1.5 bg-blue-500 rounded-lg">
+      {console.log({ salesData })}
+
+      {salesData?.linkShared && salesData?.rateShared && (
+        <div className="space-y-4">
+          {/* Rate Shared */}
+          <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <div className="flex items-center space-x-2">
+              {/* <div className="p-1.5 bg-blue-500 rounded-lg">
               <Share className="h-3 w-3 text-white" />
             </div> */}
-            <span className="font-medium text-gray-700 dark:text-gray-300">
-              {type == "Total Pitched" ? "Rate Shared" : "Today"}
-            </span>
-          </div>
-          <div className="text-right">
-            <div className="text-lg font-bold text-blue-600">
-              {salesData.rateShared.units}
+              <span className="font-medium text-gray-700 dark:text-gray-300">
+                {type == "Total Pitched" ? "Rate Shared" : "Today"}
+              </span>
             </div>
-            <div className="text-xs text-green-600 font-semibold">
-              ₹{salesData.rateShared.amount.toLocaleString()}
+            <div className="text-right">
+              <div className="text-lg font-bold text-blue-600">
+                {salesData?.rateShared.units}
+              </div>
+              <div className="text-xs text-green-600 font-semibold">
+                ₹{salesData?.rateShared.amount.toLocaleString("en-IN")}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Link Shared */}
-        <div className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-          <div className="flex items-center space-x-2">
-            {/* <div className="p-1.5 bg-purple-500 rounded-lg">
+          {/* Link Shared */}
+          <div className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+            <div className="flex items-center space-x-2">
+              {/* <div className="p-1.5 bg-purple-500 rounded-lg">
               <Link className="h-3 w-3 text-white" />
             </div> */}
-            <span className="font-medium text-gray-700 dark:text-gray-300">
-              {type == "Total Pitched" ? "Link Shared" : "Tomorrow"}
-            </span>
-          </div>
-          <div className="text-right">
-            <div className="text-lg font-bold text-purple-600">
-              {salesData.linkShared.units}
+              <span className="font-medium text-gray-700 dark:text-gray-300">
+                {type == "Total Pitched" ? "Link Shared" : "Tomorrow"}
+              </span>
             </div>
-            <div className="text-xs text-green-600 font-semibold">
-              ₹{salesData.linkShared.amount.toLocaleString()}
+            <div className="text-right">
+              <div className="text-lg font-bold text-purple-600">
+                {salesData?.linkShared.units}
+              </div>
+              <div className="text-xs text-green-600 font-semibold">
+                ₹{salesData?.linkShared.amount.toLocaleString("en-IN")}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 
@@ -156,10 +120,10 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
                 </div>
                 <div className="text-right">
                   <div className="text-lg font-bold text-blue-600">
-                    {data.salesProjection.totalPitched.count}
+                    {data?.data.total_pitched.units}
                   </div>
                   <div className="text-sm text-green-600 font-semibold">
-                    ₹{data.salesProjection.totalPitched.amount.toLocaleString()}
+                    ₹{data?.data.total_pitched.amount.toLocaleString("en-IN")}
                   </div>
                 </div>
               </div>
@@ -167,7 +131,11 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
             {hoveredCard === "total" && (
               <SalesHoverDetails
                 type="Total Pitched"
-                salesData={data.salesProjection.totalPitched}
+                salesData={{
+                  count: data?.data.total_pitched.units,
+                  rateShared: data?.data.rate_shared,
+                  linkShared: data?.data.link_shared,
+                }}
               />
             )}
           </div>
@@ -190,10 +158,10 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
                 </div>
                 <div className="text-right">
                   <div className="text-2xl font-bold text-green-600">
-                    {data.salesProjection.toPay.count}
+                    {data?.data.total_to_pay.units}
                   </div>
                   <div className="text-sm text-green-600 font-semibold">
-                    ₹{data.salesProjection.toPay.amount.toLocaleString()}
+                    ₹{data?.data.total_to_pay.amount.toLocaleString("en-IN")}
                   </div>
                 </div>
               </div>
@@ -201,7 +169,11 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
             {hoveredCard === "to_pay" && (
               <SalesHoverDetails
                 type="To Pay"
-                salesData={data.salesProjection.toPay}
+                salesData={{
+                  count: data?.data.total_to_pay.units,
+                  rateShared: data?.data.today_to_pay,
+                  linkShared: data?.data.tomorrow_to_pay,
+                }}
               />
             )}
           </div>
@@ -224,20 +196,20 @@ export default function SalesProjection({ data }: SimpleLeadMetricsProps) {
                 </div>
                 <div className="text-right">
                   <div className="text-2xl font-bold text-orange-600">
-                    {data.salesProjection.payLater.count}
+                    {data?.data.pay_later.units}
                   </div>
                   <div className="text-sm text-green-600 font-semibold">
-                    ₹{data.salesProjection.payLater.amount.toLocaleString()}
+                    ₹{data?.data.pay_later.amount.toLocaleString("en-IN")}
                   </div>
                 </div>
               </div>
             </div>
-            {hoveredCard === "pay_later" && (
+            {/* {hoveredCard === "pay_later" && (
               <SalesHoverDetails
                 type="Pay Later"
                 salesData={data.salesProjection.payLater}
               />
-            )}
+            )} */}
           </div>
         </div>
       </CardContent>

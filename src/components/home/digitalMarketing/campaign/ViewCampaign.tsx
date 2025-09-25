@@ -29,6 +29,7 @@ export default function ViewCampaign({
     selectedCampaign !== null ? { campaign_id: selectedCampaign } : skipToken
   );
 
+  console.log({data})
   const [updateCampaign, setUpdateCampaign] = useState<boolean>(false);
 
   return (
@@ -230,6 +231,7 @@ export default function ViewCampaign({
               reach: data?.data?.digitalMarketing?.reach || 0,
               start_date: data?.data?.campaignStartDate || "",
               status: data?.data?.campaignStatus || "",
+              // frequency: data?.data.
               type: String(data?.data?.campaignType) || "",
               added_by: data?.data.addedBy || "",
             }}
