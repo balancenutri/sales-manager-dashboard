@@ -19,7 +19,7 @@ export default function KeySourceConversion() {
   return (
     <>
       <div className="flex justify-between">
-        <h2 className="text-2xl font-bold">Key Source Conversion</h2>
+        <h2 className="text-xl font-bold">Key Source Conversion</h2>
         <div className="flex gap-4">
           <CustomDatePicker
             selected={selectedDate}
@@ -27,13 +27,12 @@ export default function KeySourceConversion() {
             showMonthYearPicker={true}
             dateFormat="MM/yyyy"
             maxDate={dayjs()}
-            clearable={true}
           />
         </div>
       </div>
 
       <div className="flex gap-4 overflow-x-auto pb-2">
-        {isFetching && data?.data
+        {!isFetching && data?.data
           ? Object.entries(data?.data).map(([key, value], idx) => (
               <Card key={idx} className="min-w-[320px] flex-shrink-0">
                 <CardHeader>

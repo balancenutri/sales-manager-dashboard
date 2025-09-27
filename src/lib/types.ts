@@ -262,6 +262,76 @@ export interface LeadManagementResponse {
     data: LeadManagement;
     totalCount: number;
 }
+export interface UnconvertedLeadResponse {
+    status: string;
+    message: string;
+    data: {
+        hot: number;
+        warm: number;
+        cold: number;
+    };
+    totalCount: number;
+}
+export interface ConsultationPendingResponse {
+    status: string;
+    message: string;
+    data: {
+        to_engage: number;
+        connected: number
+    };
+    totalCount: number;
+}
+export interface LeadFunnelResponse {
+    status: string;
+    message: string;
+    data: {
+        monthly: {
+            "counsellor_lead_target_units": number;
+            "mentor_lead_target_units": number;
+            "counsellor_todays_lead_target_units": number;
+            "mentor_todays_lead_target_units": number;
+        }
+    };
+    totalCount: number;
+}
+export interface QuickSalesSnapshotResponse {
+    status: string;
+    message: string;
+    data: {
+        monthly: {
+            fl: number;
+            ol: number;
+            consultations: number;
+            sales: number;
+        };
+        yesterday: {
+            fl: number;
+            ol: number;
+            consultations: number;
+            sales: number;
+        };
+    };
+    totalCount: number;
+}
+
+export type SalesOpportunities = {
+    status: string;
+    message: string;
+    data: {
+        checkout_visit: Record<string, number>;
+        "payment_details_shared(to_pay)": Record<string, number>;
+        "payment_details_shared(pay_later)": Record<string, number>;
+        leads_with_double_discount: Record<string, number>;
+        referrals: Record<string, number>;
+        leads_with_free_course: Record<string, number>;
+        leads_with_GO_pro: Record<string, number>;
+        good_weight_loss: Record<string, number>;
+        milestone: Record<string, number>;
+        good_consultation_feedback: Record<string, number>;
+    };
+    hide_columns: string[];
+};
+
 export interface OcManagementResponse {
     status: string;
     message: string;
@@ -775,7 +845,14 @@ export type ProjectionType = {
         units: number;
         amount: number;
     };
+} & {
+    page_visits: {
+        total_page_visits: number;
+        total_checkout_visits: number;
+        total_checkout_amount: number;
+    };
 };
+
 
 export interface SalesProjectionResponse {
     status: string;

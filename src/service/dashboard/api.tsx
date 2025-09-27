@@ -36,6 +36,11 @@ import {
   type CounsellorDataResponse,
   type PitchedHistoryResponse,
   type OcManagementResponse,
+  type ConsultationPendingResponse,
+  type UnconvertedLeadResponse,
+  type QuickSalesSnapshotResponse,
+  type SalesOpportunities,
+  type LeadFunnelResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -55,6 +60,55 @@ export const dashboardApi = commonAPi.injectEndpoints({
         url: `/sales/overview/lead-management`,
         method: "POST",
         body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getOldLeadManagement: builder.query<
+      LeadManagementResponse,
+      {
+        start_date?: string;
+        end_date?: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/sales/overview/old-lead-management`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getLeadFunnel: builder.query<LeadFunnelResponse, void>({
+      query: () => ({
+        url: `/sales/overview/lead-funnel`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getConsultationPending: builder.query<ConsultationPendingResponse, void>({
+      query: () => ({
+        url: `/sales/overview/consultation-pending`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getQuickSalesSnapshot: builder.query<QuickSalesSnapshotResponse, void>({
+      query: () => ({
+        url: `/sales/overview/quick-sales-snapshot`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getSolidSalesOpportunity: builder.query<SalesOpportunities, void>({
+      query: () => ({
+        url: `/sales/overview/solid-sales-opportunities`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getUnconvertedLeads: builder.query<UnconvertedLeadResponse, void>({
+      query: () => ({
+        url: `/sales/overview/unconverted-leads`,
+        method: "POST",
       }),
       providesTags: ["Common"],
     }),
@@ -532,6 +586,12 @@ export const dashboardApi = commonAPi.injectEndpoints({
 
 export const {
   useGetLeadManagementQuery,
+  useGetOldLeadManagementQuery,
+  useGetConsultationPendingQuery,
+  useGetQuickSalesSnapshotQuery,
+  useGetLeadFunnelQuery,
+  useGetSolidSalesOpportunityQuery,
+  useGetUnconvertedLeadsQuery,
   useGetOcManagementQuery,
   useGetAssignedLeadPerformanceQuery,
   useGetSalesBreakDownByStackQuery,

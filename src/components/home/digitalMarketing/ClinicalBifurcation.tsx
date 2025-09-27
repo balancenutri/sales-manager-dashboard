@@ -12,7 +12,6 @@ export type ClinicalConditionData = {
 
 export type ClinicalConditionResponse = {
   data: ClinicalConditionData;
-  
 };
 
 export default function ClinicalBifurcation() {
@@ -27,7 +26,7 @@ export default function ClinicalBifurcation() {
   return (
     <div>
       <div className="space-y-6 mt-8">
-        <h2 className="text-2xl font-bold mb-10">Clinical Conditions</h2>
+        <h2 className="text-xl font-bold mb-10">Clinical Conditions</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-6 gap-y-10">
           {isLoading || isDataEmpty
             ? skeletonArray.map((_, index: number) => (

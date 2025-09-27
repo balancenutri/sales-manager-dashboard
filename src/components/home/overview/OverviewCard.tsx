@@ -1,31 +1,30 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { keyString } from "@/lib/utils";
 
 type OverviewCardProps = {
-  title: string;
+  title?: string;
   data: { [key: string]: number } | undefined;
   fetching: boolean;
-  selected: "lead" | "oc";
-  setSelected: React.Dispatch<React.SetStateAction<"lead" | "oc">>;
+  // selected: "lead" | "oc";
+  // setSelected: React.Dispatch<React.SetStateAction<"lead" | "oc">>;
 };
 
 export default function OverviewCard({
   title,
   data,
   fetching,
-  selected,
-  setSelected,
-}: OverviewCardProps) {
+}: // selected,
+// setSelected,
+OverviewCardProps) {
   return (
     <Card className="relative mt-4">
       <CardHeader className="flex justify-between">
         <CardTitle className="text-base font-medium flex justify-between items-center w-full">
-          <span className="block text-nowrap px-3 py-2 rounded-md bg-orange-100 text-orange-800">
+          {title && <span className="block text-nowrap px-3 py-2 rounded-md bg-orange-100 text-orange-800">
             {title}
-          </span>
-          <Tabs defaultValue={selected} className="space-y-6">
+          </span>}
+          {/* <Tabs defaultValue={selected} className="space-y-6">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger
                 className="cursor-pointer"
@@ -42,7 +41,7 @@ export default function OverviewCard({
                 OC
               </TabsTrigger>
             </TabsList>
-          </Tabs>
+          </Tabs> */}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">

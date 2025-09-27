@@ -41,11 +41,11 @@ export default function RevenueCard() {
       {/* Key Metrics */}
       {/* Combined Sales & Revenue Card */}
       <Card className="hover:shadow-md transition-shadow h-full">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
-            Overall Sales Performance (Lead & OC)
-          </CardTitle>
+        <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-2">
           <Target className="h-4 w-4 text-muted-foreground" />
+          <CardTitle className="text-sm font-medium">
+            Overall Sales Performance (Fresh & Old Lead)
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <TooltipProvider>
@@ -60,7 +60,7 @@ export default function RevenueCard() {
                       Sales Closed
                     </p>
                     {salesPerformanceData?.data ? (
-                      <p className="text-2xl font-bold">
+                      <p className="text-xl font-bold">
                         {salesPerformanceData?.data.sales_closed?.total}
                       </p>
                     ) : (

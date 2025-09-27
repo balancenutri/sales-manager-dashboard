@@ -1,5 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Users } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 import { useGetSalesTriggerQuery } from "@/service/dashboard/api";
 import { keyString } from "@/lib/utils";
@@ -25,7 +24,7 @@ export default function StatusWiseMetrics() {
             ? "To Engage"
             : type === "downgrade"
             ? "Downgrades"
-            : `${type} Trigger`}
+            : `${type} `}
         </h4>
       </div>
 
@@ -38,9 +37,7 @@ export default function StatusWiseMetrics() {
                   key={key}
                   className="flex items-center justify-between py-1 px-2 bg-blue-50 rounded text-sm"
                 >
-                  <span className="font-medium">
-                    {keyString(key)}
-                  </span>
+                  <span className="font-medium">{keyString(key)}</span>
                   <span className="font-semibold text-blue-600">{value}</span>
                 </div>
               )
@@ -51,15 +48,11 @@ export default function StatusWiseMetrics() {
 
   return (
     <Card className="w-full ">
-      <CardContent className="px-3 py-3">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center space-x-2">
-            <Users className="h-4 w-4 text-blue-600" />
-            <h3 className="text-sm font-semibold">Sales Trigger</h3>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-4 gap-2">
+      <CardHeader>
+        <CardTitle>Consultation Done (Unconverted)</CardTitle>
+      </CardHeader>
+      <CardContent className="px-3">
+        <div className="grid grid-cols-3 gap-2">
           <div
             className="relative"
             onMouseEnter={() => setHoveredSection("hot")}
@@ -68,9 +61,9 @@ export default function StatusWiseMetrics() {
             <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-lg p-2 border border-red-200 dark:border-red-800 hover:shadow-md transition-all duration-300 cursor-pointer">
               <div className="text-center">
                 <h4 className="font-medium text-base text-gray-800 dark:text-gray-200">
-                  Hot Trigger
+                  Hot
                 </h4>
-                <div className="text-xl font-bold text-red-600">
+                <div className="text-xl font-bold">
                   {data?.data?.hot_triggers?.total}
                 </div>
               </div>
@@ -85,12 +78,12 @@ export default function StatusWiseMetrics() {
             onMouseEnter={() => setHoveredSection("warm")}
             onMouseLeave={() => setHoveredSection(null)}
           >
-            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg p-2 border border-yellow-200 dark:border-yellow-800 hover:shadow-md transition-all duration-300 cursor-pointer">
+            <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg p-2 border border-yellow-200 dark:border-yellow-800 hover:shadow-md transition-all duration-300 cursor-pointer">
               <div className="text-center">
                 <h4 className="font-medium text-base text-gray-800 dark:text-gray-200">
-                  Warm Trigger
+                  Warm
                 </h4>
-                <div className="text-xl font-bold text-yellow-600">
+                <div className="text-xl font-bold">
                   {data?.data?.warm_triggers?.total}
                 </div>
               </div>
@@ -105,41 +98,14 @@ export default function StatusWiseMetrics() {
             onMouseEnter={() => setHoveredSection("engage")}
             onMouseLeave={() => setHoveredSection(null)}
           >
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-2 border border-green-200 dark:border-green-800 hover:shadow-md transition-all duration-300 cursor-pointer">
+            <div className="bg-gradient-to-r from-red-50 to-orange-50  dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-2 border border-green-200 dark:border-green-800 hover:shadow-md transition-all duration-300 cursor-pointer">
               <div className="text-center">
                 <h4 className="font-medium text-base text-gray-800 dark:text-gray-200">
-                  To Engage
+                  Cold
                 </h4>
-                <div className="text-xl font-bold text-green-600">
-                  {data?.data?.to_engage}
-                </div>
+                <div className="text-xl font-bold">{data?.data?.to_engage}</div>
               </div>
             </div>
-          </div>
-
-          <div
-            className="relative"
-            onMouseEnter={() => setHoveredSection("downgrade")}
-            onMouseLeave={() => setHoveredSection(null)}
-          >
-            <div className="bg-gradient-to-r from-gray-50 to-slate-50 dark:from-gray-900/20 dark:to-slate-900/20 rounded-lg p-2 border border-gray-200 dark:border-gray-800 hover:shadow-md transition-all duration-300 cursor-pointer">
-              <div className="text-center">
-                <h4 className="font-medium text-base text-gray-800 dark:text-gray-200">
-                  Downgrades
-                </h4>
-                <div className="text-xl font-bold text-gray-600">
-                  {(data?.data?.downgrade_counts?.hot_to_warm || 0) +
-                    (data?.data?.downgrade_counts?.hot_to_cold || 0) +
-                    (data?.data?.downgrade_counts?.warm_to_cold || 0)}
-                </div>
-              </div>
-            </div>
-            {hoveredSection === "downgrade" && (
-              <DetailedInfo
-                type="downgrade"
-                leadData={data?.data?.downgrade_counts}
-              />
-            )}
           </div>
         </div>
       </CardContent>

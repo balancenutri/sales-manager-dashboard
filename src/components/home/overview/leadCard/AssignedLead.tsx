@@ -138,15 +138,15 @@ export default function AssignedLead({
         <div className="grid grid-cols-3 gap-4 text-sm">
           <div className="text-center">
             <p className="text-muted-foreground">Total Leads Assigned</p>
-            <p className="text-2xl font-bold">{total.totalLeadsAssigned}</p>
+            <p className="text-xl font-bold">{total.totalLeadsAssigned}</p>
           </div>
           <div className="text-center">
             <p className="text-muted-foreground">Total Consultations</p>
-            <p className="text-2xl font-bold">{total.totalConsultations}</p>
+            <p className="text-xl font-bold">{total.totalConsultations}</p>
           </div>
           <div className="text-center">
             <p className="text-muted-foreground">Total Sales</p>
-            <p className="text-2xl font-bold">{total.totalSales}</p>
+            <p className="text-xl font-bold">{total.totalSales}</p>
           </div>
         </div>
       </div>

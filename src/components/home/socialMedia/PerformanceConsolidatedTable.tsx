@@ -63,7 +63,7 @@ export default function PerformanceConsolidatedTable({
     // <div>
     <div className={`space-y-6 ${header ? " mt-8" : ""}`}>
       {header && (
-        <h2 className="text-2xl font-bold">Consolidated Team Performance</h2>
+        <h2 className="text-xl font-bold">Consolidated Team Performance</h2>
       )}
       <Card
         className={!header ? "hover:shadow-md transition-shadow h-full" : ""}
@@ -79,7 +79,9 @@ export default function PerformanceConsolidatedTable({
                 <TableHead>Team / Mentor</TableHead>
                 <TableHead>Leads Assigned</TableHead>
                 <TableHead>Consultations Done</TableHead>
-                <TableHead>Sales Done <br /> (Units)</TableHead>
+                <TableHead>
+                  Sales Done <br /> (Units)
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

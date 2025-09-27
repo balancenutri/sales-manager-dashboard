@@ -54,7 +54,7 @@ export default function CounsellorSocialMediaPerformance() {
   return (
     <div>
       <div className="space-y-6 mt-8">
-        <h2 className="text-2xl font-bold">
+        <h2 className="text-xl font-bold">
           Counsellor Social Media Performance
         </h2>
         <Card>
@@ -72,7 +72,9 @@ export default function CounsellorSocialMediaPerformance() {
                   <TableHead>Counsellor</TableHead>
                   <TableHead>Social Leads Assigned</TableHead>
                   <TableHead>Social Consultations</TableHead>
-                  <TableHead>Social Sales <br /> (Units)</TableHead>
+                  <TableHead>
+                    Social Sales <br /> (Units)
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -107,7 +109,7 @@ export default function CounsellorSocialMediaPerformance() {
                               {sales.social_consultations}
                             </TableCell>
                             <TableCell className="font-semibold">
-                              {sales.social_sales} 
+                              {sales.social_sales}
                             </TableCell>
                           </TableRow>
                         );

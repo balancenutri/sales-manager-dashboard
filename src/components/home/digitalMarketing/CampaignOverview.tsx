@@ -45,7 +45,7 @@ export default function CampaignOverview() {
     <div>
       <div className="space-y-6 mt-8">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Campaigns Overview</h2>
+          <h2 className="text-xl font-bold">Campaigns Overview</h2>
           {/* <div className="flex items-center space-x-2">
             <Button variant="outline">
               <Filter className="mr-2 h-4 w-4" />

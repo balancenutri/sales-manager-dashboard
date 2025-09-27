@@ -20,12 +20,15 @@ import CampaignOverview from "@/components/home/digitalMarketing/CampaignOvervie
 import AppCount from "@/components/home/appAnalysis/AppCount";
 import LeadOcBifurcation from "@/components/home/digitalMarketing/LeadOcBifurcation";
 import NotificationEngagments from "@/components/home/appAnalysis/NotificationEngagements";
-import OcCard from "@/components/home/overview/OcCard";
+// import OcCard from "@/components/home/overview/OcCard";
 // import KeyMetricsBar from "@/components/home/overview/KeyMetrics";
-import StatusWiseMetrics from "@/components/home/overview/keyMetrics/StatusWise";
+// import StatusWiseMetrics from "@/components/home/overview/keyMetrics/StatusWise";
 import SalesProjection from "@/components/home/overview/keyMetrics/SalesProjection";
 import KeySourceConversion from "@/components/home/overview/KeySourceConversion";
 import CounsellorDigitalMarketingPerfotmance from "@/components/home/digitalMarketing/CounsellorDigitalMarketingPerfotmance";
+import KeySalesAlert from "@/components/home/overview/KeySalesAlert";
+import SalesSnapshots from "@/components/home/quickSnapshot/SalesSnapshots";
+import LeadPosition from "@/components/home/overview/leadCard/LeadPosition";
 // import BenchmarkAndAvg from "@/components/home/overview/BenchmarkAndAvg";
 
 export default function Home() {
@@ -54,10 +57,19 @@ export default function Home() {
           <TabsContent value="overview" className="space-y-6">
             {/* Key Metrics */}
             {/* <BenchmarkAndAvg /> */}
+            <h2 className="text-xl font-bold">Quick Sales Snapshot</h2>
+            <SalesSnapshots />
+            {/* <h2 className="text-xl font-bold"></h2> */}
+            <LeadPosition />
+            <h2 className="text-xl font-bold">Key Sales Alerts</h2>
+
+            <KeySalesAlert />
+            <h2 className="text-xl font-bold">Lead Management</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {/* Combined Leads Card */}
-              <LeadCard />
-              <OcCard />
+              <LeadCard type="new" />
+              <LeadCard type="old" />
+              {/* <OcCard /> */}
 
               {/* Combined Sales & Revenue Card */}
               <RevenueCard />
@@ -69,11 +81,11 @@ export default function Home() {
                 header={false}
               /> */}
             </div>
-            <h2 className="text-2xl font-bold">Lead Key Metrics</h2>
-            <div className="grid lg:grid-cols-2 grid-cols-1 gap-6">
-              <StatusWiseMetrics />
-              <SalesProjection />
-            </div>
+            <h2 className="text-xl font-bold">Sales Projection (MTD)</h2>
+            {/* <div className="grid lg:grid-cols-2 grid-cols-1 gap-6"> */}
+            {/* <StatusWiseMetrics /> */}
+            {/* </div> */}
+            <SalesProjection />
             <KeySourceConversion />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Top Performers */}
@@ -123,7 +135,7 @@ export default function Home() {
           <TabsContent value="app-analytics" className="space-y-6">
             <AppDownloadCount />
             <AppCount />
-            <h2 className="text-2xl font-bold">Content Engagement</h2>
+            <h2 className="text-xl font-bold">Content Engagement</h2>
 
             <div className="grid grid-cols-3 gap-6">
               <KeyEngagementMetrix />
