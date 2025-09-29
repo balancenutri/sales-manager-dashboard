@@ -16,30 +16,9 @@ export default function SalesProjection() {
   return (
     <Card className="w-full">
       <CardContent className="px-6">
-        <div className="grid grid-cols-7 gap-6">
+        <div className="grid grid-cols-6 gap-6">
           {/* Total Pitched */}
-          <div>
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-md transition-all cursor-pointer">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div>
-                    <h4 className="font-semibold text-gray-800">
-                      Total Pitched
-                    </h4>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-lg font-bold text-blue-600">
-                    {data?.data.total_pitched.units}
-                  </div>
-                  <div className="text-sm text-black font-semibold">
-                    ₹{data?.data.total_pitched.amount.toLocaleString("en-IN")}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
+          <div onClick={() => setOpenDialog(true)}>
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-md transition-all cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
@@ -49,10 +28,10 @@ export default function SalesProjection() {
                 </div>
                 <div className="text-right">
                   <div className="text-lg font-bold text-blue-600">
-                    {data?.data.total_pitched.units}
+                    {data?.data.link_shared.units}
                   </div>
                   <div className="text-sm text-green-600 font-semibold">
-                    ₹{data?.data.total_pitched.amount.toLocaleString("en-IN")}
+                    ₹{data?.data.link_shared.amount.toLocaleString("en-IN")}
                   </div>
                 </div>
               </div>
@@ -68,10 +47,10 @@ export default function SalesProjection() {
                 </div>
                 <div className="text-right">
                   <div className="text-lg font-bold text-blue-600">
-                    {data?.data.total_pitched.units}
+                    {data?.data.rate_shared.units}
                   </div>
                   <div className="text-sm text-black font-semibold">
-                    ₹{data?.data.total_pitched.amount.toLocaleString("en-IN")}
+                    ₹{data?.data.rate_shared.amount.toLocaleString("en-IN")}
                   </div>
                 </div>
               </div>
@@ -129,7 +108,7 @@ export default function SalesProjection() {
                 </div>
                 <div className="text-right">
                   <div className="text-xl font-bold text-blue-600">
-                    {data?.data.page_visits.total_page_visits }
+                    {data?.data.page_visits.total_page_visits}
                   </div>
                 </div>
               </div>

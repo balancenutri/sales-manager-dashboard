@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/table";
 import {
   useGetLeadFunnelQuery,
-//   useGetLeadManagementQuery,
-//   useGetOldLeadManagementQuery,
+  useGetLeadManagementQuery,
+  useGetOldLeadManagementQuery,
 } from "@/service/dashboard/api";
 import dayjs from "dayjs";
 
@@ -20,13 +20,19 @@ export default function LeadPosition() {
 
   const { data } = useGetLeadFunnelQuery();
 
+  const parseLeadValue = (val?: string) => {
+    if (!val) return [0, 0];
+    const [today, mtd] = val.split("|").map((v) => parseInt(v.trim(), 10));
+    return [isNaN(today) ? 0 : today, isNaN(mtd) ? 0 : mtd];
+  };
+
   const leadData = data?.data;
 
-//   const { data: leadManagementData } = useGetLeadManagementQuery();
-//   const { data: oldLeadManagementData } = useGetOldLeadManagementQuery();
+  const { data: leadManagementData } = useGetLeadManagementQuery({});
+  const { data: oldLeadManagementData } = useGetOldLeadManagementQuery({});
 
-//   const newLead = leadManagementData?.data;
-//   const oldLead = oldLeadManagementData?.data;
+  const newLead = leadManagementData?.data;
+  const oldLead = oldLeadManagementData?.data;
 
   const rows = [
     {
@@ -34,16 +40,38 @@ export default function LeadPosition() {
       lead: {
         today: {
           req: 20,
-          alloted: 4,
+          alloted:
+            parseLeadValue(
+              newLead?.assigned?.total_assigned_to_mentors || ""
+            )[0] +
+            parseLeadValue(
+              oldLead?.assigned?.total_assigned_to_mentors || ""
+            )[0],
         },
-        mtd: { req: 20 * WORKING_DAYS, alloted: 120 },
+        mtd: {
+          req: 20 * WORKING_DAYS,
+          alloted:
+            parseLeadValue(
+              newLead?.assigned?.total_assigned_to_mentors || ""
+            )[1] +
+            parseLeadValue(
+              oldLead?.assigned?.total_assigned_to_mentors || ""
+            )[1],
+        },
       },
       consultation: {
         today: {
           req: 10,
-          alloted: 5,
+          alloted:
+            parseLeadValue(newLead?.consultation_done || "")[0] +
+            parseLeadValue(oldLead?.consultation_done || "")[0],
         },
-        mtd: { req: 10 * WORKING_DAYS, alloted: 260 },
+        mtd: {
+          req: 10 * WORKING_DAYS,
+          alloted:
+            parseLeadValue(newLead?.consultation_done || "")[1] +
+            parseLeadValue(oldLead?.consultation_done || "")[1],
+        },
       },
     },
     {
@@ -51,16 +79,34 @@ export default function LeadPosition() {
       lead: {
         today: {
           req: leadData?.monthly?.counsellor_todays_lead_target_units,
-          alloted: 33,
+          alloted:
+            parseLeadValue(
+              newLead?.assigned?.total_assigned_to_counsellors || ""
+            )[0] +
+            parseLeadValue(
+              oldLead?.assigned?.total_assigned_to_counsellors || ""
+            )[0],
         },
         mtd: {
           req: leadData?.monthly?.counsellor_lead_target_units,
-          alloted: 140,
+          alloted:
+            parseLeadValue(newLead?.assigned?.total_assigned_to_counsellors || "")[1] +
+            parseLeadValue(oldLead?.assigned?.total_assigned_to_counsellors || "")[1],
         },
       },
       consultation: {
-        today: { req: 10, alloted: 6 },
-        mtd: { req: 10 * WORKING_DAYS, alloted: 250 },
+        today: {
+          req: 10,
+          alloted:
+            parseLeadValue(newLead?.consultation_done || "")[0] +
+            parseLeadValue(oldLead?.consultation_done || "")[0],
+        },
+        mtd: {
+          req: 10 * WORKING_DAYS,
+          alloted:
+            parseLeadValue(newLead?.consultation_done || "")[1] +
+            parseLeadValue(oldLead?.consultation_done || "")[1],
+        },
       },
     },
   ];
