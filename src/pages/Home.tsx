@@ -28,7 +28,7 @@ import KeySourceConversion from "@/components/home/overview/KeySourceConversion"
 import CounsellorDigitalMarketingPerfotmance from "@/components/home/digitalMarketing/CounsellorDigitalMarketingPerfotmance";
 import KeySalesAlert from "@/components/home/overview/KeySalesAlert";
 import SalesSnapshots from "@/components/home/quickSnapshot/SalesSnapshots";
-import LeadPosition from "@/components/home/overview/leadCard/LeadPosition";
+// import LeadPosition from "@/components/home/overview/leadCard/LeadPosition";
 // import BenchmarkAndAvg from "@/components/home/overview/BenchmarkAndAvg";
 
 export default function Home() {
@@ -60,7 +60,7 @@ export default function Home() {
             <h2 className="text-xl font-bold">Quick Sales Snapshot</h2>
             <SalesSnapshots />
             {/* <h2 className="text-xl font-bold"></h2> */}
-            <LeadPosition />
+            {/* <LeadPosition /> */}
             <h2 className="text-xl font-bold">Key Sales Alerts</h2>
 
             <KeySalesAlert />
