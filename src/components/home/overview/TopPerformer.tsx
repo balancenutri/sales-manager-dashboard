@@ -14,10 +14,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TableCell, TableRow } from "@/components/ui/table";
-import { useGetTopPerformersQuery } from "@/service/dashboard/api";
+import { useGetCounsellorPerformanceQuery } from "@/service/dashboard/api";
 import { useState } from "react";
 import CounsellorCard from "../cards/CounsellorCard";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 export default function TopPerformer({
   title,
   subTitle,
@@ -25,26 +31,52 @@ export default function TopPerformer({
   title: string;
   subTitle: string;
 }) {
-  const { data, isFetching } = useGetTopPerformersQuery();
+  const [openModal, setOpenModal] = useState<null | number>(null);
+  const [selected, setSelected] = useState<
+    "sales" | "conversion_rate" | "avg_per_unit"
+  >("conversion_rate");
 
-  const [openModal, setOpenModal] = useState(false);
+  const { data, isFetching } = useGetCounsellorPerformanceQuery({
+    sort_by: selected,
+    order: title === "Top Performers" ? "desc" : "asc",
+  });
+  console.log({ selected, setSelected });
 
   const renderSkeletonRows = () => {
     return Array.from({ length: 3 }).map((_, i) => (
-      <TableRow key={i}>
-        {Array.from({ length: 4 }).map((_, j) => (
-          <TableCell key={j}>
-            <Skeleton className="h-4 w-32" />
-          </TableCell>
-        ))}
-      </TableRow>
+      <div className="flex items-center space-x-4" key={i}>
+        <Skeleton className="h-12 w-12 rounded-full" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-36" />
+          <Skeleton className="h-4 w-44" />
+        </div>
+      </div>
     ));
   };
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{subTitle}</CardDescription>
+        <div className="flex justify-between items-center">
+          <div className="">
+            <CardTitle>{title}</CardTitle>
+            <CardDescription>{subTitle}</CardDescription>
+          </div>
+          <Select
+            onValueChange={(val: string) =>
+              setSelected(val as "sales" | "conversion_rate" | "avg_per_unit")
+            }
+            value={selected}
+          >
+            <SelectTrigger className="w-32">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="conversion_rate">Conversion</SelectItem>
+              <SelectItem value="sales">Revenue</SelectItem>
+              <SelectItem value="avg_per_unit">Avg. Per Unit Sale</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-4 max-h-[60vh]">
@@ -55,14 +87,10 @@ export default function TopPerformer({
                   index < 5 && (
                     <div
                       key={index}
-                      className="flex items-center space-x-4"
-                      onClick={() => setOpenModal(true)}
+                      className="flex items-center space-x-4 cursor-pointer"
+                      onClick={() => setOpenModal(sales.id)}
                     >
-                      {/* <div className="flex items-center justify-center w-8 h-8 rounded-full bg-teal-100 text-teal-800 font-bold text-sm">
-                  {index + 1}
-                </div> */}
                       <Avatar className="h-10 w-10">
-                        {/* <AvatarImage src={counsellor.avatar || "/placeholder.svg"} /> */}
                         <AvatarFallback>
                           {counsellor
                             .split(" ")
@@ -75,6 +103,9 @@ export default function TopPerformer({
                         <p className="text-xs text-muted-foreground">
                           {sales.conversion_rate}% conversion rate
                         </p>
+                        {/* <p className="text-xs text-muted-foreground">
+                          {sales.avg_per_unit}% average per unit sale
+                        </p> */}
                       </div>
                       <Badge variant="secondary">₹{sales.sales}</Badge>
                     </div>
@@ -83,7 +114,7 @@ export default function TopPerformer({
         </div>
       </CardContent>
 
-      <Dialog open={openModal} onOpenChange={setOpenModal}>
+      <Dialog open={!!openModal} onOpenChange={() => setOpenModal(null)}>
         <DialogContent
           onInteractOutside={(e: React.MouseEvent | Event) =>
             e.preventDefault()
@@ -92,7 +123,7 @@ export default function TopPerformer({
           <DialogHeader>
             <DialogTitle>Counsellor Details</DialogTitle>
           </DialogHeader>
-          <CounsellorCard />
+          {openModal && <CounsellorCard counsellorId={openModal}/>}
         </DialogContent>
       </Dialog>
     </Card>

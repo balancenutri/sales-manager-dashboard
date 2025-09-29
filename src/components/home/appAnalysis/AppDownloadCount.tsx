@@ -10,7 +10,7 @@ type DeviceType = "" | "android" | "ios";
 export default function AppDownloadCount() {
   const [selected, setSelected] = useState<DeviceType>("");
   const { data } = useGetAppDownloadsCountQuery({
-    filter: selected == "" ? undefined : selected
+    filter: selected == "" ? undefined : selected,
   });
 
   const skeletonArray = Array(5).fill(null);
@@ -18,7 +18,7 @@ export default function AppDownloadCount() {
   return (
     <div>
       <div className="flex justify-between items-center space-y-6">
-        <h2 className="text-2xl font-bold my-4">App Download Counts</h2>
+        <h2 className="text-xl font-bold my-4">App Download Counts</h2>
         <Tabs defaultValue={selected} className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger
@@ -50,7 +50,10 @@ export default function AppDownloadCount() {
         <div className="flex justify-between items-center px-4 -my-3">
           {!data?.data
             ? skeletonArray.map((_, index: number) => (
-                <div className="flex items-center justify-between mt-1 gap-2" key={index}>
+                <div
+                  className="flex items-center justify-between mt-1 gap-2"
+                  key={index}
+                >
                   <Skeleton className="h-4 w-26 rounded-md" />
                   <Skeleton className="h-4 w-10 rounded-md" />
                 </div>

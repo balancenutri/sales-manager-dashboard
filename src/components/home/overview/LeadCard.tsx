@@ -10,7 +10,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { DialogDescription } from "@radix-ui/react-dialog";
-import { useGetLeadManagementQuery } from "@/service/dashboard/api";
+import {
+  useGetLeadManagementQuery,
+  useGetOldLeadManagementQuery,
+} from "@/service/dashboard/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import AssignedLead from "./leadCard/AssignedLead";
 import {
@@ -26,17 +29,18 @@ import {
 import CustomDatePicker from "@/components/ui/custom-date-picker";
 import dayjs from "dayjs";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import LeadPosition from "./leadCard/LeadPosition";
 
-export default function LeadCard() {
+export default function LeadCard({ type }: { type: "old" | "new" }) {
   const [modalType, setModalType] = useState<
-    "assigned" | "unassigned" | "sales" | "revenue" | "team" | null
+    "assigned" | "unassigned" | "position" | "revenue" | "team" | null
   >(null);
   const [showLeadsModal, setShowLeadsModal] = useState<boolean>(false);
   const [selected, setSelected] = useState<"counsellor_data" | "mentor_data">(
     "counsellor_data"
   );
 
-  const handleLeadsClick = (type: "assigned" | "unassigned") => {
+  const handleLeadsClick = (type: "assigned" | "unassigned" | "position") => {
     setModalType(type);
     setShowLeadsModal(true);
   };
@@ -48,27 +52,45 @@ export default function LeadCard() {
           start_date: dayjs(selectedDate).startOf("month").format("YYYY-MM-DD"),
           end_date: dayjs(selectedDate).endOf("month").format("YYYY-MM-DD"),
         }
-      : {}
+      : {},
+    {
+      skip: type === "old",
+    }
+  );
+  const { data: oldLeadManagementData } = useGetOldLeadManagementQuery(
+    selectedDate
+      ? {
+          start_date: dayjs(selectedDate).startOf("month").format("YYYY-MM-DD"),
+          end_date: dayjs(selectedDate).endOf("month").format("YYYY-MM-DD"),
+        }
+      : {},
+    {
+      skip: type === "new",
+    }
   );
 
-  const leadData = leadManagementData?.data;
+  const leadData =
+    type == "new" ? leadManagementData?.data : oldLeadManagementData?.data;
 
   return (
     <div className="space-y-6">
       <Card className="cursor-pointer hover:shadow-md transition-shadow h-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             <Users className="h-4 w-4 text-muted-foreground" />
             <CardTitle className="text-sm font-medium">
-              Lead Management
+              {type == "new" ? "Fresh Leads" : "Old Leads"}
             </CardTitle>
+
           </div>
+
           <CustomDatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
             showMonthYearPicker={true}
             dateFormat="MM/yyyy"
             maxDate={dayjs()}
+            clearable={true}
           />
         </CardHeader>
         <CardContent className="space-y-3">
@@ -99,7 +121,7 @@ export default function LeadCard() {
                     <ArrowUp className="h-4 w-4 text-green-500" />
                     <p className="text-sm">Unassigned</p>
                   </div>
-                  {leadManagementData?.data ? (
+                  {leadData ? (
                     <p className="text-xl font-bold text-green-700">
                       {leadData?.unassigned.total_unassigned_leads}
                     </p>
@@ -155,7 +177,7 @@ export default function LeadCard() {
                     <ArrowUp className="h-4 w-4 text-green-500" />
                     <p className="text-sm">Assigned</p>
                   </div>
-                  {leadManagementData?.data ? (
+                  {leadData ? (
                     <p className="text-xl font-bold text-green-700">
                       {leadData?.assigned.total_assigned_leads}
                     </p>
@@ -202,7 +224,7 @@ export default function LeadCard() {
               <ArrowUp className="h-4 w-4 text-green-500" />
               <p className="text-sm">Consultation Done</p>
             </div>
-            {leadManagementData?.data ? (
+            {leadData ? (
               <p className="text-xl font-bold text-green-700">
                 {leadData?.consultation_done}
               </p>
@@ -218,7 +240,7 @@ export default function LeadCard() {
               <IndianRupee className="h-4 w-4 text-green-500" />
               <p className="text-sm">Sales</p>
             </div>
-            {leadManagementData?.data ? (
+            {leadData ? (
               <p className="text-xl font-bold text-green-700">
                 {leadData?.sales}
               </p>
@@ -230,47 +252,59 @@ export default function LeadCard() {
       </Card>
       <Dialog open={showLeadsModal} onOpenChange={setShowLeadsModal}>
         <DialogContent
-          className={`${modalType === "assigned" ? "min-w-6xl" : ""}`}
+          className={`${
+            modalType === "assigned"
+              ? "min-w-6xl"
+              : modalType === "position"
+              ? "min-w-2xl"
+              : ""
+          }`}
         >
           <DialogHeader>
             <div className="flex justify-between items-end">
               <div className="">
                 <DialogTitle>
                   {modalType === "assigned"
-                    ? "Assigned Leads - Counsellor Performance"
-                    : "Unassigned Leads - Source Breakdown"}
+                    ? "Assigned Leads Performance"
+                    : modalType === "unassigned"
+                    ? "Unassigned Leads - Source Breakdown"
+                    : "Lead Position"}
                 </DialogTitle>
                 <DialogDescription>
                   {modalType === "assigned"
                     ? "Detailed performance metrics for each counsellor including consultation and sales ratios"
-                    : "Source-wise distribution of unassigned leads"}
+                    : modalType === "unassigned"
+                    ? "Source-wise distribution of unassigned leads"
+                    : ""}
                 </DialogDescription>
               </div>
 
-              {modalType === "assigned" && <Tabs defaultValue={selected} className="space-y-6">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger
-                    className="cursor-pointer"
-                    value={"android"}
-                    onClick={() => setSelected("counsellor_data")}
-                  >
-                    Counsellor
-                  </TabsTrigger>
-                  <TabsTrigger
-                    className="cursor-pointer"
-                    value="ios"
-                    onClick={() => setSelected("mentor_data")}
-                  >
-                    Mentor
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>}
+              {modalType === "assigned" && (
+                <Tabs defaultValue={selected} className="space-y-6">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger
+                      className="cursor-pointer"
+                      value={"android"}
+                      onClick={() => setSelected("counsellor_data")}
+                    >
+                      Counsellor
+                    </TabsTrigger>
+                    <TabsTrigger
+                      className="cursor-pointer"
+                      value="ios"
+                      onClick={() => setSelected("mentor_data")}
+                    >
+                      Mentor
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              )}
             </div>
           </DialogHeader>
 
           {modalType === "assigned" ? (
             <AssignedLead selected={selected} selectedDate={selectedDate} />
-          ) : (
+          ) : modalType === "unassigned" ? (
             <div className="space-y-4">
               {Object.entries(mockData.leadsSources.unassigned).map(
                 ([source, count]) => {
@@ -308,6 +342,8 @@ export default function LeadCard() {
                 </div>
               </div>
             </div>
+          ) : (
+            <LeadPosition />
           )}
         </DialogContent>
       </Dialog>

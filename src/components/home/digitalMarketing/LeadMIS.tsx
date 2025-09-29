@@ -238,7 +238,7 @@ export default function LeadMIS() {
     <div className="space-y-6 mt-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">MIS for Retargeting</h2>
+          <h2 className="text-xl font-bold">MIS for Retargeting</h2>
           <p className="text-muted-foreground">
             {getActiveFiltersCount() > 0 && (
               <span className="inline-flex items-center gap-1">
@@ -935,7 +935,7 @@ export default function LeadMIS() {
 //     <div className="space-y-6 mt-8">
 //       <div className="flex items-center justify-between">
 //         <div>
-//           <h2 className="text-2xl font-bold">Lead MIS for Retargeting</h2>
+//           <h2 className="text-xl font-bold">Lead MIS for Retargeting</h2>
 //           <p className="text-muted-foreground">
 //             {getActiveFiltersCount() > 0 && (
 //               <span className="inline-flex items-center gap-1">
@@ -1304,7 +1304,7 @@ export default function LeadMIS() {
 // //     <div>
 // //       <div className="space-y-6 mt-8">
 // //         <div className="flex items-center justify-between">
-// //           <h2 className="text-2xl font-bold">Lead MIS for Retargeting</h2>
+// //           <h2 className="text-xl font-bold">Lead MIS for Retargeting</h2>
 // //           <div className="flex items-center space-x-2">
 // //             <Button variant="outline" onClick={handleExportLeads}>
 // //               <Download className="mr-2 h-4 w-4" />

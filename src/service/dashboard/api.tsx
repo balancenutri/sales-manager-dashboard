@@ -29,6 +29,18 @@ import {
   type NotificationStatsResponse,
   type WebsitePerformanceResponse,
   type CounsellorCampaignPerformanceResponse,
+  type SolidSalesResponse,
+  type SalesTriggerResponse,
+  type SalesProjectionResponse,
+  type KeySourceResponse,
+  type CounsellorDataResponse,
+  type PitchedHistoryResponse,
+  type OcManagementResponse,
+  type ConsultationPendingResponse,
+  type UnconvertedLeadResponse,
+  type QuickSalesSnapshotResponse,
+  type SalesOpportunities,
+  type LeadFunnelResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -51,6 +63,69 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getOldLeadManagement: builder.query<
+      LeadManagementResponse,
+      {
+        start_date?: string;
+        end_date?: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/sales/overview/old-lead-management`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getLeadFunnel: builder.query<LeadFunnelResponse, void>({
+      query: () => ({
+        url: `/sales/overview/lead-funnel`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getConsultationPending: builder.query<ConsultationPendingResponse, void>({
+      query: () => ({
+        url: `/sales/overview/consultation-pending`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getQuickSalesSnapshot: builder.query<QuickSalesSnapshotResponse, void>({
+      query: () => ({
+        url: `/sales/overview/quick-sales-snapshot`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getSolidSalesOpportunity: builder.query<SalesOpportunities, void>({
+      query: () => ({
+        url: `/sales/overview/solid-sales-opportunities`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getUnconvertedLeads: builder.query<UnconvertedLeadResponse, void>({
+      query: () => ({
+        url: `/sales/overview/unconverted-leads`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getOcManagement: builder.query<
+      OcManagementResponse,
+      {
+        start_date?: string;
+        end_date?: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/sales/overview/oc-management`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
     getAssignedLeadPerformance: builder.query<
       AssignedLeadPerformanceResponse,
       {
@@ -62,6 +137,14 @@ export const dashboardApi = commonAPi.injectEndpoints({
         url: `/sales/overview/assigned-leads-performance`,
         method: "POST",
         body,
+      }),
+      providesTags: ["Common"],
+    }),
+
+    getSalesBreakDownByStack: builder.query<SalesPerformanceResponse, void>({
+      query: () => ({
+        url: `/sales/overview/sales-breakdown-by-stack`,
+        method: "POST",
       }),
       providesTags: ["Common"],
     }),
@@ -79,12 +162,86 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    getTopPerformers: builder.query<TopPerformerResponse, void>({
+
+    getSalesTrigger: builder.query<SalesTriggerResponse, void>({
       query: () => ({
-        url: `/sales/overview/top-performers`,
+        url: `/sales/overview/sales-trigger`,
         method: "POST",
       }),
       providesTags: ["Common"],
+    }),
+    getSalesProjection: builder.query<SalesProjectionResponse, void>({
+      query: () => ({
+        url: `/sales/overview/sales-projection`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getPitchedHistory: builder.query<
+      PitchedHistoryResponse,
+      {
+        user_type?: string;
+        start_date?: string;
+        end_date?: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/sales/overview/pitched-history`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getKeySourceConversion: builder.query<
+      KeySourceResponse,
+      {
+        start_date?: string;
+        end_date?: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/sales/overview/key-source-conversion`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getCounsellorPerformance: builder.query<
+      TopPerformerResponse,
+      { sort_by?: string; order?: string }
+    >({
+      query: (body) => ({
+        url: `/sales/overview/counsellor-performance`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getCounsellorDataById: builder.query<CounsellorDataResponse, number>({
+      query: (id) => ({
+        url: `/sales/overview/assigned-leads-performance-by-id/${id}`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
+    }),
+    getLeadRiskAndMisses: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/lead-dashboard/risk-and-misses`,
+    }),
+    getLeadSolidSalesOpportunity: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/lead-dashboard/solid-sales-opportunity`,
+    }),
+    getLeadMtdSalesRisks: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/lead-dashboard/mtd-sales-risk`,
+    }),
+
+    getOcRiskAndMisses: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/oc-dashboard/risk-and-misses`,
+    }),
+    getOcSolidSalesOpportunity: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/oc-dashboard/solid-sales-opportunity`,
+    }),
+    getOcMtdSalesRisks: builder.query<SolidSalesResponse, void>({
+      query: () => `/mentor/oc-dashboard/mtd-sales-risk`,
     }),
 
     // SOCIAL MEDIA
@@ -429,12 +586,32 @@ export const dashboardApi = commonAPi.injectEndpoints({
 
 export const {
   useGetLeadManagementQuery,
+  useGetOldLeadManagementQuery,
+  useGetConsultationPendingQuery,
+  useGetQuickSalesSnapshotQuery,
+  useGetLeadFunnelQuery,
+  useGetSolidSalesOpportunityQuery,
+  useGetUnconvertedLeadsQuery,
+  useGetOcManagementQuery,
   useGetAssignedLeadPerformanceQuery,
+  useGetSalesBreakDownByStackQuery,
 
   useGetSalesPerformanceQuery,
   useGetSaleByStackQuery,
+  useGetSalesTriggerQuery,
+  useGetSalesProjectionQuery,
+  useGetPitchedHistoryQuery,
+  useGetKeySourceConversionQuery,
 
-  useGetTopPerformersQuery,
+  useGetCounsellorPerformanceQuery,
+  useGetCounsellorDataByIdQuery,
+  useGetLeadRiskAndMissesQuery,
+  useGetLeadSolidSalesOpportunityQuery,
+  useGetLeadMtdSalesRisksQuery,
+
+  useGetOcMtdSalesRisksQuery,
+  useGetOcRiskAndMissesQuery,
+  useGetOcSolidSalesOpportunityQuery,
 
   useGetGenderWiseLeadQuery,
   useGetWebsitePerformanceQuery,

@@ -80,7 +80,7 @@ export default function MediaCard() {
                 <div className="space-y-2">
                   <div>
                     {data?.data ? (
-                      <div className="text-2xl font-bold">
+                      <div className="text-xl font-bold">
                         {data.data[platform.key].lead_generated}
                       </div>
                     ) : (

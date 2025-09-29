@@ -10,7 +10,7 @@ export default function LeadOcBifurcation() {
   console.log({ data });
   return (
     <>
-      <h2 className="text-2xl font-bold">Lead & OC Bifurcation</h2>
+      <h2 className="text-xl font-bold">Lead & OC Bifurcation</h2>
       <div className="grid grid-cols-4 gap-4">
         <UserDistribution data={data?.data.overall_distribution} />
         <RegionDistribution data={data?.data.location_distribution} />

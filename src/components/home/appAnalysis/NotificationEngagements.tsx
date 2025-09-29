@@ -6,13 +6,14 @@ import TopNotifications from "./leadPerformance/TopNotifications";
 
 export default function NotificationEngagments() {
   const [selected, setSelected] = useState("active");
-  const { data: notificationData, isFetching } = useGetNotificationEngagementQuery({
-    filter: selected,
-  });
+  const { data: notificationData, isFetching } =
+    useGetNotificationEngagementQuery({
+      filter: selected,
+    });
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h2 className="text-xl font-bold text-gray-900">
           Notification Engagement
         </h2>
         <Tabs defaultValue={selected} className="space-y-6">
@@ -49,10 +50,11 @@ export default function NotificationEngagments() {
         </Tabs>
       </div>
 
-      {(
+      {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
           <NotificationEngagement
-            data={notificationData?.data?.total_notifications} fetching={isFetching}
+            data={notificationData?.data?.total_notifications}
+            fetching={isFetching}
           />
           <div className="col-span-2">
             <TopNotifications
@@ -69,7 +71,7 @@ export default function NotificationEngagments() {
             />
           </div>
         </div>
-      )}
+      }
     </div>
   );
 }

@@ -19,11 +19,19 @@ export default function UserDistribution({
         <div className="grid grid-cols-2 h-40">
           <div className="flex justify-center items-center flex-col border-r-2">
             <h2 className="text-lg font-medium">Total Leads</h2>
-            {data?.lead ? <p className="text-2xl font-bold">{data?.lead}</p> : <Skeleton className="h-7 w-24" />}
+            {data?.lead ? (
+              <p className="text-xl font-bold">{data?.lead}</p>
+            ) : (
+              <Skeleton className="h-7 w-24" />
+            )}
           </div>
           <div className="flex justify-center items-center flex-col">
             <h2 className="text-lg font-medium">Total OC</h2>
-            {data?.oc ? <p className="text-2xl font-bold">{data?.oc}</p> : <Skeleton className="h-7 w-24" />}
+            {data?.oc ? (
+              <p className="text-xl font-bold">{data?.oc}</p>
+            ) : (
+              <Skeleton className="h-7 w-24" />
+            )}
           </div>
         </div>
       </CardContent>

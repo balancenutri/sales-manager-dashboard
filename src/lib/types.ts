@@ -138,6 +138,7 @@ export type AddCampaignBody = {
         clicks: number;
         ctr: number;
         conversions: number;
+        frequency: number;
     },
     added_by: string;
 };
@@ -261,10 +262,99 @@ export interface LeadManagementResponse {
     data: LeadManagement;
     totalCount: number;
 }
+export interface UnconvertedLeadResponse {
+    status: string;
+    message: string;
+    data: {
+        hot: number;
+        warm: number;
+        cold: number;
+    };
+    totalCount: number;
+}
+export interface ConsultationPendingResponse {
+    status: string;
+    message: string;
+    data: {
+        to_engage: number;
+        connected: number
+    };
+    totalCount: number;
+}
+export interface LeadFunnelResponse {
+    status: string;
+    message: string;
+    data: {
+        monthly: {
+            "counsellor_lead_target_units": number;
+            "mentor_lead_target_units": number;
+            "counsellor_todays_lead_target_units": number;
+            "mentor_todays_lead_target_units": number;
+        }
+    };
+    totalCount: number;
+}
+export interface QuickSalesSnapshotResponse {
+    status: string;
+    message: string;
+    data: {
+        monthly: {
+            fl: number;
+            ol: number;
+            consultations: number;
+            sales: number;
+        };
+        yesterday: {
+            fl: number;
+            ol: number;
+            consultations: number;
+            sales: number;
+        };
+    };
+    totalCount: number;
+}
+
+export type SalesOpportunities = {
+    status: string;
+    message: string;
+    data: {
+        checkout_visit: Record<string, number>;
+        "payment_details_shared(to_pay)": Record<string, number>;
+        "payment_details_shared(pay_later)": Record<string, number>;
+        leads_with_double_discount: Record<string, number>;
+        referrals: Record<string, number>;
+        leads_with_free_course: Record<string, number>;
+        leads_with_GO_pro: Record<string, number>;
+        good_weight_loss: Record<string, number>;
+        milestone: Record<string, number>;
+        good_consultation_feedback: Record<string, number>;
+    };
+    hide_columns: string[];
+};
+
+export interface OcManagementResponse {
+    status: string;
+    message: string;
+    data: {
+        oc: string;
+        suggested_programs: string;
+        calls: string;
+        orders: string;
+    };
+    totalCount: number;
+}
 
 type SalesPerformance = {
-    sales_closed: string;
-    revenue: string;
+    sales_closed: {
+        total: string;
+        by_counsellor: string;
+        by_mentor: string;
+    };
+    revenue: {
+        total: string;
+        by_counsellor: string;
+        by_mentor: string;
+    };
     target: string;
     conversion_rate: string;
     revenue_target_progress: string;
@@ -282,6 +372,9 @@ type TopPerformer = {
     [key: string]: {
         sales: number;
         conversion_rate: number;
+        avg_per_unit: number;
+        id: number;
+        crm_user: string;
     }
 }
 export interface TopPerformerResponse {
@@ -704,3 +797,140 @@ export interface WebsitePerformanceResponse {
     data: WebsitePerformanceType;
     hide_columns: string[];
 };
+export interface SolidSalesResponse {
+    status: string;
+    message: string;
+    data: { [key: string]: number; };
+    hideColumn: [];
+}
+export type TriggerType = {
+    "hot_triggers": {
+        "total": number;
+        "3_days": number;
+        "5_days": number;
+        "7_days": number;
+    },
+    "warm_triggers": {
+        "total": number;
+        "10_days": number;
+        "12_days": number;
+        "15_days": number;
+    },
+    "to_engage": number;
+    "downgrade_counts": {
+        "hot_to_warm": number;
+        "hot_to_cold": number;
+        "warm_to_cold": number;
+    }
+}
+
+export interface SalesTriggerResponse {
+    status: string;
+    message: string;
+    data: TriggerType;
+    hide_columns: string[];
+};
+
+export type ProjectionKey =
+    | "total_pitched"
+    | "rate_shared"
+    | "link_shared"
+    | "total_to_pay"
+    | "pay_later"
+    | "today_to_pay"
+    | "tomorrow_to_pay";
+
+export type ProjectionType = {
+    [key in ProjectionKey]: {
+        units: number;
+        amount: number;
+    };
+} & {
+    page_visits: {
+        total_page_visits: number;
+        total_checkout_visits: number;
+        total_checkout_amount: number;
+    };
+};
+
+
+export interface SalesProjectionResponse {
+    status: string;
+    message: string;
+    data: ProjectionType;
+    hide_columns: string[];
+};
+export type KeySourceKey =
+    | "social_media"
+    | "direct"
+    | "iwd"
+    | "campaigns"
+    | "referrals";
+
+export type KeySourceType = {
+    [key in KeySourceKey]: {
+        leads: number;
+        converted: number;
+        revenue: number;
+        conversion: string;
+    };
+};
+
+export interface KeySourceResponse {
+    status: string;
+    message: string;
+    data: KeySourceType;
+    hide_columns: string[];
+};
+
+export type CounsellorType = {
+    "crm_user": string;
+    "role_id": number;
+    "leads_assigned": number;
+    "consultations": number;
+    "sales": number;
+    "l:c": string;
+    "c:s": string;
+    "l:s": string;
+    "sales_amount": string;
+    "revenue": string;
+    "suggested_programs": number;
+    "suggested_amount": number;
+    "best_source_performance": string;
+};
+
+export interface CounsellorDataResponse {
+    status: string;
+    message: string;
+    data: CounsellorType;
+    hide_columns: string[];
+};
+
+
+export type PitchedType = {
+    "total_amount": number;
+    "basic_stack": number;
+    "special_stack": number;
+    "users": {
+        "name": string;
+        "user_id": 28,
+        "program_name": string;
+        "program_category": string;
+        "suggested_amount": string;
+        "mrp": number;
+        "suggested_by": string;
+        "designation": string;
+        "added_date": string;
+        "payment_status": number;
+        program_duration: string;
+        email_id: string;
+    }[],
+}
+export interface PitchedHistoryResponse {
+    status: string;
+    message: string;
+    data: PitchedType;
+    hide_columns: string[];
+};
+
+

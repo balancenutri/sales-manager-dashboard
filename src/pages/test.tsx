@@ -1368,7 +1368,7 @@
 //                   >
 //                     <div>
 //                       <p className="text-sm text-muted-foreground">Sales Closed</p>
-//                       <p className="text-2xl font-bold">{mockData.overview.totalSales}</p>
+//                       <p className="text-xl font-bold">{mockData.overview.totalSales}</p>
 //                     </div>
 //                     <ArrowUp className="h-4 w-4 text-green-500" />
 //                   </div>
@@ -1613,7 +1613,7 @@
 //           </TabsContent>
 
 //           <TabsContent value="social-media" className="space-y-6">
-//             <h2 className="text-2xl font-bold">Social Media Performance by Platform</h2>
+//             <h2 className="text-xl font-bold">Social Media Performance by Platform</h2>
 //             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 //               {/* Instagram Performance Card */}
 //               <Card>
@@ -1926,7 +1926,7 @@
 
 //             {/* Counsellor Social Media Performance */}
 //             <div className="space-y-6 mt-8">
-//               <h2 className="text-2xl font-bold">Counsellor Social Media Performance</h2>
+//               <h2 className="text-xl font-bold">Counsellor Social Media Performance</h2>
 //               <Card>
 //                 <CardHeader>
 //                   <CardTitle>Individual Counsellor Social Media Metrics</CardTitle>
@@ -1976,7 +1976,7 @@
 
 //             {/* New Team Performance Consolidated Table */}
 //             <div className="space-y-6 mt-8">
-//               <h2 className="text-2xl font-bold">Consolidated Team Performance</h2>
+//               <h2 className="text-xl font-bold">Consolidated Team Performance</h2>
 //               <Card>
 //                 <CardHeader>
 //                   <CardTitle>Team & Mentor Performance Summary</CardTitle>
@@ -2028,7 +2028,7 @@
 
 //           {/* Digital Marketing Tab Content */}
 //           <TabsContent value="digital-marketing" className="space-y-6">
-//             <h2 className="text-2xl font-bold">Digital Marketing Analytics</h2>
+//             <h2 className="text-xl font-bold">Digital Marketing Analytics</h2>
 //             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 //               <Card>
 //                 <CardHeader>
@@ -2246,7 +2246,7 @@
 
 //             {/* Clinical Conditions Section */}
 //             <div className="space-y-6 mt-8">
-//               <h2 className="text-2xl font-bold">Clinical Conditions</h2>
+//               <h2 className="text-xl font-bold">Clinical Conditions</h2>
 //               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 //                 {Object.entries(mockData.clinicalConditionsAnalytics)
 //                   .slice(0, 3)
@@ -2274,7 +2274,7 @@
 //                     </Card>
 //                   ))}
 //               </div>
-//               <h2 className="text-2xl font-bold mt-8">Other Clinical Conditions</h2>
+//               <h2 className="text-xl font-bold mt-8">Other Clinical Conditions</h2>
 //               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 //                 {Object.entries(mockData.clinicalConditionsAnalytics)
 //                   .slice(3)
@@ -2307,7 +2307,7 @@
 //             {/* Campaigns Overview Section */}
 //             <div className="space-y-6 mt-8">
 //               <div className="flex items-center justify-between">
-//                 <h2 className="text-2xl font-bold">Campaigns Overview</h2>
+//                 <h2 className="text-xl font-bold">Campaigns Overview</h2>
 //                 <div className="flex items-center space-x-2">
 //                   <Button variant="outline">
 //                     <Filter className="mr-2 h-4 w-4" />
@@ -2372,7 +2372,7 @@
 //             {/* Lead MIS Section */}
 //             <div className="space-y-6 mt-8">
 //               <div className="flex items-center justify-between">
-//                 <h2 className="text-2xl font-bold">Lead MIS for Retargeting</h2>
+//                 <h2 className="text-xl font-bold">Lead MIS for Retargeting</h2>
 //                 <div className="flex items-center space-x-2">
 //                   <Button variant="outline" onClick={handleExportLeads}>
 //                     <Download className="mr-2 h-4 w-4" />
@@ -2640,9 +2640,9 @@
 
 //           {/* App Analytics Tab Content (Moved from previous location) */}
 //           <TabsContent value="app-analytics" className="space-y-6">
-//             <h2 className="text-2xl font-bold">App Analytics Overview</h2>
+//             <h2 className="text-xl font-bold">App Analytics Overview</h2>
 //             {/* App Download Counts */}
-//             <h2 className="text-2xl font-bold mt-8">App Download Counts</h2>
+//             <h2 className="text-xl font-bold mt-8">App Download Counts</h2>
 //             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 overflow-x-auto pb-4">
 //               {Object.entries(mockData.appAnalytics.appDownloadsBreakdown).map(([period, data]) => (
 //                 <Card key={period} className="min-w-[200px]">
@@ -2832,7 +2832,7 @@
 //         </Tabs>
 
 //         {/* Content Engagement Section */}
-//         <h2 className="text-2xl font-bold mt-8">Content Engagement</h2>
+//         <h2 className="text-xl font-bold mt-8">Content Engagement</h2>
 //         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 //           <Card>
 //             <CardHeader>
@@ -3023,17 +3023,17 @@
 //                 <div className="grid grid-cols-3 gap-4 text-sm">
 //                   <div className="text-center">
 //                     <p className="text-muted-foreground">Total Leads Assigned</p>
-//                     <p className="text-2xl font-bold">{mockData.overview.assignedLeads}</p>
+//                     <p className="text-xl font-bold">{mockData.overview.assignedLeads}</p>
 //                   </div>
 //                   <div className="text-center">
 //                     <p className="text-muted-foreground">Total Consultations</p>
-//                     <p className="text-2xl font-bold">
+//                     <p className="text-xl font-bold">
 //                       {mockData.counsellors.reduce((sum, c) => sum + c.consultations, 0)}
 //                     </p>
 //                   </div>
 //                   <div className="text-center">
 //                     <p className="text-muted-foreground">Total Sales</p>
-//                     <p className="text-2xl font-bold">{mockData.overview.totalSales}</p>
+//                     <p className="text-xl font-bold">{mockData.overview.totalSales}</p>
 //                   </div>
 //                 </div>
 //               </div>
@@ -3217,7 +3217,7 @@
 //               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 //                 <Card className="p-4">
 //                   <div className="text-center">
-//                     <div className="text-2xl font-bold text-blue-600">
+//                     <div className="text-xl font-bold text-blue-600">
 //                       {mockData.teams.reduce((sum, team) => sum + team.totalLeadsAssigned, 0)}
 //                     </div>
 //                     <div className="text-sm text-muted-foreground">Total Leads Assigned</div>
@@ -3226,7 +3226,7 @@
 
 //                 <Card className="p-4">
 //                   <div className="text-center">
-//                     <div className="text-2xl font-bold text-green-600">
+//                     <div className="text-xl font-bold text-green-600">
 //                       {mockData.teams.reduce((sum, team) => sum + team.totalSalesUnits, 0)}
 //                     </div>
 //                     <div className="text-sm text-muted-foreground">Total Sales Units</div>
@@ -3235,7 +3235,7 @@
 
 //                 <Card className="p-4">
 //                   <div className="text-center">
-//                     <div className="text-2xl font-bold text-orange-600">
+//                     <div className="text-xl font-bold text-orange-600">
 //                       {mockData.teams.reduce((sum, team) => sum + team.targetSalesUnits, 0)}
 //                     </div>
 //                     <div className="text-sm text-muted-foreground">Total Target Units</div>
@@ -3244,7 +3244,7 @@
 
 //                 <Card className="p-4">
 //                   <div className="text-center">
-//                     <div className="text-2xl font-bold text-teal-600">
+//                     <div className="text-xl font-bold text-teal-600">
 //                       {(
 //                         (mockData.teams.reduce((sum, team) => sum + team.totalSalesUnits, 0) /
 //                           mockData.teams.reduce((sum, team) => sum + team.targetSalesUnits, 0)) *
@@ -3604,110 +3604,103 @@
 //   )
 // }
 
+// <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//   {mockData.counsellors.map((counsellor) => {
+//     const performanceTag = getPerformanceTag(counsellor.conversionRate)
+//     const leadToConsultationRatio =
+//       counsellor.leadsAssigned > 0
+//         ? ((counsellor.consultations / counsellor.leadsAssigned) * 100).toFixed(1)
+//         : "0.0"
+//     const consultationToSalesRatio =
+//       counsellor.consultations > 0
+//         ? ((counsellor.salesClosed / counsellor.consultations) * 100).toFixed(1)
+//         : "0.0"
+//     const leadToSalesRatio =
+//       counsellor.leadsAssigned > 0
+//         ? ((counsellor.salesClosed / counsellor.leadsAssigned) * 100).toFixed(1)
+//         : "0.0"
 
-
-
-          // <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          //   {mockData.counsellors.map((counsellor) => {
-          //     const performanceTag = getPerformanceTag(counsellor.conversionRate)
-          //     const leadToConsultationRatio =
-          //       counsellor.leadsAssigned > 0
-          //         ? ((counsellor.consultations / counsellor.leadsAssigned) * 100).toFixed(1)
-          //         : "0.0"
-          //     const consultationToSalesRatio =
-          //       counsellor.consultations > 0
-          //         ? ((counsellor.salesClosed / counsellor.consultations) * 100).toFixed(1)
-          //         : "0.0"
-          //     const leadToSalesRatio =
-          //       counsellor.leadsAssigned > 0
-          //         ? ((counsellor.salesClosed / counsellor.leadsAssigned) * 100).toFixed(1)
-          //         : "0.0"
-
-          //     return (
-          //       <Card
-          //         key={counsellor.id}
-          //         className="cursor-pointer hover:shadow-md transition-shadow"
-          //         onClick={() => handleCounsellorCardClick(counsellor)}
-          //       >
-          //         <CardHeader className="pb-3">
-          //           <div className="flex items-center space-x-3">
-          //             <Avatar className="h-12 w-12">
-          //               <AvatarImage src={counsellor.avatar || "/placeholder.svg"} />
-          //               <AvatarFallback>
-          //                 {counsellor.name
-          //                   .split(" ")
-          //                   .map((n) => n[0])
-          //                   .join("")}
-          //               </AvatarFallback>
-          //             </Avatar>
-          //             <div className="flex-1">
-          //               <CardTitle className="text-lg">{counsellor.name}</CardTitle>
-          //               <div className="flex items-center space-x-2">
-          //                 <Badge className={getStatusColor(counsellor.status)}>{counsellor.status}</Badge>
-          //                 <span className="text-xs text-muted-foreground">{counsellor.lastActive}</span>
-          //               </div>
-          //             </div>
-          //             <Badge className={performanceTag.color}>{performanceTag.tag}</Badge>
-          //           </div>
-          //         </CardHeader>
-          //         <CardContent className="space-y-4">
-          //           <div className="flex items-center justify-between p-2 rounded-md bg-blue-50 text-blue-800 text-sm font-medium">
-          //             <span>Best Source:</span>
-          //             <span>{counsellor.bestConversionSource}</span>
-          //           </div>
-          //           <div className="grid grid-cols-2 gap-4 text-sm">
-          //             <div>
-          //               <p className="text-muted-foreground">Leads Assigned</p>
-          //               <p className="font-semibold">{counsellor.leadsAssigned}</p>
-          //             </div>
-          //             <div>
-          //               <p className="text-muted-foreground">Consultations</p>
-          //               <p className="font-semibold">{counsellor.consultations}</p>
-          //             </div>
-          //             <div>
-          //               <p className="text-muted-foreground">Sales Closed</p>
-          //               <p className="font-semibold">₹{(counsellor.revenue / 1000).toFixed(0)}K</p>
-          //             </div>
-          //             <div>
-          //               <p className="text-muted-foreground">Revenue</p>
-          //               <p className="font-semibold">₹{(counsellor.revenue / 1000).toFixed(0)}K</p>
-          //             </div>
-          //             <div>
-          //               <p className="text-muted-foreground">Total Sales Opportunity</p>
-          //               <p className="font-semibold">{mockData.overview.totalSalesOpportunity}</p>
-          //             </div>
-          //             <div>
-          //               <p className="text-muted-foreground">Payment Details Shared</p>
-          //               <p className="font-semibold">
-          //                 ₹{(counsellor.paymentDetailsShared.amount / 1000).toFixed(1)} Lac (
-          //                 {counsellor.paymentDetailsShared.count})
-          //               </p>
-          //             </div>
-          //           </div>
-          //           <div className="grid grid-cols-3 gap-2 text-center text-sm pt-2 border-t">
-          //             <div>
-          //               <p className="text-muted-foreground">L:C</p>
-          //               <p className="font-semibold">{leadToConsultationRatio}%</p>
-          //             </div>
-          //             <div>
-          //               <p className="text-muted-foreground">C:S</p>
-          //               <p className="font-semibold">{consultationToSalesRatio}%</p>
-          //             </div>
-          //             <div>
-          //               <p className="text-muted-foreground">L:S</p>
-          //               <p className="font-semibold">{leadToSalesRatio}%</p>
-          //             </div>
-          //           </div>
-          //         </CardContent>
-          //       </Card>
-          //     )
-          //   })}
-          // </div>
+//     return (
+//       <Card
+//         key={counsellor.id}
+//         className="cursor-pointer hover:shadow-md transition-shadow"
+//         onClick={() => handleCounsellorCardClick(counsellor)}
+//       >
+//         <CardHeader className="pb-3">
+//           <div className="flex items-center space-x-3">
+//             <Avatar className="h-12 w-12">
+//               <AvatarImage src={counsellor.avatar || "/placeholder.svg"} />
+//               <AvatarFallback>
+//                 {counsellor.name
+//                   .split(" ")
+//                   .map((n) => n[0])
+//                   .join("")}
+//               </AvatarFallback>
+//             </Avatar>
+//             <div className="flex-1">
+//               <CardTitle className="text-lg">{counsellor.name}</CardTitle>
+//               <div className="flex items-center space-x-2">
+//                 <Badge className={getStatusColor(counsellor.status)}>{counsellor.status}</Badge>
+//                 <span className="text-xs text-muted-foreground">{counsellor.lastActive}</span>
+//               </div>
+//             </div>
+//             <Badge className={performanceTag.color}>{performanceTag.tag}</Badge>
+//           </div>
+//         </CardHeader>
+//         <CardContent className="space-y-4">
+//           <div className="flex items-center justify-between p-2 rounded-md bg-blue-50 text-blue-800 text-sm font-medium">
+//             <span>Best Source:</span>
+//             <span>{counsellor.bestConversionSource}</span>
+//           </div>
+//           <div className="grid grid-cols-2 gap-4 text-sm">
+//             <div>
+//               <p className="text-muted-foreground">Leads Assigned</p>
+//               <p className="font-semibold">{counsellor.leadsAssigned}</p>
+//             </div>
+//             <div>
+//               <p className="text-muted-foreground">Consultations</p>
+//               <p className="font-semibold">{counsellor.consultations}</p>
+//             </div>
+//             <div>
+//               <p className="text-muted-foreground">Sales Closed</p>
+//               <p className="font-semibold">₹{(counsellor.revenue / 1000).toFixed(0)}K</p>
+//             </div>
+//             <div>
+//               <p className="text-muted-foreground">Revenue</p>
+//               <p className="font-semibold">₹{(counsellor.revenue / 1000).toFixed(0)}K</p>
+//             </div>
+//             <div>
+//               <p className="text-muted-foreground">Total Sales Opportunity</p>
+//               <p className="font-semibold">{mockData.overview.totalSalesOpportunity}</p>
+//             </div>
+//             <div>
+//               <p className="text-muted-foreground">Payment Details Shared</p>
+//               <p className="font-semibold">
+//                 ₹{(counsellor.paymentDetailsShared.amount / 1000).toFixed(1)} Lac (
+//                 {counsellor.paymentDetailsShared.count})
+//               </p>
+//             </div>
+//           </div>
+//           <div className="grid grid-cols-3 gap-2 text-center text-sm pt-2 border-t">
+//             <div>
+//               <p className="text-muted-foreground">L:C</p>
+//               <p className="font-semibold">{leadToConsultationRatio}%</p>
+//             </div>
+//             <div>
+//               <p className="text-muted-foreground">C:S</p>
+//               <p className="font-semibold">{consultationToSalesRatio}%</p>
+//             </div>
+//             <div>
+//               <p className="text-muted-foreground">L:S</p>
+//               <p className="font-semibold">{leadToSalesRatio}%</p>
+//             </div>
+//           </div>
+//         </CardContent>
+//       </Card>
+//     )
+//   })}
+// </div>
 
 export default function test() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div></div>;
 }

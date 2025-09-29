@@ -592,7 +592,6 @@
 //   );
 // }
 
-
 import { useForm, Controller } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -620,7 +619,7 @@ import {
   useUpdateCampaignMutation,
 } from "@/service/dashboard/api";
 import { keyString } from "@/lib/utils";
-import { useEffect } from "react";
+import { useMemo } from "react";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(customParseFormat);
@@ -676,23 +675,17 @@ export default function AddCampaignForm({
     reset,
   } = useForm<FormValues>({
     defaultValues: {
-      name: "",
-      added_by: "",
-      type: "",
-      status: "",
-      start_date: "",
-      end_date: "",
-      ad_spend: undefined,
-      impressions: undefined,
-      reach: undefined,
-      clicks: undefined,
-      ctr: undefined,
-      conversions: undefined,
-      frequency: undefined,
-      gender: [],
-      health_conditions: [],
-      age_group: [],
-      program_name: [],
+      ...(data
+        ? {
+            ...data,
+            type: data.type ? String(data.type) : "",
+            status: data.status ? data.status.toLowerCase() : "",
+            start_date: dayjs(data.start_date, "DD/MM/YYYY").format(
+              "YYYY-MM-DD"
+            ),
+            end_date: dayjs(data.end_date, "DD/MM/YYYY").format("YYYY-MM-DD"),
+          }
+        : {}),
     },
   });
 
@@ -704,19 +697,7 @@ export default function AddCampaignForm({
     source_id: 6,
   });
 
-  useEffect(() => {
-    if (data) {
-      const normalized = {
-        ...data,
-        type: String(data.type),
-        status: data.status.toLowerCase(),
-        start_date: dayjs(data.start_date, "DD/MM/YYYY").format("YYYY-MM-DD"),
-        end_date: dayjs(data.end_date, "DD/MM/YYYY").format("YYYY-MM-DD"),
-      };
-      reset(normalized);
-    }
-  }, [data, reset, allSources]);
-
+  const stableAllSources = useMemo(() => allSources?.data, [allSources?.data]);
   const [addNewCampaign] = useAddNewCampaignMutation();
   const [updateCampaign] = useUpdateCampaignMutation();
 
@@ -752,6 +733,7 @@ export default function AddCampaignForm({
         clicks: formData.clicks ?? 0,
         ctr: formData.ctr ?? 0,
         conversions: formData.conversions ?? 0,
+        frequency: formData.frequency ?? 0,
       },
       added_by: formData.added_by,
     };
@@ -809,17 +791,23 @@ export default function AddCampaignForm({
             control={control}
             name="status"
             rules={{ required: "Campaign status is required" }}
-            render={({ field }) => (
-              <Select value={field.value || ""} onValueChange={field.onChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="inactive">Inactive</SelectItem>
-                </SelectContent>
-              </Select>
-            )}
+            render={({ field }) => {
+              console.log("Status field", field);
+              return (
+                <Select
+                  value={field.value || undefined}
+                  onValueChange={field.onChange}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="inactive">Inactive</SelectItem>
+                  </SelectContent>
+                </Select>
+              );
+            }}
           />
           {errors.status && (
             <p className="mt-1 text-xs text-red-600">{errors.status.message}</p>
@@ -835,23 +823,29 @@ export default function AddCampaignForm({
             control={control}
             name="type"
             rules={{ required: "Campaign type is required" }}
-            render={({ field }) => (
-              <Select value={field.value || ""} onValueChange={field.onChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {allSources?.data?.map((item) => (
-                    <SelectItem
-                      key={item.source_id}
-                      value={String(item.source_id)}
-                    >
-                      {keyString(item.source_name)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
+            render={({ field }) => {
+              console.log("Type field", field);
+              return (
+                <Select
+                  value={field.value || undefined}
+                  onValueChange={field.onChange}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {stableAllSources?.map((item) => (
+                      <SelectItem
+                        key={item.source_id}
+                        value={String(item.source_id)}
+                      >
+                        {keyString(item.source_name)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              );
+            }}
           />
           {errors.type && (
             <p className="mt-1 text-xs text-red-600">{errors.type.message}</p>
@@ -958,7 +952,7 @@ export default function AddCampaignForm({
                   { name: "Male", id: "male" },
                   { name: "Female", id: "female" },
                 ]}
-                selected={field.value}
+                selected={field.value || []}
                 onChange={field.onChange}
                 placeholder="Select Gender"
               />
@@ -979,7 +973,7 @@ export default function AddCampaignForm({
                 options={healthData?.data || []}
                 nameKey="name"
                 valueKey="name"
-                selected={field.value}
+                selected={field.value || []}
                 onChange={field.onChange}
                 placeholder="Select Clinical Condition"
               />
@@ -996,7 +990,7 @@ export default function AddCampaignForm({
             render={({ field }) => (
               <MultiSelect
                 options={["18-25", "25-35", "35-45", "45-55", "55-65", "65+"]}
-                selected={field.value}
+                selected={field.value || []}
                 onChange={field.onChange}
                 placeholder="Select Age Group"
               />
@@ -1045,6 +1039,7 @@ export default function AddCampaignForm({
               onClick={() =>
                 reset({
                   name: "",
+                  added_by: "",
                   type: "",
                   status: "",
                   start_date: "",
@@ -1055,11 +1050,11 @@ export default function AddCampaignForm({
                   clicks: undefined,
                   ctr: undefined,
                   conversions: undefined,
+                  frequency: undefined,
                   gender: [],
                   health_conditions: [],
                   age_group: [],
                   program_name: [],
-                  added_by: "",
                 })
               }
             >

@@ -29,7 +29,7 @@ export default function AppCount() {
   return (
     <div className="mt-12">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">App Analytics Overview</h2>
+        <h2 className="text-xl font-bold">App Analytics Overview</h2>
       </div>
       <div className="grid lg:grid-cols-3 gap-4">
         <AppCountCard

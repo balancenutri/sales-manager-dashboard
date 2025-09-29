@@ -92,13 +92,13 @@ export default function AppUpdateStatus({
 
           <div className="grid grid-cols-2 gap-4 w-full">
             <div className="text-center p-3 bg-green-50 rounded-lg">
-              <div className="text-2xl font-bold text-green-600">
+              <div className="text-xl font-bold text-green-600">
                 {data?.appVersionStats?.updatedPercentage}%
               </div>
               <div className="text-sm text-green-700 font-medium">Updated</div>
             </div>
             <div className="text-center p-3 bg-amber-50 rounded-lg">
-              <div className="text-2xl font-bold text-amber-600">
+              <div className="text-xl font-bold text-amber-600">
                 {data?.appVersionStats?.notUpdatedPercentage}%
               </div>
               <div className="text-sm text-amber-700 font-medium">

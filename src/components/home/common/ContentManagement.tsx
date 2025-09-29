@@ -94,28 +94,28 @@ export default function ContentManagement({
       color: "text-indigo-500",
       key: "peer_group_visit",
     },
-  ]; 
+  ];
 
   return (
     <div>
-      {/* <h2 className="text-2xl font-bold my-4">Content Engagement</h2> */}
+      {/* <h2 className="text-xl font-bold my-4">Content Engagement</h2> */}
       {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> */}
-      {type === "content" &&
+      {type === "content" && (
         <CardSection
           title="Content Visits"
           description="User engagement with various content types"
           data={contentVisitsData?.data}
           items={contentItems}
         />
-      }
-      {type === "guide" &&
-         <CardSection
+      )}
+      {type === "guide" && (
+        <CardSection
           title="Guide & Book Interactions"
           description="User interactions with guides and recipe books"
           data={guideData?.data}
           items={guideItems}
         />
-      }
+      )}
       {/* </div> */}
     </div>
   );

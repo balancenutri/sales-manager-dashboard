@@ -23,7 +23,7 @@ import { useGetCounsellorCampaignPerformanceQuery } from "@/service/dashboard/ap
 // };
 
 export default function CounsellorDigitalMarketingPerfotmance() {
-//   const filter = useSelector(selectPeriod);
+  //   const filter = useSelector(selectPeriod);
 
   const { data, isLoading } = useGetCounsellorCampaignPerformanceQuery();
 
@@ -42,7 +42,7 @@ export default function CounsellorDigitalMarketingPerfotmance() {
   return (
     <div>
       <div className="space-y-6 mt-8">
-        <h2 className="text-2xl font-bold">
+        <h2 className="text-xl font-bold">
           Counsellor Digital Marketing Performance (MTD)
         </h2>
         <Card>
