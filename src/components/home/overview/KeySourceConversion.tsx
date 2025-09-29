@@ -40,7 +40,7 @@ export default function KeySourceConversion() {
                 </CardHeader>
                 <CardContent className="space-y-2">
                   {Object.entries(value).map(([key, item], index) => (
-                    <div
+                    key !== "type" && <div
                       key={index}
                       className="flex items-center justify-between border-b last:border-none pb-2 last:pb-0"
                     >

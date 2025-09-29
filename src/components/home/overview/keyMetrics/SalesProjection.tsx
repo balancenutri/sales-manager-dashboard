@@ -23,25 +23,6 @@ export default function SalesProjection() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <h4 className="font-semibold text-gray-800">Link Shared</h4>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-lg font-bold text-blue-600">
-                    {data?.data.link_shared.units}
-                  </div>
-                  <div className="text-sm text-green-600 font-semibold">
-                    ₹{data?.data.link_shared.amount.toLocaleString("en-IN")}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-md transition-all cursor-pointer">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div>
                     <h4 className="font-semibold text-gray-800">Rate Shared</h4>
                   </div>
                 </div>
@@ -51,6 +32,25 @@ export default function SalesProjection() {
                   </div>
                   <div className="text-sm text-black font-semibold">
                     ₹{data?.data.rate_shared.amount.toLocaleString("en-IN")}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div onClick={() => setOpenDialog(true)}>
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-md transition-all cursor-pointer">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div>
+                    <h4 className="font-semibold text-gray-800">Link Shared</h4>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-lg font-bold text-blue-600">
+                    {data?.data.link_shared.units}
+                  </div>
+                  <div className="text-sm text-green-600 font-semibold">
+                    ₹{data?.data.link_shared.amount.toLocaleString("en-IN")}
                   </div>
                 </div>
               </div>

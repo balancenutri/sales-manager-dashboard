@@ -63,14 +63,14 @@ export default function LeadPosition() {
         today: {
           req: 10,
           alloted:
-            parseLeadValue(newLead?.consultation_done || "")[0] +
-            parseLeadValue(oldLead?.consultation_done || "")[0],
+            parseLeadValue(newLead?.consultation_done?.mentor_consultations || "")[0] +
+            parseLeadValue(oldLead?.consultation_done?.mentor_consultations || "")[0],
         },
         mtd: {
           req: 10 * WORKING_DAYS,
           alloted:
-            parseLeadValue(newLead?.consultation_done || "")[1] +
-            parseLeadValue(oldLead?.consultation_done || "")[1],
+            parseLeadValue(newLead?.consultation_done?.mentor_consultations || "")[1] +
+            parseLeadValue(oldLead?.consultation_done?.mentor_consultations || "")[1],
         },
       },
     },
@@ -98,14 +98,14 @@ export default function LeadPosition() {
         today: {
           req: 10,
           alloted:
-            parseLeadValue(newLead?.consultation_done || "")[0] +
-            parseLeadValue(oldLead?.consultation_done || "")[0],
+            parseLeadValue(newLead?.consultation_done?.counsellor_consultations || "")[0] +
+            parseLeadValue(oldLead?.consultation_done?.counsellor_consultations || "")[0],
         },
         mtd: {
           req: 10 * WORKING_DAYS,
           alloted:
-            parseLeadValue(newLead?.consultation_done || "")[1] +
-            parseLeadValue(oldLead?.consultation_done || "")[1],
+            parseLeadValue(newLead?.consultation_done?.counsellor_consultations || "")[1] +
+            parseLeadValue(oldLead?.consultation_done?.counsellor_consultations || "")[1],
         },
       },
     },

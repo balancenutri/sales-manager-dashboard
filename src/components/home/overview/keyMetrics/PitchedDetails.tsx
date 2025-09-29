@@ -23,7 +23,7 @@ import {
   User,
   Package,
 } from "lucide-react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import CustomDatePicker from "@/components/ui/custom-date-picker";
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -32,7 +32,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import SkeletonTable from "@/components/common/SkeletonTable";
 
 export default function PitchedHistory() {
-  const [selected, setSelected] = useState<"" | "lead" | "oc">("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const { data, isFetching } = useGetPitchedHistoryQuery({
@@ -42,7 +41,6 @@ export default function PitchedHistory() {
           end_date: dayjs(selectedDate).endOf("month").format("YYYY-MM-DD"),
         }
       : {}),
-    user_type: selected,
   });
   console.log({ data, isFetching });
 
@@ -91,32 +89,6 @@ export default function PitchedHistory() {
   return (
     <div className="space-y-6 p-6 bg-gray-50 h-[80vh] overflow-scroll">
       {/* Header */}
-
-      <Tabs defaultValue={selected} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger
-            className="cursor-pointer"
-            value=""
-            onClick={() => setSelected("")}
-          >
-            All
-          </TabsTrigger>
-          <TabsTrigger
-            className="cursor-pointer"
-            value={"lead"}
-            onClick={() => setSelected("lead")}
-          >
-            Lead
-          </TabsTrigger>
-          <TabsTrigger
-            className="cursor-pointer"
-            value="oc"
-            onClick={() => setSelected("oc")}
-          >
-            OC
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Pitched History</h1>
@@ -127,7 +99,7 @@ export default function PitchedHistory() {
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-3">
             {/* Sales Person Filter */}
-            <Select value="all">
+            {/* <Select value="all">
               <SelectTrigger className="w-40">
                 <SelectValue placeholder="Sales Person" />
               </SelectTrigger>
@@ -138,7 +110,7 @@ export default function PitchedHistory() {
                 <SelectItem value="manshi">Manshi</SelectItem>
                 <SelectItem value="kajal">Kajal</SelectItem>
               </SelectContent>
-            </Select>
+            </Select> */}
 
             <CustomDatePicker
               selected={selectedDate}

@@ -253,7 +253,11 @@ type LeadManagement = {
         "total_assigned_to_mentors": string,
         "total_assigned_to_counsellors": string;
     },
-    "consultation_done": string,
+    "consultation_done": {
+        "mentor_consultations": string;
+        "counsellor_consultations": string;
+        "total_consultations": string;
+    },
     "sales": string,
 }
 export interface LeadManagementResponse {

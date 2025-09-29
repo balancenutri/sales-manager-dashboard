@@ -115,7 +115,7 @@ export default function LeadCard({ type }: { type: "old" | "new" }) {
               <TooltipTrigger asChild>
                 <div
                   className="flex items-center justify-between p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
-                  onClick={() => handleLeadsClick("unassigned")}
+                  // onClick={() => handleLeadsClick("unassigned")}
                 >
                   <div className="flex items-center gap-2">
                     <ArrowUp className="h-4 w-4 text-green-500" />
@@ -226,7 +226,7 @@ export default function LeadCard({ type }: { type: "old" | "new" }) {
             </div>
             {leadData ? (
               <p className="text-xl font-bold text-green-700">
-                {leadData?.consultation_done}
+                {leadData?.consultation_done?.total_consultations}
               </p>
             ) : (
               <Skeleton className="h-5 w-20 mt-2" />
