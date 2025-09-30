@@ -40,9 +40,11 @@ export default function LeadCard({ type }: { type: "old" | "new" }) {
     "counsellor_data"
   );
 
-  const handleLeadsClick = (type: "assigned" | "unassigned" | "position") => {
-    setModalType(type);
-    setShowLeadsModal(true);
+  const handleLeadsClick = (types: "assigned" | "unassigned" | "position") => {
+    if (type == "new") {
+      setModalType(types);
+      setShowLeadsModal(true);
+    }
   };
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -81,7 +83,6 @@ export default function LeadCard({ type }: { type: "old" | "new" }) {
             <CardTitle className="text-sm font-medium">
               {type == "new" ? "Fresh Leads" : "Old Leads"}
             </CardTitle>
-
           </div>
 
           <CustomDatePicker
@@ -216,22 +217,56 @@ export default function LeadCard({ type }: { type: "old" | "new" }) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <div
-            className="flex items-center justify-between p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
-            // onClick={() => handleLeadsClick("assigned")}
-          >
-            <div className="flex items-center gap-2">
-              <ArrowUp className="h-4 w-4 text-green-500" />
-              <p className="text-sm">Consultation Done</p>
-            </div>
-            {leadData ? (
-              <p className="text-xl font-bold text-green-700">
-                {leadData?.consultation_done?.total_consultations}
-              </p>
-            ) : (
-              <Skeleton className="h-5 w-20 mt-2" />
-            )}
-          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div
+                  className="flex items-center justify-between p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
+                  
+                >
+                  <div className="flex items-center gap-2">
+                    <ArrowUp className="h-4 w-4 text-green-500" />
+                    <p className="text-sm">Consultation Done</p>
+                  </div>
+                  {leadData ? (
+                    <p className="text-xl font-bold text-green-700">
+                      {leadData?.consultation_done.total_consultations}
+                    </p>
+                  ) : (
+                    <Skeleton className="h-5 w-20 mt-2" />
+                  )}
+                </div>
+              </TooltipTrigger>
+              <TooltipContent className="p-0 bg-white border border-gray-200 shadow-lg rounded-lg max-w-xs">
+                <div className="p-2">
+                  <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <h4 className="font-semibold text-gray-900 text-sm">
+                      Consultation Done
+                    </h4>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 m-3">
+                    <div className="text-center p-2 bg-green-50 rounded-md">
+                      <p className="text-xs text-gray-600 font-medium">
+                        Mentor
+                      </p>
+                      <p className="text-sm font-bold text-green-700">
+                        {leadData?.consultation_done.mentor_consultations}
+                      </p>
+                    </div>
+                    <div className="text-center p-2 bg-blue-50 rounded-md">
+                      <p className="text-xs text-gray-600 font-medium">
+                        Counsellor
+                      </p>
+                      <p className="text-sm font-bold text-blue-700">
+                        {leadData?.consultation_done.counsellor_consultations}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <div
             className="flex items-center justify-between p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
             // onClick={() => handleLeadsClick("assigned")}
