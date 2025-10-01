@@ -57,10 +57,10 @@ export default function Home() {
           <TabsContent value="overview" className="space-y-6">
             {/* Key Metrics */}
             {/* <BenchmarkAndAvg /> */}
+            <LeadPosition />
             <h2 className="text-xl font-bold">Quick Sales Snapshot</h2>
             <SalesSnapshots />
             {/* <h2 className="text-xl font-bold"></h2> */}
-            <LeadPosition />
             <h2 className="text-xl font-bold">Key Sales Alerts</h2>
 
             <KeySalesAlert />
