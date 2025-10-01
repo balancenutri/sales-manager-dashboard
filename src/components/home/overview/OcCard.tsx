@@ -18,7 +18,7 @@ import CustomDatePicker from "@/components/ui/custom-date-picker";
 import dayjs from "dayjs";
 // import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function LeadCard() {
+export default function OcCard() {
   // const [modalType, setModalType] = useState<
   //   "assigned" | "unassigned" | "sales" | "revenue" | "team" | null
   // >(null);
