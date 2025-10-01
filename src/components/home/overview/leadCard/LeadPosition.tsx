@@ -271,6 +271,8 @@ export default function LeadPosition() {
     "42 | 45",
     "42 | 45",
     "42 | 45",
+    "32.08%",
+    "46.67%",
   ];
 
   return (
@@ -312,6 +314,8 @@ export default function LeadPosition() {
                   <TableHead className="text-center">MTD Leads</TableHead>
                   <TableHead className="text-center">MTD Cons.</TableHead>
                   <TableHead className="text-center">MTD Sales</TableHead>
+                  <TableHead className="text-center">L : S</TableHead>
+                  <TableHead className="text-center">C : S</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
