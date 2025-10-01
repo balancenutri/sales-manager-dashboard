@@ -49,6 +49,10 @@ interface TimeFrame {
   lead: Metrics;
   consultation: Metrics;
   sales: Metrics;
+  ratios?: {
+    Mentor: { ls: string; cs: string };
+    Counsellor: { ls: string; cs: string };
+  };
 }
 
 interface ConvertedData {
@@ -235,6 +239,10 @@ export default function LeadPosition() {
         Mentor: { req: 0, alloted: 0 },
         Counsellor: { req: 0, alloted: 0 },
       },
+      ratios: {
+        Mentor: { ls: "18.5%", cs: "42.8%" },
+        Counsellor: { ls: "27.9%", cs: "56.8%" },
+      },
     },
   };
 
@@ -277,19 +285,13 @@ export default function LeadPosition() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="text-center">Today Leads</TableHead>
-                  <TableHead className="text-center">
-                    Today Cons.
-                  </TableHead>
+                  <TableHead className="text-center">Today Cons.</TableHead>
                   <TableHead className="text-center">Today Sales</TableHead>
                   <TableHead className="text-center">Yesterday Leads</TableHead>
-                  <TableHead className="text-center">
-                    Yesterday Cons.
-                  </TableHead>
+                  <TableHead className="text-center">Yesterday Cons.</TableHead>
                   <TableHead className="text-center">Yesterday Sales</TableHead>
                   <TableHead className="text-center">MTD Leads</TableHead>
-                  <TableHead className="text-center">
-                    MTD Cons.
-                  </TableHead>
+                  <TableHead className="text-center">MTD Cons.</TableHead>
                   <TableHead className="text-center">MTD Sales</TableHead>
                 </TableRow>
               </TableHeader>
@@ -333,7 +335,7 @@ export default function LeadPosition() {
                   <TableHead colSpan={3} className="text-center">
                     Yesterday
                   </TableHead>
-                  <TableHead colSpan={3} className="text-center">
+                  <TableHead colSpan={5} className="text-center">
                     MTD
                   </TableHead>
                 </TableRow>
@@ -347,6 +349,8 @@ export default function LeadPosition() {
                   <TableHead className="text-center">Leads</TableHead>
                   <TableHead className="text-center">Consultation</TableHead>
                   <TableHead className="text-center">Sales</TableHead>
+                  <TableHead className="text-center">L : S</TableHead>
+                  <TableHead className="text-center">C : S</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -391,6 +395,12 @@ export default function LeadPosition() {
                     <TableCell className="text-center">
                       {row.mtd.sales[row.name].alloted} |{" "}
                       {row.mtd.sales[row.name].req}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {row.mtd.ratios?.[row.name].ls ?? "-"}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {row.mtd.ratios?.[row.name].cs ?? "-"}
                     </TableCell>
                   </TableRow>
                 ))}
