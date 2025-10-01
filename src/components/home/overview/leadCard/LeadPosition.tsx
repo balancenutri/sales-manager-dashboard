@@ -14,7 +14,7 @@ import {
   useGetOldLeadManagementQuery,
 } from "@/service/dashboard/api";
 import dayjs from "dayjs";
-import { ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 // Define types
 interface LeadData {
@@ -115,7 +115,7 @@ export default function LeadPosition() {
       },
       consultation: {
         Mentor: {
-          req: 10,
+          req: 15,
           alloted:
             parseLeadValue(
               newLead?.consultation_done?.mentor_consultations || ""
@@ -125,7 +125,7 @@ export default function LeadPosition() {
             )[0],
         },
         Counsellor: {
-          req: 10,
+          req: 30,
           alloted:
             parseLeadValue(
               newLead?.consultation_done?.counsellor_consultations || ""
@@ -165,7 +165,7 @@ export default function LeadPosition() {
       },
       consultation: {
         Mentor: {
-          req: 10,
+          req: 15,
           alloted:
             parseLeadValue(
               newLead?.consultation_done?.mentor_consultations || ""
@@ -175,7 +175,7 @@ export default function LeadPosition() {
             )[0],
         },
         Counsellor: {
-          req: 10,
+          req: 30,
           alloted:
             parseLeadValue(
               newLead?.consultation_done?.counsellor_consultations || ""
@@ -215,7 +215,7 @@ export default function LeadPosition() {
       },
       consultation: {
         Mentor: {
-          req: 10 * WORKING_DAYS,
+          req: 15 * WORKING_DAYS,
           alloted:
             parseLeadValue(
               newLead?.consultation_done?.mentor_consultations || ""
@@ -225,7 +225,7 @@ export default function LeadPosition() {
             )[1],
         },
         Counsellor: {
-          req: 10 * WORKING_DAYS,
+          req: 30 * WORKING_DAYS,
           alloted:
             parseLeadValue(
               newLead?.consultation_done?.counsellor_consultations || ""
@@ -274,8 +274,27 @@ export default function LeadPosition() {
   ];
 
   return (
-    <Card>
-      <CardContent>
+    <Card className="pt-2 pb-4">
+      <CardContent >
+        <div
+          className="flex justify-between items-center cursor-pointer mb-1"
+          onClick={() => setShowLarge((prev) => !prev)}
+        >
+          <h2 className="text-lg font-semibold">
+            Lead Funnel ({dayjs().format("MMM YYYY")})
+          </h2>
+          <div className="flex items-center gap-3">
+            <p className="text-sm text-gray-600">
+              Total Leads Required:{" "}
+              <span className="font-bold">{totalLeadsRequired}</span>
+            </p>
+            {showLarge ? (
+              <ChevronUp className="cursor-pointer" />
+            ) : (
+              <ChevronDown className="cursor-pointer" />
+            )}
+          </div>
+        </div>
         {!showLarge ? (
           <div>
             <Table
@@ -308,21 +327,6 @@ export default function LeadPosition() {
           </div>
         ) : (
           <div>
-            <div
-              className="flex justify-between items-center cursor-pointer mb-2"
-              onClick={() => setShowLarge(false)}
-            >
-              <h2 className="text-lg font-semibold">
-                Lead Funnel ({dayjs().format("MMM YYYY")})
-              </h2>
-              <div className="flex items-center gap-3">
-                <p className="text-sm text-gray-600">
-                  Total Leads Required:{" "}
-                  <span className="font-bold">{totalLeadsRequired}</span>
-                </p>
-                <ChevronUp className="cursor-pointer" />
-              </div>
-            </div>
             <Table>
               <TableHeader>
                 <TableRow>
