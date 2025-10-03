@@ -41,6 +41,7 @@ import {
   type QuickSalesSnapshotResponse,
   type SalesOpportunities,
   type LeadFunnelResponse,
+  type PageVisitsDataResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -189,6 +190,18 @@ export const dashboardApi = commonAPi.injectEndpoints({
         url: `/sales/overview/pitched-history`,
         method: "POST",
         body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getPageVisitsData: builder.query<
+      PageVisitsDataResponse,
+      {
+        id: number | null;
+      }
+    >({
+      query: ({ id }) => ({
+        url: `/sales/overview/page-visit-details?page_type=${id}`,
+        method: "POST",
       }),
       providesTags: ["Common"],
     }),
@@ -601,6 +614,7 @@ export const {
   useGetSalesTriggerQuery,
   useGetSalesProjectionQuery,
   useGetPitchedHistoryQuery,
+  useGetPageVisitsDataQuery,
   useGetKeySourceConversionQuery,
 
   useGetCounsellorPerformanceQuery,

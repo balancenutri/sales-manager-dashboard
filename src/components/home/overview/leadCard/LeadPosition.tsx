@@ -431,32 +431,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  useGetLeadFunnelQuery,
-  useGetLeadManagementQuery,
-  useGetOldLeadManagementQuery,
-} from "@/service/dashboard/api";
+import { useGetLeadFunnelQuery } from "@/service/dashboard/api";
 import dayjs from "dayjs";
 import { ChevronDown, ChevronUp } from "lucide-react";
-
-// Define types
-interface LeadData {
-  monthly?: {
-    counsellor_todays_lead_target_units?: number;
-    counsellor_lead_target_units?: number;
-  };
-}
-
-interface LeadManagementData {
-  assigned?: {
-    total_assigned_to_mentors?: string;
-    total_assigned_to_counsellors?: string;
-  };
-  consultation_done?: {
-    mentor_consultations?: string;
-    counsellor_consultations?: string;
-  };
-}
 
 interface Metric {
   req: number | undefined;
@@ -494,180 +471,140 @@ interface Row {
 export default function LeadPosition() {
   const [showLarge, setShowLarge] = useState(false);
 
-  const totalLeadsRequired = 1000;
-  const WORKING_DAYS = 26;
-
   const { data } = useGetLeadFunnelQuery();
-  const leadData: LeadData | undefined = data?.data;
 
-  const { data: leadManagementData } = useGetLeadManagementQuery({});
-  const { data: oldLeadManagementData } = useGetOldLeadManagementQuery({});
-
-  const newLead: LeadManagementData | undefined = leadManagementData?.data;
-  const oldLead: LeadManagementData | undefined = oldLeadManagementData?.data;
-
-  const parseLeadValue = (val?: string): [number, number] => {
-    if (!val) return [0, 0];
-    const [today, mtd] = val.split("|").map((v) => parseInt(v.trim(), 10));
-    return [isNaN(today) ? 0 : today, isNaN(mtd) ? 0 : mtd];
-  };
+  const allData = data?.data;
+  // if (isFetching) return;
 
   const convertedData: ConvertedData = {
     today: {
       lead: {
         Mentor: {
-          req: 20,
-          alloted:
-            parseLeadValue(
-              newLead?.assigned?.total_assigned_to_mentors || ""
-            )[0] +
-            parseLeadValue(
-              oldLead?.assigned?.total_assigned_to_mentors || ""
-            )[0],
+          req: allData?.today?.mentor_todays_lead_target_units || 0,
+          alloted: allData?.today?.mentor_todays_lead_assigned_units || 0,
         },
         Counsellor: {
-          req: leadData?.monthly?.counsellor_todays_lead_target_units,
-          alloted:
-            parseLeadValue(
-              newLead?.assigned?.total_assigned_to_counsellors || ""
-            )[0] +
-            parseLeadValue(
-              oldLead?.assigned?.total_assigned_to_counsellors || ""
-            )[0],
+          req: allData?.today?.counsellor_todays_lead_target_units || 0,
+          alloted: allData?.today?.counsellor_todays_lead_assigned_units || 0,
         },
       },
       consultation: {
         Mentor: {
           req: 15,
-          alloted:
-            parseLeadValue(
-              newLead?.consultation_done?.mentor_consultations || ""
-            )[0] +
-            parseLeadValue(
-              oldLead?.consultation_done?.mentor_consultations || ""
-            )[0],
+          alloted: allData?.today?.mentor_todays_consultations || 0,
         },
         Counsellor: {
           req: 30,
-          alloted:
-            parseLeadValue(
-              newLead?.consultation_done?.counsellor_consultations || ""
-            )[0] +
-            parseLeadValue(
-              oldLead?.consultation_done?.counsellor_consultations || ""
-            )[0],
+          alloted: allData?.today?.counsellor_todays_consultations || 0,
         },
       },
       sales: {
-        Mentor: { req: 0, alloted: 0 },
-        Counsellor: { req: 0, alloted: 0 },
+        Mentor: {
+          req: allData?.today?.mentor_todays_sales_target || 0,
+          alloted: allData?.today?.mentor_todays_sales || 0,
+        },
+        Counsellor: {
+          req: allData?.today?.counsellor_todays_sales_target || 0,
+          alloted: allData?.today?.counsellor_todays_sales || 0,
+        },
       },
     },
     yesterday: {
       lead: {
         Mentor: {
-          req: 20,
+          req: allData?.yesterday?.mentor_yesterdays_lead_target_units || 0,
           alloted:
-            parseLeadValue(
-              newLead?.assigned?.total_assigned_to_mentors || ""
-            )[0] +
-            parseLeadValue(
-              oldLead?.assigned?.total_assigned_to_mentors || ""
-            )[0],
+            allData?.yesterday?.mentor_yesterdays_lead_assigned_units || 0,
         },
         Counsellor: {
-          req: leadData?.monthly?.counsellor_todays_lead_target_units,
+          req: allData?.yesterday?.counsellor_yesterdays_lead_target_units || 0,
           alloted:
-            parseLeadValue(
-              newLead?.assigned?.total_assigned_to_counsellors || ""
-            )[0] +
-            parseLeadValue(
-              oldLead?.assigned?.total_assigned_to_counsellors || ""
-            )[0],
+            allData?.yesterday?.counsellor_yesterdays_lead_assigned_units || 0,
         },
       },
       consultation: {
         Mentor: {
           req: 15,
-          alloted:
-            parseLeadValue(
-              newLead?.consultation_done?.mentor_consultations || ""
-            )[0] +
-            parseLeadValue(
-              oldLead?.consultation_done?.mentor_consultations || ""
-            )[0],
+          alloted: allData?.yesterday?.mentor_yesterdays_consultations || 0,
         },
         Counsellor: {
           req: 30,
-          alloted:
-            parseLeadValue(
-              newLead?.consultation_done?.counsellor_consultations || ""
-            )[0] +
-            parseLeadValue(
-              oldLead?.consultation_done?.counsellor_consultations || ""
-            )[0],
+          alloted: allData?.yesterday?.counsellor_yesterdays_consultations || 0,
         },
       },
       sales: {
-        Mentor: { req: 0, alloted: 0 },
-        Counsellor: { req: 0, alloted: 0 },
+        Mentor: {
+          req: allData?.yesterday?.mentor_yesterdays_sales_target || 0,
+          alloted: allData?.yesterday?.mentor_yesterdays_sales || 0,
+        },
+        Counsellor: {
+          req: allData?.yesterday?.counsellor_yesterdays_sales_target || 0,
+          alloted: allData?.yesterday?.counsellor_yesterdays_sales || 0,
+        },
       },
     },
     mtd: {
       lead: {
         Mentor: {
-          req: 20 * WORKING_DAYS,
-          alloted:
-            parseLeadValue(
-              newLead?.assigned?.total_assigned_to_mentors || ""
-            )[1] +
-            parseLeadValue(
-              oldLead?.assigned?.total_assigned_to_mentors || ""
-            )[1],
+          req: allData?.monthly?.mentor_lead_target_units || 0,
+          alloted: allData?.monthly?.mentor_lead_assigned_units || 0,
         },
         Counsellor: {
-          req: leadData?.monthly?.counsellor_lead_target_units,
-          alloted:
-            parseLeadValue(
-              newLead?.assigned?.total_assigned_to_counsellors || ""
-            )[1] +
-            parseLeadValue(
-              oldLead?.assigned?.total_assigned_to_counsellors || ""
-            )[1],
+          req: allData?.monthly?.counsellor_lead_target_units || 0,
+          alloted: allData?.monthly?.counsellor_lead_assigned_units || 0,
         },
       },
       consultation: {
         Mentor: {
-          req: 15 * WORKING_DAYS,
-          alloted:
-            parseLeadValue(
-              newLead?.consultation_done?.mentor_consultations || ""
-            )[1] +
-            parseLeadValue(
-              oldLead?.consultation_done?.mentor_consultations || ""
-            )[1],
+          req: 15 * 26,
+          alloted: allData?.monthly?.mentor_total_consultations || 0,
         },
         Counsellor: {
-          req: 30 * WORKING_DAYS,
-          alloted:
-            parseLeadValue(
-              newLead?.consultation_done?.counsellor_consultations || ""
-            )[1] +
-            parseLeadValue(
-              oldLead?.consultation_done?.counsellor_consultations || ""
-            )[1],
+          req: 30 * 26,
+          alloted: allData?.monthly?.counsellor_total_consultations || 0,
         },
       },
       sales: {
-        Mentor: { req: 0, alloted: 0 },
-        Counsellor: { req: 0, alloted: 0 },
+        Mentor: {
+          req: allData?.monthly?.mentor_total_target || 0,
+          alloted: allData?.monthly?.mentor_total_sales || 0,
+        },
+        Counsellor: {
+          req: allData?.monthly?.counsellor_total_target || 0,
+          alloted: allData?.monthly?.counsellor_total_sales || 0,
+        },
       },
       ratios: {
-        Mentor: { ls: "18.5%", cs: "42.8%" },
-        Counsellor: { ls: "27.9%", cs: "56.8%" },
+        Mentor: {
+          ls: `${
+            allData?.monthly?.mentor_lead_to_sales_conversion_rate?.toFixed(
+              2
+            ) || 0
+          } %`,
+          cs: `${
+            allData?.monthly?.mentor_consultation_to_sales_conversion_rate?.toFixed(
+              2
+            ) || 0
+          } %`,
+        },
+        Counsellor: {
+          ls: `${
+            allData?.monthly?.counsellor_lead_to_sales_conversion_rate?.toFixed(
+              2
+            ) || 0
+          } %`,
+          cs: `${
+            allData?.monthly?.counsellor_consultation_to_sales_conversion_rate?.toFixed(
+              2
+            ) || 0
+          } %`,
+        },
       },
     },
   };
+  const totalLeadsRequired =
+    (convertedData.mtd.lead.Counsellor.req || 0) +
+    (convertedData.mtd.lead.Mentor.req || 0);
 
   const rows: Row[] = [
     {
@@ -739,16 +676,22 @@ export default function LeadPosition() {
   const summaryData = [
     `${totals.today.leads} | ${totals.today.reqLeads}`,
     `${totals.today.consultations} | ${totals.today.reqCons}`,
-    `${totals.today.sales} | ${totals.today.reqSales}`,
+    `₹ ${totals.today.sales?.toLocaleString(
+      "en-IN"
+    )} | ₹ ${totals.today.reqSales?.toLocaleString("en-IN")}`,
     `${totals.yesterday.leads} | ${totals.yesterday.reqLeads}`,
     `${totals.yesterday.consultations} | ${totals.yesterday.reqCons}`,
-    `${totals.yesterday.sales} | ${totals.yesterday.reqSales}`,
+    `₹ ${totals.yesterday.sales?.toLocaleString(
+      "en-IN"
+    )} | ₹ ${totals.yesterday.reqSales?.toLocaleString("en-IN")}`,
     `${totals.mtd.leads} | ${totals.mtd.reqLeads}`,
     `${totals.mtd.consultations} | ${totals.mtd.reqCons}`,
-    `${totals.mtd.sales} | ${totals.mtd.reqSales}`,
+    `₹ ${totals.mtd.sales?.toLocaleString(
+      "en-IN"
+    )} | ₹ ${totals.mtd.reqSales?.toLocaleString("en-IN")}`,
     // ratios — you can compute weighted average here if needed
-    convertedData.mtd.ratios?.Mentor.ls ?? "-",
-    convertedData.mtd.ratios?.Mentor.cs ?? "-",
+    `${allData?.monthly.total_lead_to_sales_conversion_rate.toFixed(2)} %`,
+    `${allData?.monthly.total_consultation_to_sales_conversion_rate.toFixed(2)} %`,
   ];
 
   return (
@@ -851,8 +794,12 @@ export default function LeadPosition() {
                       {row.today.consultation[row.name].req}
                     </TableCell>
                     <TableCell className="text-center">
-                      {row.today.sales[row.name].alloted} |{" "}
-                      {row.today.sales[row.name].req}
+                      ₹{" "}
+                      {row.today.sales[row.name].alloted?.toLocaleString(
+                        "en-IN"
+                      )}{" "}
+                      | ₹{" "}
+                      {row.today.sales[row.name].req?.toLocaleString("en-IN")}
                     </TableCell>
                     {/* Yesterday */}
                     <TableCell className="text-center">
@@ -864,8 +811,14 @@ export default function LeadPosition() {
                       {row.yesterday.consultation[row.name].req}
                     </TableCell>
                     <TableCell className="text-center">
-                      {row.yesterday.sales[row.name].alloted} |{" "}
-                      {row.yesterday.sales[row.name].req}
+                      ₹{" "}
+                      {row.yesterday.sales[row.name].alloted?.toLocaleString(
+                        "en-IN"
+                      )}{" "}
+                      | ₹{" "}
+                      {row.yesterday.sales[row.name].req?.toLocaleString(
+                        "en-IN"
+                      )}
                     </TableCell>
                     {/* MTD */}
                     <TableCell className="text-center">
@@ -877,8 +830,9 @@ export default function LeadPosition() {
                       {row.mtd.consultation[row.name].req}
                     </TableCell>
                     <TableCell className="text-center">
-                      {row.mtd.sales[row.name].alloted} |{" "}
-                      {row.mtd.sales[row.name].req}
+                      ₹{" "}
+                      {row.mtd.sales[row.name].alloted?.toLocaleString("en-IN")}{" "}
+                      | ₹ {row.mtd.sales[row.name].req?.toLocaleString("en-IN")}
                     </TableCell>
                     <TableCell className="text-center">
                       {row.mtd.ratios?.[row.name].ls ?? "-"}

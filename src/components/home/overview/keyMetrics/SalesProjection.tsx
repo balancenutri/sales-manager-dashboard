@@ -8,9 +8,11 @@ import {
 } from "@/components/ui/dialog";
 import PitchedHistory from "./PitchedDetails";
 import { useGetSalesProjectionQuery } from "@/service/dashboard/api";
+import PageVisitModal from "./PageVisitModal";
 
 export default function SalesProjection() {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<null | number>(null);
   const { data } = useGetSalesProjectionQuery();
 
   return (
@@ -37,7 +39,7 @@ export default function SalesProjection() {
               </div>
             </div>
           </div>
-          <div onClick={() => setOpenDialog(true)}>
+          <div>
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-md transition-all cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
@@ -98,7 +100,7 @@ export default function SalesProjection() {
             </div>
           </div>
           {/* Pay Later */}
-          <div>
+          <div onClick={() => setOpenModal(1)}>
             <div className="bg-gradient-to-r flex items-center h-full from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-md transition-all cursor-pointer">
               <div className="flex items-center w-full justify-between">
                 <div className="flex items-center space-x-3">
@@ -114,7 +116,7 @@ export default function SalesProjection() {
               </div>
             </div>
           </div>
-          <div>
+          <div onClick={() => setOpenModal(2)}>
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-md transition-all cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
@@ -152,6 +154,21 @@ export default function SalesProjection() {
             <DialogTitle>Pitched History</DialogTitle>
           </DialogHeader>
           <PitchedHistory />
+        </DialogContent>
+      </Dialog>
+      <Dialog open={!!openModal} onOpenChange={() => setOpenModal(null)}>
+        <DialogContent
+          onInteractOutside={(e: React.MouseEvent | Event) =>
+            e.preventDefault()
+          }
+          className="min-w-[80vw]"
+        >
+          <DialogHeader>
+            <DialogTitle>
+              {openModal == 1 ? "Page Visits" : "Checkout Visit"}
+            </DialogTitle>
+          </DialogHeader>
+          <PageVisitModal id={openModal} />
         </DialogContent>
       </Dialog>
     </Card>
