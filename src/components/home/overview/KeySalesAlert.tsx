@@ -3,7 +3,7 @@ import {
   useGetConsultationPendingQuery,
   useGetLeadSolidSalesOpportunityQuery,
   useGetSalesTriggerQuery,
-  useGetSolidSalesOpportunityQuery
+  useGetSolidSalesOpportunityQuery,
 } from "@/service/dashboard/api";
 import { useState } from "react";
 import StatusWiseMetrics from "./keyMetrics/StatusWise";
@@ -16,13 +16,12 @@ type UserCount = {
 };
 export default function KeySalesAlert() {
   const { data } = useGetSalesTriggerQuery();
-  const { data: leadSolidSalesData, } =
-    useGetLeadSolidSalesOpportunityQuery();
+  const { data: leadSolidSalesData } = useGetLeadSolidSalesOpportunityQuery();
 
   const { data: solidSalesData } = useGetSolidSalesOpportunityQuery();
 
   const { data: consultationPending } = useGetConsultationPendingQuery();
-//   const { data: unconvertedLeads } = useGetUnconvertedLeadsQuery();
+  //   const { data: unconvertedLeads } = useGetUnconvertedLeadsQuery();
 
   const totalSalesOpp =
     leadSolidSalesData?.data &&
@@ -73,7 +72,7 @@ export default function KeySalesAlert() {
                 <div className="text-xl font-bold">{totalSalesOpp}</div>
               </div>
             </div>
-            {hoveredSection == "hot" && (
+            {hoveredSection == "hot" && (totalSalesOpp || 0) > 0 && (
               <div className="absolute left-0 top-full right-0 mt-2 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 p-2 z-10 animate-in slide-in-from-left-2 duration-200 min-w-48">
                 <div className="grid grid-cols-3 gap-2">
                   {transformedData.map((item, index) => (

@@ -290,14 +290,52 @@ export interface LeadFunnelResponse {
     message: string;
     data: {
         monthly: {
-            "counsellor_lead_target_units": number;
-            "mentor_lead_target_units": number;
-            "counsellor_todays_lead_target_units": number;
-            "mentor_todays_lead_target_units": number;
-        }
+            counsellor_lead_target_units: number;
+            counsellor_lead_assigned_units: number;
+            mentor_lead_target_units: number;
+            mentor_lead_assigned_units: number;
+            counsellor_total_target: number;
+            mentor_total_target: number;
+            counsellor_total_sales: number;
+            mentor_total_sales: number;
+            counsellor_total_consultations: number;
+            mentor_total_consultations: number;
+            counsellor_lead_to_sales_conversion_rate: number;
+            mentor_lead_to_sales_conversion_rate: number | null;
+            counsellor_consultation_to_sales_conversion_rate: number;
+            mentor_consultation_to_sales_conversion_rate: number | null;
+            total_lead_to_sales_conversion_rate: number;
+            total_consultation_to_sales_conversion_rate: number
+        };
+        today: {
+            counsellor_todays_lead_target_units: number;
+            counsellor_todays_lead_assigned_units: number;
+            mentor_todays_lead_target_units: number;
+            mentor_todays_lead_assigned_units: number;
+            counsellor_todays_sales_target: number;
+            mentor_todays_sales_target: number;
+            counsellor_todays_sales: number;
+            mentor_todays_sales: number;
+            counsellor_todays_consultations: number;
+            mentor_todays_consultations: number;
+        };
+        yesterday: {
+            counsellor_yesterdays_lead_target_units: number;
+            counsellor_yesterdays_lead_assigned_units: number;
+            mentor_yesterdays_lead_target_units: number;
+            mentor_yesterdays_lead_assigned_units: number;
+            counsellor_yesterdays_sales_target: number;
+            mentor_yesterdays_sales_target: number;
+            counsellor_yesterdays_sales: number;
+            mentor_yesterdays_sales: number;
+            total_yesterdays_sales: number;
+            counsellor_yesterdays_consultations: number;
+            mentor_yesterdays_consultations: number;
+        };
     };
-    totalCount: number;
-}
+    hide_columns: string[];
+};
+
 export interface QuickSalesSnapshotResponse {
     status: string;
     message: string;
@@ -934,6 +972,22 @@ export interface PitchedHistoryResponse {
     status: string;
     message: string;
     data: PitchedType;
+    hide_columns: string[];
+};
+
+export interface PageVisitsDataResponse {
+    status: string;
+    message: string;
+    data: {
+        name: string;
+        user_id: number;
+        program_name: string;
+        program_category: string;
+        mrp?: number
+        program_duration?: number,
+        email_id: string;
+        page_type: string;
+    }[];
     hide_columns: string[];
 };
 

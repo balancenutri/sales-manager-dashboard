@@ -29,6 +29,7 @@ import CounsellorDigitalMarketingPerfotmance from "@/components/home/digitalMark
 import KeySalesAlert from "@/components/home/overview/KeySalesAlert";
 import SalesSnapshots from "@/components/home/quickSnapshot/SalesSnapshots";
 import LeadPosition from "@/components/home/overview/leadCard/LeadPosition";
+import OcCard from "@/components/home/overview/OcCard";
 // import BenchmarkAndAvg from "@/components/home/overview/BenchmarkAndAvg";
 
 export default function Home() {
@@ -57,19 +58,19 @@ export default function Home() {
           <TabsContent value="overview" className="space-y-6">
             {/* Key Metrics */}
             {/* <BenchmarkAndAvg /> */}
+            <LeadPosition />
             <h2 className="text-xl font-bold">Quick Sales Snapshot</h2>
             <SalesSnapshots />
             {/* <h2 className="text-xl font-bold"></h2> */}
-            <LeadPosition />
             <h2 className="text-xl font-bold">Key Sales Alerts</h2>
 
             <KeySalesAlert />
             <h2 className="text-xl font-bold">Lead Management</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {/* Combined Leads Card */}
               <LeadCard type="new" />
               <LeadCard type="old" />
-              {/* <OcCard /> */}
+              <OcCard />
 
               {/* Combined Sales & Revenue Card */}
               <RevenueCard />
