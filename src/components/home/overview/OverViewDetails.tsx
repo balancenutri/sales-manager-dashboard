@@ -1,4 +1,4 @@
-import OverviewCard from "./OverviewCard";
+import OverviewCard from "../cards/OverviewCard";
 import {
   useGetLeadMtdSalesRisksQuery,
   useGetLeadRiskAndMissesQuery,

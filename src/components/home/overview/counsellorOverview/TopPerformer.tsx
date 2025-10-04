@@ -16,7 +16,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetCounsellorPerformanceQuery } from "@/service/dashboard/api";
 import { useState } from "react";
-import CounsellorCard from "../cards/CounsellorCard";
 import {
   Select,
   SelectContent,
@@ -24,23 +23,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-export default function TopPerformer({
-  title,
-  subTitle,
-}: {
-  title: string;
-  subTitle: string;
-}) {
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import CounsellorCard from "../../cards/CounsellorCard";
+export default function TopPerformer() {
   const [openModal, setOpenModal] = useState<null | number>(null);
   const [selected, setSelected] = useState<
     "sales" | "conversion_rate" | "avg_per_unit"
   >("conversion_rate");
+  const [order, setOrder] = useState<"asc" | "desc">("desc");
 
   const { data, isFetching } = useGetCounsellorPerformanceQuery({
     sort_by: selected,
-    order: title === "Top Performers" ? "desc" : "asc",
+    order,
   });
-  console.log({ selected, setSelected });
 
   const renderSkeletonRows = () => {
     return Array.from({ length: 3 }).map((_, i) => (
@@ -58,24 +53,44 @@ export default function TopPerformer({
       <CardHeader>
         <div className="flex justify-between items-center">
           <div className="">
-            <CardTitle>{title}</CardTitle>
-            <CardDescription>{subTitle}</CardDescription>
+            <CardTitle>{order == "desc" ? "Top" : "Low"} Performers</CardTitle>
+            <CardDescription>Best Performers</CardDescription>
           </div>
-          <Select
-            onValueChange={(val: string) =>
-              setSelected(val as "sales" | "conversion_rate" | "avg_per_unit")
-            }
-            value={selected}
-          >
-            <SelectTrigger className="w-32">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="conversion_rate">Conversion</SelectItem>
-              <SelectItem value="sales">Revenue</SelectItem>
-              <SelectItem value="avg_per_unit">Avg. Per Unit Sale</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="flex gap-2">
+            <Tabs defaultValue={order} className="">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger
+                  className="cursor-pointer"
+                  value="desc"
+                  onClick={() => setOrder("desc")}
+                >
+                  Top
+                </TabsTrigger>
+                <TabsTrigger
+                  className="cursor-pointer"
+                  value={"asc"}
+                  onClick={() => setOrder("asc")}
+                >
+                  Low
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+            <Select
+              onValueChange={(val: string) =>
+                setSelected(val as "sales" | "conversion_rate" | "avg_per_unit")
+              }
+              value={selected}
+            >
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="conversion_rate">Conversion</SelectItem>
+                <SelectItem value="sales">Revenue</SelectItem>
+                <SelectItem value="avg_per_unit">Avg. Per Unit Sale</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </CardHeader>
       <CardContent>
@@ -103,9 +118,6 @@ export default function TopPerformer({
                         <p className="text-xs text-muted-foreground">
                           {sales.conversion_rate}% conversion rate
                         </p>
-                        {/* <p className="text-xs text-muted-foreground">
-                          {sales.avg_per_unit}% average per unit sale
-                        </p> */}
                       </div>
                       <Badge variant="secondary">₹{sales.sales}</Badge>
                     </div>
@@ -123,7 +135,7 @@ export default function TopPerformer({
           <DialogHeader>
             <DialogTitle>Counsellor Details</DialogTitle>
           </DialogHeader>
-          {openModal && <CounsellorCard counsellorId={openModal}/>}
+          {openModal && <CounsellorCard counsellorId={openModal} />}
         </DialogContent>
       </Dialog>
     </Card>

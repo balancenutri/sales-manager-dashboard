@@ -21,9 +21,11 @@ OverviewCardProps) {
     <Card className="relative mt-4">
       <CardHeader className="flex justify-between">
         <CardTitle className="text-base font-medium flex justify-between items-center w-full">
-          {title && <span className="block text-nowrap px-3 py-2 rounded-md bg-orange-100 text-orange-800">
-            {title}
-          </span>}
+          {title && (
+            <span className="block text-nowrap px-3 py-2 rounded-md bg-orange-100 text-orange-800">
+              {title}
+            </span>
+          )}
           {/* <Tabs defaultValue={selected} className="space-y-6">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger
