@@ -28,6 +28,7 @@ import LeadPosition from "@/components/home/overview/leadCard/LeadPosition";
 import OcCard from "@/components/home/overview/leadManagement/OcCard";
 import SalesAlert from "@/components/home/overview/counsellorOverview/SalesAlert";
 import RiskMissesAndOds from "@/components/home/overview/counsellorOverview/RiskMissesAndOds";
+import BalancePayment from "@/components/home/overview/dataTables/salesAlert/BalancePayment";
 
 export default function Home() {
   return (
@@ -72,6 +73,7 @@ export default function Home() {
             </div>
 
             <RiskMissesAndOds />
+            <BalancePayment />
 
             <KeySourceConversion />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

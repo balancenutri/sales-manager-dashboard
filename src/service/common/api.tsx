@@ -55,23 +55,61 @@ export const commonAPi = createApi({
     getAllHealthIssue: builder.query<HealthIssueResponse, void>({
       query: () => `/common/get-health-issues`,
     }),
-    getAllProgramName: builder.query<AllProgramResponse[], { user_type: string | null }>({
+    getAllProgramName: builder.query<
+      AllProgramResponse[],
+      { user_type: string | null }
+    >({
       query: (params) => ({
         url: `/program/program-names`,
         method: "GET",
         params,
       }),
     }),
-    getAllSource: builder.query<AllSourceResponse, { source_id: number | null }>({
+    getAllSource: builder.query<
+      AllSourceResponse,
+      { source_id: number | null }
+    >({
       query: (params) => ({
         url: `/common/get-all-sources`,
         method: "GET",
         params,
       }),
     }),
-    // getAllPrograms: builder.query({
-    //   query: () => `/program-session/all`,
-    // }),
+    getAllPrograms: builder.query({
+      query: () => `/program-session/all`,
+    }),
+
+    getMentorAvailableSlots: builder.query({
+      query: ({ id, date }) => {
+        return {
+          url: `sales/leads/check-slot?id=${id}&date=${date}`,
+          method: "POST",
+        };
+      },
+    }),
+    getPaymentGroupDetails: builder.query({
+      query: (type) => `/accounts/payment-mode/get-mode-by-group?group=${type}`,
+    }),
+    suggestProgram: builder.mutation({
+      query: (body) => {
+        return {
+          url: `/sales/admin-user/suggest-program`,
+          method: "POST",
+          body,
+        };
+      },
+      // invalidatesTags: ["SuggestProgram"],
+    }),
+    updateSuggestProgram: builder.mutation({
+      query: ({ body, id }) => {
+        return {
+          url: `/sales/leads/update-suggested-program/${id}`,
+          method: "PATCH",
+          body,
+        };
+      },
+      // invalidatesTags: ["SuggestProgram"],
+    }),
   }),
 });
 
@@ -86,5 +124,11 @@ export const {
   useGetAllHealthIssueQuery,
 
   useGetAllProgramNameQuery,
+  useGetAllProgramsQuery,
   useGetAllSourceQuery,
+
+  useLazyGetMentorAvailableSlotsQuery,
+  useLazyGetPaymentGroupDetailsQuery,
+  useSuggestProgramMutation,
+  useUpdateSuggestProgramMutation,
 } = commonAPi;
