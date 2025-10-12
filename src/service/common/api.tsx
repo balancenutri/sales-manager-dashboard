@@ -57,7 +57,7 @@ export const commonAPi = createApi({
     }),
     getAllProgramName: builder.query<
       AllProgramResponse[],
-      { user_type: string | null }
+      { user_type?: string | null }
     >({
       query: (params) => ({
         url: `/program/program-names`,

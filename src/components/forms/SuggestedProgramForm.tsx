@@ -160,18 +160,18 @@ export default function SuggestProgramForm({
   };
 
   return (
-    <div className="w-full max-w-[500px] max-h-[90vh] bg-background rounded-lg shadow-lg">
+    <div className="w-full max-h-[90vh] bg-background">
       <div className="p-4 border-b">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Suggest Program</h2>
-          <Button
+        <div className="flex items-center justify-center">
+          <h2 className="text-lg font-semibold">Suggest Program</h2>
+          {/* <Button
             variant="ghost"
             size="icon"
             onClick={modalControl}
             className="hover:text-destructive"
           >
             <X className="h-5 w-5" />
-          </Button>
+          </Button> */}
         </div>
       </div>
 
@@ -191,11 +191,15 @@ export default function SuggestProgramForm({
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
                 <SelectTrigger
-                  className={cn(errors.lead_status && "border-destructive")}
+                  className={cn(
+                    errors.lead_status && "border-destructive",
+                    "w-full"
+                  )}
                 >
                   <SelectValue placeholder="Select Status" />
                 </SelectTrigger>
                 <SelectContent>
+                  
                   {leadStatus.map((status) => (
                     <SelectItem key={status.value} value={status.value}>
                       {status.name}
@@ -267,7 +271,10 @@ export default function SuggestProgramForm({
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
                 <SelectTrigger
-                  className={cn(errors.program_id && "border-destructive")}
+                  className={cn(
+                    errors.program_id && "border-destructive",
+                    "w-full"
+                  )}
                 >
                   <SelectValue placeholder="Select Program" />
                 </SelectTrigger>
@@ -303,7 +310,10 @@ export default function SuggestProgramForm({
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
                 <SelectTrigger
-                  className={cn(errors.session_id && "border-destructive")}
+                  className={cn(
+                    errors.session_id && "border-destructive",
+                    "w-full"
+                  )}
                 >
                   <SelectValue placeholder="Select Session" />
                 </SelectTrigger>
@@ -448,7 +458,10 @@ export default function SuggestProgramForm({
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
                 <SelectTrigger
-                  className={cn(errors.next_fu_time && "border-destructive")}
+                  className={cn(
+                    errors.next_fu_time && "border-destructive",
+                    "w-full"
+                  )}
                 >
                   <SelectValue placeholder="Select Time" />
                 </SelectTrigger>
