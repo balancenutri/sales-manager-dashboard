@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-
 type FollowUpDetails = {
   prev_follow_up_id: number | null;
   prev_follow_up_date: string | null;
@@ -41,7 +39,7 @@ function formatDate(dateString: string) {
 }
 
 export default function FollowUpCell({ value, rowData }: FollowUpCellProps) {
-  if (!value) return null;
+  if (!value && !rowData) return null;
 
   const followUpType = value.next_follow_up_type === "1" ? "Whatsapp" : "Call";
 

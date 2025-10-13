@@ -16,7 +16,7 @@ type HealthDetailsCellProps = {
 }
 
 export default function HealthDetailsCell({ value, rowData }: HealthDetailsCellProps) {
-  if (!value) return null
+  if (!value && rowData) return null
 
   const hasHealthData = value.health_score !== null || value.weight !== null
 
