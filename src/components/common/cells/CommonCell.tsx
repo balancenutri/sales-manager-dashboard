@@ -35,7 +35,7 @@ const CommonCell = ({ value, hideData = [] }: GenericObjectCellProps) => {
                 .join(" ")}
               :
             </span>
-            <span className="font-normal">{typeof item === "object" ? JSON.stringify(item) : isDateKey(key) ? dayjs(item).format("DD MMM YYYY") : String(item)}</span>
+            <span className="font-normal">{typeof item === "object" ? JSON.stringify(item) : isDateKey(key) && (typeof item === 'string' || item instanceof Date) ? dayjs(item).format("DD MMM YYYY") : String(item)}</span>
           </div>
         )
       })}
