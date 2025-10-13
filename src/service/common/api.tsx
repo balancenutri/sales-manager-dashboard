@@ -75,7 +75,7 @@ export const commonAPi = createApi({
         params,
       }),
     }),
-    getAllPrograms: builder.query({
+    getAllPrograms: builder.query<any, void>({
       query: () => `/program-session/all`,
     }),
 

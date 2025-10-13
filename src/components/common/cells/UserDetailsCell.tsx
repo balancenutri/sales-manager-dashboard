@@ -25,9 +25,6 @@ export default function UserDetailsCell({
   hideData = [],
 }: UserDetailsCellProps) {
   if (!value) return null;
-
-  
-
   return (
     <div className="space-y-1 py-2 flex flex-col items-center">
       <div className="text-sm font-medium text-blue-600 hover:underline cursor-pointer">

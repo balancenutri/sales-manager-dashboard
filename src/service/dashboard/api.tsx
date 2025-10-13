@@ -42,6 +42,7 @@ import {
   type SalesOpportunities,
   type LeadFunnelResponse,
   type PageVisitsDataResponse,
+  type SalesAlertResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -246,6 +247,11 @@ export const dashboardApi = commonAPi.injectEndpoints({
     getLeadMtdSalesRisks: builder.query<SolidSalesResponse, void>({
       query: () => `/mentor/lead-dashboard/mtd-sales-risk`,
     }),
+    
+    getSalesAlert: builder.query<SalesAlertResponse, void>({
+      query: () => `/franchise/country-wise-sales/sales-alert`,
+    }),
+
 
     getOcRiskAndMisses: builder.query<SolidSalesResponse, void>({
       query: () => `/mentor/oc-dashboard/risk-and-misses`,
@@ -622,6 +628,7 @@ export const {
   useGetLeadRiskAndMissesQuery,
   useGetLeadSolidSalesOpportunityQuery,
   useGetLeadMtdSalesRisksQuery,
+  useGetSalesAlertQuery,
 
   useGetOcMtdSalesRisksQuery,
   useGetOcRiskAndMissesQuery,

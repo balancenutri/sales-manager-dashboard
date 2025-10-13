@@ -9,9 +9,91 @@ export const dataTableApi = dashboardApi.injectEndpoints({
         body,
       }),
     }),
+    getEngagementData: builder.query<any, { filter: string }>({
+      query: (body) => ({
+        url: `/mentor/lead-dashboard/engagement-today-leads`,
+        method: "POST",
+        body,
+      }),
+    }),
+    getFollowUpData: builder.query<any, { filter: string }>({
+      query: (body) => ({
+        url: `/mentor/lead-dashboard/follow-ups-leads`,
+        method: "POST",
+        body,
+      }),
+    }),
+    getCrossCallData: builder.query<any, { filter: string }>({
+      query: (body) => ({
+        url: `/mentor/lead-dashboard/cross-calls-leads`,
+        method: "POST",
+        body,
+      }),
+    }),
+    getCallsData: builder.query<any, { filter: string }>({
+      query: (body) => ({
+        url: `/mentor/lead-dashboard/calls-leads`,
+        method: "POST",
+        body,
+      }),
+    }),
+
+    getLeadWalletExpiringTomorrowData: builder.query<any, { search?: string}>({
+      query: (body) => ({
+        url: `/mentor/lead-dashboard/wallet-expiring-tomorrow-leads`,
+        method: "POST",
+        body,
+      }),
+    }),
+    getHotLeadWithNegativeFeedbackTomorrowData: builder.query<any, { search?: string}>({
+      query: (body) => ({
+        url: `/mentor/lead-dashboard/hot-leads-with-negative-feedback`,
+        method: "POST",
+        body,
+      }),
+    }),
+    getLeadHotFollowUpPendingData: builder.query<any, { search?: string}>({
+      query: (body) => ({
+        url: `/mentor/lead-dashboard/hot-follow-ups-pending-leads`,
+        method: "POST",
+        body,
+      }),
+    }),
+    getLeadGoodWeightLossData: builder.query<any, { search?: string}>({
+      query: (body) => ({
+        url: `/mentor/lead-dashboard/good-weight-loss-leads`,
+        method: "POST",
+        body,
+      }),
+    }),
+    getLeadMilestoneData: builder.query<any, { search?: string}>({
+      query: (body) => ({
+        url: `/mentor/lead-dashboard/milestone-filled-leads`,
+        method: "POST",
+        body,
+      }),
+    }),
+    getLeadWithGuidePurchasedData: builder.query<any, { search?: string}>({
+      query: (body) => ({
+        url: `/mentor/lead-dashboard/guide-purchased-leads`,
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
 export const {
-    useGetBalancePaymentOdDataQuery,
+  useGetBalancePaymentOdDataQuery,
+  useGetEngagementDataQuery,
+  useGetFollowUpDataQuery,
+  useGetCrossCallDataQuery,
+  useGetCallsDataQuery,
+
+  useGetLeadWalletExpiringTomorrowDataQuery,
+  useGetHotLeadWithNegativeFeedbackTomorrowDataQuery,
+  useGetLeadHotFollowUpPendingDataQuery,
+  useGetLeadGoodWeightLossDataQuery,
+  useGetLeadMilestoneDataQuery,
+  useGetLeadWithGuidePurchasedDataQuery
 } = dataTableApi;

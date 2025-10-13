@@ -1,35 +1,53 @@
-import { useForm, Controller } from "react-hook-form"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Textarea } from "@/components/ui/textarea"
-import { CalendarIcon, X } from "lucide-react"
-import { format } from "date-fns"
-import { cn } from "@/lib/utils"
-import { useState, useEffect } from "react"
-import { useGetAllProgramNameQuery, useGetAllProgramsQuery,
+import { useForm, Controller } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Textarea } from "@/components/ui/textarea";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
+import {
+  useGetAllProgramNameQuery,
+  useGetAllProgramsQuery,
   useLazyGetMentorAvailableSlotsQuery,
   useLazyGetPaymentGroupDetailsQuery,
   useUpdateSuggestProgramMutation,
-} from "@/service/common/api"
-import { adminId, leadStatus } from "@/lib/data"
+} from "@/service/common/api";
+import { adminId, leadStatus } from "@/lib/data";
 
 interface EditSuggestProgramFormProps {
-  modalControl: () => void
-  data: any
+  modalControl: () => void;
+  data: any;
 }
 
-export default function EditSuggestProgramForm({ modalControl, data }: EditSuggestProgramFormProps) {
-  const pitchedData = data?.pitched_details || data?.pitched_program_details
-  const suggestedData = data?.suggested_details || data?.suggested_program_details
+export default function EditSuggestProgramForm({
+  modalControl,
+  data,
+}: EditSuggestProgramFormProps) {
+  const pitchedData = data?.pitched_details || data?.pitched_program_details;
+  const suggestedData =
+    data?.suggested_details || data?.suggested_program_details;
+
+  console.log({ data });
 
   function capitalizeFirstLetter(str: string) {
-    if (!str) return ""
-    return str.charAt(0).toUpperCase() + str.slice(1)
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   const defaultValue = {
@@ -43,12 +61,18 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
       typeof suggestedData?.suggested_motivation_level === "string"
         ? capitalizeFirstLetter(suggestedData?.suggested_motivation_level)
         : suggestedData?.suggested_motivation_level === 0
-          ? "Low"
-          : suggestedData?.suggested_motivation_level === 1
-            ? "Medium"
-            : "High",
+        ? "Low"
+        : suggestedData?.suggested_motivation_level === 1
+        ? "Medium"
+        : "High",
     payment_link: "No",
-  }
+    payment_mode: "",
+    payment_mode_id: "",
+    date: "",
+    next_fu_time: "",
+    follow_up_using: "",
+    payment_expiry: "",
+  };
 
   const pitchedValue = {
     session_id: pitchedData?.pitched_program_session_id,
@@ -58,84 +82,100 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
     mentor_comment: pitchedData?.pitched_mentor_note,
     lead_status: data?.source_and_status_details?.lead_status,
     motivation:
-      pitchedData?.pitched_motivation_level === 0
+      typeof suggestedData?.suggested_motivation_level === "string"
+        ? capitalizeFirstLetter(suggestedData?.suggested_motivation_level)
+        : suggestedData?.suggested_motivation_level === 0
         ? "Low"
-        : pitchedData?.pitched_motivation_level === 1
-          ? "Medium"
-          : "High",
+        : suggestedData?.suggested_motivation_level === 1
+        ? "Medium"
+        : "High",
     payment_link: "No",
-  }
+    payment_mode: "",
+    payment_mode_id: "",
+    date: "",
+    next_fu_time: "",
+    follow_up_using: "",
+    payment_expiry: "",
+  };
 
   const {
     control,
     handleSubmit,
     watch,
     setValue,
-    formState: { errors },
+    // formState: { errors },
   } = useForm({
     defaultValues: suggestedData ? defaultValue : pitchedValue,
-  })
+  });
 
-  const mentorId = adminId
+  const mentorId = adminId;
 
   const { data: allPrograms, isLoading } = useGetAllProgramNameQuery({
     user_type: data?.lead_details ? "Lead" : "Client",
-  })
-  const { data: allProgramSessions } = useGetAllProgramsQuery()
-  const [getAvailableSlots, { data: availableSlots }] = useLazyGetMentorAvailableSlotsQuery()
-  const [getPaymentMode, { data: paymentMode }] = useLazyGetPaymentGroupDetailsQuery()
-  const [updateSuggestProgram, { isLoading: loadingSuggest }] = useUpdateSuggestProgramMutation()
+  });
+  const { data: allProgramSessions } = useGetAllProgramsQuery();
+  const [getAvailableSlots, { data: availableSlots }] =
+    useLazyGetMentorAvailableSlotsQuery();
+  const [getPaymentMode, { data: paymentMode }] =
+    useLazyGetPaymentGroupDetailsQuery();
+  const [updateSuggestProgram, { isLoading: loadingSuggest }] =
+    useUpdateSuggestProgramMutation();
 
-  const [sessions, setSessions] = useState<any[]>([])
+  const [sessions, setSessions] = useState<any[]>([]);
 
-  const watchProgram = watch("program_id")
-  const watchSession = watch("session_id")
-  const watchPaymentLink = watch("payment_link")
-  const watchPaymentMode = watch("payment_mode")
+  const watchProgram = watch("program_id");
+  const watchSession = watch("session_id");
+  const watchPaymentLink = watch("payment_link");
+  const watchPaymentMode = watch("payment_mode");
 
   useEffect(() => {
     if (allProgramSessions?.[0]?.data) {
       const filteredSessions = allProgramSessions[0].data.filter(
-        (item: any) => item.meta_data.program_id === watchProgram,
-      )
-      setSessions(filteredSessions)
+        (item: any) => item.meta_data.program_id === watchProgram
+      );
+      setSessions(filteredSessions);
     }
-  }, [watchProgram, isLoading, allProgramSessions])
+  }, [watchProgram, isLoading, allProgramSessions]);
 
   useEffect(() => {
     if (sessions && watchSession) {
-      const foundSession = sessions.find((item) => item.program_session_id === watchSession)
+      const foundSession = sessions.find(
+        (item) => item.program_session_id === watchSession
+      );
       if (foundSession) {
-        setValue("program_mrp", foundSession.mrp)
+        setValue("program_mrp", foundSession.mrp);
       }
     }
-  }, [watchSession, sessions, setValue])
+  }, [watchSession, sessions, setValue]);
 
   const handlePaymentLink = (value: string) => {
-    setValue("payment_mode", value)
+    setValue("payment_mode", value);
     if (value === "UPI") {
-      getPaymentMode("UPI Details")
+      getPaymentMode("UPI Details");
     }
     if (value === "Bank Details") {
-      getPaymentMode("Bank Details")
+      getPaymentMode("Bank Details");
     }
-  }
+  };
 
-  const handleDateChange = async (date: Date | undefined, fieldName: string) => {
+  const handleDateChange = async (
+    date: Date | undefined,
+    fieldName: "date" | "payment_expiry"
+  ) => {
     if (date) {
-      const selectedDate = format(date, "yyyy-MM-dd")
-      setValue(fieldName, selectedDate)
+      const selectedDate = format(date, "yyyy-MM-dd");
+      setValue(fieldName, selectedDate);
       if (fieldName === "date") {
-        await getAvailableSlots({ id: mentorId, date: selectedDate })
+        await getAvailableSlots({ id: mentorId, date: selectedDate });
       }
     }
-  }
+  };
 
   const handleProgramChange = (value: string) => {
-    setValue("program_id", value)
-    setValue("session_id", null)
-    setValue("program_mrp", 0)
-  }
+    setValue("program_id", value);
+    setValue("session_id", null);
+    setValue("program_mrp", 0);
+  };
 
   const onSubmit = async (formData: any) => {
     const responseData = {
@@ -147,17 +187,17 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
         formData.motivation === "Low"
           ? "0"
           : formData.motivation === "Medium"
-            ? "1"
-            : formData.motivation === "High"
-              ? "2"
-              : null,
+          ? "1"
+          : formData.motivation === "High"
+          ? "2"
+          : null,
       payment_mode_id: formData.payment_mode_id
         ? formData.payment_mode_id
         : watchPaymentMode === "Payment Link"
-          ? 1
-          : watchPaymentMode === "Cash Collection (withIn Mumbai only)"
-            ? 4
-            : null,
+        ? 1
+        : watchPaymentMode === "Cash Collection (withIn Mumbai only)"
+        ? 4
+        : null,
       payment_expiry: formData.payment_expiry,
       suggested_by: mentorId,
       follow_up_date: formData.date,
@@ -165,43 +205,51 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
         formData.follow_up_using === "Call"
           ? "0"
           : formData.follow_up_using === "Whatsapp"
-            ? "1"
-            : formData.follow_up_using === "App"
-              ? "2"
-              : null,
+          ? "1"
+          : formData.follow_up_using === "App"
+          ? "2"
+          : null,
       slot_id: formData.next_fu_time,
       user_id:
         data?.lead_details?.lead_id ||
         data?.client_details?.client_id ||
         data?.user_details?.client_id ||
         data?.user_details?.user_id,
-    }
+    };
 
     const result = await updateSuggestProgram({
       id: suggestedData?.suggested_id || pitchedData?.pitched_id,
       body: responseData,
-    })
+    });
     if (result.data?.status === "success") {
-      alert("Program Updated successfully!")
-      modalControl()
+      alert("Program Updated successfully!");
+      modalControl();
     } else {
-      alert("Failed to update program!")
+      alert("Failed to update program!");
     }
-  }
+  };
 
   return (
-    <div className="w-full max-w-[450px]">
-      <div className="mb-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Edit Suggested Program</h2>
-          <Button variant="ghost" size="icon" onClick={modalControl} className="hover:text-red-400">
+    <div className="w-full max-h-[90vh] bg-background">
+      <div className="p-4">
+        <div className="flex items-center justify-center">
+          <h2 className="text-lg font-semibold">Update Suggested Program</h2>
+          {/* <Button
+            variant="ghost"
+            size="icon"
+            onClick={modalControl}
+            className="hover:text-red-400"
+          >
             <X className="h-5 w-5" />
-          </Button>
+          </Button> */}
         </div>
-        <hr className="mt-2" />
+        {/* <hr className="mt-2" /> */}
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="max-h-[520px] space-y-4 overflow-y-auto px-2 py-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="max-h-[calc(90vh-80px)] space-y-4 overflow-y-auto p-4"
+      >
         {!data.payment_link && (
           <>
             <div className="space-y-2">
@@ -211,7 +259,7 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
                 control={control}
                 render={({ field }) => (
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select Status" />
                     </SelectTrigger>
                     <SelectContent>
@@ -262,13 +310,19 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
                 name="program_id"
                 control={control}
                 render={({ field }) => (
-                  <Select onValueChange={handleProgramChange} value={field.value?.toString()}>
-                    <SelectTrigger>
+                  <Select
+                    onValueChange={handleProgramChange}
+                    value={field.value?.toString()}
+                  >
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Suggested Program" />
                     </SelectTrigger>
                     <SelectContent>
                       {allPrograms?.[0]?.data?.map((program: any) => (
-                        <SelectItem key={program.program_id} value={program.program_id.toString()}>
+                        <SelectItem
+                          key={program.program_id}
+                          value={program.program_id.toString()}
+                        >
                           {program.program_name}
                         </SelectItem>
                       ))}
@@ -284,13 +338,19 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
                 name="session_id"
                 control={control}
                 render={({ field }) => (
-                  <Select onValueChange={field.onChange} value={field.value?.toString()}>
-                    <SelectTrigger>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value?.toString()}
+                  >
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Suggested Session Day" />
                     </SelectTrigger>
                     <SelectContent>
                       {sessions.map((session) => (
-                        <SelectItem key={session.program_session_id} value={session.program_session_id.toString()}>
+                        <SelectItem
+                          key={session.program_session_id}
+                          value={session.program_session_id.toString()}
+                        >
                           {session.program_duration}
                         </SelectItem>
                       ))}
@@ -305,7 +365,14 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
               <Controller
                 name="program_mrp"
                 control={control}
-                render={({ field }) => <Input {...field} type="number" disabled placeholder="Program MRP" />}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type="number"
+                    disabled
+                    placeholder="Program MRP"
+                  />
+                )}
               />
             </div>
 
@@ -314,7 +381,13 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
               <Controller
                 name="amount"
                 control={control}
-                render={({ field }) => <Input {...field} type="number" placeholder="Suggested Amount" />}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type="number"
+                    placeholder="Suggested Amount"
+                  />
+                )}
               />
             </div>
 
@@ -323,7 +396,9 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
               <Controller
                 name="mentor_comment"
                 control={control}
-                render={({ field }) => <Textarea {...field} placeholder="Mentor Comment" />}
+                render={({ field }) => (
+                  <Textarea {...field} placeholder="Mentor Comment" />
+                )}
               />
             </div>
 
@@ -339,19 +414,28 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
                         variant="outline"
                         className={cn(
                           "w-full justify-start text-left font-normal",
-                          !field.value && "text-muted-foreground",
+                          !field.value && "text-muted-foreground"
                         )}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
+                        {field.value ? (
+                          format(new Date(field.value), "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">
                       <Calendar
                         mode="single"
-                        selected={field.value ? new Date(field.value) : undefined}
+                        selected={
+                          field.value ? new Date(field.value) : undefined
+                        }
                         onSelect={(date) => handleDateChange(date, "date")}
-                        disabled={(date) => date < new Date() || date > new Date(Date.now() + 9 * 24 * 60 * 60 * 1000)}
+                        disabled={(date) =>
+                          date < new Date() ||
+                          date > new Date(Date.now() + 9 * 24 * 60 * 60 * 1000)
+                        }
                         initialFocus
                       />
                     </PopoverContent>
@@ -367,7 +451,7 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
                 control={control}
                 render={({ field }) => (
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select Next FU Time" />
                     </SelectTrigger>
                     <SelectContent>
@@ -418,7 +502,11 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
             name="payment_link"
             control={control}
             render={({ field }) => (
-              <RadioGroup onValueChange={field.onChange} value={field.value} className="flex items-center space-x-4">
+              <RadioGroup
+                onValueChange={field.onChange}
+                value={field.value}
+                className="flex items-center space-x-4"
+              >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="Yes" id="yes" />
                   <Label htmlFor="yes">Yes</Label>
@@ -441,12 +529,12 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
               render={({ field }) => (
                 <Select
                   onValueChange={(value) => {
-                    field.onChange(value)
-                    handlePaymentLink(value)
+                    field.onChange(value);
+                    handlePaymentLink(value);
                   }}
                   value={field.value}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select Payment Mode" />
                   </SelectTrigger>
                   <SelectContent>
@@ -463,41 +551,6 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
           </div>
         )}
 
-        {watchPaymentMode === "Payment Link" && watchPaymentLink === "Yes" && (
-          <div className="space-y-2">
-            <Label>Set Payment Link Expiry Date</Label>
-            <Controller
-              name="payment_expiry"
-              control={control}
-              render={({ field }) => (
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal",
-                        !field.value && "text-muted-foreground",
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={field.value ? new Date(field.value) : undefined}
-                      onSelect={(date) => handleDateChange(date, "payment_expiry")}
-                      disabled={(date) => date < new Date()}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-              )}
-            />
-          </div>
-        )}
-
         {watchPaymentMode === "Bank Details" && watchPaymentLink === "Yes" && (
           <>
             <div className="space-y-2">
@@ -507,49 +560,20 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
                 control={control}
                 render={({ field }) => (
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select Bank" />
                     </SelectTrigger>
                     <SelectContent>
                       {paymentMode?.[0]?.data?.map((mode: any) => (
-                        <SelectItem key={mode.payment_mode_id} value={mode.payment_mode_id.toString()}>
+                        <SelectItem
+                          key={mode.payment_mode_id}
+                          value={mode.payment_mode_id.toString()}
+                        >
                           {mode.payment_mode_name}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                )}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Set Bank Transfer Due Date</Label>
-              <Controller
-                name="payment_expiry"
-                control={control}
-                render={({ field }) => (
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !field.value && "text-muted-foreground",
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={field.value ? new Date(field.value) : undefined}
-                        onSelect={(date) => handleDateChange(date, "payment_expiry")}
-                        disabled={(date) => date < new Date()}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
                 )}
               />
             </div>
@@ -565,12 +589,15 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
                 control={control}
                 render={({ field }) => (
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select UPI Type" />
                     </SelectTrigger>
                     <SelectContent>
                       {paymentMode?.[0]?.data?.map((mode: any) => (
-                        <SelectItem key={mode.payment_mode_id} value={mode.payment_mode_id.toString()}>
+                        <SelectItem
+                          key={mode.payment_mode_id}
+                          value={mode.payment_mode_id.toString()}
+                        >
                           {mode.payment_mode_name}
                         </SelectItem>
                       ))}
@@ -579,44 +606,20 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
                 )}
               />
             </div>
-            <div className="space-y-2">
-              <Label>Set UPI Payment Due Date</Label>
-              <Controller
-                name="payment_expiry"
-                control={control}
-                render={({ field }) => (
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !field.value && "text-muted-foreground",
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={field.value ? new Date(field.value) : undefined}
-                        onSelect={(date) => handleDateChange(date, "payment_expiry")}
-                        disabled={(date) => date < new Date()}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                )}
-              />
-            </div>
           </>
         )}
 
-        {watchPaymentMode === "Cash Collection (withIn Mumbai only)" && watchPaymentLink === "Yes" && (
+        {watchPaymentLink === "Yes" && (
           <div className="space-y-2">
-            <Label>Set Cash Collection Date</Label>
+            <Label>
+              {watchPaymentMode === "Payment Link"
+                ? "Set Payment Link Expiry Date"
+                : watchPaymentMode === "Bank Details"
+                ? "Set Bank Transfer Due Date"
+                : watchPaymentMode === "UPI"
+                ? "Set UPI Payment Due Date"
+                : "Set Cash Collection Date"}
+            </Label>
             <Controller
               name="payment_expiry"
               control={control}
@@ -627,18 +630,24 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
                       variant="outline"
                       className={cn(
                         "w-full justify-start text-left font-normal",
-                        !field.value && "text-muted-foreground",
+                        !field.value && "text-muted-foreground"
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
+                      {field.value ? (
+                        format(new Date(field.value), "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
                     <Calendar
                       mode="single"
                       selected={field.value ? new Date(field.value) : undefined}
-                      onSelect={(date) => handleDateChange(date, "payment_expiry")}
+                      onSelect={(date) =>
+                        handleDateChange(date, "payment_expiry")
+                      }
                       disabled={(date) => date < new Date()}
                       initialFocus
                     />
@@ -651,10 +660,14 @@ export default function EditSuggestProgramForm({ modalControl, data }: EditSugge
 
         <div className="flex justify-center pt-4">
           <Button type="submit" disabled={loadingSuggest}>
-            {loadingSuggest ? "Updating..." : data.payment_link ? "Create Payment Link" : "Update Suggest Program"}
+            {loadingSuggest
+              ? "Updating..."
+              : data.payment_link
+              ? "Create Payment Link"
+              : "Update Suggest Program"}
           </Button>
         </div>
       </form>
     </div>
-  )
+  );
 }

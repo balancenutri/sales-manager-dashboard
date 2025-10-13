@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
-import { X, CalendarIcon } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import {
@@ -52,7 +52,7 @@ export default function SuggestProgramForm({
 
   const mentorId = adminId;
 
-  const { data: allPrograms, isLoading } = useGetAllProgramNameQuery({
+  const { data: allPrograms } = useGetAllProgramNameQuery({
     user_type: data?.lead_details ? "Lead" : "Client",
   });
   const { data: allProgramSessions } = useGetAllProgramsQuery();
@@ -199,7 +199,6 @@ export default function SuggestProgramForm({
                   <SelectValue placeholder="Select Status" />
                 </SelectTrigger>
                 <SelectContent>
-                  
                   {leadStatus.map((status) => (
                     <SelectItem key={status.value} value={status.value}>
                       {status.name}

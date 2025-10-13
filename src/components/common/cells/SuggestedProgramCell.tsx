@@ -107,7 +107,7 @@ export default function SuggestProgramCell({ value, rowData }: any) {
   }
 
   return (
-    <div className="min-w-[300px]">
+    <div className="">
       <div className="flex flex-col items-center text-center">
         {/* Program Name */}
         {value?.suggested_program_name && (

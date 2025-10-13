@@ -36,6 +36,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import SkeletonTable from "./SkeletonTable";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -45,6 +46,9 @@ interface DataTableProps<TData, TValue> {
   showPagination?: boolean;
   showColumnVisibility?: boolean;
   pageSize?: number;
+  isFetching?: boolean;
+  actions?: string;
+  userActions?: React.ReactNode;
 }
 
 export function DataTable<TData, TValue>({
@@ -55,6 +59,9 @@ export function DataTable<TData, TValue>({
   showPagination = true,
   showColumnVisibility = true,
   pageSize = 10,
+  isFetching,
+  actions,
+  userActions,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -89,7 +96,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-4 max-h-[75vh] max-w-[88vw]  overflow-scroll">
       <div className="flex items-center justify-between gap-4">
         {searchKey && (
           <div className="relative flex-1 max-w-sm">
@@ -135,58 +142,68 @@ export function DataTable<TData, TValue>({
           </DropdownMenu>
         )}
       </div>
-      <div className="rounded-md border">
-        {data.length > 0 && (
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="align-top">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
+      {isFetching ? (
+        <SkeletonTable col={6} row={5} withHeader />
+      ) : (
+        <div className="rounded-md border">
+          {data.length > 0 && (
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      );
+                    })}
+                    {actions && <TableHead>{actions}</TableHead>}
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results found.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        )}
-      </div>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id} className="align-top">
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                      {userActions && (
+                        <TableCell className="align-top">
+                          {userActions}
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      No results found.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          )}
+        </div>
+      )}
       {showPagination && (
         <div className="flex items-center justify-between px-2">
           <div className="flex-1 text-sm text-muted-foreground">

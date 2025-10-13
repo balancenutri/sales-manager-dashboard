@@ -845,6 +845,19 @@ export interface SolidSalesResponse {
     data: { [key: string]: number; };
     hideColumn: [];
 }
+export interface SalesAlertResponse {
+    status: string;
+    message: string;
+    data: {
+        leads_with_e_kit_pro: number;
+        wallet_expiring_tomorrow: number;
+        HOT_lead_with_negative_feedback: number;
+        HOT_followups_pending: number;
+        good_weight_loss: number;
+        milestone: number;
+    };
+    hideColumn: [];
+}
 export type TriggerType = {
     "hot_triggers": {
         "total": number;

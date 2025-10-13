@@ -1,4 +1,6 @@
 import CommonCell from "@/components/common/cells/CommonCell";
+import FollowUpCell from "@/components/common/cells/FollowUpCell";
+import HealthDetailsCell from "@/components/common/cells/HealthDetailsCell";
 import ProgramDetailsCell from "@/components/common/cells/ProgramDetailsCell";
 import SuggestProgramCell from "@/components/common/cells/SuggestedProgramCell";
 import UserDetailsCell from "@/components/common/cells/UserDetailsCell";
@@ -22,7 +24,6 @@ export const generateHeadersAndAccessors = (
   hiddenColumn: string[] = [],
   hiddenData: string[] = []
 ) => {
-  console.log(datas);
   if (!datas?.data || datas.data.length === 0) {
     return { data: [], columns: [] };
   }
@@ -57,7 +58,6 @@ export const generateHeadersAndAccessors = (
     },
   ];
 
-  console.log(datas.data[0], 155);
   // Generate columns from data structure
   const headers = Object.entries(datas.data[0]).reduce((acc, [key, value]) => {
     if (hideColumn.includes(key)) return acc;
@@ -85,8 +85,10 @@ export const generateHeadersAndAccessors = (
                   hideData={hideData}
                 />
               );
-            // case "health_details":
-            //   return <HealthDetailsCell value={cellValue} rowData={rowData} />
+            case "next_follow_up":
+              return <FollowUpCell value={cellValue} rowData={rowData} />;
+            case "health_details":
+              return <HealthDetailsCell value={cellValue} rowData={rowData} />;
             case "suggested_details":
             case "suggested_program_details":
               return <SuggestProgramCell value={cellValue} rowData={rowData} />;
@@ -123,22 +125,22 @@ export const generateHeadersAndAccessors = (
 
   // Add ACTIONS column at the end
   columns.push(...headers);
-  columns.push({
-    id: "actions",
-    header: () => (
-      <div className="text-xs font-semibold text-muted-foreground">ACTIONS</div>
-    ),
-    cell: () => {
-      return (
-        <div className="py-2">
-          <textarea
-            placeholder="FU Notes"
-            className="min-h-[80px] text-xs border rounded p-2 w-full"
-          />
-        </div>
-      );
-    },
-  });
+  //   columns.push({
+  //     id: "actions",
+  //     header: () => (
+  //       <div className="text-xs font-semibold text-muted-foreground">ACTIONS</div>
+  //     ),
+  //     cell: () => {
+  //       return (
+  //         <div className="py-2">
+  //           <textarea
+  //             placeholder="FU Notes"
+  //             className="min-h-[80px] text-xs border rounded p-2 w-full"
+  //           />
+  //         </div>
+  //       );
+  //     },
+  //   });
 
   return { data: datas.data, columns };
 };
