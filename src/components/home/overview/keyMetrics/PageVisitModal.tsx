@@ -150,11 +150,9 @@ export default function PageVisitModal({
                             </div>
                             <div className="flex items-center space-x-2">
                               <span className="text-sm font-semibold text-green-600">
-                                MRP: {formatCurrency(record.mrp)}
+                                MRP: {formatCurrency(record?.mrp || 0)}
                               </span>
-                              <span className="text-sm font-semibold text-green-600">
-                                Sugg. Amt.:{formatCurrency(Number(record.suggested_amount))}
-                              </span>
+                              
                             </div>
                               <Badge
                                 variant="outline"
