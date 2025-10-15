@@ -9,9 +9,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  Users,
+  // Users,
   DollarSign,
-  TrendingUp,
+  // TrendingUp,
   Calendar,
   User,
   Package,
@@ -25,6 +25,7 @@ import { useState } from "react";
 import { useGetPitchedHistoryQuery } from "@/service/dashboard/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import SkeletonTable from "@/components/common/SkeletonTable";
+import { keyString } from "@/lib/utils";
 
 export default function PitchedHistory({
   filter,
@@ -117,7 +118,7 @@ export default function PitchedHistory({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Pitched History</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{keyString(filter)}</h1>
           <p className="text-gray-600 mt-1">
             Track all program pitches and their outcomes
           </p>
@@ -158,7 +159,7 @@ export default function PitchedHistory({
             <CardContent className="p-6">
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-blue-500 rounded-2xl shadow-lg">
-                  <Users className="h-6 w-6 text-white" />
+                  <DollarSign className="h-6 w-6 text-white" />
                 </div>
                 <div>
                   {isFetching ? (
@@ -204,7 +205,7 @@ export default function PitchedHistory({
             <CardContent className="p-6">
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-purple-500 rounded-2xl shadow-lg">
-                  <TrendingUp className="h-6 w-6 text-white" />
+                  <DollarSign className="h-6 w-6 text-white" />
                 </div>
                 <div>
                   {isFetching ? (

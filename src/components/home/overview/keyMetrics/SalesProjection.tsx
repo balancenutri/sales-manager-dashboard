@@ -12,6 +12,7 @@ import PageVisitModal from "./PageVisitModal";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
+import { keyString } from "@/lib/utils";
 dayjs.extend(quarterOfYear);
 
 export default function SalesProjection({ prev }: { prev: boolean }) {
@@ -84,7 +85,7 @@ export default function SalesProjection({ prev }: { prev: boolean }) {
         <CardContent className="px-6">
           <div className="grid grid-cols-6 gap-6">
             {/* Total Pitched */}
-            <div onClick={() => setOpenDialog("link_shared")}>
+            <div onClick={() => setOpenDialog("rate_shared")}>
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-md transition-all cursor-pointer">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
@@ -105,7 +106,7 @@ export default function SalesProjection({ prev }: { prev: boolean }) {
                 </div>
               </div>
             </div>
-            <div onClick={() => setOpenDialog("rate_shared")}>
+            <div onClick={() => setOpenDialog("link_shared")}>
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-md transition-all cursor-pointer">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
@@ -221,7 +222,7 @@ export default function SalesProjection({ prev }: { prev: boolean }) {
             className="min-w-[80vw]"
           >
             <DialogHeader>
-              <DialogTitle>Pitched History</DialogTitle>
+              <DialogTitle>{keyString(openDialog || "")}</DialogTitle>
             </DialogHeader>
             {openDialog && (
               <PitchedHistory
