@@ -146,7 +146,7 @@ export function DataTable<TData, TValue>({
         <SkeletonTable col={6} row={5} withHeader />
       ) : (
         <div className="rounded-md border">
-          {data.length > 0 && (
+          {data.length > 0 ? (
             <Table>
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -201,6 +201,8 @@ export function DataTable<TData, TValue>({
                 )}
               </TableBody>
             </Table>
+          ): (
+            <p className="text-center my-8">No Data found</p>
           )}
         </div>
       )}

@@ -19,12 +19,20 @@ import {
 
 import CustomDatePicker from "@/components/ui/custom-date-picker";
 import dayjs from "dayjs";
+import quarterOfYear from "dayjs/plugin/quarterOfYear";
+dayjs.extend(quarterOfYear);
 import { useState } from "react";
 import { useGetPitchedHistoryQuery } from "@/service/dashboard/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import SkeletonTable from "@/components/common/SkeletonTable";
 
-export default function PitchedHistory() {
+export default function PitchedHistory({
+  filter,
+  type,
+}: {
+  filter: "rate_shared" | "link_shared" | "to_pay" | "pay_later";
+  type: "" | "prev" | "quarter" | "mtd"; 
+}) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const { data, isFetching } = useGetPitchedHistoryQuery({
@@ -32,10 +40,35 @@ export default function PitchedHistory() {
       ? {
           start_date: dayjs(selectedDate).startOf("month").format("YYYY-MM-DD"),
           end_date: dayjs(selectedDate).endOf("month").format("YYYY-MM-DD"),
+          filter,
         }
-      : {}),
+      : {
+          filter,
+          ...(type === "prev"
+            ? {
+                start_date: dayjs()
+                  .subtract(1, "month")
+                  .startOf("month")
+                  .format("YYYY-MM-DD"),
+                end_date: dayjs()
+                  .subtract(1, "month")
+                  .endOf("month")
+                  .format("YYYY-MM-DD"),
+              }
+            : type === "quarter"
+            ? {
+                start_date: dayjs().startOf("quarter").format("YYYY-MM-DD"),
+                end_date: dayjs().format("YYYY-MM-DD"),
+              }
+            : type === "mtd"
+            ? {
+                start_date: dayjs().startOf("month").format("YYYY-MM-DD"),
+                end_date: dayjs().format("YYYY-MM-DD"),
+              }
+            : {}),
+        }),
   });
-  console.log({ data, isFetching });
+  // console.log({ data, isFetching });
 
   const getStatusColor = (status: number) => {
     switch (status) {

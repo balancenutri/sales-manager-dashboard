@@ -43,19 +43,19 @@ export const generateHeadersAndAccessors = (
 
   // Add SR. NO. column first
   const columns: ColumnDef<any>[] = [
-    {
-      id: "sr_no",
-      header: () => (
-        <div className="text-xs font-semibold text-muted-foreground">
-          SR.
-          <br />
-          NO.
-        </div>
-      ),
-      cell: ({ row }) => (
-        <div className="w-8 text-center font-medium">{row.index + 1}</div>
-      ),
-    },
+    // {
+    //   id: "sr_no",
+    //   header: () => (
+    //     <div className="text-xs font-semibold text-muted-foreground">
+    //       SR.
+    //       <br />
+    //       NO.
+    //     </div>
+    //   ),
+    //   cell: ({ row }) => (
+    //     <div className="w-8 text-center font-medium">{row.index + 1}</div>
+    //   ),
+    // },
   ];
 
   // Generate columns from data structure

@@ -1,3 +1,4 @@
+import type { PageVisitsDataResponse } from "@/lib/types";
 import { dashboardApi } from "./api";
 
 export const dataTableApi = dashboardApi.injectEndpoints({
@@ -38,47 +39,63 @@ export const dataTableApi = dashboardApi.injectEndpoints({
       }),
     }),
 
-    getLeadWalletExpiringTomorrowData: builder.query<any, { search?: string}>({
+    getLeadWalletExpiringTomorrowData: builder.query<any, { search?: string }>({
       query: (body) => ({
         url: `/mentor/lead-dashboard/wallet-expiring-tomorrow-leads`,
         method: "POST",
         body,
       }),
     }),
-    getHotLeadWithNegativeFeedbackTomorrowData: builder.query<any, { search?: string}>({
+    getHotLeadWithNegativeFeedbackTomorrowData: builder.query<
+      any,
+      { search?: string }
+    >({
       query: (body) => ({
         url: `/mentor/lead-dashboard/hot-leads-with-negative-feedback`,
         method: "POST",
         body,
       }),
     }),
-    getLeadHotFollowUpPendingData: builder.query<any, { search?: string}>({
+    getLeadHotFollowUpPendingData: builder.query<any, { search?: string }>({
       query: (body) => ({
         url: `/mentor/lead-dashboard/hot-follow-ups-pending-leads`,
         method: "POST",
         body,
       }),
     }),
-    getLeadGoodWeightLossData: builder.query<any, { search?: string}>({
+    getLeadGoodWeightLossData: builder.query<any, { search?: string }>({
       query: (body) => ({
         url: `/mentor/lead-dashboard/good-weight-loss-leads`,
         method: "POST",
         body,
       }),
     }),
-    getLeadMilestoneData: builder.query<any, { search?: string}>({
+    getLeadMilestoneData: builder.query<any, { search?: string }>({
       query: (body) => ({
         url: `/mentor/lead-dashboard/milestone-filled-leads`,
         method: "POST",
         body,
       }),
     }),
-    getLeadWithGuidePurchasedData: builder.query<any, { search?: string}>({
+    getLeadWithGuidePurchasedData: builder.query<any, { search?: string }>({
       query: (body) => ({
         url: `/mentor/lead-dashboard/guide-purchased-leads`,
         method: "POST",
         body,
       }),
+    }),
+
+    getSalesTriggerData: builder.query<
+      PageVisitsDataResponse,
+      {
+        status: "hot" | "warm" | "cold";
+      }
+    >({
+      query: ({ status }) => ({
+        url: `/sales/overview/sales-trigger-data?status=${status}`,
+        method: "POST",
+      }),
+      providesTags: ["Common"],
     }),
   }),
 });
@@ -95,5 +112,7 @@ export const {
   useGetLeadHotFollowUpPendingDataQuery,
   useGetLeadGoodWeightLossDataQuery,
   useGetLeadMilestoneDataQuery,
-  useGetLeadWithGuidePurchasedDataQuery
+  useGetLeadWithGuidePurchasedDataQuery,
+
+  useGetSalesTriggerDataQuery,
 } = dataTableApi;

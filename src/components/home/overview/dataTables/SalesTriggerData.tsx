@@ -10,44 +10,20 @@ import {
 } from "@/components/ui/table";
 import { User, Package } from "lucide-react";
 
-import { useGetPageVisitsDataQuery } from "@/service/dashboard/api";
-
 import SkeletonTable from "@/components/common/SkeletonTable";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
+import { useGetSalesTriggerDataQuery } from "@/service/dashboard/dataTableApi";
+import { keyString } from "@/lib/utils";
 dayjs.extend(quarterOfYear);
 
-export default function PageVisitModal({
-  id,
-  type,
+export default function SalesTriggerData({
+  selected,
 }: {
-  id: number;
-  type: "" | "prev" | "quarter" | "mtd";
+  selected: "hot" | "warm" | "cold";
 }) {
-  const { data, isFetching } = useGetPageVisitsDataQuery({
-    page_type: id,
-    ...(type === "prev"
-      ? {
-          start_date: dayjs()
-            .subtract(1, "month")
-            .startOf("month")
-            .format("YYYY-MM-DD"),
-          end_date: dayjs()
-            .subtract(1, "month")
-            .endOf("month")
-            .format("YYYY-MM-DD"),
-        }
-      : type === "quarter"
-      ? {
-          start_date: dayjs().startOf("quarter").format("YYYY-MM-DD"),
-          end_date: dayjs().format("YYYY-MM-DD"),
-        }
-      : type === "mtd"
-      ? {
-          start_date: dayjs().startOf("month").format("YYYY-MM-DD"),
-          end_date: dayjs().format("YYYY-MM-DD"),
-        }
-      : {}),
+  const { data, isFetching } = useGetSalesTriggerDataQuery({
+    status: selected,
   });
 
   const getProgramTypeColor = (type: string) => {
@@ -83,7 +59,7 @@ export default function PageVisitModal({
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center space-x-2">
               <Package className="h-5 w-5" />
-              <span>Page Visits</span>
+              <span>{keyString(selected)}</span>
             </CardTitle>
             <Badge variant="outline" className="px-3 py-1">
               {data?.data.length} records
@@ -100,11 +76,11 @@ export default function PageVisitModal({
                   <TableRow className="bg-gray-50">
                     <TableHead className="font-semibold">Name</TableHead>
                     <TableHead className="font-semibold">
-                      Program Details
+                      Suggested Program Details
                     </TableHead>
-                    <TableHead className="font-semibold">
+                    {/* <TableHead className="font-semibold">
                       Page Details
-                    </TableHead>
+                    </TableHead> */}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -139,9 +115,9 @@ export default function PageVisitModal({
                         </TableCell>
 
                         <TableCell>
-                          <div className="space-y-2">
+                          {record.program_name ? <div className="space-y-2">
                             <div>
-                              <p className="font-semibold text-gray-900">
+                              <p className="font-semibold text-blue-500 hover:underline">
                                 {record.program_name}
                               </p>
                               <p className="text-sm text-gray-600">
@@ -161,16 +137,16 @@ export default function PageVisitModal({
                                 {formatCurrency(record?.mrp || 0)}
                               </span>
                             </div>
-                          </div>
+                          </div> : <div className="space-y-2">No Program Suggested</div>}
                         </TableCell>
 
-                        <TableCell>
+                        {/* <TableCell>
                           <div className="space-y-1">
                             <p className="font-semibold text-gray-900">
                               {record.program_name}
                             </p>
                           </div>
-                        </TableCell>
+                        </TableCell> */}
                       </TableRow>
                     ))
                   ) : (

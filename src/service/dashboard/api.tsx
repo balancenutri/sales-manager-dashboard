@@ -172,10 +172,17 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    getSalesProjection: builder.query<SalesProjectionResponse, void>({
-      query: () => ({
+    getSalesProjection: builder.query<
+      SalesProjectionResponse,
+      {
+        start_date?: string;
+        end_date?: string;
+      }
+    >({
+      query: (body) => ({
         url: `/sales/overview/sales-projection`,
         method: "POST",
+        body,
       }),
       providesTags: ["Common"],
     }),
@@ -185,6 +192,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
         user_type?: string;
         start_date?: string;
         end_date?: string;
+        filter?: "rate_shared" | "link_shared" | "to_pay" | "pay_later";
       }
     >({
       query: (body) => ({
@@ -197,12 +205,15 @@ export const dashboardApi = commonAPi.injectEndpoints({
     getPageVisitsData: builder.query<
       PageVisitsDataResponse,
       {
-        id: number | null;
+        page_type?: number;
+        start_date?: string;
+        end_date?: string;
       }
     >({
-      query: ({ id }) => ({
-        url: `/sales/overview/page-visit-details?page_type=${id}`,
+      query: (params) => ({
+        url: `/sales/overview/page-visit-details`,
         method: "POST",
+        params
       }),
       providesTags: ["Common"],
     }),
@@ -247,11 +258,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
     getLeadMtdSalesRisks: builder.query<SolidSalesResponse, void>({
       query: () => `/mentor/lead-dashboard/mtd-sales-risk`,
     }),
-    
+
     getSalesAlert: builder.query<SalesAlertResponse, void>({
       query: () => `/franchise/country-wise-sales/sales-alert`,
     }),
-
 
     getOcRiskAndMisses: builder.query<SolidSalesResponse, void>({
       query: () => `/mentor/oc-dashboard/risk-and-misses`,
