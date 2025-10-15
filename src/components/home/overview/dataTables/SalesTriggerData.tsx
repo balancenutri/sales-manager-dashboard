@@ -115,30 +115,33 @@ export default function SalesTriggerData({
                         </TableCell>
 
                         <TableCell>
-                          {record.program_name ? <div className="space-y-2">
-                            <div>
-                              <p className="font-semibold text-blue-500 hover:underline">
-                                {record.program_name}
-                              </p>
-                              <p className="text-sm text-gray-600">
-                                {record.program_duration}
-                              </p>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <Badge
-                                variant="outline"
-                                className={getProgramTypeColor(
-                                  record.program_category
-                                )}
-                              >
-                                {record.program_category}
-                              </Badge>
-                              <span className="text-sm font-semibold text-green-600">
-                                {formatCurrency(record?.mrp || 0)}
-                              </span>
-                            </div>
-                          </div> : <div className="space-y-2">No Program Suggested</div>}
-                        </TableCell>
+                                                  <div className="space-y-2">
+                                                    <div>
+                                                      <p className="font-semibold text-gray-900">
+                                                        {record.program_name}
+                                                      </p>
+                                                      <p className="text-sm text-gray-600">
+                                                        {record.program_duration}
+                                                      </p>
+                                                    </div>
+                                                    <div className="flex items-center space-x-2">
+                                                      <span className="text-sm font-semibold text-green-600">
+                                                        MRP: {formatCurrency(record.mrp)}
+                                                      </span>
+                                                      <span className="text-sm font-semibold text-green-600">
+                                                        Sugg. Amt.:{formatCurrency(Number(record.suggested_amount))}
+                                                      </span>
+                                                    </div>
+                                                      <Badge
+                                                        variant="outline"
+                                                        className={getProgramTypeColor(
+                                                          record.program_category
+                                                        )}
+                                                      >
+                                                        {record.program_category}
+                                                      </Badge>
+                                                  </div>
+                                                </TableCell>
 
                         {/* <TableCell>
                           <div className="space-y-1">

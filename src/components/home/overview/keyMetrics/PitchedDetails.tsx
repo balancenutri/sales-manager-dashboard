@@ -296,6 +296,13 @@ export default function PitchedHistory({
                               </p>
                             </div>
                             <div className="flex items-center space-x-2">
+                              <span className="text-sm font-semibold text-green-600">
+                                MRP: {formatCurrency(record.mrp)}
+                              </span>
+                              <span className="text-sm font-semibold text-green-600">
+                                Sugg. Amt.:{formatCurrency(Number(record.suggested_amount))}
+                              </span>
+                            </div>
                               <Badge
                                 variant="outline"
                                 className={getProgramTypeColor(
@@ -304,10 +311,6 @@ export default function PitchedHistory({
                               >
                                 {record.program_category}
                               </Badge>
-                              <span className="text-sm font-semibold text-green-600">
-                                {formatCurrency(record.mrp)}
-                              </span>
-                            </div>
                           </div>
                         </TableCell>
 
