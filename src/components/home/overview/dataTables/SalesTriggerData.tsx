@@ -14,7 +14,6 @@ import SkeletonTable from "@/components/common/SkeletonTable";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import { useGetSalesTriggerDataQuery } from "@/service/dashboard/dataTableApi";
-import { keyString } from "@/lib/utils";
 dayjs.extend(quarterOfYear);
 
 export default function SalesTriggerData({
