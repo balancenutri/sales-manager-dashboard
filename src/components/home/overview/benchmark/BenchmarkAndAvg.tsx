@@ -1,4 +1,4 @@
-import BenchmarkCard from "./benchmark/BenchmarkCard";
+import BenchmarkCard from "./BenchmarkCard";
 
 export default function BenchmarkAndAvg() {
   const data = {

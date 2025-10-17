@@ -6,7 +6,7 @@ import {
   useGetSolidSalesOpportunityQuery,
 } from "@/service/dashboard/api";
 import { useState } from "react";
-import StatusWiseMetrics from "./keyMetrics/StatusWise";
+import StatusWiseMetrics from "./StatusWise";
 
 type SalesData = Record<string, Record<string, number>>;
 
@@ -50,8 +50,6 @@ export default function KeySalesAlert() {
   }
 
   const transformedData = transformSalesData(solidSalesData?.data || {});
-
-  console.log({ transformedData });
 
   return (
     <div className="grid gap-4 md:grid-cols-3">
@@ -110,44 +108,6 @@ export default function KeySalesAlert() {
       {/* Unconverted Leads */}
       <StatusWiseMetrics />
 
-      {/* Consultation Pending */}
-      {/* <Card>
-        <CardHeader>
-          <CardTitle>Consultation Done</CardTitle>
-        </CardHeader>
-        <CardContent className="grid grid-cols-3 gap-4 text-center">
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-2 border border-green-200 dark:border-green-800 hover:shadow-md transition-all duration-300 cursor-pointer">
-            <div className="text-center">
-              <h4 className="font-medium text-base text-gray-800 dark:text-gray-200">
-                Hot
-              </h4>
-              <div className="text-xl font-bold">
-                {unconvertedLeads?.data?.hot}
-              </div>
-            </div>
-          </div>
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-2 border border-green-200 dark:border-green-800 hover:shadow-md transition-all duration-300 cursor-pointer">
-            <div className="text-center">
-              <h4 className="font-medium text-base text-gray-800 dark:text-gray-200">
-                Warm
-              </h4>
-              <div className="text-xl font-bold">
-                {unconvertedLeads?.data?.warm}
-              </div>
-            </div>
-          </div>
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-2 border border-green-200 dark:border-green-800 hover:shadow-md transition-all duration-300 cursor-pointer">
-            <div className="text-center">
-              <h4 className="font-medium text-base text-gray-800 dark:text-gray-200">
-                Cold
-              </h4>
-              <div className="text-xl font-bold">
-                {unconvertedLeads?.data?.cold}
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card> */}
       <Card>
         <CardHeader>
           <CardTitle>Consultation Pending</CardTitle>

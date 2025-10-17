@@ -13,7 +13,7 @@ import {
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useGetSalesPerformanceQuery } from "@/service/dashboard/api";
 import { Skeleton } from "@/components/ui/skeleton";
-import SalesByStack from "./salesPerformance/SalesByStack";
+import SalesByStack from "../salesPerformance/SalesByStack";
 import {
   Tooltip,
   TooltipContent,

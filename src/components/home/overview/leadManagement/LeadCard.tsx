@@ -15,7 +15,7 @@ import {
   useGetOldLeadManagementQuery,
 } from "@/service/dashboard/api";
 import { Skeleton } from "@/components/ui/skeleton";
-import AssignedLead from "./leadCard/AssignedLead";
+import AssignedLead from "../leadCard/AssignedLead";
 import {
   Tooltip,
   TooltipContent,
@@ -29,7 +29,7 @@ import {
 import CustomDatePicker from "@/components/ui/custom-date-picker";
 import dayjs from "dayjs";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import LeadPosition from "./leadCard/LeadPosition";
+import LeadPosition from "../leadCard/LeadPosition";
 
 export default function LeadCard({ type }: { type: "old" | "new" }) {
   const [modalType, setModalType] = useState<
@@ -220,10 +220,7 @@ export default function LeadCard({ type }: { type: "old" | "new" }) {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div
-                  className="flex items-center justify-between p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
-                  
-                >
+                <div className="flex items-center justify-between p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors cursor-pointer">
                   <div className="flex items-center gap-2">
                     <ArrowUp className="h-4 w-4 text-green-500" />
                     <p className="text-sm">Consultation Done</p>

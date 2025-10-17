@@ -1004,3 +1004,13 @@ export const simpleRowMetricsData = {
     },
   },
 };
+
+
+export const leadStatus = [
+  { name: "1st Pitch(can't decide)", value: "1" },
+  { name: "Hot", value: "2" },
+  { name: "Warm", value: "3" },
+  { name: "Cold", value: "4" },
+];
+
+export const adminId = 312;
