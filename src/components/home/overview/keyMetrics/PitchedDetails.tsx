@@ -227,17 +227,6 @@ export default function PitchedHistory({
 
       {/* Pitched Details Table */}
       <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center space-x-2">
-              <Package className="h-5 w-5" />
-              <span>Pitched Details</span>
-            </CardTitle>
-            <Badge variant="outline" className="px-3 py-1">
-              {data?.data.users.length} records
-            </Badge>
-          </div>
-        </CardHeader>
 
         <CardContent className="p-0">
           {/* Table Scroll Wrapper */}
