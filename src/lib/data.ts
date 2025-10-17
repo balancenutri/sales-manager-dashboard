@@ -1011,6 +1011,8 @@ export const leadStatus = [
   { name: "Hot", value: "2" },
   { name: "Warm", value: "3" },
   { name: "Cold", value: "4" },
+  { name: "To Engage", value: "0" },
+  { name: "Consultation Done", value: "7" },
 ];
 
 export const adminId = 312;
