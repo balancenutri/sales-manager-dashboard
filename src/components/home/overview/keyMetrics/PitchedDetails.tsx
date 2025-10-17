@@ -9,9 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  // Users,
   DollarSign,
-  // TrendingUp,
   Calendar,
   User,
   Package,

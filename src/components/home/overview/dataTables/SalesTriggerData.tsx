@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -14,7 +14,6 @@ import SkeletonTable from "@/components/common/SkeletonTable";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import { useGetSalesTriggerDataQuery } from "@/service/dashboard/dataTableApi";
-import { keyString } from "@/lib/utils";
 dayjs.extend(quarterOfYear);
 
 export default function SalesTriggerData({
@@ -51,22 +50,7 @@ export default function SalesTriggerData({
 
   return (
     <div className="space-y-6 p-6 bg-gray-50 h-[80vh] overflow-scroll">
-      {/* Header */}
-
-      {/* Pitched Details Table */}
       <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center space-x-2">
-              <Package className="h-5 w-5" />
-              <span>{keyString(selected)}</span>
-            </CardTitle>
-            <Badge variant="outline" className="px-3 py-1">
-              {data?.data.length} records
-            </Badge>
-          </div>
-        </CardHeader>
-
         <CardContent className="p-0">
           {/* Table Scroll Wrapper */}
           <div className="max-h-[500px] overflow-y-auto">
@@ -115,32 +99,36 @@ export default function SalesTriggerData({
                         </TableCell>
 
                         <TableCell>
-                          <div className="space-y-2">
-                            <div>
-                              <p className="font-semibold text-gray-900">
-                                {record.program_name}
-                              </p>
-                              <p className="text-sm text-gray-600">
-                                {record.program_duration}
-                              </p>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <span className="text-sm font-semibold text-green-600">
-                                <Badge
-                                  variant="outline"
-                                  className={getProgramTypeColor(
-                                    record.program_category
-                                  )}
-                                >
-                                  {record.program_category}
-                                </Badge>
-                                MRP: {formatCurrency(record?.mrp || 0)}
-                              </span>
-                              {/* <span className="text-sm font-semibold text-green-600">
+                          {record.program_name ? (
+                            <div className="space-y-2">
+                              <div>
+                                <p className="font-semibold text-gray-900">
+                                  {record.program_name}
+                                </p>
+                                <p className="text-sm text-gray-600">
+                                  {record.program_duration}
+                                </p>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <span className="text-sm font-semibold text-green-600">
+                                  <Badge
+                                    variant="outline"
+                                    className={getProgramTypeColor(
+                                      record.program_category
+                                    )}
+                                  >
+                                    {record.program_category}
+                                  </Badge>
+                                  MRP: {formatCurrency(record?.mrp || 0)}
+                                </span>
+                                {/* <span className="text-sm font-semibold text-green-600">
                                                         Sugg. Amt.:{formatCurrency(Number(record.suggested_amount))}
                                                       </span> */}
+                              </div>
                             </div>
-                          </div>
+                          ) : (
+                            <p>No Program Suggested</p>
+                          )}
                         </TableCell>
 
                         {/* <TableCell>
