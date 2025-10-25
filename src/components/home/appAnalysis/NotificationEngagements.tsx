@@ -16,38 +16,72 @@ export default function NotificationEngagments() {
         <h2 className="text-xl font-bold text-gray-900">
           Notification Engagement
         </h2>
-        <Tabs defaultValue={selected} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger
-              className="cursor-pointer"
-              value="all"
-              onClick={() => setSelected("all")}
-            >
-              All Lead
-            </TabsTrigger>
-            <TabsTrigger
-              className="cursor-pointer"
-              value="active"
-              onClick={() => setSelected("active")}
-            >
-              Active
-            </TabsTrigger>
-            <TabsTrigger
-              className="cursor-pointer"
-              value="oc"
-              onClick={() => setSelected("oc")}
-            >
-              OC
-            </TabsTrigger>
-            <TabsTrigger
-              className="cursor-pointer"
-              value="lead"
-              onClick={() => setSelected("lead")}
-            >
-              Lead
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <div className="flex gap-3">
+          <Tabs defaultValue={selected} className="space-y-6">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger
+                className="cursor-pointer"
+                value="all"
+                onClick={() => setSelected("all")}
+              >
+                All
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="active"
+                onClick={() => setSelected("active")}
+              >
+                Promotional
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="oc"
+                onClick={() => setSelected("oc")}
+              >
+                Transaction
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+          <Tabs defaultValue={selected} className="space-y-6">
+            <TabsList className="grid w-full grid-cols-5">
+              <TabsTrigger
+                className="cursor-pointer"
+                value="all"
+                onClick={() => setSelected("all")}
+              >
+                All
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="active"
+                onClick={() => setSelected("active")}
+              >
+                Today
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="oc"
+                onClick={() => setSelected("oc")}
+              >
+                Yesterday
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="lead"
+                onClick={() => setSelected("lead")}
+              >
+                Weekly
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="lead"
+                onClick={() => setSelected("lead")}
+              >
+                Monthly
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
       </div>
 
       {

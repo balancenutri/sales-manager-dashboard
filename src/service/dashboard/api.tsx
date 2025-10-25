@@ -213,7 +213,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
       query: (params) => ({
         url: `/sales/overview/page-visit-details`,
         method: "POST",
-        params
+        params,
       }),
       providesTags: ["Common"],
     }),
@@ -610,6 +610,40 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+
+    getAppDownloadData: builder.query({
+      query: (body: { filter: string; device?: string }) => ({
+        url: `/sales/app-activity/app-download-data`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+
+    getLeadAppAnalyticsOverViewData: builder.query({
+      query: (body: { filter?: string; type?: string }) => ({
+        url: `/sales/app-activity/app-analytics-overview-lead-data`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getActiveAppAnalyticsOverViewData: builder.query({
+      query: (body: { filter?: string; type?: string }) => ({
+        url: `/sales/app-activity/app-analytics-overview-active-data`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getOcAppAnalyticsOverViewData: builder.query({
+      query: (body: { filter?: string; type?: string }) => ({
+        url: `/sales/app-activity/app-analytics-overview-oc-data`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
   }),
 });
 
@@ -686,4 +720,9 @@ export const {
 
   useGetGuideAndBookInteractionsQuery,
   useGetContentVisitsQuery,
+
+  useGetAppDownloadDataQuery,
+  useGetLeadAppAnalyticsOverViewDataQuery,
+  useGetActiveAppAnalyticsOverViewDataQuery,
+  useGetOcAppAnalyticsOverViewDataQuery,
 } = dashboardApi;

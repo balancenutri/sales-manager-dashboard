@@ -12,7 +12,7 @@ const isHideKey = (key: string) => {
 }
 
 const isDateKey = (key: string) => {
-  const dateKeys = ["date", "time", "timestamp"]
+  const dateKeys = ["date", "time", "timestamp", "last_app_install_date"]
   return dateKeys.includes(key.toLowerCase())
 }
 
