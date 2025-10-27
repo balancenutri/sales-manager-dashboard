@@ -77,6 +77,7 @@ export default function AppCountCard({
                   "with_app_inactive_user",
                   "on_new_app_not_updated",
                   "on_old_app_not_updated",
+                  "not_updated_versions"
                 ].includes(key) && (
                   <div
                     className="flex items-center justify-between border-b pb-2"
