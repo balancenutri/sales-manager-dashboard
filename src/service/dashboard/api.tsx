@@ -572,7 +572,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
     }),
     getNotificationEngagement: builder.query<
       NotificationStatsResponse,
-      BodyProps
+      {
+        type?: "" | "p" | "t";
+        period: string;
+      }
     >({
       query: (body) => ({
         url: `/sales/app-activity/notification-engagement`,
