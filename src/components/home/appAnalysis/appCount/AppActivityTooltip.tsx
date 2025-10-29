@@ -25,7 +25,7 @@ export default function AppActivityTooltip({
           </span>
         </TooltipTrigger>
         {withApp !== 0 && (
-          <TooltipContent className="p-0 bg-white border border-gray-200 shadow-lg rounded-lg max-w-xs z-50">
+          <TooltipContent className="p-0 bg-white border border-gray-200 shadow-lg rounded-lg max-w-xs z-50" onClick={e => e.stopPropagation()}>
             <div className="p-4 space-y-4">
               <div className="space-y-2">
                 
