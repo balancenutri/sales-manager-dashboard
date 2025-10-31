@@ -213,7 +213,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
       query: (params) => ({
         url: `/sales/overview/page-visit-details`,
         method: "POST",
-        params
+        params,
       }),
       providesTags: ["Common"],
     }),
@@ -572,7 +572,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
     }),
     getNotificationEngagement: builder.query<
       NotificationStatsResponse,
-      BodyProps
+      {
+        type?: "" | "p" | "t";
+        period: string;
+      }
     >({
       query: (body) => ({
         url: `/sales/app-activity/notification-engagement`,
@@ -605,6 +608,40 @@ export const dashboardApi = commonAPi.injectEndpoints({
     getContentVisits: builder.query({
       query: (body: BodyProps) => ({
         url: `/sales/social-media/content-visits`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+
+    getAppDownloadData: builder.query({
+      query: (body: { filter: string; device?: string }) => ({
+        url: `/sales/app-activity/app-download-data`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+
+    getLeadAppAnalyticsOverViewData: builder.query({
+      query: (body: { filter?: string; type?: string }) => ({
+        url: `/sales/app-activity/app-analytics-overview-lead-data`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getActiveAppAnalyticsOverViewData: builder.query({
+      query: (body: { filter?: string; type?: string }) => ({
+        url: `/sales/app-activity/app-analytics-overview-active-data`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getOcAppAnalyticsOverViewData: builder.query({
+      query: (body: { filter?: string; type?: string }) => ({
+        url: `/sales/app-activity/app-analytics-overview-oc-data`,
         method: "POST",
         body,
       }),
@@ -686,4 +723,9 @@ export const {
 
   useGetGuideAndBookInteractionsQuery,
   useGetContentVisitsQuery,
+
+  useGetAppDownloadDataQuery,
+  useGetLeadAppAnalyticsOverViewDataQuery,
+  useGetActiveAppAnalyticsOverViewDataQuery,
+  useGetOcAppAnalyticsOverViewDataQuery,
 } = dashboardApi;

@@ -1,9 +1,12 @@
-import { Card } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { keyString } from "@/lib/utils";
 import { useGetAppDownloadsCountQuery } from "@/service/dashboard/api";
 import { useState } from "react";
+import AppDownloadData from "./dataTables/AppDownloadData";
+import { ArrowDown, ArrowUp } from "lucide-react";
 
 type DeviceType = "" | "android" | "ios";
 
@@ -13,7 +16,31 @@ export default function AppDownloadCount() {
     filter: selected == "" ? undefined : selected,
   });
 
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+
   const skeletonArray = Array(5).fill(null);
+
+  const compareWithPrevious = (key: string, total: number, data: any) => {
+    const compareMap: Record<string, string> = {
+      last_24_hours_count: "last_24_to_48_hours_count",
+      last_48_hours_count: "last_48_to_96_hours_count",
+      last_72_hours_count: "last_72_to_144_hours_count",
+      last_7_days_count: "last_7_to_14_days_count",
+      this_month_count: "last_month_count",
+    };
+
+    const previousKey = compareMap[key];
+    if (!previousKey || !data?.[previousKey]) return null;
+
+    const prevValue = data[previousKey].lead + data[previousKey].oc;
+    const trendUp = total > prevValue;
+
+    return trendUp ? (
+      <ArrowUp className="size-4 text-green-500 ml-1" />
+    ) : (
+      <ArrowDown className="size-4 text-red-500 ml-1" />
+    );
+  };
 
   return (
     <div>
@@ -58,64 +85,50 @@ export default function AppDownloadCount() {
                   <Skeleton className="h-4 w-10 rounded-md" />
                 </div>
               ))
-            : Object.entries(data?.data).map(([period, data]) => (
-                <div className="text-sm">
-                  <span className="mr-2 font-semibold">
-                    {keyString(period?.replace("_count", " Downloads"))} :
-                  </span>
-                  <span className="font-bold">{data.lead + data.oc}</span>
-                </div>
-              ))}
+            : Object.entries(data?.data).map(
+                ([period, value]) => {
+                  if (
+                  [
+                    "last_24_to_48_hours_count",
+                    "last_48_to_96_hours_count",
+                    "last_72_to_144_hours_count",
+                    "last_7_to_14_days_count",
+                    "last_month_count",
+                  ].includes(period)
+                )
+                  return null;
+                  const total = value.lead + value.oc;
+
+                   return (
+                    <div className="text-sm flex items-center gap-0">
+                      <span className="mr-2 font-semibold">
+                        {keyString(period?.replace("_count", " Installs"))} :
+                      </span>
+                      <span
+                        className="font-bold cursor-pointer"
+                        onClick={() =>
+                          setSelectedTime(period?.replace("_hours_count", ""))
+                        }
+                      >
+                        {total}
+                      </span>
+                      {compareWithPrevious(period, total, data?.data)}
+                    </div>
+                  )
+                }
+              )}
         </div>
       </Card>
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 overflow-x-auto pb-4">
-        {isFetching || !data?.data
-          ? skeletonArray.map((_, index: number) => (
-              <Card key={index} className="relative">
-                <CardContent className="space-y-4 mt-4">
-                  <div className="flex items-center justify-between">
-                    <Skeleton className="h-4 w-16 rounded-md" />
-                    <Skeleton className="h-4 w-10 rounded-md" />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <Skeleton className="h-4 w-16 rounded-md" />
-                    <Skeleton className="h-4 w-10 rounded-md" />
-                  </div>
-                  <hr />
-                  <div className="flex items-center justify-between">
-                    <Skeleton className="h-4 w-16 rounded-md" />
-                    <Skeleton className="h-4 w-10 rounded-md" />
-                  </div>
-                </CardContent>
-              </Card>
-            ))
-          : Object.entries(data?.data).map(([period, data]) => (
-              <Card key={period} className="min-w-[200px]">
-                {" "}
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium capitalize">
-                    {keyString(period?.replace("_count", " Downloads"))}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Lead</span>
-                    <span className="font-semibold text-base">{data.lead}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">OC</span>{" "}
-                    <span className="font-semibold text-base">{data.oc}</span>
-                  </div>
-                  <div className="flex items-center justify-between pt-2 border-t">
-                    <span className="font-medium">Total</span>
-                    <span className="font-semibold text-lg">
-                      {data.lead + data.oc}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-      </div> */}
+      <Dialog open={!!selectedTime} onOpenChange={() => setSelectedTime(null)}>
+        <DialogContent className="min-w-[90vw]">
+          <CardHeader>
+            <CardTitle>{keyString("App Download Data")}</CardTitle>
+          </CardHeader>
+          {selectedTime && (
+            <AppDownloadData selected={selectedTime} device={selected} />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

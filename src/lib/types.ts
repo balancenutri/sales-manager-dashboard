@@ -737,16 +737,13 @@ export type NotUpdatedVersions = {
 };
 
 export type ActiveAppCount = {
-    with_app: number;
-    without_app: number;
     not_updated: number;
-    with_activity: number;
-    with_inactivity: number;
-    not_updated_versions: NotUpdatedVersions;
-    current_versions: {
-        android: string;
-        ios: string;
-    }
+    on_new_app_not_updated: number;
+    on_old_app_not_updated: number;
+    with_app: number;
+    with_app_active_user: number;
+    with_app_inactive_user: number;
+    without_app: number;
 };
 
 export interface AppCountResponse {

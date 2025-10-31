@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { ActiveAppCount, NotUpdatedVersions } from "@/lib/types";
+import type { ActiveAppCount } from "@/lib/types";
 import { keyString } from "@/lib/utils";
-import PreviousVersionTooltip from "./PreviousVersionTooltip";
 import {
   Select,
   SelectContent,
@@ -9,8 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { Dispatch, SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import AppActivityTooltip from "./AppActivityTooltip";
+import { Dialog } from "@radix-ui/react-dialog";
+import { DialogContent } from "@/components/ui/dialog";
+import AppAnalysisData from "../dataTables/AppAnalysisData";
 
 type PeriodType = "overall" | "last_24_hours" | "last_48_hours" | "mtd";
 
@@ -38,6 +41,9 @@ export default function AppCountCard({
         <Skeleton className="h-5 w-20" />
       </div>
     ));
+
+  const [filter, setFilter] = useState<string | null>(null);
+
   return (
     <Card>
       <CardHeader>
@@ -64,20 +70,40 @@ export default function AppCountCard({
       <CardContent className="space-y-3">
         {data && !fetching
           ? Object.entries(data).map(([key, value]) => {
-              console.log({ data });
               return (
-                key !== "current_versions" && (
+                ![
+                  "current_versions",
+                  "with_app_active_user",
+                  "with_app_inactive_user",
+                  "on_new_app_not_updated",
+                  "on_old_app_not_updated",
+                  "not_updated_versions"
+                ].includes(key) && (
                   <div
                     className="flex items-center justify-between border-b pb-2"
-                    key={key}
+                    key={key} onClick={() => setFilter(key)}
                   >
                     <div className="flex items-center space-x-3">
                       <span className="font-medium">{keyString(key)}</span>
                     </div>
                     <div className="font-semibold text-lg">
-                      {key === "not_updated_versions" ? (
-                        <PreviousVersionTooltip
-                          versions={value as NotUpdatedVersions}
+                      {key === "with_app" ? (
+                        <AppActivityTooltip
+                          withApp={value as number}
+                          withActivity={data?.with_app_active_user as number}
+                          withoutActivity={
+                            data?.with_app_inactive_user as number
+                          }
+                          type="activity"
+                        />
+                      ) : key === "not_updated" ? (
+                        <AppActivityTooltip
+                          withApp={value as number}
+                          withActivity={data?.on_new_app_not_updated as number}
+                          withoutActivity={
+                            data?.on_old_app_not_updated as number
+                          }
+                          type="not_updated"
                         />
                       ) : (
                         (value as number)
@@ -89,6 +115,17 @@ export default function AppCountCard({
             })
           : SkeletonArray}
       </CardContent>
+
+      <Dialog open={!!filter} onOpenChange={() => setFilter(null)}>
+        <DialogContent className="min-w-[90vw]">
+          <CardHeader>
+            <CardTitle>{keyString("App Download Data")}</CardTitle>
+          </CardHeader>
+          {filter && (
+            <AppAnalysisData selected={filter} type={title?.split(" ")[0]?.toLowerCase()} period={period} />
+          )}
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

@@ -3,12 +3,23 @@ import { useGetNotificationEngagementQuery } from "@/service/dashboard/api";
 import { useState } from "react";
 import NotificationEngagement from "./leadPerformance/NotificationEngagement";
 import TopNotifications from "./leadPerformance/TopNotifications";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+type PeriodType =  "today" | "this_week" | "yesterday" | "this_month";
 
 export default function NotificationEngagments() {
-  const [selected, setSelected] = useState("active");
+  const [selected, setSelected] = useState<"" | "p" | "t">("");
+  const [period, setPeriod] = useState<PeriodType>("today");
   const { data: notificationData, isFetching } =
     useGetNotificationEngagementQuery({
-      filter: selected,
+      type: selected,
+      period,
     });
   return (
     <div className="space-y-8">
@@ -16,38 +27,47 @@ export default function NotificationEngagments() {
         <h2 className="text-xl font-bold text-gray-900">
           Notification Engagement
         </h2>
-        <Tabs defaultValue={selected} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger
-              className="cursor-pointer"
-              value="all"
-              onClick={() => setSelected("all")}
-            >
-              All Lead
-            </TabsTrigger>
-            <TabsTrigger
-              className="cursor-pointer"
-              value="active"
-              onClick={() => setSelected("active")}
-            >
-              Active
-            </TabsTrigger>
-            <TabsTrigger
-              className="cursor-pointer"
-              value="oc"
-              onClick={() => setSelected("oc")}
-            >
-              OC
-            </TabsTrigger>
-            <TabsTrigger
-              className="cursor-pointer"
-              value="lead"
-              onClick={() => setSelected("lead")}
-            >
-              Lead
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <div className="flex gap-3">
+          <Tabs defaultValue={selected} className="space-y-6">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger
+                className="cursor-pointer"
+                value=""
+                onClick={() => setSelected("")}
+              >
+                All
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="p"
+                onClick={() => setSelected("p")}
+              >
+                Promotional
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="t"
+                onClick={() => setSelected("t")}
+              >
+                Transaction
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+          <Select
+            value={period}
+            onValueChange={(val: PeriodType) => setPeriod(val)}
+          >
+            <SelectTrigger className="w-32">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="today">Today</SelectItem>
+              <SelectItem value="yesterday">Yesterday</SelectItem>
+              <SelectItem value="this_week">This Week</SelectItem>
+              <SelectItem value="this_month">This Month</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {
