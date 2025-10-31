@@ -11,15 +11,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-type PeriodType =  "today" | "this_week" | "yesterday" | "this_month";
+type PeriodType = "today" | "this_week" | "yesterday" | "this_month";
+type StatusType = "all" | "active" | "oc" | "lead";
 
 export default function NotificationEngagments() {
+
   const [selected, setSelected] = useState<"" | "p" | "t">("");
   const [period, setPeriod] = useState<PeriodType>("today");
+  const [filter, setFilter] = useState<StatusType>("all");
+
   const { data: notificationData, isFetching } =
     useGetNotificationEngagementQuery({
       type: selected,
       period,
+      filter: filter === "all" ? "" : filter,
     });
   return (
     <div className="space-y-8">
@@ -65,6 +70,20 @@ export default function NotificationEngagments() {
               <SelectItem value="yesterday">Yesterday</SelectItem>
               <SelectItem value="this_week">This Week</SelectItem>
               <SelectItem value="this_month">This Month</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select
+            value={filter}
+            onValueChange={(val: StatusType) => setFilter(val)}
+          >
+            <SelectTrigger className="w-32">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="oc">OC</SelectItem>
+              <SelectItem value="lead">Lead</SelectItem>
             </SelectContent>
           </Select>
         </div>

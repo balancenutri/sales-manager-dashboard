@@ -70,7 +70,7 @@ export default function NotificationEngagement({
                       : "text-red-500"
                   }`}
                 >
-                  {data?.open_trend}%
+                  {data?.open_trend}
                 </span>
               </div>}
             </div>

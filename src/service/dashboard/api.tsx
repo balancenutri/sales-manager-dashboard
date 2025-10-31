@@ -575,6 +575,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
       {
         type?: "" | "p" | "t";
         period: string;
+        filter?: string;
       }
     >({
       query: (body) => ({
