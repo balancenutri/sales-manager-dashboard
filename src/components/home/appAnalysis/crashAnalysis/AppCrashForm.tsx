@@ -2,8 +2,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-// import { useUpdateAppPerformanceMutation } from "@/service/dashboard/api"; // <-- you can replace with your API hook
-// import type { UpdateAppPerformanceBody } from "@/lib/types"; // <-- optional type if you have it
+import { useUpdateAppCrashlyticsMutation } from "@/service/dashboard/api";
 
 type FormValues = {
   crash_free_users: number;
@@ -15,35 +14,42 @@ type FormValues = {
 
 export default function AppCrashForm({
   closeModal,
+  data,
 }: {
   closeModal: () => void;
+  data?: any;
 }) {
+  // 🔹 Prepare cleaned default values
+  const defaultValues: FormValues = {
+    crash_free_users: data?.crash_free_users
+      ? Number(String(data.crash_free_users).replace("%", ""))
+      : 0,
+    crash_free_sessions: data?.crash_free_sessions
+      ? Number(String(data.crash_free_sessions).replace("%", ""))
+      : 0,
+    yesterday: data?.yesterday ? Number(data.yesterday) : 0,
+    last_7_days: data?.last_seven_days ? Number(data.last_seven_days) : 0,
+    mtd: data?.mtd ? Number(data.mtd) : 0,
+  };
+
   const {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
-    // defaultValues: appData,
+    defaultValues,
   });
 
-  //   const [updateAppPerformance] = useUpdateAppPerformanceMutation();
+  const [updateAppCrash] = useUpdateAppCrashlyticsMutation();
 
-  const onSubmit = async (data: FormValues) => {
-    // const body: UpdateAppPerformanceBody = {
-    //   platform: platform ?? undefined,
-    //   app: appName ?? undefined,
-    //   data: {
-    //     crash_free_users: data.crash_free_users,
-    //     crash_free_sessions: data.crash_free_sessions,
-    //     yesterday: data.yesterday,
-    //     last_7_days: data.last_7_days,
-    //     mtd: data.mtd,
-    //   },
-    // };
-
-    // const res = await updateAppPerformance(body);
-    // console.log("Updated App Performance:", res.data);
-    console.log({ data });
+  const onSubmit = async (formData: FormValues) => {
+    const res = await updateAppCrash({
+      ...formData,
+      crash_free_users: `${formData.crash_free_users}%`,
+      crash_free_sessions: `${formData.crash_free_sessions}%`,
+      id: 1,
+    }).unwrap();
+    console.log(res);
     closeModal();
   };
 
@@ -69,12 +75,6 @@ export default function AppCrashForm({
               min={0}
               max={100}
               {...field}
-              value={field.value || ""}
-              onChange={(e) => {
-                const value =
-                  e.target.value === "" ? "" : Number(e.target.value);
-                field.onChange(value);
-              }}
             />
           )}
         />
@@ -102,12 +102,6 @@ export default function AppCrashForm({
               min={0}
               max={100}
               {...field}
-              value={field.value || ""}
-              onChange={(e) => {
-                const value =
-                  e.target.value === "" ? "" : Number(e.target.value);
-                field.onChange(value);
-              }}
             />
           )}
         />
@@ -134,12 +128,6 @@ export default function AppCrashForm({
               placeholder="Enter yesterday value"
               min={0}
               {...field}
-              value={field.value || ""}
-              onChange={(e) => {
-                const value =
-                  e.target.value === "" ? "" : Number(e.target.value);
-                field.onChange(value);
-              }}
             />
           )}
         />
@@ -166,12 +154,6 @@ export default function AppCrashForm({
               placeholder="Enter last 7 days value"
               min={0}
               {...field}
-              value={field.value || ""}
-              onChange={(e) => {
-                const value =
-                  e.target.value === "" ? "" : Number(e.target.value);
-                field.onChange(value);
-              }}
             />
           )}
         />
@@ -198,12 +180,6 @@ export default function AppCrashForm({
               placeholder="Enter MTD value"
               min={0}
               {...field}
-              value={field.value || ""}
-              onChange={(e) => {
-                const value =
-                  e.target.value === "" ? "" : Number(e.target.value);
-                field.onChange(value);
-              }}
             />
           )}
         />

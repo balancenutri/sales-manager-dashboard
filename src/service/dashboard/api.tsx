@@ -44,6 +44,7 @@ import {
   type PageVisitsDataResponse,
   type SalesAlertResponse,
   type NotificationEngagementSummaryResponse,
+  type AppCralysticsResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -533,6 +534,31 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getAppCrashlytics: builder.query<AppCralysticsResponse, void>({
+      query: () => ({
+        url: `/sales/app-activity/crashlytics-data`,
+        method: "GET",
+      }),
+      providesTags: ["Common"],
+    }),
+    updateAppCrashlytics: builder.mutation<
+      AppCralysticsResponse,
+      {
+        crash_free_users: string;
+        crash_free_sessions: string;
+        yesterday: number;
+        last_7_days: number;
+        mtd: number;
+        id: number;
+      }
+    >({
+      query: (body) => ({
+        url: `/sales/app-activity/update-crashlytics-data`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Common"],
+    }),
     getKeyEngagementMatrics: builder.query<KeyEngagementResponse, void>({
       query: () => ({
         url: `/sales/app-activity/key-engagement-metrics`,
@@ -724,6 +750,8 @@ export const {
   useGetAllActiveAppCountQuery,
   useGetAllLeadAppCountQuery,
   useGetAppUsageOverviewQuery,
+  useGetAppCrashlyticsQuery,
+  useUpdateAppCrashlyticsMutation,
   useGetKeyEngagementMatricsQuery,
   useGetActivatedFeaturesQuery,
   useGetActiveAppCountQuery,
