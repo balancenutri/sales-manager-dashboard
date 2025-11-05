@@ -43,6 +43,7 @@ import {
   type LeadFunnelResponse,
   type PageVisitsDataResponse,
   type SalesAlertResponse,
+  type NotificationEngagementSummaryResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -573,7 +574,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
     getNotificationEngagement: builder.query<
       NotificationStatsResponse,
       {
-        type?: "" | "p" | "t";
+        type?: "" | "promotional" | "transactional" | "engagement";
         period: string;
         filter?: string;
       }
@@ -582,6 +583,16 @@ export const dashboardApi = commonAPi.injectEndpoints({
         url: `/sales/app-activity/notification-engagement`,
         method: "POST",
         body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getNotificationEngagementSummary: builder.query<
+      NotificationEngagementSummaryResponse,
+      void
+    >({
+      query: () => ({
+        url: `/sales/app-activity/notification-engagement-summary`,
+        method: "POST",
       }),
       providesTags: ["Common"],
     }),
@@ -719,6 +730,7 @@ export const {
   useGetOcAppCountQuery,
   useGetLeadAppCountQuery,
   useGetNotificationEngagementQuery,
+  useGetNotificationEngagementSummaryQuery,
 
   useGetClientPerformanceQuery,
 

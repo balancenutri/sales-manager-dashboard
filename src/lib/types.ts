@@ -1002,3 +1002,25 @@ export interface PageVisitsDataResponse {
 };
 
 
+export interface NotificationCategory {
+    total_sent: number;
+    total_seen: number;
+    open_trend: string;
+}
+export interface NotificationDayData {
+    promotional: NotificationCategory;
+    engagement: NotificationCategory;
+    transactional: NotificationCategory;
+}
+
+export interface NotificationEngagementSummaryData {
+    today: NotificationDayData;
+    yesterday: NotificationDayData;
+}
+
+export interface NotificationEngagementSummaryResponse {
+    status: "success" | "error";
+    message: string;
+    data: NotificationEngagementSummaryData;
+    hide_columns: string[];
+}
