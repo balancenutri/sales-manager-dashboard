@@ -196,6 +196,7 @@ export default function LeadMIS() {
         regions: filters.region,
         stages: filters.stage,
         statuses: filters.salesStatus,
+        user_types: filters.userTypes,
         page,
         limit,
         is_export: true,

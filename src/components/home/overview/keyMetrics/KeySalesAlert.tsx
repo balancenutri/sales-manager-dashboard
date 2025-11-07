@@ -25,10 +25,16 @@ export default function KeySalesAlert() {
 
   const totalSalesOpp =
     leadSolidSalesData?.data &&
-    Object.values(leadSolidSalesData?.data).reduce(
+    Object.values(leadSolidSalesData?.data).filter(val => typeof val !== "string").reduce(
       (sum, value) => sum + value,
       0
     );
+
+  // const totalSalesOpp =
+  //   leadSolidSalesData?.data &&
+  //   Object.entries(leadSolidSalesData.data)
+  //     .filter(([key]) => key !== "cart_not_paid")
+  //     .reduce((sum, [, value]) => sum + value, 0);
 
   const [hoveredSection, setHoveredSection] = useState<
     "hot" | "warm" | "engage" | "downgrade" | null
