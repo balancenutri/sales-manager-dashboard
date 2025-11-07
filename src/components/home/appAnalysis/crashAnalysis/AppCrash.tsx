@@ -5,15 +5,10 @@ import { keyString } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import AppCrashForm from "./AppCrashForm";
+import { useGetAppCrashlyticsQuery } from "@/service/dashboard/api";
 
 export default function AppCrash() {
-  const data = {
-    crash_free_users: "99.6%",
-    crash_free_sessions: "99.6%",
-    yesterday: 7,
-    last_7_days: 13,
-    mtd: 35,
-  };
+  const { data, isFetching } = useGetAppCrashlyticsQuery();
 
   const [openModal, setOpenModal] = useState<string | null>(null);
 
@@ -30,7 +25,7 @@ export default function AppCrash() {
 
       <Card className="">
         <div className="flex justify-between items-center px-4 -my-3">
-          {!data
+          {!data?.data || isFetching
             ? skeletonArray.map((_, index: number) => (
                 <div
                   className="flex items-center justify-between mt-1 gap-2"
@@ -40,21 +35,23 @@ export default function AppCrash() {
                   <Skeleton className="h-4 w-10 rounded-md" />
                 </div>
               ))
-            : Object.entries(data).map(([period, value]) => {
+            : Object.entries(data?.data[0] ?? {}).map(([period, value]) => {
                 return (
-                  <div className="text-sm flex items-center gap-0">
-                    <span className="mr-2 font-semibold">
-                      {keyString(period?.replace("_count", " Installs"))} :
-                    </span>
-                    <span
-                      className="font-bold cursor-pointer"
-                      onClick={() =>
-                        setOpenModal(period?.replace("_hours_count", ""))
-                      }
-                    >
-                      {value}
-                    </span>
-                  </div>
+                  period !== "id" && (
+                    <div className="text-sm flex items-center gap-0">
+                      <span className="mr-2 font-semibold">
+                        {keyString(period?.replace("_count", " Installs"))} :
+                      </span>
+                      <span
+                        className="font-bold cursor-pointer"
+                        onClick={() =>
+                          setOpenModal(period?.replace("_hours_count", ""))
+                        }
+                      >
+                        {value}
+                      </span>
+                    </div>
+                  )
                 );
               })}
         </div>
@@ -64,7 +61,12 @@ export default function AppCrash() {
           <CardHeader>
             <CardTitle>{keyString("App Crash Form")}</CardTitle>
           </CardHeader>
-          {openModal && <AppCrashForm closeModal={() => setOpenModal(null)} />}
+          {openModal && (
+            <AppCrashForm
+              closeModal={() => setOpenModal(null)}
+              data={data?.data[0] ?? {}}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </div>
