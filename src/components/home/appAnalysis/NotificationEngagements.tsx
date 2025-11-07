@@ -16,7 +16,7 @@ type StatusType = "all" | "active" | "oc" | "lead";
 
 export default function NotificationEngagments() {
 
-  const [selected, setSelected] = useState<"" | "p" | "t">("");
+  const [selected, setSelected] = useState<"" | "promotional" | "transactional" | "engagement">("");
   const [period, setPeriod] = useState<PeriodType>("today");
   const [filter, setFilter] = useState<StatusType>("all");
 
@@ -34,7 +34,7 @@ export default function NotificationEngagments() {
         </h2>
         <div className="flex gap-3">
           <Tabs defaultValue={selected} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger
                 className="cursor-pointer"
                 value=""
@@ -44,17 +44,24 @@ export default function NotificationEngagments() {
               </TabsTrigger>
               <TabsTrigger
                 className="cursor-pointer"
-                value="p"
-                onClick={() => setSelected("p")}
+                value="promotional"
+                onClick={() => setSelected("promotional")}
               >
                 Promotional
               </TabsTrigger>
               <TabsTrigger
                 className="cursor-pointer"
-                value="t"
-                onClick={() => setSelected("t")}
+                value="transactional"
+                onClick={() => setSelected("transactional")}
               >
                 Transaction
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="engagement"
+                onClick={() => setSelected("engagement")}
+              >
+                Engagement
               </TabsTrigger>
             </TabsList>
           </Tabs>

@@ -28,6 +28,8 @@ import LeadPosition from "@/components/home/overview/leadCard/LeadPosition";
 import OcCard from "@/components/home/overview/leadManagement/OcCard";
 import SalesAlert from "@/components/home/overview/counsellorOverview/SalesAlert";
 import RiskMissesAndOds from "@/components/home/overview/counsellorOverview/RiskMissesAndOds";
+import AppNotificationMarquee from "@/components/home/appAnalysis/AppNotificationMarquee";
+import AppCrash from "@/components/home/appAnalysis/crashAnalysis/AppCrash";
 // import AllCounsellorCard from "@/components/home/cards/AllCounsellorCard";
 
 export default function Home() {
@@ -111,7 +113,9 @@ export default function Home() {
           </TabsContent>
 
           <TabsContent value="app-analytics" className="space-y-6">
+            <AppNotificationMarquee />
             <AppDownloadCount />
+            <AppCrash />
             <AppCount />
             <h2 className="text-xl font-bold">Content Engagement</h2>
 
