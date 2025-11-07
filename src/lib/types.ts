@@ -498,6 +498,28 @@ export type AssignedLeadPerformance = {
         "l:s": string;
     }
 }
+export type AssignedLeadPerformanceAll = {
+    admin_user_id: number;
+    crm_user: string;
+    role_id: number;
+    leads_assigned: number;
+    consultations: number;
+    sales: number;
+    "l:c": string;
+    "c:s": string;
+    "l:s": string;
+    sales_amount: number;
+    revenue: number;
+    suggested_programs: number;
+    suggested_amount: number;
+    best_source_performance: string | null;
+    lead_assigned_sales_status_count: {
+        to_engage: number;
+        hot: number;
+        warm: number;
+        cold: number;
+    };
+}
 
 export interface AssignedLeadPerformanceResponse {
     status: string;
@@ -506,6 +528,12 @@ export interface AssignedLeadPerformanceResponse {
         counsellor_data: AssignedLeadPerformance,
         mentor_data: AssignedLeadPerformance,
     };
+    totalCount: number;
+}
+export interface AssignedLeadPerformanceAllResponse {
+    status: string;
+    message: string;
+    data: AssignedLeadPerformanceAll[];
     totalCount: number;
 }
 export interface SaleByStackResponse {

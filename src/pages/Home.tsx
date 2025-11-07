@@ -28,6 +28,7 @@ import LeadPosition from "@/components/home/overview/leadCard/LeadPosition";
 import OcCard from "@/components/home/overview/leadManagement/OcCard";
 import SalesAlert from "@/components/home/overview/counsellorOverview/SalesAlert";
 import RiskMissesAndOds from "@/components/home/overview/counsellorOverview/RiskMissesAndOds";
+// import AllCounsellorCard from "@/components/home/cards/AllCounsellorCard";
 
 export default function Home() {
   return (
@@ -53,6 +54,7 @@ export default function Home() {
 
           {/* Overview Tab Content */}
           <TabsContent value="overview" className="space-y-6">
+            {/* <AllCounsellorCard /> */}
             <LeadPosition />
             <h2 className="text-xl font-bold">Quick Sales Snapshot</h2>
             <SalesSnapshots />

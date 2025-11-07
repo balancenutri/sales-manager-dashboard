@@ -43,6 +43,7 @@ import {
   type LeadFunnelResponse,
   type PageVisitsDataResponse,
   type SalesAlertResponse,
+  type AssignedLeadPerformanceAllResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -137,6 +138,20 @@ export const dashboardApi = commonAPi.injectEndpoints({
     >({
       query: (body) => ({
         url: `/sales/overview/assigned-leads-performance`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    getAssignedLeadPerformanceAll: builder.query<
+      AssignedLeadPerformanceAllResponse,
+      {
+        start_date?: string;
+        end_date?: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/sales/overview/assigned-leads-performance-all`,
         method: "POST",
         body,
       }),
@@ -673,6 +688,7 @@ export const {
   useGetUnconvertedLeadsQuery,
   useGetOcManagementQuery,
   useGetAssignedLeadPerformanceQuery,
+  useGetAssignedLeadPerformanceAllQuery,
   useGetSalesBreakDownByStackQuery,
 
   useGetSalesPerformanceQuery,
