@@ -40,7 +40,7 @@ import {
 } from "@/service/common/api";
 import {
   useGetLeadUserMisDataQuery,
-  useLazyGetLeadMisDataQuery,
+  useGetLeadMisDataMutation,
 } from "@/service/dashboard/api";
 import { keyString } from "@/lib/utils";
 import type { LeadMisBody } from "@/lib/types";
@@ -181,57 +181,45 @@ export default function LeadMIS() {
 
   const { data, isLoading } = useGetLeadUserMisDataQuery(buildQueryParams());
 
-  const [triggerExport, { isFetching: exportLoading }] =
-    useLazyGetLeadMisDataQuery();
+const [triggerExport, { isLoading: exportLoading }] = useGetLeadMisDataMutation();
 
-  const handleExportLeads = async () => {
-    try {
-      const body = {
-        age_groups: filters.ageGroup,
-        countries: filters.country,
-        states: filters.state,
-        cities: filters.city,
-        genders: filters.gender,
-        health_conditions: filters.clinicalCondition,
-        regions: filters.region,
-        stages: filters.stage,
-        statuses: filters.salesStatus,
-        user_types: filters.userTypes,
-        page,
-        limit,
-        is_export: true,
-      };
-      console.log("Request body:", body);
+const handleExportLeads = async () => {
+  try {
+    const body = {
+      age_groups: filters.ageGroup,
+      countries: filters.country,
+      states: filters.state,
+      cities: filters.city,
+      genders: filters.gender,
+      health_conditions: filters.clinicalCondition,
+      regions: filters.region,
+      stages: filters.stage,
+      statuses: filters.salesStatus,
+      user_types: filters.userTypes,
+      page,
+      limit,
+      is_export: true,
+    };
 
-      const response = await triggerExport(body).unwrap();
-      console.log(
-        "Response type:",
-        response.type,
-        "Response size:",
-        response.size
-      );
+    const blob: Blob = await triggerExport(body).unwrap();
 
-      if (!(response instanceof Blob) || response.size === 0) {
-        throw new Error("Invalid response: Not a valid Blob or empty response");
-      }
-
-      const url = window.URL.createObjectURL(response);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "lead_mis.xlsx");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url); // Clean up memory
-    } catch (err: any) {
-      console.error("Export failed:", err);
-      alert(
-        `Failed to download the file: ${
-          err.message || "Unknown error"
-        }. Please check the console for details or contact support.`
-      );
+    if (!blob || blob.size === 0) {
+      throw new Error("Empty file received");
     }
-  };
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "lead_mis.xlsx";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  } catch (err: any) {
+    console.error("Export failed:", err);
+    alert(`Export failed: ${err.message || "Please try again."}`);
+  }
+};
 
   console.log({ data, isLoading });
 

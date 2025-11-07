@@ -396,35 +396,47 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    getLeadMisData: builder.query<Blob, LeadMisBody>({
+    // getLeadMisData: builder.query<Blob, LeadMisBody>({
+    //   query: (body) => ({
+    //     url: `/sales/digital-marketing/lead-mis-data`,
+    //     method: "POST",
+    //     body,
+    //     responseHandler: async (response) => {
+    //       const contentType = response.headers.get("Content-Type");
+    //       console.log("Content-Type:", contentType);
+    //       if (
+    //         !contentType?.includes(
+    //           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    //         )
+    //       ) {
+    //         const text = await response.text();
+    //         throw new Error(
+    //           `Unexpected Content-Type: ${contentType}. Response: ${text}`
+    //         );
+    //       }
+    //       return response.blob();
+    //     },
+    //     headers: {
+    //       Accept:
+    //         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    //       // "Content-Type": "application/json",
+    //     },
+    //   }),
+    //   providesTags: ["Common"],
+    // }),
+    // API Slice
+    getLeadMisData: builder.mutation<Blob, LeadMisBody>({
       query: (body) => ({
         url: `/sales/digital-marketing/lead-mis-data`,
         method: "POST",
         body,
-        responseHandler: async (response) => {
-          const contentType = response.headers.get("Content-Type");
-          console.log("Content-Type:", contentType);
-          if (
-            !contentType?.includes(
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            )
-          ) {
-            const text = await response.text();
-            throw new Error(
-              `Unexpected Content-Type: ${contentType}. Response: ${text}`
-            );
-          }
-          return response.blob();
-        },
+        responseHandler: (response) => response.blob(),
         headers: {
           Accept:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          "Content-Type": "application/json",
         },
       }),
-      providesTags: ["Common"],
     }),
-
     addNewCampaign: builder.mutation<any, AddCampaignBody>({
       query: (body) => ({
         url: `/sales/digital-marketing/add-campaign`,
@@ -685,7 +697,7 @@ export const {
   useGetGenderWiseLeadQuery,
   useGetWebsitePerformanceQuery,
   useGetClinicalConditionDataQuery,
-  useGetLeadMisDataQuery,
+  // useGetLeadMisDataQuery,
 
   useAddNewCampaignMutation,
   useUpdateCampaignMutation,
@@ -695,7 +707,8 @@ export const {
   useGetCounsellorCampaignPerformanceQuery,
   useGetUserBifurcationCountQuery,
   useGetLeadUserMisDataQuery,
-  useLazyGetLeadMisDataQuery,
+  // useLazyGetLeadMisDataQuery,
+  useGetLeadMisDataMutation,
 
   useGetCounsellorSocialMediaPerformanceQuery,
   useGetConsolidatedTeamPerformanceQuery,
