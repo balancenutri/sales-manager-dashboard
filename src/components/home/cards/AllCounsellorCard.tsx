@@ -333,7 +333,7 @@ export default function AllCounsellorCard({
     <>
       <Card
         className="w-full max-w-md"
-        onClick={() => setOpenModal(performanceData?.admin_user_id)}
+        // onClick={() => setOpenModal(performanceData?.admin_user_id)}
       >
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between gap-2">
