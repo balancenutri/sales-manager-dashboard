@@ -46,6 +46,7 @@ import {
   type AssignedLeadPerformanceAllResponse,
   type NotificationEngagementSummaryResponse,
   type AppCralysticsResponse,
+  type CounsellorDailyPerformanceByIdResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -152,10 +153,22 @@ export const dashboardApi = commonAPi.injectEndpoints({
         end_date?: string;
       }
     >({
-      query: (body) => ({
+      query: (params) => ({
         url: `/sales/overview/assigned-leads-performance-all`,
         method: "POST",
-        body,
+        params,
+      }),
+      providesTags: ["Common"],
+    }),
+    getCounsellorDailyPerformanceById: builder.query<
+      CounsellorDailyPerformanceByIdResponse,
+      {
+        id: number;
+      }
+    >({
+      query: ({ id }) => ({
+        url: `/sales/overview/counsellor-daily-performance-by-id?id=${id}`,
+        method: "POST",
       }),
       providesTags: ["Common"],
     }),
@@ -726,6 +739,7 @@ export const {
   useGetOcManagementQuery,
   useGetAssignedLeadPerformanceQuery,
   useGetAssignedLeadPerformanceAllQuery,
+  useGetCounsellorDailyPerformanceByIdQuery,
   useGetSalesBreakDownByStackQuery,
 
   useGetSalesPerformanceQuery,

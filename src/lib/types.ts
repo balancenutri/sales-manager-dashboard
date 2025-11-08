@@ -533,6 +533,25 @@ export interface AssignedLeadPerformanceAllResponse {
     data: AssignedLeadPerformanceAll[];
     totalCount: number;
 }
+
+interface DailyReport {
+  note: string;
+  added_date: string;
+  lead_assigned: number;
+  follow_up_done_today: number;
+  consultation_done: number;
+  engagement_today: number;
+  sale_today: {
+    unit: number;
+    amount: number;
+  };
+}
+export interface CounsellorDailyPerformanceByIdResponse {
+    status: string;
+    message: string;
+    data: DailyReport[];
+    totalCount: number;
+}
 export interface SaleByStackResponse {
   status: string;
   message: string;
