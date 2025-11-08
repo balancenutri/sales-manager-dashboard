@@ -30,7 +30,7 @@ import SalesAlert from "@/components/home/overview/counsellorOverview/SalesAlert
 import RiskMissesAndOds from "@/components/home/overview/counsellorOverview/RiskMissesAndOds";
 import AppNotificationMarquee from "@/components/home/appAnalysis/AppNotificationMarquee";
 import AppCrash from "@/components/home/appAnalysis/crashAnalysis/AppCrash";
-// import AllCounsellorCard from "@/components/home/cards/AllCounsellorCard";
+import AllCounsellorCard from "@/components/home/cards/AllCounsellorCard";
 
 export default function Home() {
   return (
@@ -56,7 +56,7 @@ export default function Home() {
 
           {/* Overview Tab Content */}
           <TabsContent value="overview" className="space-y-6">
-            {/* <AllCounsellorCard /> */}
+            <AllCounsellorCard />
             <LeadPosition />
             <h2 className="text-xl font-bold">Quick Sales Snapshot</h2>
             <SalesSnapshots />
