@@ -104,6 +104,8 @@ export type LeadMis = {
   "Sales Status": string;
   Stage: string;
   "User Type": string;
+  "Phone Code": string;
+            "Phone Number": string;
 };
 
 export interface LeadMisResponse {
