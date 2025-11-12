@@ -577,6 +577,8 @@ const handleExportLeads = async () => {
                   <TableHead>Sr. No.</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
+                  <TableHead>Phone Code</TableHead>
+                  <TableHead>Phone Number</TableHead>
                   <TableHead>Gender</TableHead>
                   <TableHead>Age Group</TableHead>
                   <TableHead>User Type</TableHead>
@@ -599,12 +601,19 @@ const handleExportLeads = async () => {
                       <TableCell className="font-medium">
                         {lead.Email}
                       </TableCell>
+                      <TableCell>
+                        {lead["Phone Code"] || "N/A"}
+                      </TableCell>
+                      <TableCell>
+                        {lead["Phone Number"] || "N/A"}
+                      </TableCell>
                       <TableCell>{lead.Gender || "N/A"}</TableCell>
                       <TableCell>{lead["Age Group"] || "N/A"}</TableCell>
                       <TableCell>{lead["User Type"] || "N/A"}</TableCell>
                       <TableCell>
                         {lead["Clinical Conditions"] || "N/A"}
                       </TableCell>
+                      
                       <TableCell className="text-sm">
                         {lead["Region"]}
                       </TableCell>
