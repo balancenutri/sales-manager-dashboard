@@ -272,6 +272,16 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getCounsellorCategoryWisePerformance: builder.query<any, number>({
+      query: (id) =>
+        `/mentor/lead-dashboard/category-wise-performance?mentor_id=${id}`,
+      providesTags: ["Common"],
+    }),
+    getCounsellorSourceWisePerformance: builder.query<any, number>({
+      query: (id) =>
+        `/mentor/lead-dashboard/source-wise-performance?mentor_id=${id}`,
+      providesTags: ["Common"],
+    }),
     getCounsellorDataById: builder.query<CounsellorDataResponse, number>({
       query: (id) => ({
         url: `/sales/overview/assigned-leads-performance-by-id/${id}`,
@@ -751,6 +761,8 @@ export const {
   useGetKeySourceConversionQuery,
 
   useGetCounsellorPerformanceQuery,
+  useGetCounsellorCategoryWisePerformanceQuery,
+  useGetCounsellorSourceWisePerformanceQuery,
   useGetCounsellorDataByIdQuery,
   useGetLeadRiskAndMissesQuery,
   useGetLeadSolidSalesOpportunityQuery,
