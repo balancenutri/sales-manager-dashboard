@@ -3,6 +3,7 @@ import { useGetAssignedLeadPerformanceAllQuery } from "@/service/dashboard/api";
 import dayjs from "dayjs";
 import { useState } from "react";
 import AllCounsellorCard from "../../cards/AllCounsellorCard";
+import SkeletonCard from "@/components/common/SkeletonCard";
 
 export default function CounsellorPerformance() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
@@ -28,11 +29,19 @@ export default function CounsellorPerformance() {
         />
       </div>
       <div className="grid grid-cols-4 gap-3 mt-2">
-        {data?.data &&
-          !isFetching &&
+        {data?.data && !isFetching ? (
           data?.data.map((performanceData) => (
             <AllCounsellorCard performanceData={performanceData} />
-          ))}
+          ))
+        ) : (
+          <div className="grid grid-cols-4 gap-2">
+            {Array(4)
+              .fill(null)
+              .map((_, idx: number) => (
+                <SkeletonCard row={4} key={idx} />
+              ))}
+          </div>
+        )}
       </div>
     </div>
   );
