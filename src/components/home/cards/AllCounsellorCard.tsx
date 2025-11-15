@@ -5,6 +5,8 @@ import { useState } from "react";
 import { keyString } from "@/lib/utils";
 import dayjs from "dayjs";
 import CounsellorIndividualPerformance from "../overview/counsellorPerformance/CounsellorIndividualPerformance";
+import { Button } from "@/components/ui/button";
+import CounsellorDailyPerformance from "../overview/counsellorPerformance/CounsellorDailyPerformance";
 
 export default function AllCounsellorCard({
   performanceData,
@@ -18,13 +20,18 @@ export default function AllCounsellorCard({
       maximumFractionDigits: 0,
     }).format(amount);
 
-  const [openModal, setOpenModal] = useState<number | undefined>(undefined);
+  const [openModal, setOpenModal] = useState<{
+    id: number | undefined;
+    type: string | null;
+  }>();
 
   return (
     <>
       <Card
-        className="w-full max-w-md"
-        onClick={() => setOpenModal(performanceData?.admin_user_id)}
+        className="w-full max-w-md cursor-pointer"
+        onClick={() =>
+          setOpenModal({ id: performanceData?.admin_user_id, type: "daily" })
+        }
       >
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between gap-2">
@@ -33,6 +40,18 @@ export default function AllCounsellorCard({
                 {performanceData.crm_user}
               </h3>
             </div>
+            <Button
+              variant="outline"
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenModal({
+                  id: performanceData?.admin_user_id,
+                  type: "source",
+                });
+              }}
+            >
+              View Leads
+            </Button>
           </div>
         </CardHeader>
 
@@ -125,8 +144,11 @@ export default function AllCounsellorCard({
               {dayjs().format("MMM YYYY")})
             </CardTitle>
           </CardHeader>
-          {/* <CounsellorDailyPerformance id={openModal} /> */}
-          <CounsellorIndividualPerformance mentorId={openModal} />
+          {openModal?.type == "daily" ? (
+            <CounsellorDailyPerformance id={openModal?.id} />
+          ) : (
+            <CounsellorIndividualPerformance mentorId={openModal?.id} />
+          )}
         </DialogContent>
       </Dialog>
     </>
