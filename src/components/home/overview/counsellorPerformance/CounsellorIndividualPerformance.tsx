@@ -49,7 +49,7 @@ const CounsellorIndividualPerformance: React.FC<
         Source Wise Leads
       </h5>
       <section className="mb-6  ">
-        {sourceData?.data && sourceFetching ? (
+        {sourceData?.data && !sourceFetching ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {sourceData.data.map((metric: any, idx: number) => (
               <MetricCard key={idx} data={metric} />
