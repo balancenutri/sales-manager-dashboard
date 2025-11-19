@@ -47,6 +47,7 @@ import {
   type NotificationEngagementSummaryResponse,
   type AppCralysticsResponse,
   type CounsellorDailyPerformanceByIdResponse,
+  type DailySourceLeadsResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -151,6 +152,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
       {
         start_date?: string;
         end_date?: string;
+        filter: "" | "ol" | "fl";
       }
     >({
       query: (params) => ({
@@ -311,6 +313,12 @@ export const dashboardApi = commonAPi.injectEndpoints({
     }),
     getOcMtdSalesRisks: builder.query<SolidSalesResponse, void>({
       query: () => `/mentor/oc-dashboard/mtd-sales-risk`,
+    }),
+    getDailySourceWiseLeads: builder.query<DailySourceLeadsResponse, void>({
+      query: () => ({
+        url: `/sales/overview/daily-new-leads`,
+        method: "POST",
+      }),
     }),
 
     // SOCIAL MEDIA
@@ -770,6 +778,7 @@ export const {
   useGetSalesAlertQuery,
 
   useGetOcMtdSalesRisksQuery,
+  useGetDailySourceWiseLeadsQuery,
   useGetOcRiskAndMissesQuery,
   useGetOcSolidSalesOpportunityQuery,
 

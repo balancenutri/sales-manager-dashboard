@@ -105,7 +105,7 @@ export type LeadMis = {
   Stage: string;
   "User Type": string;
   "Phone Code": string;
-            "Phone Number": string;
+  "Phone Number": string;
 };
 
 export interface LeadMisResponse {
@@ -316,6 +316,24 @@ export interface LeadFunnelResponse {
       total_lead_to_sales_conversion_rate: number;
       total_consultation_to_sales_conversion_rate: number;
     };
+    last_month: {
+      counsellor_lead_target_units: number;
+      counsellor_lead_assigned_units: number;
+      mentor_lead_target_units: number;
+      mentor_lead_assigned_units: number;
+      counsellor_total_target: number;
+      mentor_total_target: number;
+      counsellor_total_sales: number;
+      mentor_total_sales: number;
+      counsellor_total_consultations: number;
+      mentor_total_consultations: number;
+      counsellor_lead_to_sales_conversion_rate: number;
+      mentor_lead_to_sales_conversion_rate: number | null;
+      counsellor_consultation_to_sales_conversion_rate: number;
+      mentor_consultation_to_sales_conversion_rate: number | null;
+      total_lead_to_sales_conversion_rate: number;
+      total_consultation_to_sales_conversion_rate: number;
+    };
     today: {
       counsellor_todays_lead_target_units: number;
       counsellor_todays_lead_assigned_units: number;
@@ -487,38 +505,38 @@ export type ClientPerformanceBody = {
 };
 
 export type AssignedLeadPerformance = {
-    [key: string]: {
-        "crm_user": string;
-        "leads_assigned": number;
-        "consultations": number;
-        "sales": number;
-        "l:c": string;
-        "c:s": string;
-        "l:s": string;
-    }
-}
-export type AssignedLeadPerformanceAll = {
-    admin_user_id: number;
+  [key: string]: {
     crm_user: string;
-    role_id: number;
     leads_assigned: number;
     consultations: number;
     sales: number;
     "l:c": string;
     "c:s": string;
     "l:s": string;
-    sales_amount: number;
-    revenue: number;
-    suggested_programs: number;
-    suggested_amount: number;
-    best_source_performance: string | null;
-    lead_assigned_sales_status_count: {
-        to_engage: number;
-        hot: number;
-        warm: number;
-        cold: number;
-    };
-}
+  };
+};
+export type AssignedLeadPerformanceAll = {
+  admin_user_id: number;
+  crm_user: string;
+  role_id: number;
+  leads_assigned: number;
+  consultations: number;
+  sales: number;
+  "l:c": string;
+  "c:s": string;
+  "l:s": string;
+  sales_amount: number;
+  revenue: number;
+  suggested_programs: number;
+  suggested_amount: number;
+  best_source_performance: string | null;
+  lead_assigned_sales_status_count: {
+    to_engage: number;
+    hot: number;
+    warm: number;
+    cold: number;
+  };
+};
 
 export interface AssignedLeadPerformanceResponse {
   status: string;
@@ -530,10 +548,10 @@ export interface AssignedLeadPerformanceResponse {
   totalCount: number;
 }
 export interface AssignedLeadPerformanceAllResponse {
-    status: string;
-    message: string;
-    data: AssignedLeadPerformanceAll[];
-    totalCount: number;
+  status: string;
+  message: string;
+  data: AssignedLeadPerformanceAll[];
+  totalCount: number;
 }
 
 interface DailyReport {
@@ -549,10 +567,10 @@ interface DailyReport {
   };
 }
 export interface CounsellorDailyPerformanceByIdResponse {
-    status: string;
-    message: string;
-    data: DailyReport[];
-    totalCount: number;
+  status: string;
+  message: string;
+  data: DailyReport[];
+  totalCount: number;
 }
 export interface SaleByStackResponse {
   status: string;
@@ -877,6 +895,17 @@ export interface SolidSalesResponse {
   status: string;
   message: string;
   data: { [key: string]: number };
+  hideColumn: [];
+}
+export interface DailySourceLeadsResponse {
+  status: string;
+  message: string;
+  data: {
+    lead_date: string;
+    source_name: string;
+    counsellor_name: string;
+    total_leads: number;
+  }[];
   hideColumn: [];
 }
 export interface SalesAlertResponse {

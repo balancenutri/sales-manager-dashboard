@@ -31,6 +31,7 @@ import RiskMissesAndOds from "@/components/home/overview/counsellorOverview/Risk
 import AppNotificationMarquee from "@/components/home/appAnalysis/AppNotificationMarquee";
 import AppCrash from "@/components/home/appAnalysis/crashAnalysis/AppCrash";
 import CounsellorPerformance from "@/components/home/overview/counsellorPerformance/CounsellorPerformance";
+import MentorCounsellorPerformance from "@/components/home/overview/leadCard/MentorCounsellorPerformance";
 // import AllCounsellorCard from "@/components/home/cards/AllCounsellorCard";
 
 export default function Home() {
@@ -80,6 +81,7 @@ export default function Home() {
             <RiskMissesAndOds />
 
             <KeySourceConversion />
+            <MentorCounsellorPerformance />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Top Performers */}
               <TopPerformer />
