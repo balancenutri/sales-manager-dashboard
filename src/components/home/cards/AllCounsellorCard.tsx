@@ -87,6 +87,12 @@ export default function AllCounsellorCard({
                 {formatCurrency(performanceData.revenue)}
               </p>
             </div>
+            <div>
+              <p className="text-muted-foreground">Avg. Sal. Cycle</p>
+              <p className="font-semibold text-green-400">
+                {Math.ceil(Number(performanceData.avg_conversion_time_days))} days
+              </p>
+            </div>
           </div>
 
           {/* ✅ RATIO SECTION */}

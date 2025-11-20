@@ -10,7 +10,7 @@ export default function MentorCounsellorPerformance() {
   console.log({ allData });
   return (
     <div>
-      <h2 className="text-lg font-bold">Key Source Conversion</h2>
+      <h2 className="text-lg font-bold">Mentor & Counsellor Performance</h2>
       <div className="grid grid-cols-2 gap-3">
         <Card>
           <CardHeader>

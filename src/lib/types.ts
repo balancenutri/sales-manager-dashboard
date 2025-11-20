@@ -536,6 +536,7 @@ export type AssignedLeadPerformanceAll = {
     warm: number;
     cold: number;
   };
+  avg_conversion_time_days: string;
 };
 
 export interface AssignedLeadPerformanceResponse {
@@ -897,15 +898,17 @@ export interface SolidSalesResponse {
   data: { [key: string]: number };
   hideColumn: [];
 }
+
+export interface DailyLeadData {
+  lead_date: string;
+  source_name: string;
+  counsellor_name: string;
+  total_leads: number;
+}
 export interface DailySourceLeadsResponse {
   status: string;
   message: string;
-  data: {
-    lead_date: string;
-    source_name: string;
-    counsellor_name: string;
-    total_leads: number;
-  }[];
+  data: DailyLeadData[];
   hideColumn: [];
 }
 export interface SalesAlertResponse {
