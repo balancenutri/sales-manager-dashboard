@@ -1,4 +1,5 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { formatCurrency } from "@/lib/utils";
 
 interface PerformanceData {
   counsellor_lead_target_units: number;
@@ -75,21 +76,21 @@ export default function PerformanceCards({ data }: { data: PerformanceData }) {
           </div>
 
           {/* <div>
-            <p className="text-muted-foreground">Sales Target</p>
+            <p className="text-muted-foreground">Sales Closed</p>
             <p className="font-semibold text-green-600">{salesTarget}</p>
           </div> */}
           <div>
             <p className="text-muted-foreground">Sales Done</p>
-            <p className="font-semibold text-green-600">{sales}</p>
+            <p className="font-semibold text-green-600">
+              {formatCurrency(sales)}
+            </p>
           </div>
 
           <div className="mt-3 p-3 rounded-lg bg-gray-50 border text-sm col-span-3">
             <div className="grid grid-cols-2 text-center">
               <div>
-                <p className="text-muted-foreground text-xs">L : C</p>
-                <p className="font-semibold">
-                  {formatPercentage(leadToSales)}
-                </p>
+                <p className="text-muted-foreground text-xs">L : S</p>
+                <p className="font-semibold">{formatPercentage(leadToSales)}</p>
               </div>
               <div>
                 <p className="text-muted-foreground text-xs">C : S</p>
