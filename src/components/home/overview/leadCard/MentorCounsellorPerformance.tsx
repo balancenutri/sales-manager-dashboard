@@ -4,18 +4,14 @@ import { Card, CardHeader } from "@/components/ui/card";
 
 export default function MentorCounsellorPerformance() {
   const { data } = useGetLeadFunnelQuery();
-
-  const allData = data?.data;
-
-  console.log({ allData });
   return (
     <div>
-      <h2 className="text-lg font-bold">Mentor & Counsellor Performance</h2>
+      <h2 className="text-lg font-semibold mb-4">Mentor & Counsellor Team Performance</h2>
       <div className="grid grid-cols-2 gap-3">
         <Card>
           <CardHeader>
             <h3 className="font-semibold text-center -my-4 underline">
-              This Month
+              Last Month
             </h3>
           </CardHeader>
           {data?.data?.last_month && (
@@ -25,7 +21,7 @@ export default function MentorCounsellorPerformance() {
         <Card>
           <CardHeader>
             <h3 className="font-semibold text-center -my-4 underline">
-              Last Month
+              This Month
             </h3>
           </CardHeader>
           {data?.data?.monthly && (

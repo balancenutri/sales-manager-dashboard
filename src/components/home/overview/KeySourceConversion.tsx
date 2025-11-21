@@ -19,7 +19,7 @@ export default function KeySourceConversion() {
   return (
     <>
       <div className="flex justify-between">
-        <h2 className="text-xl font-bold">Key Source Conversion</h2>
+        <h2 className="text-lg font-semibold">Key Source Conversion</h2>
         <div className="flex gap-4">
           <CustomDatePicker
             selected={selectedDate}
