@@ -1,12 +1,15 @@
 import { useGetLeadFunnelQuery } from "@/service/dashboard/api";
 import PerformanceCards from "../../cards/PerformanceCard";
 import { Card, CardHeader } from "@/components/ui/card";
+import SkeletonCard from "@/components/common/SkeletonCard";
 
 export default function MentorCounsellorPerformance() {
   const { data } = useGetLeadFunnelQuery();
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-4">Mentor & Counsellor Team Performance</h2>
+      <h2 className="text-lg font-semibold mb-4">
+        Mentor & Counsellor Team Performance
+      </h2>
       <div className="grid grid-cols-2 gap-3">
         <Card>
           <CardHeader>
@@ -14,8 +17,13 @@ export default function MentorCounsellorPerformance() {
               Last Month
             </h3>
           </CardHeader>
-          {data?.data?.last_month && (
+          {data?.data?.last_month ? (
             <PerformanceCards data={data?.data.last_month} />
+          ) : (
+            <div className="grid grid-cols-2 gap-3">
+              <SkeletonCard row={4} />
+              <SkeletonCard row={4} />
+            </div>
           )}
         </Card>
         <Card>
@@ -24,8 +32,13 @@ export default function MentorCounsellorPerformance() {
               This Month
             </h3>
           </CardHeader>
-          {data?.data?.monthly && (
+          {data?.data?.monthly ? (
             <PerformanceCards data={data?.data.monthly} />
+          ) : (
+            <div className="grid grid-cols-2 gap-3">
+              <SkeletonCard row={4} />
+              <SkeletonCard row={4} />
+            </div>
           )}
         </Card>
       </div>

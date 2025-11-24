@@ -14,6 +14,7 @@ import SkeletonTable from "@/components/common/SkeletonTable";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import { useGetSalesTriggerDataQuery } from "@/service/dashboard/dataTableApi";
+import { formatCurrency } from "@/lib/utils";
 dayjs.extend(quarterOfYear);
 
 export default function SalesTriggerData({
@@ -38,14 +39,6 @@ export default function SalesTriggerData({
       default:
         return "bg-gray-100 text-gray-800";
     }
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
   };
 
   return (

@@ -10,6 +10,9 @@ interface PerformanceData {
   counsellor_total_target: number;
   mentor_total_target: number;
 
+  counsellor_total_sales_units: number,
+  mentor_total_sales_units: number,
+
   counsellor_total_sales: number;
   mentor_total_sales: number;
 
@@ -35,6 +38,7 @@ export default function PerformanceCards({ data }: { data: PerformanceData }) {
     targetUnits,
     assignedUnits,
     sales,
+    salesUnit,
     consultations,
     leadToSales,
     consultToSales,
@@ -43,6 +47,7 @@ export default function PerformanceCards({ data }: { data: PerformanceData }) {
     targetUnits: number;
     assignedUnits: number;
     sales: number;
+    salesUnit: number;
     consultations: number;
     leadToSales: number | null;
     consultToSales: number | null;
@@ -75,10 +80,10 @@ export default function PerformanceCards({ data }: { data: PerformanceData }) {
             <p className="font-semibold">{consultations}</p>
           </div>
 
-          {/* <div>
+          <div>
             <p className="text-muted-foreground">Sales Closed</p>
-            <p className="font-semibold text-green-600">{salesTarget}</p>
-          </div> */}
+            <p className="font-semibold text-green-600">{salesUnit}</p>
+          </div>
           <div>
             <p className="text-muted-foreground">Sales Done</p>
             <p className="font-semibold text-green-600">
@@ -114,6 +119,7 @@ export default function PerformanceCards({ data }: { data: PerformanceData }) {
           targetUnits={data.counsellor_lead_target_units || 15 * 26}
           assignedUnits={data.counsellor_lead_assigned_units}
           sales={data.counsellor_total_sales}
+          salesUnit={data.counsellor_total_sales_units}
           consultations={data.counsellor_total_consultations}
           leadToSales={data.counsellor_lead_to_sales_conversion_rate}
           consultToSales={data.counsellor_consultation_to_sales_conversion_rate}
@@ -125,6 +131,7 @@ export default function PerformanceCards({ data }: { data: PerformanceData }) {
           targetUnits={data.mentor_lead_target_units}
           assignedUnits={data.mentor_lead_assigned_units}
           sales={data.mentor_total_sales}
+          salesUnit={data.mentor_total_sales_units}
           consultations={data.mentor_total_consultations}
           leadToSales={data.mentor_lead_to_sales_conversion_rate}
           consultToSales={data.mentor_consultation_to_sales_conversion_rate}

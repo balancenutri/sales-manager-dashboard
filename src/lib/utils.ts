@@ -13,9 +13,9 @@ export const keyString = (str: string): string => {
   return result;
 };
 
-export const formatCurrency = (amount: number) =>
+export const formatCurrency = (amount: number | undefined) =>
   new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
     maximumFractionDigits: 0,
-  }).format(amount);
+  }).format(amount ?? 0);

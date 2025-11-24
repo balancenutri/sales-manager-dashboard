@@ -306,7 +306,9 @@ export interface LeadFunnelResponse {
       counsellor_total_target: number;
       mentor_total_target: number;
       counsellor_total_sales: number;
+      counsellor_total_sales_units: number;
       mentor_total_sales: number;
+      mentor_total_sales_units: number;
       counsellor_total_consultations: number;
       mentor_total_consultations: number;
       counsellor_lead_to_sales_conversion_rate: number;
@@ -324,7 +326,9 @@ export interface LeadFunnelResponse {
       counsellor_total_target: number;
       mentor_total_target: number;
       counsellor_total_sales: number;
+      counsellor_total_sales_units: number;
       mentor_total_sales: number;
+      mentor_total_sales_units: number;
       counsellor_total_consultations: number;
       mentor_total_consultations: number;
       counsellor_lead_to_sales_conversion_rate: number;

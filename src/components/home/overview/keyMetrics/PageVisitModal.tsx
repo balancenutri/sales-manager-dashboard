@@ -15,6 +15,7 @@ import { useGetPageVisitsDataQuery } from "@/service/dashboard/api";
 import SkeletonTable from "@/components/common/SkeletonTable";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
+import { formatCurrency } from "@/lib/utils";
 dayjs.extend(quarterOfYear);
 
 export default function PageVisitModal({
@@ -63,14 +64,6 @@ export default function PageVisitModal({
       default:
         return "bg-gray-100 text-gray-800";
     }
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
   };
 
   return (

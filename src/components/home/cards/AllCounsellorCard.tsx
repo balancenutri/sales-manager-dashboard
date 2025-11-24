@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import type { AssignedLeadPerformanceAll } from "@/lib/types";
 import { useState } from "react";
-import { keyString } from "@/lib/utils";
+import { formatCurrency, keyString } from "@/lib/utils";
 import dayjs from "dayjs";
 import CounsellorIndividualPerformance from "../overview/counsellorPerformance/CounsellorIndividualPerformance";
 import { Button } from "@/components/ui/button";
@@ -13,13 +13,6 @@ export default function AllCounsellorCard({
 }: {
   performanceData: AssignedLeadPerformanceAll;
 }) {
-  const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
-
   const [openModal, setOpenModal] = useState<{
     id: number | undefined;
     type: string | null;

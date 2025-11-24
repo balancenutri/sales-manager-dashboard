@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { formatCurrency } from "@/lib/utils";
 import { useGetQuickSalesSnapshotQuery } from "@/service/dashboard/api";
 
 export default function SalesSnapshots() {
@@ -9,13 +10,13 @@ export default function SalesSnapshots() {
     { name: "Avg. FL / day", value: Math.round(data?.monthly.fl || 0) },
     { name: "Avg. OL / day", value: Math.round(data?.monthly.ol || 0) },
     { name: "Avg. Cons. / day", value: Math.round(data?.monthly.consultations || 0) },
-    { name: "Avg. Sale / day", value: `₹${data?.monthly.sales?.toLocaleString("en-IN")}` },
+    { name: "Avg. Sale / day", value: formatCurrency(data?.monthly.sales) },
   ];
   const yesterdayData = [
     { name: "Yest. FL", value: Math.round(data?.yesterday.fl || 0) },
     { name: "Yest. OL", value: Math.round(data?.yesterday.ol || 0) },
     { name: "Yest. Cons.", value: Math.round(data?.yesterday.consultations || 0) },
-    { name: "Yest. Sale", value: `₹${data?.yesterday.sales?.toLocaleString("en-IN")}` },
+    { name: "Yest. Sale", value: formatCurrency(data?.yesterday?.sales) },
   ];
 
   return (

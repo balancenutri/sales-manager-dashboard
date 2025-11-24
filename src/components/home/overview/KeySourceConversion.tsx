@@ -31,32 +31,41 @@ export default function KeySourceConversion() {
         </div>
       </div>
 
-      <div className="flex gap-4 overflow-x-auto pb-2">
-        {!isFetching && data?.data
-          ? Object.entries(data?.data).map(([key, value], idx) => (
-              <Card key={idx} className="min-w-[320px] flex-shrink-0">
-                <CardHeader>
-                  <CardTitle>{keyString(key)}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {Object.entries(value).map(([key, item], index) => (
-                    key !== "type" && <div
-                      key={index}
-                      className="flex items-center justify-between border-b last:border-none pb-2 last:pb-0"
-                    >
-                      <div className="flex items-center space-x-2">
-                        <span className="font-medium">{keyString(key)}</span>
+      {!isFetching && data?.data ? (
+        <div className="flex gap-4 overflow-x-auto pb-2">
+          {Object.entries(data?.data).map(([key, value], idx) => (
+            <Card key={idx} className="min-w-[320px] flex-shrink-0">
+              <CardHeader>
+                <CardTitle>{keyString(key)}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {Object.entries(value).map(
+                  ([key, item], index) =>
+                    key !== "type" && (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between border-b last:border-none pb-2 last:pb-0"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <span className="font-medium">{keyString(key)}</span>
+                        </div>
+                        <span className="font-medium">{item}</span>
                       </div>
-                      <span className="font-medium">{item}</span>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            ))
-          : Array(5)
-              .fill(null)
-              .map((_, idx: number) => <SkeletonCard row={4} key={idx} />)}
-      </div>
+                    )
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-5 gap-3">
+          {Array(5)
+            .fill(null)
+            .map((_, idx: number) => (
+              <SkeletonCard row={4} key={idx} />
+            ))}
+        </div>
+      )}
     </>
   );
 }

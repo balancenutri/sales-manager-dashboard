@@ -10,6 +10,7 @@ import {
 import { useGetDailySourceWiseLeadsQuery } from "@/service/dashboard/api";
 import type { DailyLeadData } from "@/lib/types";
 import DailySourceWiseAllLeads from "./DailySourceWiseAllLeads";
+import SkeletonTable from "@/components/common/SkeletonTable";
 
 interface GroupedByDate {
   [date: string]: {
@@ -23,7 +24,7 @@ interface GroupedByDate {
 export default function DailySourceWiseLeads() {
   const [showAllPopup, setShowAllPopup] = useState(false);
 
-  const { data } = useGetDailySourceWiseLeadsQuery();
+  const { data, isFetching } = useGetDailySourceWiseLeadsQuery();
 
   const groupedData = useMemo(() => {
     const grouped: GroupedByDate = {};
@@ -93,7 +94,7 @@ export default function DailySourceWiseLeads() {
         )}
       </div>
 
-      <Card className="overflow-hidden">
+      {!isFetching && data?.data ? <Card className="overflow-hidden">
         <CardContent className="p-0 -mt-6">
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -176,18 +177,7 @@ export default function DailySourceWiseLeads() {
             </table>
           </div>
         </CardContent>
-      </Card>
-      {/* 
-      <Dialog open={showAllPopup} onOpenChange={setShowAllPopup}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader className="sticky top-0">
-            <DialogTitle>All Daily Leads Data</DialogTitle>
-          </DialogHeader>
-
-          <DailySourceWiseAllLeads groupedData={groupedData} />
-        </DialogContent>
-      </Dialog> */}
-
+      </Card> : <SkeletonTable row={5} col={8} withHeader={true} />}
       <Dialog open={showAllPopup} onOpenChange={setShowAllPopup}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
           {/* Sticky header */}
