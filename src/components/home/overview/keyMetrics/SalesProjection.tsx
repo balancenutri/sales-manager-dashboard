@@ -50,7 +50,7 @@ export default function SalesProjection({ prev }: { prev: boolean }) {
   return (
     <>
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold">
+        <h2 className="text-lg font-semibold">
           {prev ? `Sales Possibilty (All)` : "Sales Possibility (MTD)"}
         </h2>
         {prev && (

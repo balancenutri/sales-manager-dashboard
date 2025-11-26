@@ -23,7 +23,7 @@ import { useState } from "react";
 import { useGetPitchedHistoryQuery } from "@/service/dashboard/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import SkeletonTable from "@/components/common/SkeletonTable";
-import { keyString } from "@/lib/utils";
+import { formatCurrency, keyString } from "@/lib/utils";
 
 export default function PitchedHistory({
   filter,
@@ -93,14 +93,6 @@ export default function PitchedHistory({
       default:
         return "bg-gray-100 text-gray-800";
     }
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
   };
 
   const formatDate = (dateString: string) => {

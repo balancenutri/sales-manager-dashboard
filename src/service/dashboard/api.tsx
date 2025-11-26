@@ -47,6 +47,7 @@ import {
   type NotificationEngagementSummaryResponse,
   type AppCralysticsResponse,
   type CounsellorDailyPerformanceByIdResponse,
+  type DailySourceLeadsResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -151,6 +152,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
       {
         start_date?: string;
         end_date?: string;
+        filter: "" | "ol" | "fl";
       }
     >({
       query: (params) => ({
@@ -272,6 +274,16 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getCounsellorCategoryWisePerformance: builder.query<any, number>({
+      query: (id) =>
+        `/mentor/lead-dashboard/category-wise-performance?mentor_id=${id}`,
+      providesTags: ["Common"],
+    }),
+    getCounsellorSourceWisePerformance: builder.query<any, number>({
+      query: (id) =>
+        `/mentor/lead-dashboard/source-wise-performance?mentor_id=${id}`,
+      providesTags: ["Common"],
+    }),
     getCounsellorDataById: builder.query<CounsellorDataResponse, number>({
       query: (id) => ({
         url: `/sales/overview/assigned-leads-performance-by-id/${id}`,
@@ -301,6 +313,12 @@ export const dashboardApi = commonAPi.injectEndpoints({
     }),
     getOcMtdSalesRisks: builder.query<SolidSalesResponse, void>({
       query: () => `/mentor/oc-dashboard/mtd-sales-risk`,
+    }),
+    getDailySourceWiseLeads: builder.query<DailySourceLeadsResponse, void>({
+      query: () => ({
+        url: `/sales/overview/daily-new-leads`,
+        method: "POST",
+      }),
     }),
 
     // SOCIAL MEDIA
@@ -751,6 +769,8 @@ export const {
   useGetKeySourceConversionQuery,
 
   useGetCounsellorPerformanceQuery,
+  useGetCounsellorCategoryWisePerformanceQuery,
+  useGetCounsellorSourceWisePerformanceQuery,
   useGetCounsellorDataByIdQuery,
   useGetLeadRiskAndMissesQuery,
   useGetLeadSolidSalesOpportunityQuery,
@@ -758,6 +778,7 @@ export const {
   useGetSalesAlertQuery,
 
   useGetOcMtdSalesRisksQuery,
+  useGetDailySourceWiseLeadsQuery,
   useGetOcRiskAndMissesQuery,
   useGetOcSolidSalesOpportunityQuery,
 
