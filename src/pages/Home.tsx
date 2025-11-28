@@ -19,7 +19,6 @@ import AppCount from "@/components/home/appAnalysis/AppCount";
 import LeadOcBifurcation from "@/components/home/digitalMarketing/LeadOcBifurcation";
 import NotificationEngagments from "@/components/home/appAnalysis/NotificationEngagements";
 import SalesProjection from "@/components/home/overview/keyMetrics/SalesProjection";
-import KeySourceConversion from "@/components/home/overview/KeySourceConversion";
 import CounsellorDigitalMarketingPerfotmance from "@/components/home/digitalMarketing/CounsellorDigitalMarketingPerfotmance";
 import KeySalesAlert from "@/components/home/overview/keyMetrics/KeySalesAlert";
 import SalesSnapshots from "@/components/home/quickSnapshot/SalesSnapshots";
@@ -30,7 +29,6 @@ import RiskMissesAndOds from "@/components/home/overview/counsellorOverview/Risk
 import AppNotificationMarquee from "@/components/home/appAnalysis/AppNotificationMarquee";
 import AppCrash from "@/components/home/appAnalysis/crashAnalysis/AppCrash";
 import CounsellorPerformance from "@/components/home/overview/counsellorPerformance/CounsellorPerformance";
-import MentorCounsellorPerformance from "@/components/home/overview/leadCard/MentorCounsellorPerformance";
 import DailySourceWiseLeads from "@/components/home/overview/leadSources/DailySourceWiseLead";
 // import AllCounsellorCard from "@/components/home/cards/AllCounsellorCard";
 
