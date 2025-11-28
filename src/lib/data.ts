@@ -1,3 +1,5 @@
+import { Home, TrendingUp } from "lucide-react";
+
 export const mockData = {
   overview: {
     totalLeads: 1247,
@@ -1014,5 +1016,36 @@ export const leadStatus = [
   { name: "To Engage", value: "0" },
   { name: "Consultation Done", value: "7" },
 ];
+
+export const menuItems = [
+    {
+      label: "Dashboard",
+      path: "/",
+      icon: Home,
+    },
+    {
+      label: "Key Source Conversion",
+      path: "/key-source-conversion",
+      icon: TrendingUp,
+    },
+    {
+      label: "Team Performance",
+      path: "/team-performance",
+      icon: TrendingUp,
+    },
+  ];
+
+  export  const dbUrls = [
+    {
+      name: "Content DB",
+      url: "https://bn-content-db.vercel.app",
+      icon: "",
+    },
+    {
+      name: "Bahrain DB",
+      url: "https://mentor.balancenutrition.in/franchise-dashboard",
+      icon: "",
+    },
+  ];
 
 export const adminId = 312;
