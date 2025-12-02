@@ -10,13 +10,52 @@ import CounsellorDailyPerformance from "../overview/counsellorPerformance/Counse
 
 export default function AllCounsellorCard({
   performanceData,
+  benchmarkData,
 }: {
   performanceData: AssignedLeadPerformanceAll;
+  benchmarkData: {
+    "l:c": number;
+    "c:s": number;
+    "l:s": number;
+  };
 }) {
   const [openModal, setOpenModal] = useState<{
     id: number | undefined;
     type: string | null;
   }>();
+
+  const performanceLabel = (
+    data: string,
+    benchmark: number,
+    avg: string
+  ): string => {
+    let value = Number(data);
+    let average = Number(avg);
+    if (value > benchmark) return "Excellent";
+    if (value >= benchmark - 5) return "Good";
+    if (value < benchmark - 5 && value <= average + 5 && value > average)
+      return "Fair";
+    if (value >= average - 5 && value <= average + 5) return "Poor";
+    if (value < average) return "High Risk";
+    return "Unknown";
+  };
+
+  const performanceColor = (
+    data: string,
+    benchmark: number,
+    avg: string
+  ): string => {
+    let value = Number(data);
+    let average = Number(avg);
+
+    if (value > benchmark) return "text-green-700";
+    if (value >= benchmark - 5) return "text-green-400";
+    if (value < benchmark - 5 && value <= average + 5 && value > average)
+      return "text-yellow-700";
+    if (value >= average - 5 && value <= average + 5) return "text-orange-500";
+    if (value < average) return "text-red-400";
+    return "text-red-600";
+  };
 
   return (
     <>
@@ -83,7 +122,8 @@ export default function AllCounsellorCard({
             <div>
               <p className="text-muted-foreground">Avg. Sal. Cycle</p>
               <p className="font-semibold text-green-400">
-                {Math.ceil(Number(performanceData.avg_conversion_time_days))} days
+                {Math.ceil(Number(performanceData.avg_conversion_time_days))}{" "}
+                days
               </p>
             </div>
           </div>
@@ -93,40 +133,85 @@ export default function AllCounsellorCard({
             <div className="grid grid-cols-3 text-center">
               <div>
                 <p className="text-muted-foreground text-xs">L : C</p>
-                <p className="font-semibold">{performanceData["l:c"]}%</p>
+                <p
+                  className={`${performanceColor(
+                    performanceData["l:c"],
+                    benchmarkData["l:c"],
+                    performanceData.avg_performance["l:c"]
+                  )} font-semibold`}
+                >
+                  {performanceData["l:c"]}%{" "}
+                </p>
+                <p>
+                  {performanceLabel(
+                    performanceData["l:c"],
+                    benchmarkData["l:c"],
+                    performanceData.avg_performance["l:c"]
+                  )}
+                </p>
               </div>
               <div>
                 <p className="text-muted-foreground text-xs">C : S</p>
-                <p className="font-semibold">{performanceData["c:s"]}%</p>
+                <p
+                  className={`${performanceColor(
+                    performanceData["c:s"],
+                    benchmarkData["c:s"],
+                    performanceData.avg_performance["c:s"]
+                  )} font-semibold`}
+                >
+                  {performanceData["c:s"]}%{" "}
+                </p>
+                <p>
+                  {performanceLabel(
+                    performanceData["l:c"],
+                    benchmarkData["l:c"],
+                    performanceData.avg_performance["l:c"]
+                  )}
+                </p>
               </div>
               <div>
                 <p className="text-muted-foreground text-xs">L : S</p>
-                <p className="font-semibold">{performanceData["l:s"]}%</p>
+                <p
+                  className={`${performanceColor(
+                    performanceData["l:s"],
+                    benchmarkData["l:s"],
+                    performanceData.avg_performance["l:s"]
+                  )} font-semibold`}
+                >
+                  {performanceData["l:s"]}%{" "}
+                </p>
+                <p>
+                  {performanceLabel(
+                    performanceData["l:c"],
+                    benchmarkData["l:c"],
+                    performanceData.avg_performance["l:c"]
+                  )}{" "}
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-4 border-t-2 mt-3 pt-2">
+          <div className="grid grid-cols-4 border-t-2 mt-3 pt-4">
             <div className="flex flex-col justify-center items-center">
-              <p className="text-muted-foreground">Hot</p>
+              <p className="text-sm">Hot</p>
               <p className="font-semibold text-green-600">
                 {performanceData.lead_assigned_sales_status_count.hot}
               </p>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <p className="text-muted-foreground">Warm</p>
+              <p className="text-sm">Warm</p>
               <p className="font-semibold text-green-600">
                 {performanceData.lead_assigned_sales_status_count.warm}
               </p>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <p className="text-muted-foreground">Cold</p>
+              <p className="text-sm">Cold</p>
               <p className="font-semibold text-green-600">
                 {performanceData.lead_assigned_sales_status_count.cold}
               </p>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <p className="text-muted-foreground">To Engage</p>
+              <p className="text-sm">To Engage</p>
               <p className="font-semibold text-green-600">
                 {performanceData.lead_assigned_sales_status_count.to_engage}
               </p>

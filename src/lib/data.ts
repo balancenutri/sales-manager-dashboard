@@ -1,4 +1,4 @@
-import { Home, TrendingUp } from "lucide-react";
+import { Home, TrendingUp, Users } from "lucide-react";
 
 export const mockData = {
   overview: {
@@ -45,7 +45,12 @@ export const mockData = {
       totalLeadsAssigned: 327,
       totalSalesUnits: 29,
       targetSalesUnits: 37,
-      counsellors: ["Arjun Mehta", "Pooja Agarwal", "Ravi Sharma", "Meera Joshi"],
+      counsellors: [
+        "Arjun Mehta",
+        "Pooja Agarwal",
+        "Ravi Sharma",
+        "Meera Joshi",
+      ],
     },
   ],
   leadsSources: {
@@ -489,7 +494,14 @@ export const mockData = {
   ],
   // New data for Analytics section
   leadSourceAnalytics: [
-    { source: "Website", totalLeads: 500, convertedLeads: 50, unitsSold: 60, revenue: 300000, conversionRate: 10.0 },
+    {
+      source: "Website",
+      totalLeads: 500,
+      convertedLeads: 50,
+      unitsSold: 60,
+      revenue: 300000,
+      conversionRate: 10.0,
+    },
     {
       source: "Social Media",
       totalLeads: 300,
@@ -498,8 +510,22 @@ export const mockData = {
       revenue: 120000,
       conversionRate: 8.3,
     },
-    { source: "Referral", totalLeads: 200, convertedLeads: 20, unitsSold: 25, revenue: 100000, conversionRate: 10.0 },
-    { source: "Google Ads", totalLeads: 150, convertedLeads: 10, unitsSold: 12, revenue: 45000, conversionRate: 6.7 },
+    {
+      source: "Referral",
+      totalLeads: 200,
+      convertedLeads: 20,
+      unitsSold: 25,
+      revenue: 100000,
+      conversionRate: 10.0,
+    },
+    {
+      source: "Google Ads",
+      totalLeads: 150,
+      convertedLeads: 10,
+      unitsSold: 12,
+      revenue: 45000,
+      conversionRate: 6.7,
+    },
   ],
   leadDowngrades: {
     hotToWarm: 15,
@@ -675,7 +701,11 @@ export const mockData = {
       adSpend: 5000,
       leadsGenerated: 150,
       revenueGenerated: 75000,
-      usersTargeted: ["Weight Loss Seekers", "Fitness Enthusiasts", "Health-Conscious Individuals"],
+      usersTargeted: [
+        "Weight Loss Seekers",
+        "Fitness Enthusiasts",
+        "Health-Conscious Individuals",
+      ],
       conversionRate: 15,
       roi: 1.5,
     },
@@ -873,14 +903,32 @@ export const mockData = {
   ],
   // New mock data for clinical conditions analytics based on image (29).png
   clinicalConditionsAnalytics: {
-    "Women & Child": { olr: { count: 315, value: 2890 }, ocl: { count: 432, value: 3580 } },
-    "Menopause (Peri & Post)": { olr: { count: 412, value: 5160 }, ocl: { count: 328, value: 8930 } },
-    "Hormonal Disorder": { olr: { count: 325, value: 7130 }, ocl: { count: 189, value: 6505 } },
-    Diabetes: { olr: { count: 1151, value: 1890 }, ocl: { count: 432, value: 3580 } },
-    Thyroid: { olr: { count: 102, value: 8920 }, ocl: { count: 111, value: 7850 } },
-    Cholesterol: { olr: { count: 89, value: 5121 }, ocl: { count: 85, value: 3528 } },
+    "Women & Child": {
+      olr: { count: 315, value: 2890 },
+      ocl: { count: 432, value: 3580 },
+    },
+    "Menopause (Peri & Post)": {
+      olr: { count: 412, value: 5160 },
+      ocl: { count: 328, value: 8930 },
+    },
+    "Hormonal Disorder": {
+      olr: { count: 325, value: 7130 },
+      ocl: { count: 189, value: 6505 },
+    },
+    Diabetes: {
+      olr: { count: 1151, value: 1890 },
+      ocl: { count: 432, value: 3580 },
+    },
+    Thyroid: {
+      olr: { count: 102, value: 8920 },
+      ocl: { count: 111, value: 7850 },
+    },
+    Cholesterol: {
+      olr: { count: 89, value: 5121 },
+      ocl: { count: 85, value: 3528 },
+    },
   },
-}
+};
 
 export const keyMetricsData = {
   hot: {
@@ -923,8 +971,7 @@ export const keyMetricsData = {
       },
     },
   },
-}
-
+};
 
 export const simpleRowMetricsData = {
   hot: {
@@ -1007,7 +1054,6 @@ export const simpleRowMetricsData = {
   },
 };
 
-
 export const leadStatus = [
   { name: "1st Pitch(can't decide)", value: "1" },
   { name: "Hot", value: "2" },
@@ -1018,34 +1064,34 @@ export const leadStatus = [
 ];
 
 export const menuItems = [
-    {
-      label: "Dashboard",
-      path: "/",
-      icon: Home,
-    },
-    {
-      label: "Key Source Conversion",
-      path: "/key-source-conversion",
-      icon: TrendingUp,
-    },
-    {
-      label: "Team Performance",
-      path: "/team-performance",
-      icon: TrendingUp,
-    },
-  ];
+  {
+    label: "Dashboard",
+    path: "/",
+    icon: Home,
+  },
+  {
+    label: "Key Source Conversion",
+    path: "/key-source-conversion",
+    icon: TrendingUp,
+  },
+  {
+    label: "Team Performance",
+    path: "/team-performance",
+    icon: Users,
+  },
+];
 
-  export  const dbUrls = [
-    {
-      name: "Content DB",
-      url: "https://bn-content-db.vercel.app",
-      icon: "",
-    },
-    {
-      name: "Bahrain DB",
-      url: "https://mentor.balancenutrition.in/franchise-dashboard",
-      icon: "",
-    },
-  ];
+export const dbUrls = [
+  {
+    name: "Content DB",
+    url: "https://bn-content-db.vercel.app",
+    icon: "",
+  },
+  {
+    name: "Bahrain DB",
+    url: "https://mentor.balancenutrition.in/franchise-dashboard",
+    icon: "",
+  },
+];
 
 export const adminId = 312;

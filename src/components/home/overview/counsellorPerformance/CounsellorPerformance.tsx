@@ -62,7 +62,7 @@ export default function CounsellorPerformance() {
       <div className="grid grid-cols-4 gap-3 mt-2">
         {data?.data && !isFetching
           ? data?.data.map((performanceData) => (
-              <AllCounsellorCard performanceData={performanceData} />
+              <AllCounsellorCard performanceData={performanceData} benchmarkData={data?.table_meta_data?.benchmarkData} />
             ))
           : Array(4)
               .fill(null)

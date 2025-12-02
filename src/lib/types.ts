@@ -541,6 +541,11 @@ export type AssignedLeadPerformanceAll = {
     cold: number;
   };
   avg_conversion_time_days: string;
+  avg_performance: {
+    "l:c": string;
+    "c:s": string;
+    "l:s": string;
+  };
 };
 
 export interface AssignedLeadPerformanceResponse {
@@ -556,7 +561,13 @@ export interface AssignedLeadPerformanceAllResponse {
   status: string;
   message: string;
   data: AssignedLeadPerformanceAll[];
-  totalCount: number;
+  table_meta_data: {
+    benchmarkData: {
+      "l:c": number;
+      "c:s": number;
+      "l:s": number;
+    };
+  };
 }
 
 interface DailyReport {
