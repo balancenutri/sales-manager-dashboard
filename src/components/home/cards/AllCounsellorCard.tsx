@@ -163,9 +163,9 @@ export default function AllCounsellorCard({
                 </p>
                 <p>
                   {performanceLabel(
-                    performanceData["l:c"],
-                    benchmarkData["l:c"],
-                    performanceData.avg_performance["l:c"]
+                    performanceData["c:s"],
+                    benchmarkData["c:s"],
+                    performanceData.avg_performance["c:s"]
                   )}
                 </p>
               </div>
@@ -182,9 +182,9 @@ export default function AllCounsellorCard({
                 </p>
                 <p>
                   {performanceLabel(
-                    performanceData["l:c"],
-                    benchmarkData["l:c"],
-                    performanceData.avg_performance["l:c"]
+                    performanceData["l:s"],
+                    benchmarkData["l:s"],
+                    performanceData.avg_performance["l:s"]
                   )}{" "}
                 </p>
               </div>
