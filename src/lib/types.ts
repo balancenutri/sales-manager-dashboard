@@ -567,6 +567,11 @@ export interface AssignedLeadPerformanceAllResponse {
       "c:s": number;
       "l:s": number;
     };
+    avgPerformance: {
+      "l:c": number;
+      "c:s": number;
+      "l:s": number;
+    };
   };
 }
 

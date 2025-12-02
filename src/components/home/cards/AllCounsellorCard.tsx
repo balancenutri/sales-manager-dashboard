@@ -7,13 +7,20 @@ import dayjs from "dayjs";
 import CounsellorIndividualPerformance from "../overview/counsellorPerformance/CounsellorIndividualPerformance";
 import { Button } from "@/components/ui/button";
 import CounsellorDailyPerformance from "../overview/counsellorPerformance/CounsellorDailyPerformance";
+import { CounsellorAverageTooltip } from "../common/CounsellorAverageTooltip";
 
 export default function AllCounsellorCard({
   performanceData,
   benchmarkData,
+  averageData,
 }: {
   performanceData: AssignedLeadPerformanceAll;
   benchmarkData: {
+    "l:c": number;
+    "c:s": number;
+    "l:s": number;
+  };
+  averageData: {
     "l:c": number;
     "c:s": number;
     "l:s": number;
@@ -24,38 +31,38 @@ export default function AllCounsellorCard({
     type: string | null;
   }>();
 
-  const performanceLabel = (
-    data: string,
-    benchmark: number,
-    avg: string
-  ): string => {
-    let value = Number(data);
-    let average = Number(avg);
-    if (value > benchmark) return "Excellent";
-    if (value >= benchmark - 5) return "Good";
-    if (value < benchmark - 5 && value <= average + 5 && value > average)
-      return "Fair";
-    if (value >= average - 5 && value <= average + 5) return "Poor";
-    if (value < average) return "High Risk";
-    return "Unknown";
-  };
+  // const performanceLabel = (
+  //   data: string,
+  //   benchmark: number,
+  //   avg: string
+  // ): string => {
+  //   let value = Number(data);
+  //   let average = Number(avg);
+  //   if (value > benchmark) return "Excellent";
+  //   if (value >= benchmark - 5) return "Good";
+  //   if (value < benchmark - 5 && value <= average + 5 && value > average)
+  //     return "Fair";
+  //   if (value >= average - 5 && value <= average + 5) return "Poor";
+  //   if (value < average) return "High Risk";
+  //   return "Unknown";
+  // };
 
-  const performanceColor = (
-    data: string,
-    benchmark: number,
-    avg: string
-  ): string => {
-    let value = Number(data);
-    let average = Number(avg);
+  // const performanceColor = (
+  //   data: string,
+  //   benchmark: number,
+  //   avg: string
+  // ): string => {
+  //   let value = Number(data);
+  //   let average = Number(avg);
 
-    if (value > benchmark) return "text-green-700";
-    if (value >= benchmark - 5) return "text-green-400";
-    if (value < benchmark - 5 && value <= average + 5 && value > average)
-      return "text-yellow-700";
-    if (value >= average - 5 && value <= average + 5) return "text-orange-500";
-    if (value < average) return "text-red-400";
-    return "text-red-600";
-  };
+  //   if (value > benchmark) return "text-green-700";
+  //   if (value >= benchmark - 5) return "text-green-400";
+  //   if (value < benchmark - 5 && value <= average + 5 && value > average)
+  //     return "text-yellow-700";
+  //   if (value >= average - 5 && value <= average + 5) return "text-orange-500";
+  //   if (value < average) return "text-red-400";
+  //   return "text-red-600";
+  // };
 
   return (
     <>
@@ -129,67 +136,11 @@ export default function AllCounsellorCard({
           </div>
 
           {/* ✅ RATIO SECTION */}
-          <div className="mt-3 p-3 rounded-lg bg-gray-50 border text-sm">
-            <div className="grid grid-cols-3 text-center">
-              <div>
-                <p className="text-muted-foreground text-xs">L : C</p>
-                <p
-                  className={`${performanceColor(
-                    performanceData["l:c"],
-                    benchmarkData["l:c"],
-                    performanceData.avg_performance["l:c"]
-                  )} font-semibold`}
-                >
-                  {performanceData["l:c"]}%{" "}
-                </p>
-                <p>
-                  {performanceLabel(
-                    performanceData["l:c"],
-                    benchmarkData["l:c"],
-                    performanceData.avg_performance["l:c"]
-                  )}
-                </p>
-              </div>
-              <div>
-                <p className="text-muted-foreground text-xs">C : S</p>
-                <p
-                  className={`${performanceColor(
-                    performanceData["c:s"],
-                    benchmarkData["c:s"],
-                    performanceData.avg_performance["c:s"]
-                  )} font-semibold`}
-                >
-                  {performanceData["c:s"]}%{" "}
-                </p>
-                <p>
-                  {performanceLabel(
-                    performanceData["c:s"],
-                    benchmarkData["c:s"],
-                    performanceData.avg_performance["c:s"]
-                  )}
-                </p>
-              </div>
-              <div>
-                <p className="text-muted-foreground text-xs">L : S</p>
-                <p
-                  className={`${performanceColor(
-                    performanceData["l:s"],
-                    benchmarkData["l:s"],
-                    performanceData.avg_performance["l:s"]
-                  )} font-semibold`}
-                >
-                  {performanceData["l:s"]}%{" "}
-                </p>
-                <p>
-                  {performanceLabel(
-                    performanceData["l:s"],
-                    benchmarkData["l:s"],
-                    performanceData.avg_performance["l:s"]
-                  )}{" "}
-                </p>
-              </div>
-            </div>
-          </div>
+          <CounsellorAverageTooltip
+            averageData={averageData}
+            benchmarkData={benchmarkData}
+            performanceData={performanceData}
+          />
 
           <div className="grid grid-cols-4 border-t-2 mt-3 pt-4">
             <div className="flex flex-col justify-center items-center">
