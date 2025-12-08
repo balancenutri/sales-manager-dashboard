@@ -69,12 +69,12 @@ export function CounsellorAverageTooltip({
                 >
                   {performanceData["l:c"]}%{" "}
                 </p>
-                <p>
-                  {performanceLabel(
+                <p className="text-xs">
+                  ({performanceLabel(
                     performanceData["l:c"],
                     benchmarkData["l:c"],
                     averageData["l:c"]
-                  )}
+                  )})
                 </p>
               </div>
               <div>
@@ -88,12 +88,12 @@ export function CounsellorAverageTooltip({
                 >
                   {performanceData["c:s"]}%{" "}
                 </p>
-                <p>
-                  {performanceLabel(
+                <p className="text-xs">
+                  ({performanceLabel(
                     performanceData["c:s"],
                     benchmarkData["c:s"],
                     averageData["c:s"]
-                  )}
+                  )})
                 </p>
               </div>
               <div>
@@ -107,12 +107,12 @@ export function CounsellorAverageTooltip({
                 >
                   {performanceData["l:s"]}%{" "}
                 </p>
-                <p>
-                  {performanceLabel(
+                <p className="text-xs">
+                  ({performanceLabel(
                     performanceData["l:s"],
                     benchmarkData["l:s"],
                     averageData["l:s"]
-                  )}{" "}
+                  )})
                 </p>
               </div>
             </div>
