@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router";
 import { dbUrls, menuItems } from "@/lib/data";
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
