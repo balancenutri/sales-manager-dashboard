@@ -18,7 +18,7 @@ export default function KeySourceConversion() {
 
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-2">
         <h2 className="text-lg font-semibold">Key Source Conversion</h2>
         <div className="flex gap-4">
           <CustomDatePicker
@@ -32,9 +32,9 @@ export default function KeySourceConversion() {
       </div>
 
       {!isFetching && data?.data ? (
-        <div className="flex gap-4 overflow-x-auto pb-2">
+        <div className="grid grid-cols-4 gap-4 pb-2">
           {Object.entries(data?.data).map(([key, value], idx) => (
-            <Card key={idx} className="min-w-[320px] flex-shrink-0">
+            <Card key={idx} className="flex-shrink-0">
               <CardHeader>
                 <CardTitle>{keyString(key)}</CardTitle>
               </CardHeader>
