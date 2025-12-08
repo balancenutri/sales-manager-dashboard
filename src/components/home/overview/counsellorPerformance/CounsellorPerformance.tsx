@@ -11,7 +11,7 @@ export default function CounsellorPerformance() {
     dayjs().toDate()
   );
 
-  const [selected, setSelected] = useState<"" | "ol" | "fl">("");
+  const [selected, setSelected] = useState<"" | "ol" | "fl" | "oc">("");
 
   const { data, isFetching } = useGetAssignedLeadPerformanceAllQuery({
     start_date: dayjs(selectedDate).startOf("month").format("YYYY-MM-DD"),
@@ -24,13 +24,13 @@ export default function CounsellorPerformance() {
         <h2 className="text-lg font-semibold">Counsellor Performance</h2>
         <div className="flex gap-2 items-center">
           <Tabs defaultValue={selected} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger
                 className="cursor-pointer"
                 value=""
                 onClick={() => setSelected("")}
               >
-                All
+                All Leads
               </TabsTrigger>
               <TabsTrigger
                 className="cursor-pointer"
@@ -45,6 +45,13 @@ export default function CounsellorPerformance() {
                 onClick={() => setSelected("ol")}
               >
                 Old Lead
+              </TabsTrigger>
+              <TabsTrigger
+                className="cursor-pointer"
+                value="oc"
+                onClick={() => setSelected("oc")}
+              >
+                OC
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -64,7 +71,7 @@ export default function CounsellorPerformance() {
       <div className="grid grid-cols-4 gap-3 mt-2">
         {data?.data && !isFetching
           ? data?.data.map((performanceData) => (
-              <AllCounsellorCard performanceData={performanceData} benchmarkData={data?.table_meta_data?.benchmarkData} averageData={data?.table_meta_data?.avgPerformance} />
+              <AllCounsellorCard performanceData={performanceData} benchmarkData={data?.table_meta_data?.benchmarkData} averageData={data?.table_meta_data?.avgPerformance} type={selected !== "oc"} />
             ))
           : Array(4)
               .fill(null)
