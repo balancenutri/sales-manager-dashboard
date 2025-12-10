@@ -13,6 +13,7 @@ export default function AllCounsellorCard({
   performanceData,
   benchmarkData,
   averageData,
+  type,
 }: {
   performanceData: AssignedLeadPerformanceAll;
   benchmarkData: {
@@ -25,44 +26,12 @@ export default function AllCounsellorCard({
     "c:s": number;
     "l:s": number;
   };
+  type: boolean;
 }) {
   const [openModal, setOpenModal] = useState<{
     id: number | undefined;
     type: string | null;
   }>();
-
-  // const performanceLabel = (
-  //   data: string,
-  //   benchmark: number,
-  //   avg: string
-  // ): string => {
-  //   let value = Number(data);
-  //   let average = Number(avg);
-  //   if (value > benchmark) return "Excellent";
-  //   if (value >= benchmark - 5) return "Good";
-  //   if (value < benchmark - 5 && value <= average + 5 && value > average)
-  //     return "Fair";
-  //   if (value >= average - 5 && value <= average + 5) return "Poor";
-  //   if (value < average) return "High Risk";
-  //   return "Unknown";
-  // };
-
-  // const performanceColor = (
-  //   data: string,
-  //   benchmark: number,
-  //   avg: string
-  // ): string => {
-  //   let value = Number(data);
-  //   let average = Number(avg);
-
-  //   if (value > benchmark) return "text-green-700";
-  //   if (value >= benchmark - 5) return "text-green-400";
-  //   if (value < benchmark - 5 && value <= average + 5 && value > average)
-  //     return "text-yellow-700";
-  //   if (value >= average - 5 && value <= average + 5) return "text-orange-500";
-  //   if (value < average) return "text-red-400";
-  //   return "text-red-600";
-  // };
 
   return (
     <>
@@ -79,7 +48,7 @@ export default function AllCounsellorCard({
                 {performanceData.crm_user}
               </h3>
             </div>
-            <Button
+            {type && <Button
               variant="outline"
               onClick={(e) => {
                 e.stopPropagation();
@@ -90,23 +59,23 @@ export default function AllCounsellorCard({
               }}
             >
               View Leads
-            </Button>
+            </Button>}
           </div>
         </CardHeader>
 
         <CardContent className="-mt-4">
           <div className="grid grid-cols-3 gap-3 text-sm">
-            <div>
+            {type && <div>
               <p className="text-muted-foreground">Best Source</p>
               <p className="font-semibold">
                 {performanceData.best_source_performance || "N/A"}
               </p>
-            </div>
+            </div>}
 
-            <div>
+            {type && <div>
               <p className="text-muted-foreground">Leads Assigned</p>
               <p className="font-semibold">{performanceData.leads_assigned}</p>
-            </div>
+            </div>}
 
             <div>
               <p className="text-muted-foreground">Consultation</p>
@@ -126,23 +95,29 @@ export default function AllCounsellorCard({
                 {formatCurrency(performanceData.revenue)}
               </p>
             </div>
-            <div>
+            {type && <div>
               <p className="text-muted-foreground">Avg. Sal. Cycle</p>
               <p className="font-semibold text-green-400">
                 {Math.ceil(Number(performanceData.avg_conversion_time_days))}{" "}
                 days
               </p>
-            </div>
+            </div>}
+            {!type && <div>
+              <p className="text-muted-foreground">C:S</p>
+              <p className="font-semibold text-green-400">
+                {performanceData["c:s"]}
+              </p>
+            </div>}
           </div>
 
           {/* ✅ RATIO SECTION */}
-          <CounsellorAverageTooltip
+          {type && <CounsellorAverageTooltip
             averageData={averageData}
             benchmarkData={benchmarkData}
             performanceData={performanceData}
-          />
+          />}
 
-          <div className="grid grid-cols-4 border-t-2 mt-3 pt-4">
+          <div className={`grid ${type ? "grid-cols-4" : "grid-cols-3"} border-t-2 mt-3 pt-4`}>
             <div className="flex flex-col justify-center items-center">
               <p className="text-sm">Hot</p>
               <p className="font-semibold text-green-600">
@@ -161,21 +136,21 @@ export default function AllCounsellorCard({
                 {performanceData.lead_assigned_sales_status_count.cold}
               </p>
             </div>
-            <div className="flex flex-col justify-center items-center">
+            {type && <div className="flex flex-col justify-center items-center">
               <p className="text-sm">To Engage</p>
               <p className="font-semibold text-green-600">
                 {performanceData.lead_assigned_sales_status_count.to_engage}
               </p>
-            </div>
+            </div>}
           </div>
         </CardContent>
       </Card>
 
-      <Dialog open={!!openModal} onOpenChange={() => setOpenModal(undefined)}>
+      {type && <Dialog open={!!openModal} onOpenChange={() => setOpenModal(undefined)}>
         <DialogContent className="min-w-[90vw] max-h-[90vh] overflow-scroll">
           <CardHeader>
             <CardTitle>
-              {keyString(performanceData?.crm_user)} Daily Performance (
+              {keyString(performanceData?.crm_user)} {openModal?.type == "daily" ? "Daily Performance" : "Activity Table"} (
               {dayjs().format("MMM YYYY")})
             </CardTitle>
           </CardHeader>
@@ -185,7 +160,7 @@ export default function AllCounsellorCard({
             <CounsellorIndividualPerformance mentorId={openModal?.id} />
           )}
         </DialogContent>
-      </Dialog>
+      </Dialog>}
     </>
   );
 }

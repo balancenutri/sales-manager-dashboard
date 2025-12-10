@@ -152,7 +152,7 @@ export const dashboardApi = commonAPi.injectEndpoints({
       {
         start_date?: string;
         end_date?: string;
-        filter: "" | "ol" | "fl";
+        filter: "" | "ol" | "fl" | "oc";
       }
     >({
       query: (params) => ({
