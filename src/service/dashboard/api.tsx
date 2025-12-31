@@ -48,6 +48,9 @@ import {
   type AppCralysticsResponse,
   type CounsellorDailyPerformanceByIdResponse,
   type DailySourceLeadsResponse,
+  type AdPerformanceBody,
+  type AdPerformanceData,
+  type AdPerformanceResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -552,6 +555,30 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
+    getAdPerformnaceReport: builder.query<AdPerformanceResponse, void>({
+      query: (body) => ({
+        url: `/sales/digital-marketing/ad-performance-report`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    createAdPerformanceReport: builder.mutation<LeadMisResponse, AdPerformanceBody>({
+      query: (body) => ({
+        url: `/sales/digital-marketing/create-ad-performance-report`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Common"],
+    }),
+    updateAdPerformanceReport: builder.mutation<LeadMisResponse, AdPerformanceBody>({
+      query: (body) => ({
+        url: `/sales/digital-marketing/upload-ad-performance-report`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Common"],
+    }),
 
     getAppDownloadsCount: builder.query<
       AppDownlaodResponse,
@@ -808,6 +835,9 @@ export const {
   useGetSocialMediaPerformanceQuery,
   useGetAllSocialMediaPerformanceQuery,
   useUpdateSocialMediaPerformanceMutation,
+  useGetAdPerformnaceReportQuery,
+  useCreateAdPerformanceReportMutation,
+  useUpdateAdPerformanceReportMutation,
 
   useGetAppDownloadsCountQuery,
   useGetAllOcAppCountQuery,
