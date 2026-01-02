@@ -267,8 +267,8 @@ export default function LeadPosition() {
       "en-IN"
     )} | ₹ ${totals.mtd.reqSales?.toLocaleString("en-IN")}`,
     // ratios — you can compute weighted average here if needed
-    `${allData?.monthly.total_lead_to_sales_conversion_rate.toFixed(2)} %`,
-    `${allData?.monthly.total_consultation_to_sales_conversion_rate.toFixed(2)} %`,
+    `${allData?.monthly.total_lead_to_sales_conversion_rate?.toFixed(2)} %`,
+    `${allData?.monthly.total_consultation_to_sales_conversion_rate?.toFixed(2)} %`,
   ];
 
   return (
