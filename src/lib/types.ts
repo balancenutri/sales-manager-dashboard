@@ -209,6 +209,7 @@ export type AdPerformanceData = {
   link_clicks?: number;
   ctr?: number;
   cpc?: number;
+  cpm?: number;
   
   results?: number;
   cost_per_result?: number;
@@ -217,6 +218,11 @@ export type AdPerformanceData = {
   cpa?: number;
   aov?: number;
   
+}
+
+export interface UpdateAdPerformanceArgs {
+  id: number | string
+  body: AdPerformanceBody
 }
 
 export interface AdPerformanceResponse {

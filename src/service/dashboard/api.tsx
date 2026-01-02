@@ -49,8 +49,8 @@ import {
   type CounsellorDailyPerformanceByIdResponse,
   type DailySourceLeadsResponse,
   type AdPerformanceBody,
-  type AdPerformanceData,
   type AdPerformanceResponse,
+  type UpdateAdPerformanceArgs,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -571,7 +571,15 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       invalidatesTags: ["Common"],
     }),
-    updateAdPerformanceReport: builder.mutation<LeadMisResponse, AdPerformanceBody>({
+    updateAdPerformanceReport: builder.mutation<any, UpdateAdPerformanceArgs>({
+      query: ({body, id}) => ({
+        url: `/sales/digital-marketing/update-ad-performance-report/${id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Common"],
+    }),
+    uplaodAdPerformanceReport: builder.mutation<LeadMisResponse, AdPerformanceBody>({
       query: (body) => ({
         url: `/sales/digital-marketing/upload-ad-performance-report`,
         method: "POST",
@@ -838,6 +846,8 @@ export const {
   useGetAdPerformnaceReportQuery,
   useCreateAdPerformanceReportMutation,
   useUpdateAdPerformanceReportMutation,
+  useUplaodAdPerformanceReportMutation,
+
 
   useGetAppDownloadsCountQuery,
   useGetAllOcAppCountQuery,

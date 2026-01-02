@@ -486,6 +486,7 @@ import {
   useCreateAdPerformanceReportMutation,
   useUpdateAdPerformanceReportMutation,
 } from "@/service/dashboard/api";
+import { toast } from "sonner";
 
 type FormValues = {
   ad_name: string;
@@ -506,6 +507,7 @@ type FormValues = {
   link_clicks?: number;
   ctr?: number;
   cpc?: number;
+  cpm?: number;
 
   results?: number;
   cost_per_result?: number;
@@ -534,7 +536,7 @@ export default function AddCampaignForm({
   campaignId,
 }: {
   modalControl: () => void;
-  data: FormValues | null;
+  data: FormValues | undefined;
   campaignId?: number | null;
 }) {
   const {
@@ -563,9 +565,11 @@ export default function AddCampaignForm({
     }
 
     if (data) {
-      await updateCampaign({ ...formData, id: campaignId || 0 });
+      campaignId && await updateCampaign({ body: formData, id: campaignId });
+      toast.success("Campaign Added Successfully");
     } else {
       await addNewCampaign(formData);
+      toast.success("Campaign Updated Successfully");
     }
 
     modalControl();
@@ -637,23 +641,24 @@ export default function AddCampaignForm({
 
         {/* Metrics */}
         {[
-          { name: "amount_spent", label: "Amount Spent (₹)", step: "0.01" },
+          { name: "amount_spent", label: "Amount Spent (₹)", step: "any" },
           { name: "impressions", label: "Impressions" },
           { name: "reach", label: "Reach" },
-          { name: "frequency", label: "Frequency", step: "0.01" },
+          { name: "frequency", label: "Frequency", step: "any" },
           { name: "link_clicks", label: "Link Clicks" },
-          { name: "ctr", label: "CTR (%)", step: "0.01" },
-          { name: "cpc", label: "CPC (₹)", step: "0.01" },
+          { name: "ctr", label: "CTR (%)", step: "any" },
+          { name: "cpc", label: "CPC (₹)", step: "any" },
+          { name: "cpm", label: "CPM (₹)", step: "any" },
           { name: "results", label: "Results" },
           {
             name: "cost_per_result",
             label: "Cost per Result (₹)",
-            step: "0.01",
+            step: "any",
           },
           { name: "sales", label: "Sales" },
-          { name: "revenue", label: "Revenue (₹)", step: "0.01" },
-          { name: "cpa", label: "CPA (₹)", step: "0.01" },
-          { name: "aov", label: "AOV (₹)", step: "0.01" },
+          { name: "revenue", label: "Revenue (₹)", step: "any" },
+          { name: "cpa", label: "CPA", step: "any" },
+          { name: "aov", label: "AOV", step: "any" },
         ].map(({ name, label, step }) => (
           <div key={name} className="space-y-1">
             <Label>{label}</Label>

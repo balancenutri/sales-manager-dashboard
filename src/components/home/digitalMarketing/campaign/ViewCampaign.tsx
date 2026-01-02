@@ -19,10 +19,11 @@ import dayjs from "dayjs";
 
 export default function ViewCampaign({
   selectedCampaign,
+  onClose,
 }: {
   selectedCampaign: AdPerformanceData | null;
+  onClose: () => void;
 }) {
-  console.log({ selectedCampaign });
   const [updateCampaign, setUpdateCampaign] = useState<boolean>(false);
 
   return (
@@ -51,46 +52,36 @@ export default function ViewCampaign({
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {/* <div className="flex items-center justify-between">
-                  <span className="font-medium">Type</span>
-                  <span className="font-semibold">
-                    {keyString(data.data.campaignTypeName)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-medium">Status</span>
-                  <Badge
-                    className={
-                      data.data.campaignStatus.toLowerCase() === "active"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-gray-100 text-gray-800"
-                    }
-                  >
-                    {keyString(data.data.campaignStatus)}
-                  </Badge>
-                </div> */}
                 <div className="flex items-center justify-between">
                   <span className="font-medium">Start Date</span>
                   <span className="font-semibold">
-                    {dayjs(selectedCampaign.reporting_start).format("Do MMM YYYY")}
+                    {dayjs(selectedCampaign.reporting_start).format(
+                      "Do MMM YYYY"
+                    )}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="font-medium">End Date</span>
                   <span className="font-semibold">
-                    {dayjs(selectedCampaign.reporting_end).format("Do MMM YYYY")}
+                    {dayjs(selectedCampaign.reporting_end).format(
+                      "Do MMM YYYY"
+                    )}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="font-medium">Ad Spend</span>
                   <span className="font-semibold">
-                    ₹{selectedCampaign.amount_spent}
+                    ₹
+                    {String(selectedCampaign.amount_spent)?.replace(
+                      /\.0+$/,
+                      ""
+                    )}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="font-medium">Funnel</span>
                   <span className="font-semibold">
-                    {selectedCampaign.funnel}
+                    {selectedCampaign.funnel || "N/A"}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -102,59 +93,12 @@ export default function ViewCampaign({
                 <div className="flex items-center justify-between">
                   <span className="font-medium">Revenue Generated</span>
                   <span className="font-semibold">
-                    ₹{selectedCampaign.revenue}
+                    ₹{String(selectedCampaign.revenue)?.replace(/\.0+$/, "")}
                   </span>
                 </div>
               </CardContent>
             </Card>
             <div>
-              {/* <Card className="my-2">
-                <CardHeader className="mb-0 pb-0">
-                  <CardTitle>Targeted Users</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {data.data?.targetUsers?.program_name?.length > 0 && (
-                    <div>
-                      <h2 className="text-base font-semibold">Programs</h2>
-                      {data.data.targetUsers.program_name.map((item) => (
-                        <Badge variant={"outline"} className="mr-2">
-                          {keyString(item)}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-                  {data.data?.targetUsers?.gender?.length > 0 && (
-                    <div>
-                      <h2 className="text-base font-semibold">Gender</h2>
-                      {data.data.targetUsers.gender.map((item) => (
-                        <Badge variant={"outline"} className="mr-2">
-                          {keyString(item)}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-                  {data.data?.targetUsers?.age_group?.length > 0 && (
-                    <div>
-                      <h2 className="text-base font-semibold">Age Group</h2>
-                      {data.data.targetUsers.age_group.map((item) => (
-                        <Badge variant={"outline"} className="mr-2">
-                          {keyString(item)}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-                  {data.data?.targetUsers?.health_conditions?.length > 0 && (
-                    <div>
-                      <h2 className="text-base font-semibold">Health Issues</h2>
-                      {data.data.targetUsers.health_conditions.map((item) => (
-                        <Badge variant={"outline"} className="mr-2">
-                          {keyString(item)}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-                </CardContent>
-              </Card> */}
               <Card>
                 <CardHeader>
                   <CardTitle>Digital Marketing</CardTitle>
@@ -176,25 +120,61 @@ export default function ViewCampaign({
                     <div>
                       <span className="text-sm font-medium">Frequency: </span>
                       <span className="text-sm font-medium">
-                        {selectedCampaign?.frequency || 0}
+                        {String(selectedCampaign?.frequency)?.replace(
+                          /\.0+$/,
+                          ""
+                        ) || 0}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium">
+                        Cost per Result:{" "}
+                      </span>
+                      <span className="text-sm font-medium">
+                        {String(selectedCampaign?.cost_per_result)?.replace(
+                          /\.0+$/,
+                          ""
+                        ) || 0}
                       </span>
                     </div>
                     <div>
                       <span className="text-sm font-medium">CTR: </span>
                       <span className="text-sm font-medium">
-                        {selectedCampaign?.ctr || 0}%
+                        {String(selectedCampaign?.ctr)?.replace(/\.0+$/, "") ||
+                          0}
+                        %
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium">CPM: </span>
+                      <span className="text-sm font-medium">
+                        ₹
+                        {String(selectedCampaign?.cpm)?.replace(/\.0+$/, "") ||
+                          0}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium">CPC: </span>
+                      <span className="text-sm font-medium">
+                        ₹
+                        {String(selectedCampaign?.cpc)?.replace(/\.0+$/, "") ||
+                          0}
                       </span>
                     </div>
                     <div>
                       <span className="text-sm font-medium">CPA: </span>
                       <span className="text-sm font-medium">
-                        {selectedCampaign?.cpa || 0}%
+                        ₹
+                        {String(selectedCampaign?.cpa)?.replace(/\.0+$/, "") ||
+                          0}
                       </span>
                     </div>
                     <div>
                       <span className="text-sm font-medium">AOV: </span>
                       <span className="text-sm font-medium">
-                        {selectedCampaign?.aov || 0}%
+                        ₹
+                        {String(selectedCampaign?.aov)?.replace(/\.0+$/, "") ||
+                          0}
                       </span>
                     </div>
                   </div>
@@ -215,8 +195,11 @@ export default function ViewCampaign({
             <DialogTitle>Update Campaign</DialogTitle>
           </DialogHeader>
           <AddCampaignForm
-            modalControl={() => setUpdateCampaign(false)}
-            data={selectedCampaign}
+            modalControl={() => {
+              setUpdateCampaign(false);
+              onClose();
+            }}
+            data={selectedCampaign || undefined}
             campaignId={selectedCampaign?.id}
           />
         </DialogContent>
