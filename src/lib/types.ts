@@ -162,6 +162,77 @@ export type UpdateCampaignBody = {
   };
 };
 
+export type AdPerformanceBody = {
+  ad_name: string;
+  added_by: string;
+  id?: number;
+
+  funnel: string;
+  objective: string;
+
+  reporting_start: string;
+  reporting_end: string;
+
+  amount_spent?: number;
+  impressions?: number;
+  reach?: number;
+  frequency?: number;
+
+  link_clicks?: number;
+  ctr?: number;
+  cpc?: number;
+
+  results?: number;
+  cost_per_result?: number;
+  sales?: number;
+  revenue?: number;
+  cpa?: number;
+  aov?: number;
+};
+
+export type AdPerformanceData = {
+  ad_name: string;
+  added_by: string;
+  id: number;
+  
+  funnel: string;
+  objective: string;
+  
+  reporting_start: string;
+  reporting_end: string;
+  
+  amount_spent?: number;
+  impressions?: number;
+  reach?: number;
+  frequency?: number;
+  
+  link_clicks?: number;
+  ctr?: number;
+  cpc?: number;
+  cpm?: number;
+  
+  results?: number;
+  cost_per_result?: number;
+  sales?: number;
+  revenue?: number;
+  cpa?: number;
+  aov?: number;
+  
+}
+
+export interface UpdateAdPerformanceArgs {
+  id: number | string
+  body: AdPerformanceBody
+}
+
+export interface AdPerformanceResponse {
+  status: string;
+  message: string;
+  data: AdPerformanceData[];
+  totalCount: number;
+  hide_columns: any[];
+}
+
 export type LeadMisBody = {
   genders?: string[];
   age_groups?: string[];
