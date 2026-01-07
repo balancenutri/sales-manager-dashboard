@@ -19,3 +19,26 @@ export const formatCurrency = (amount: number | undefined) =>
     currency: "INR",
     maximumFractionDigits: 0,
   }).format(amount ?? 0);
+
+export const getStatusColor = (status: string) => {
+  switch (status) {
+    case "active":
+      return "bg-green-100 text-green-800 capitalize";
+    case "inactive":
+      return "bg-red-100 text-red-800 capitalize";
+    case "new":
+      return "bg-blue-100 text-blue-800 capitalize";
+    case "contacted":
+      return "bg-yellow-100 text-yellow-800 capitalize";
+    case "follow-up":
+      return "bg-purple-100 text-purple-800 capitalize";
+    case "HOT":
+      return "bg-red-100 text-red-800 capitalize";
+    case "WARM":
+      return "bg-orange-100 text-orange-800 capitalize";
+    case "COLD":
+      return "bg-blue-100 text-blue-800 capitalize";
+    default:
+      return "bg-gray-100 text-gray-800 capitalize";
+  }
+};

@@ -16,6 +16,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { AdPerformanceData } from "@/lib/types";
 import dayjs from "dayjs";
+import { Badge } from "@/components/ui/badge";
+import { getStatusColor } from "@/lib/utils";
 
 export default function ViewCampaign({
   selectedCampaign,
@@ -52,6 +54,12 @@ export default function ViewCampaign({
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">Status</span>
+                  <Badge className={getStatusColor(selectedCampaign.status)}>
+                    {selectedCampaign.status}
+                  </Badge>
+                </div>
                 <div className="flex items-center justify-between">
                   <span className="font-medium">Start Date</span>
                   <span className="font-semibold">

@@ -51,6 +51,8 @@ import {
   type AdPerformanceBody,
   type AdPerformanceResponse,
   type UpdateAdPerformanceArgs,
+  type AdPerformanceFilterPayload,
+  type AdPerformanceOverviewResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -555,7 +557,10 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    getAdPerformnaceReport: builder.query<AdPerformanceResponse, void>({
+    getAdPerformnaceReport: builder.query<
+      AdPerformanceResponse,
+      AdPerformanceFilterPayload
+    >({
       query: (body) => ({
         url: `/sales/digital-marketing/ad-performance-report`,
         method: "POST",
@@ -563,7 +568,21 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["Common"],
     }),
-    createAdPerformanceReport: builder.mutation<LeadMisResponse, AdPerformanceBody>({
+    getAdPerformnaceReportOverview: builder.query<
+      AdPerformanceOverviewResponse,
+      AdPerformanceFilterPayload
+    >({
+      query: (body) => ({
+        url: `/sales/digital-marketing/ad-performance-report-overview`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["Common"],
+    }),
+    createAdPerformanceReport: builder.mutation<
+      LeadMisResponse,
+      AdPerformanceBody
+    >({
       query: (body) => ({
         url: `/sales/digital-marketing/create-ad-performance-report`,
         method: "POST",
@@ -572,14 +591,17 @@ export const dashboardApi = commonAPi.injectEndpoints({
       invalidatesTags: ["Common"],
     }),
     updateAdPerformanceReport: builder.mutation<any, UpdateAdPerformanceArgs>({
-      query: ({body, id}) => ({
+      query: ({ body, id }) => ({
         url: `/sales/digital-marketing/update-ad-performance-report/${id}`,
         method: "PATCH",
         body,
       }),
       invalidatesTags: ["Common"],
     }),
-    uplaodAdPerformanceReport: builder.mutation<LeadMisResponse, AdPerformanceBody>({
+    uplaodAdPerformanceReport: builder.mutation<
+      LeadMisResponse,
+      AdPerformanceBody
+    >({
       query: (body) => ({
         url: `/sales/digital-marketing/upload-ad-performance-report`,
         method: "POST",
@@ -844,10 +866,10 @@ export const {
   useGetAllSocialMediaPerformanceQuery,
   useUpdateSocialMediaPerformanceMutation,
   useGetAdPerformnaceReportQuery,
+  useGetAdPerformnaceReportOverviewQuery,
   useCreateAdPerformanceReportMutation,
   useUpdateAdPerformanceReportMutation,
   useUplaodAdPerformanceReportMutation,
-
 
   useGetAppDownloadsCountQuery,
   useGetAllOcAppCountQuery,

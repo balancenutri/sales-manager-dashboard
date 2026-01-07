@@ -42,7 +42,7 @@ import {
   useGetLeadUserMisDataQuery,
   useGetLeadMisDataMutation,
 } from "@/service/dashboard/api";
-import { keyString } from "@/lib/utils";
+import { getStatusColor, keyString } from "@/lib/utils";
 import type { LeadMisBody } from "@/lib/types";
 
 export default function LeadMIS() {
@@ -90,36 +90,12 @@ export default function LeadMIS() {
 
   const { data: healthData } = useGetAllHealthIssueQuery();
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800";
-      case "inactive":
-        return "bg-red-100 text-red-800";
-      case "new":
-        return "bg-blue-100 text-blue-800";
-      case "contacted":
-        return "bg-yellow-100 text-yellow-800";
-      case "follow-up":
-        return "bg-purple-100 text-purple-800";
-      case "HOT":
-        return "bg-red-100 text-red-800";
-      case "WARM":
-        return "bg-orange-100 text-orange-800";
-      case "COLD":
-        return "bg-blue-100 text-blue-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
   const getActiveFiltersCount = () => {
     return Object.values(filters).reduce((count, filterArray) => {
       return count + filterArray.length;
     }, 0);
   };
 
-  // Handle country change - reset state and city when country changes
   const handleCountryChange = (selectedCountryIds: (string | number)[]) => {
     reset({
       ...filters,
@@ -129,7 +105,6 @@ export default function LeadMIS() {
     });
   };
 
-  // Handle state change - reset city when state changes
   const handleStateChange = (selectedStateIds: (string | number)[]) => {
     reset({
       ...filters,
@@ -137,8 +112,6 @@ export default function LeadMIS() {
       city: [],
     });
   };
-
-  console.log(countryData, 7689);
 
   const salesStatus = [
     { name: "Hot", id: 2 },

@@ -194,43 +194,69 @@ export type AdPerformanceData = {
   ad_name: string;
   added_by: string;
   id: number;
-  
+
   funnel: string;
   objective: string;
-  
+  status: string;
+
   reporting_start: string;
   reporting_end: string;
-  
+
   amount_spent?: number;
   impressions?: number;
   reach?: number;
   frequency?: number;
-  
+
   link_clicks?: number;
   ctr?: number;
   cpc?: number;
   cpm?: number;
-  
+
   results?: number;
   cost_per_result?: number;
   sales?: number;
   revenue?: number;
   cpa?: number;
   aov?: number;
-  
-}
+};
 
 export interface UpdateAdPerformanceArgs {
-  id: number | string
-  body: AdPerformanceBody
+  id: number | string;
+  body: AdPerformanceBody;
 }
 
 export interface AdPerformanceResponse {
   status: string;
   message: string;
   data: AdPerformanceData[];
+  table_meta_data: {
+    funnels: string[];
+  };
   totalCount: number;
   hide_columns: any[];
+}
+
+type AdPerformanceOverviewData = {
+  active_count: number;
+  inactive_count: number;
+  total_count: number;
+  total_conversion: number;
+  total_ad_spend: number;
+  total_impressions: number;
+  total_reach: number;
+  total_ctr: number;
+  total_cac: number;
+  leads_generated: number;
+  revenue_generated: number;
+};
+export interface AdPerformanceOverviewResponse {
+  status: string;
+  message: string;
+  data: AdPerformanceOverviewData[];
+  table_meta_data: {
+    funnels: string[];
+  };
+  hide_columns: string[];
 }
 
 export type LeadMisBody = {
@@ -794,6 +820,14 @@ export interface GetCampaignDetailsResponse {
   message: string;
   data: CampaignDetails;
   hideColumn: [];
+}
+
+export interface AdPerformanceFilterPayload {
+  start_date?: string | null;
+  end_date?: string | null;
+  funnel?: string;
+  objective?: string;
+  ad_name?: string;
 }
 
 export type CampaignDetailsBody = {
