@@ -7,7 +7,7 @@ import RegionDistribution from "./bifurcation/RegionDistribution";
 
 export default function LeadOcBifurcation() {
   const { data } = useGetUserBifurcationCountQuery();
-  console.log({ data });
+
   return (
     <>
       <h2 className="text-xl font-bold">Lead & OC Bifurcation</h2>

@@ -6,9 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { keyString } from "@/lib/utils";
-import { useGetCampaignOverviewQuery } from "@/service/dashboard/api";
+import { useGetAdPerformnaceReportOverviewQuery } from "@/service/dashboard/api";
 import {
   BarChart2,
   CheckCircle,
@@ -29,18 +28,33 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-// import CustomDatePicker from "@/components/ui/custom-date-picker";
-// import dayjs from "dayjs";
+import dayjs from "dayjs";
+import CustomDatePicker from "@/components/ui/custom-date-picker";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type IconTypes = {
   [key: string]: LucideIcon;
 };
 
 export default function CampaignDetails() {
-  const [selected, setSelected] = useState<"" | "meta" | "google">("");
-  // const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const { data, isFetching } = useGetCampaignOverviewQuery({
-    filter: selected,
+  const [selected, setSelected] = useState<undefined | string>(undefined);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const { data, isFetching } = useGetAdPerformnaceReportOverviewQuery({
+    funnel: selected,
+    ...(selectedDate
+      ? {
+          start_date: dayjs(selectedDate)
+            ?.startOf("month")
+            .format("YYYY-MM-DD"),
+          end_date: dayjs(selectedDate)?.endOf("month").format("YYYY-MM-DD"),
+        }
+      : {}),
   });
 
   const SkeletonArray = Array(9)
@@ -55,35 +69,16 @@ export default function CampaignDetails() {
       </div>
     ));
 
-  // const cleanseData = {
-  //   total_campaigns: {
-  //     active: 2,
-  //     inactive: 3,
-  //     total: 5,
-  //   },
-  //   // total_campaigns_inactive: 4,
-  //   total_ad_spent: 9647,
-  //   impressions: 52780,
-  //   reach: 40583,
-  //   clicks: 4200,
-  //   CPL: 209.07,
-  //   CAC: "₹ 9647",
-  //   CTR: "7.34%",
-  //   total_conversions: 1,
-  //   total_leads_generated: 46,
-  //   total_revenue_generated: "₹ 1499",
-  // };
-
   const allIcons: IconTypes = {
     total_campaigns: Rocket,
     // total_campaigns_inactive: Rocket,
-    total_ad_spent: IndianRupee,
-    impressions: BarChart2,
-    reach: Users,
+    total_amount_spent: IndianRupee,
+    total_impressions: BarChart2,
+    total_reach: Users,
     clicks: MousePointerClick,
     CPL: GaugeCircle,
     CAC: TrendingUp,
-    CTR: LineChart,
+    total_ctr: LineChart,
     total_leads_generated: UserPlus,
     total_conversions: CheckCircle,
     total_revenue_generated: IndianRupee,
@@ -146,39 +141,34 @@ export default function CampaignDetails() {
                 Campaign Overview
               </CardDescription>
             </div>
-            <div className="flex gap-3">
-              {/* <CustomDatePicker
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                showMonthYearPicker={true}
-                dateFormat="MM/yyyy"
-                maxDate={dayjs()}
-              /> */}
-              <Tabs defaultValue={selected} className="space-y-6">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger
-                    className="cursor-pointer"
-                    value=""
-                    onClick={() => setSelected("")}
-                  >
-                    All
-                  </TabsTrigger>
-                  <TabsTrigger
-                    className="cursor-pointer"
-                    value={"meta"}
-                    onClick={() => setSelected("meta")}
-                  >
-                    Meta
-                  </TabsTrigger>
-                  <TabsTrigger
-                    className="cursor-pointer"
-                    value="google"
-                    onClick={() => setSelected("google")}
-                  >
-                    Google
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>
+
+            <div className="flex gap-2">
+              <div className="space-y-2">
+                <Select
+                  value={selected}
+                  onValueChange={(value) => setSelected(value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select funnel" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={""}>All</SelectItem>
+                    {data?.table_meta_data.funnels?.map((item) => (
+                      <SelectItem value={item}>{keyString(item)}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex gap-3">
+                <CustomDatePicker
+                  selected={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
+                  showMonthYearPicker={true}
+                  dateFormat="MM/yyyy"
+                  maxDate={dayjs()}
+                  clearable={true}
+                />
+              </div>
             </div>
           </div>
         </CardHeader>
@@ -216,156 +206,3 @@ export default function CampaignDetails() {
     </div>
   );
 }
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card";
-// import { Skeleton } from "@/components/ui/skeleton";
-// import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { useGetCampaignOverviewQuery } from "@/service/dashboard/api";
-// import { Activity, Eye, TrendingUp, UserPlus, Users } from "lucide-react";
-// import { useState } from "react";
-
-// export default function CampaignDetails() {
-//   const { data, isFetching } = useGetCampaignOverviewQuery();
-
-//   const [selected, setSelected] = useState<"" | "bn" | "cleanse">("");
-//   console.log({ data });
-
-//   const SkeletonArray = Array(9)
-//     .fill(null)
-//     .map((_, index: number) => (
-//       <div
-//         className="flex justify-between py-3 px-4 bg-muted rounded-lg"
-//         key={index}
-//       >
-//         <Skeleton className="h-5 w-20" />
-//         <Skeleton className="h-5 w-20" />
-//       </div>
-//     ));
-
-//   return (
-//     <div>
-//       <Card>
-//         <CardHeader>
-//           <div className="flex justify-between">
-//             <div>
-//               <CardTitle>Campaign Details</CardTitle>
-//               <CardDescription className="mt-1">
-//                 Campaign Overview
-//               </CardDescription>
-//             </div>
-//             <Tabs defaultValue={selected} className="space-y-6">
-//               <TabsList className="grid w-full grid-cols-3">
-//                 <TabsTrigger
-//                   className="cursor-pointer"
-//                   value=""
-//                   onClick={() => setSelected("")}
-//                 >
-//                   All
-//                 </TabsTrigger>
-//                 <TabsTrigger
-//                   className="cursor-pointer"
-//                   value={"bn"}
-//                   onClick={() => setSelected("bn")}
-//                 >
-//                   Meta
-//                 </TabsTrigger>
-//                 <TabsTrigger
-//                   className="cursor-pointer"
-//                   value="cleanse"
-//                   onClick={() => setSelected("cleanse")}
-//                 >
-//                   Google
-//                 </TabsTrigger>
-//               </TabsList>
-//             </Tabs>
-//           </div>
-//         </CardHeader>
-//         {data?.data && !isFetching ? (
-//           <CardContent>
-//             <div className="grid grid-cols-3 gap-3">
-//               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
-//                 <div className="flex items-center space-x-3">
-//                   <Eye className="h-4 w-4 text-purple-500" />
-//                   <span className="font-medium">No. of Champaign (Active)</span>
-//                 </div>
-//                 <div className="font-semibold text-lg">
-//                   {selected === "cleanse" ? 0 : data.data[0].active_count}
-//                 </div>
-//               </div>
-//               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
-//                 <div className="flex items-center space-x-3">
-//                   <Users className="h-4 w-4 text-purple-500" />
-//                   <span className="font-medium">Ad Spend</span>
-//                 </div>
-//                 <div className="font-semibold text-lg">
-//                   {selected === "cleanse" ? 0 : data.data[0].total_ad_spend}
-//                 </div>
-//               </div>
-//               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
-//                 <div className="flex items-center space-x-3">
-//                   <Activity className="h-4 w-4 text-orange-500" />
-//                   <span className="font-medium">Total Impressions</span>
-//                 </div>
-//                 <div className="font-semibold text-lg">
-//                   {selected === "cleanse" ? 0 : data.data[0].total_impressions}
-//                 </div>
-//               </div>
-//               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
-//                 <div className="flex items-center space-x-3">
-//                   <TrendingUp className="h-4 w-4 text-green-500" />
-//                   <span className="font-medium">Total Reach</span>
-//                 </div>
-//                 <div className="font-semibold text-lg">
-//                   {selected === "cleanse" ? 0 : data.data[0].total_reach}
-//                 </div>
-//               </div>
-//               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
-//                 <div className="flex items-center space-x-3">
-//                   <TrendingUp className="h-4 w-4 text-green-500" />
-//                   <span className="font-medium">Total CTR</span>
-//                 </div>
-//                 <div className="font-semibold text-lg">
-//                   {selected === "cleanse" ? 0 : data.data[0].total_ctr}%
-//                 </div>
-//               </div>
-//               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
-//                 <div className="flex items-center space-x-3">
-//                   <TrendingUp className="h-4 w-4 text-green-500" />
-//                   <span className="font-medium">Total CAC</span>
-//                 </div>
-//                 <div className="font-semibold text-lg">
-//                   {selected === "cleanse" ? 0 : data.data[0].total_cac}
-//                 </div>
-//               </div>
-//               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
-//                 <div className="flex items-center space-x-3">
-//                   <Activity className="h-4 w-4 text-orange-500" />
-//                   <span className="font-medium">Lead Generated</span>
-//                 </div>
-//                 <div className="font-semibold text-lg">
-//                   {selected === "cleanse" ? 0 : data.data[0].leads_generated}
-//                 </div>
-//               </div>
-//               <div className="flex justify-between py-3 px-4 bg-muted rounded-lg">
-//                 <div className="flex items-center space-x-3">
-//                   <UserPlus className="h-4 w-4 text-teal-500" />
-//                   <span className="font-medium">Revenue Generated</span>
-//                 </div>
-//                 <div className="font-semibold text-lg">
-//                   {selected === "cleanse" ? 0 : data.data[0].revenue_generated}
-//                 </div>
-//               </div>
-//             </div>
-//           </CardContent>
-//         ) : (
-//           <div className="grid grid-cols-3 gap-3 mx-6">{SkeletonArray}</div>
-//         )}
-//       </Card>
-//     </div>
-//   );
-// }

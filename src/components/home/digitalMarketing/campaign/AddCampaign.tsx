@@ -487,6 +487,7 @@ import {
   useUpdateAdPerformanceReportMutation,
 } from "@/service/dashboard/api";
 import { toast } from "sonner";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type FormValues = {
   ad_name: string;
@@ -495,6 +496,7 @@ type FormValues = {
 
   funnel: string;
   objective: string;
+  status: string;
 
   reporting_start: string;
   reporting_end: string;
@@ -565,11 +567,11 @@ export default function AddCampaignForm({
     }
 
     if (data) {
-      campaignId && await updateCampaign({ body: formData, id: campaignId });
-      toast.success("Campaign Added Successfully");
+      campaignId && (await updateCampaign({ body: formData, id: campaignId }));
+      toast.success("Campaign Updated Successfully");
     } else {
       await addNewCampaign(formData);
-      toast.success("Campaign Updated Successfully");
+      toast.success("Campaign Added Successfully");
     }
 
     modalControl();
@@ -589,6 +591,36 @@ export default function AddCampaignForm({
           />
           {errors.ad_name && (
             <p className="text-xs text-red-600">{errors.ad_name.message}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="status">
+            Status
+          </Label>
+          <Controller
+            control={control}
+            name="status"
+            rules={{ required: "Campaign status is required" }}
+            render={({ field }) => {
+              return (
+                <Select
+                  value={field.value || undefined}
+                  onValueChange={field.onChange}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="inactive">Inactive</SelectItem>
+                  </SelectContent>
+                </Select>
+              );
+            }}
+          />
+          {errors.status && (
+            <p className="mt-1 text-xs text-red-600">{errors.status.message}</p>
           )}
         </div>
 
