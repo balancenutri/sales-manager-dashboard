@@ -67,7 +67,7 @@ export default function CampaignOverview() {
     end_date: filters.end_date
       ? dayjs(filters.end_date).format("YYYY-MM-DD")
       : null,
-    funnel: filters.funnel,
+    funnel: filters.funnel === "all" ? undefined : filters.funnel,
     objective: filters.objective,
     ad_name: filters.ad_name,
   });
@@ -155,7 +155,7 @@ export default function CampaignOverview() {
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Funnel</label>
                   <Select
-                    value={filters.funnel}
+                    value={filters.funnel ?? "all"}
                     onValueChange={(value) =>
                       setFilters((prev) => ({ ...prev, funnel: value }))
                     }
@@ -164,8 +164,8 @@ export default function CampaignOverview() {
                       <SelectValue placeholder="Select funnel" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value={""}>All</SelectItem>
-                      {data?.table_meta_data.funnels?.map((item) => (
+                      <SelectItem value={"all"}>All</SelectItem>
+                      {data?.table_meta_data?.funnels?.map((item) => (
                         <SelectItem value={item}>{keyString(item)}</SelectItem>
                       ))}
                     </SelectContent>

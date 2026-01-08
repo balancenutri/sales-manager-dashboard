@@ -46,7 +46,7 @@ export default function CampaignDetails() {
   const [selected, setSelected] = useState<undefined | string>(undefined);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const { data, isFetching } = useGetAdPerformnaceReportOverviewQuery({
-    funnel: selected,
+    funnel: selected === "all" ? undefined : selected,
     ...(selectedDate
       ? {
           start_date: dayjs(selectedDate)
@@ -145,15 +145,15 @@ export default function CampaignDetails() {
             <div className="flex gap-2">
               <div className="space-y-2">
                 <Select
-                  value={selected}
+                  value={selected ?? "all"}
                   onValueChange={(value) => setSelected(value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select funnel" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value={""}>All</SelectItem>
-                    {data?.table_meta_data.funnels?.map((item) => (
+                    <SelectItem value={"all"}>All</SelectItem>
+                    {data?.table_meta_data?.funnels?.map((item) => (
                       <SelectItem value={item}>{keyString(item)}</SelectItem>
                     ))}
                   </SelectContent>
