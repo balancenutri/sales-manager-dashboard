@@ -24,7 +24,7 @@ export const commonAPi = createApi({
     },
   }),
   reducerPath: "commonApi",
-  tagTypes: ["Common", "SocialMedia", "Campaign"],
+  tagTypes: ["Common", "SocialMedia", "Campaign", "FranchiseEnquires"],
   endpoints: (builder) => ({
     adminLogin: builder.query({
       query: (body) => {

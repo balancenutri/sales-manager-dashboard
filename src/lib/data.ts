@@ -1079,6 +1079,11 @@ export const menuItems = [
     path: "/team-performance",
     icon: Users,
   },
+  {
+    label: "Franchise Enquiries",
+    path: "/franchise-enquires",
+    icon: Users,
+  },
 ];
 
 export const dbUrls = [
