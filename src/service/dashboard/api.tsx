@@ -53,6 +53,9 @@ import {
   type UpdateAdPerformanceArgs,
   type AdPerformanceFilterPayload,
   type AdPerformanceOverviewResponse,
+  type FranchiseEnquiryResponse,
+  type CommentFranchiseEnquiryBody,
+  type CommentFranchiseEnquiryResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -278,6 +281,25 @@ export const dashboardApi = commonAPi.injectEndpoints({
         body,
       }),
       providesTags: ["Common"],
+    }),
+    getFranchiseEnquires: builder.query<FranchiseEnquiryResponse, void>({
+      query: (body) => ({
+        url: `/sales/overview/franchise-enquiries`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["FranchiseEnquires"],
+    }),
+    addCommentToFranchiseEnquires: builder.mutation<
+      CommentFranchiseEnquiryResponse,
+      CommentFranchiseEnquiryBody
+    >({
+      query: ({body, id}) => ({
+        url: `/sales/overview/add-comment-to-franchise-enquiry/${id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["FranchiseEnquires"],
     }),
     getCounsellorCategoryWisePerformance: builder.query<any, number>({
       query: (id) =>
@@ -826,6 +848,8 @@ export const {
   useGetKeySourceConversionQuery,
 
   useGetCounsellorPerformanceQuery,
+  useGetFranchiseEnquiresQuery,
+  useAddCommentToFranchiseEnquiresMutation,
   useGetCounsellorCategoryWisePerformanceQuery,
   useGetCounsellorSourceWisePerformanceQuery,
   useGetCounsellorDataByIdQuery,

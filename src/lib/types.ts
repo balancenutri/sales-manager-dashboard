@@ -1215,3 +1215,42 @@ export interface NotificationEngagementSummaryResponse {
   data: NotificationEngagementSummaryData;
   hide_columns: string[];
 }
+
+export interface FranchiseEnquiry {
+  id: number;
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+  country: string;
+  state: string;
+  city: string;
+  pincode: string;
+  franchise_location: string;
+  have_place_or_rent_plan: string;
+  investment_amount_in_lacs: string;
+  interest_reason: string;
+  industry_interest: string;
+  background: string;
+  franchise_motivation: string;
+  comment: string | null;
+  created_at: string;
+}
+
+export interface FranchiseEnquiryResponse {
+  status: "success" | "error";
+  message: string;
+  data: FranchiseEnquiry[];
+  hide_columns: string[];
+}
+
+export interface CommentFranchiseEnquiryBody {
+  body: {
+    comment: string;
+  };
+  id: number;
+}
+export interface CommentFranchiseEnquiryResponse {
+  status: string;
+  message: string;
+}

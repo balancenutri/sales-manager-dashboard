@@ -1,6 +1,7 @@
 import KeySourceConversion from "@/components/home/overview/KeySourceConversion";
 import MentorCounsellorPerformance from "@/components/home/overview/leadCard/MentorCounsellorPerformance";
 import MainLayout from "@/layout/MainLayout";
+import FranchiseEnquires from "@/pages/FranchiseEnquires";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import { createBrowserRouter } from "react-router";
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/team-performance",
         element: <MentorCounsellorPerformance />,
+      },
+      {
+        path: "/franchise-enquires",
+        element: <FranchiseEnquires />,
       },
     ],
   },
