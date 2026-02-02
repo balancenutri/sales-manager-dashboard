@@ -1236,11 +1236,26 @@ export interface FranchiseEnquiry {
   comment: string | null;
   created_at: string;
 }
+export interface NutripreneurEnquires {
+  id: number;
+  full_name: string;
+  phone_number: string;
+  city: string;
+  occupation: string;
+  comment: string | null;
+  created_at: string;
+}
 
 export interface FranchiseEnquiryResponse {
   status: "success" | "error";
   message: string;
   data: FranchiseEnquiry[];
+  hide_columns: string[];
+}
+export interface NutripreneurEnquiresResponse {
+  status: "success" | "error";
+  message: string;
+  data: NutripreneurEnquires[];
   hide_columns: string[];
 }
 

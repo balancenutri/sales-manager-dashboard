@@ -56,6 +56,7 @@ import {
   type FranchiseEnquiryResponse,
   type CommentFranchiseEnquiryBody,
   type CommentFranchiseEnquiryResponse,
+  type NutripreneurEnquiresResponse,
 } from "@/lib/types";
 
 type BodyProps = {
@@ -290,12 +291,31 @@ export const dashboardApi = commonAPi.injectEndpoints({
       }),
       providesTags: ["FranchiseEnquires"],
     }),
+    getNutripreneurEnquires: builder.query<NutripreneurEnquiresResponse, void>({
+      query: (body) => ({
+        url: `/sales/overview/nutripreneur-enquiries`,
+        method: "POST",
+        body,
+      }),
+      providesTags: ["FranchiseEnquires"],
+    }),
     addCommentToFranchiseEnquires: builder.mutation<
       CommentFranchiseEnquiryResponse,
       CommentFranchiseEnquiryBody
     >({
       query: ({body, id}) => ({
         url: `/sales/overview/add-comment-to-franchise-enquiry/${id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["FranchiseEnquires"],
+    }),
+    addCommentToNutripreneurEnquires: builder.mutation<
+      CommentFranchiseEnquiryResponse,
+      CommentFranchiseEnquiryBody
+    >({
+      query: ({body, id}) => ({
+        url: `/sales/overview/add-comment-to-nutripreneur-enquiry/${id}`,
         method: "PATCH",
         body,
       }),
@@ -849,7 +869,9 @@ export const {
 
   useGetCounsellorPerformanceQuery,
   useGetFranchiseEnquiresQuery,
+  useGetNutripreneurEnquiresQuery,
   useAddCommentToFranchiseEnquiresMutation,
+  useAddCommentToNutripreneurEnquiresMutation,
   useGetCounsellorCategoryWisePerformanceQuery,
   useGetCounsellorSourceWisePerformanceQuery,
   useGetCounsellorDataByIdQuery,
