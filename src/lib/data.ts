@@ -1081,7 +1081,12 @@ export const menuItems = [
   },
   {
     label: "Franchise Enquiries",
-    path: "/franchise-enquires",
+    path: "/franchise-enquiries",
+    icon: Users,
+  },
+  {
+    label: "Nutriprenuer Enquiries",
+    path: "/nutripreneur-enquiries",
     icon: Users,
   },
 ];

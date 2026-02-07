@@ -4,6 +4,7 @@ import MainLayout from "@/layout/MainLayout";
 import FranchiseEnquires from "@/pages/FranchiseEnquires";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
+import NutripreneurEnquires from "@/pages/NutripreneurEnquires";
 import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
@@ -21,8 +22,12 @@ const router = createBrowserRouter([
         element: <MentorCounsellorPerformance />,
       },
       {
-        path: "/franchise-enquires",
+        path: "/franchise-enquiries",
         element: <FranchiseEnquires />,
+      },
+      {
+        path: "/nutripreneur-enquiries",
+        element: <NutripreneurEnquires />,
       },
     ],
   },
